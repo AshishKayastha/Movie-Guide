@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 25
@@ -18,8 +20,55 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+        disable 'BinaryOperationInTimber'
+    }
+
+    dexOptions {
+        maxProcessCount 4
+        threadCount 8
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+repositories {
+    maven { url "https://clojars.org/repo/" }
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.1.0'
+    // Support Libraries
+    compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.android.support:cardview-v7:${supportLibVersion}"
+    compile "com.android.support:recyclerview-v7:${supportLibVersion}"
+
+    compile 'com.jakewharton.timber:timber:4.3.1'
+
+    // Kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+    // Retrofit 2
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+
+    // RxJava/RxAndroid
+    compile 'io.reactivex:rxjava:1.2.4'
+    compile 'io.reactivex:rxandroid:1.2.1'
+
+    // Dagger 2
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    apt "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    compile "com.jakewharton:butterknife:${butterknifeVersion}"
+    apt "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
+
+    compile "frankiesardo:icepick:${icepickVersion}"
+    apt "frankiesardo:icepick-processor:${icepickVersion}"
 }
