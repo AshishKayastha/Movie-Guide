@@ -12,6 +12,7 @@ android {
         targetSdkVersion 25
         versionCode 100
         versionName "1.0.0"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -43,11 +44,9 @@ repositories {
 dependencies {
     // Support Libraries
     compile "com.android.support:design:${supportLibVersion}"
-    compile "com.android.support:appcompat-v7:$supportLibVersion"
     compile "com.android.support:cardview-v7:${supportLibVersion}"
-    compile "com.android.support:recyclerview-v7:${supportLibVersion}"
 
-    compile 'com.jakewharton.timber:timber:4.3.1'
+    compile 'com.jakewharton.timber:timber:4.4.0'
 
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
@@ -56,6 +55,7 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
+    // OkHttp
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
 
     // RxJava/RxAndroid
@@ -66,9 +66,15 @@ dependencies {
     compile "com.google.dagger:dagger:${daggerVersion}"
     apt "com.google.dagger:dagger-compiler:${daggerVersion}"
 
+    // ButterKnife
     compile "com.jakewharton:butterknife:${butterknifeVersion}"
     apt "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
 
+    // IcePick
     compile "frankiesardo:icepick:${icepickVersion}"
     apt "frankiesardo:icepick-processor:${icepickVersion}"
+
+    // Leak Canary
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
 }
