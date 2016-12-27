@@ -8,11 +8,15 @@ import com.ashish.movies.R
 import com.ashish.movies.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_movies.*
 import kotlinx.android.synthetic.main.layout_empty_view.*
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 26.
  */
 class MoviesFragment : BaseFragment(), MoviesMvpView, SwipeRefreshLayout.OnRefreshListener {
+
+    @Inject
+    lateinit var presenter: MoviesPresenter
 
     private var moviesAdapter: MoviesAdapter? = null
 

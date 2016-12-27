@@ -1,6 +1,7 @@
 package com.ashish.movies.ui.movies
 
 import dagger.Module
+import dagger.Provides
 
 /**
  * Created by Ashish on Dec 27.
@@ -8,4 +9,8 @@ import dagger.Module
 @Module
 class MoviesModule {
 
+    @Provides
+    fun provideMoviesPresenter(): MoviesPresenter {
+        return MoviesPresenter()
+    }
 }
