@@ -7,6 +7,7 @@ import android.view.View
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_movies.*
+import kotlinx.android.synthetic.main.layout_empty_view.*
 
 /**
  * Created by Ashish on Dec 26.
@@ -24,16 +25,16 @@ class MoviesFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         retainInstance = true
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_movies
-    }
+    override fun getLayoutId(): Int = R.layout.fragment_movies
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView.setHasFixedSize(true)
+        recyclerView.emptyView = emptyView
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
+        swipeRefresh.setSwipeableViews(emptyView)
         swipeRefresh.setOnRefreshListener(this)
     }
 

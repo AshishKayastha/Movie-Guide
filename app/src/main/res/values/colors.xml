@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="greyish_white">#D1D1D1</color>
+
+    <color name="primary_text_light">#FFFFFFFF</color>
+    <color name="secondary_text_light">#B3FFFFFF</color>
 </resources>

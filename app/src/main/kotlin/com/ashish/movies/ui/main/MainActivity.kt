@@ -12,7 +12,6 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setSupportActionBar(toolbar)
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
@@ -26,9 +25,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_main
-    }
+    override fun getLayoutId(): Int = R.layout.activity_main
 
     fun replaceFragment(fragment: Fragment) {
         supportFragmentManager
