@@ -14,9 +14,9 @@
 
         <ImageView
             android:id="@+id/emptyImageView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:srcCompat="@drawable/ic_movies_white_24dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/ic_movies_white_100dp"
             tools:ignore="ContentDescription" />
 
         <TextView

@@ -12,7 +12,9 @@ import kotlinx.android.synthetic.main.layout_empty_view.*
 /**
  * Created by Ashish on Dec 26.
  */
-class MoviesFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+class MoviesFragment : BaseFragment(), MoviesMvpView, SwipeRefreshLayout.OnRefreshListener {
+
+    private var moviesAdapter: MoviesAdapter? = null
 
     companion object {
         fun newInstance(): MoviesFragment {
@@ -33,6 +35,9 @@ class MoviesFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         recyclerView.setHasFixedSize(true)
         recyclerView.emptyView = emptyView
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+
+        moviesAdapter = MoviesAdapter()
+        recyclerView.adapter = moviesAdapter
 
         swipeRefresh.setSwipeableViews(emptyView)
         swipeRefresh.setOnRefreshListener(this)
