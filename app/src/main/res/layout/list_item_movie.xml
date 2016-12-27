@@ -12,8 +12,7 @@
 
         <ImageView
             android:id="@+id/thumbnailImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/Match.Width"
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription" />
 
@@ -25,21 +24,18 @@
 
             <TextView
                 android:id="@+id/movieTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/PrimaryText"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textColor="@color/primary_text_light"
-                android:textSize="@dimen/text_size_large" />
+                tools:text="Movie Title" />
 
             <TextView
                 android:id="@+id/movieSubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/SecondaryText"
+                android:layout_marginTop="@dimen/spacing_micro"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/secondary_text_light"
-                android:textSize="@dimen/text_size_normal" />
+                tools:text="Movie SubTitle" />
 
         </LinearLayout>
 

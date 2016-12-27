@@ -2,13 +2,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/Match">
 
     <LinearLayout
         android:id="@+id/emptyView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/Match.Width"
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
@@ -18,15 +16,13 @@
             android:id="@+id/emptyImageView"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:tint="@android:color/black"
             app:srcCompat="@drawable/ic_movies_white_24dp"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/emptyTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
+            style="@style/PrimaryText"
+            android:gravity="center"
             tools:text="No Movies Available" />
 
     </LinearLayout>
