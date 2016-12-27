@@ -31,7 +31,7 @@ class MoviesFragment : BaseFragment(), MoviesMvpView, SwipeRefreshLayout.OnRefre
         retainInstance = true
     }
 
-    override fun getLayoutId(): Int = R.layout.fragment_movies
+    override fun getLayoutId() = R.layout.fragment_movies
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

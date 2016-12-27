@@ -26,7 +26,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_main
+    override fun getLayoutId() = R.layout.activity_main
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
