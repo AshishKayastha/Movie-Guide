@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">Movies</string>
-    <string name="title_people">People</string>
-    <string name="title_tv_shows">TV Shows</string>
     <string name="title_movies">Movies</string>
-
-    <string name="tmdb_api_key">21962412093fb3887ace2f97f2253eae</string>
+    <string name="title_tv_shows">TV Shows</string>
+    <string name="title_people">People</string>
 
     <!-- Movie List Types -->
     <string name="now_playing_txt">Now Playing</string>

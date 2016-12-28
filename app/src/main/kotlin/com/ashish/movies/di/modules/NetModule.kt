@@ -1,9 +1,11 @@
 package com.ashish.movies.di.modules
 
 import com.ashish.movies.BuildConfig
+import com.ashish.movies.utils.ApiKeyInterceptor
 import com.ashish.movies.utils.Constants.Companion.BASE_API_URL
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
@@ -45,8 +47,14 @@ class NetModule {
 
     @Provides
     @Singleton
-    fun provideClient(builder: OkHttpClient.Builder, interceptor: HttpLoggingInterceptor): OkHttpClient {
-        builder.addInterceptor(interceptor)
+    fun provideApiKeyInterceptor(): Interceptor = ApiKeyInterceptor()
+
+    @Provides
+    @Singleton
+    fun provideClient(builder: OkHttpClient.Builder, interceptor: Interceptor,
+                      loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        builder.addNetworkInterceptor(interceptor)
+        builder.addInterceptor(loggingInterceptor)
         return builder.build()
     }
 

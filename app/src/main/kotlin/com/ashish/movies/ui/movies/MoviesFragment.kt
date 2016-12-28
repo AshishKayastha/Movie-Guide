@@ -14,9 +14,11 @@ import kotlinx.android.synthetic.main.layout_empty_view.*
 /**
  * Created by Ashish on Dec 26.
  */
-class MoviesFragment : BaseFragment<MoviesPresenter>(), MoviesMvpView, SwipeRefreshLayout.OnRefreshListener {
+class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvpView,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private var movieType: Int? = null
+
     private var moviesAdapter: MoviesAdapter? = null
 
     companion object {
@@ -64,6 +66,8 @@ class MoviesFragment : BaseFragment<MoviesPresenter>(), MoviesMvpView, SwipeRefr
         swipeRefresh.setSwipeableViews(emptyView)
         swipeRefresh.setOnRefreshListener(this)
     }
+
+    override fun getMvpView() = this
 
     override fun onRefresh() {
         presenter.getMovieList(movieType)

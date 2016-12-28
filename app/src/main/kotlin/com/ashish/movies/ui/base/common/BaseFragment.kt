@@ -15,10 +15,9 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 26.
  */
-abstract class BaseFragment<P : RxPresenter<in MvpView>> : Fragment(), MvpView {
+abstract class BaseFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpView {
 
-    @Inject
-    lateinit var presenter: P
+    @Inject lateinit var presenter: P
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +34,10 @@ abstract class BaseFragment<P : RxPresenter<in MvpView>> : Fragment(), MvpView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.attachView(this)
+        presenter.attachView(getMvpView())
     }
+
+    protected abstract fun getMvpView(): V
 
     override fun onDestroyView() {
         presenter.detachView()
