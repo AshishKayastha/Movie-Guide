@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.ashish.movies.R
+import com.ashish.movies.data.models.Movie
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.common.BaseFragment
 import kotlinx.android.synthetic.main.fragment_movies.*
@@ -15,16 +16,18 @@ import kotlinx.android.synthetic.main.layout_empty_view.*
  */
 class MoviesFragment : BaseFragment<MoviesPresenter>(), MoviesMvpView, SwipeRefreshLayout.OnRefreshListener {
 
+    private var movieType: Int? = null
     private var moviesAdapter: MoviesAdapter? = null
 
     companion object {
 
-        val ARG_MOVIE_TYPE = "movie_type"
+        const val ARG_MOVIE_TYPE = "movie_type"
 
-        val NOW_PLAYING_MOVIES = 0
-        val POPULAR_MOVIES = 1
-        val TOP_RATED_MOVIES = 2
-        val UPCOMING_MOVIES = 3
+        const val NOW_PLAYING_MOVIES = 0
+        const val LATEST_MOVIES = 1
+        const val POPULAR_MOVIES = 2
+        const val TOP_RATED_MOVIES = 3
+        const val UPCOMING_MOVIES = 4
 
         fun newInstance(movieType: Int): MoviesFragment {
             val extras = Bundle()
@@ -49,6 +52,8 @@ class MoviesFragment : BaseFragment<MoviesPresenter>(), MoviesMvpView, SwipeRefr
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        movieType = arguments.getInt(ARG_MOVIE_TYPE)
+
         recyclerView.setHasFixedSize(true)
         recyclerView.emptyView = emptyView
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -61,6 +66,16 @@ class MoviesFragment : BaseFragment<MoviesPresenter>(), MoviesMvpView, SwipeRefr
     }
 
     override fun onRefresh() {
+        presenter.getMovieList(movieType)
+    }
 
+    override fun showProgress() {
+    }
+
+    override fun hideProgress() {
+    }
+
+    override fun showMoviesList(moviesList: List<Movie>?) {
+        moviesAdapter?.updateMoviesList(moviesList)
     }
 }

@@ -10,7 +10,7 @@ import javax.inject.Inject
  */
 class MovieInteractor @Inject constructor(val movieService: MovieService) {
 
-    fun getNowPlayingMovies(page: Int? = null): Observable<MovieResults> {
-        return movieService.getNowPlayingMovies(page)
+    fun getMovies(movieType: String, page: Int? = null): Observable<MovieResults> {
+        return movieService.getMovies(movieType, page)
     }
 }

@@ -15,7 +15,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 26.
  */
-abstract class BaseFragment<P : RxPresenter<out MvpView>> : Fragment(), MvpView {
+abstract class BaseFragment<P : RxPresenter<in MvpView>> : Fragment(), MvpView {
 
     @Inject
     lateinit var presenter: P

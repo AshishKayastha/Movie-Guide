@@ -18,9 +18,7 @@ abstract class RxPresenter<V : MvpView> {
 
     protected fun getView(): V? = viewWeakRef?.get()
 
-    protected fun isViewAttached() = viewWeakRef?.get() != null
-
-    fun addSubscription(subscription: Subscription) {
+    protected fun addSubscription(subscription: Subscription) {
         compositeSubscription.add(subscription)
     }
 

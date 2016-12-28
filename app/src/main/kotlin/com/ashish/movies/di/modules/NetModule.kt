@@ -1,7 +1,7 @@
 package com.ashish.movies.di.modules
 
 import com.ashish.movies.BuildConfig
-import com.ashish.movies.utils.Constants.Companion.BASE_URL
+import com.ashish.movies.utils.Constants.Companion.BASE_API_URL
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -56,7 +56,7 @@ class NetModule {
         return Retrofit.Builder()
                 .addConverterFactory(moshiConverterFactory)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
-                .baseUrl(BASE_URL)
+                .baseUrl(BASE_API_URL)
                 .client(client)
                 .build()
     }

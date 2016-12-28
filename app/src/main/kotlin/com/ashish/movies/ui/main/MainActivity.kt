@@ -10,13 +10,15 @@ import kotlinx.android.synthetic.main.layout_toolbar.*
 
 class MainActivity : BaseActivity() {
 
+    private var movieTabTitles: Array<String>? = null
     private var tabPagerAdapter: TabPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
 
-        tabPagerAdapter = TabPagerAdapter(supportFragmentManager)
+        movieTabTitles = resources.getStringArray(R.array.movie_list_type_array)
+        tabPagerAdapter = TabPagerAdapter(supportFragmentManager, movieTabTitles!!)
         viewPager.adapter = tabPagerAdapter
 
         navigationView.setNavigationItemSelectedListener { item ->

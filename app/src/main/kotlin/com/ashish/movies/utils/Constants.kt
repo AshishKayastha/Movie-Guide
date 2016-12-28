@@ -6,6 +6,6 @@ package com.ashish.movies.utils
 class Constants {
 
     companion object {
-        val BASE_URL = "https://api.themoviedb.org/3"
+        const val BASE_API_URL = "https://api.themoviedb.org/3/"
     }
 }

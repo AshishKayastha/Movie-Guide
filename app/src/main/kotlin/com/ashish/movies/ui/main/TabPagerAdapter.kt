@@ -8,11 +8,19 @@ import com.ashish.movies.ui.movies.MoviesFragment
 /**
  * Created by Ashish on Dec 27.
  */
-class TabPagerAdapter constructor(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
+class TabPagerAdapter constructor(fragmentManager: FragmentManager, var tabTitles: Array<String>)
+    : FragmentStatePagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment? {
         return MoviesFragment.newInstance(position)
     }
 
-    override fun getCount() = 2
+    fun updateTabTitles(tabTitles: Array<String>) {
+        this.tabTitles = tabTitles
+        notifyDataSetChanged()
+    }
+
+    override fun getCount() = tabTitles.size
+
+    override fun getPageTitle(position: Int) = tabTitles[position]
 }

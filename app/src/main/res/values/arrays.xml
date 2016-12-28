@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="movie_list_type_array">
+        <item>@string/now_playing_txt</item>
+        <item>@string/latest_txt</item>
+        <item>@string/popular_txt</item>
+        <item>@string/top_rated_txt</item>
+        <item>@string/upcoming_txt</item>
+    </string-array>
+</resources>
