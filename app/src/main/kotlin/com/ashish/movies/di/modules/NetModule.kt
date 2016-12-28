@@ -2,8 +2,6 @@ package com.ashish.movies.di.modules
 
 import com.ashish.movies.BuildConfig
 import com.ashish.movies.utils.Constants.Companion.BASE_URL
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -11,7 +9,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
+import rx.schedulers.Schedulers
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Singleton
 
@@ -41,11 +41,7 @@ class NetModule {
 
     @Provides
     @Singleton
-    fun provideGson(): Gson = GsonBuilder().setPrettyPrinting().create()
-
-    @Provides
-    @Singleton
-    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory = GsonConverterFactory.create(gson)
+    fun provideMoshiConverterFactory(): MoshiConverterFactory = MoshiConverterFactory.create()
 
     @Provides
     @Singleton
@@ -56,9 +52,10 @@ class NetModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient, gsonConverterFactory: GsonConverterFactory): Retrofit {
+    fun provideRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory): Retrofit {
         return Retrofit.Builder()
-                .addConverterFactory(gsonConverterFactory)
+                .addConverterFactory(moshiConverterFactory)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .baseUrl(BASE_URL)
                 .client(client)
                 .build()

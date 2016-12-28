@@ -53,7 +53,8 @@ dependencies {
 
     // Retrofit 2
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
 
     // OkHttp
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'

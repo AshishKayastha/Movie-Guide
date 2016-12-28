@@ -1,5 +1,6 @@
 package com.ashish.movies.ui.movies
 
+import com.ashish.movies.data.interactors.MovieInteractor
 import dagger.Module
 import dagger.Provides
 
@@ -10,7 +11,7 @@ import dagger.Provides
 class MoviesModule {
 
     @Provides
-    fun provideMoviesPresenter(): MoviesPresenter {
-        return MoviesPresenter()
+    fun provideMoviesPresenter(movieInteractor: MovieInteractor): MoviesPresenter {
+        return MoviesPresenter(movieInteractor)
     }
 }

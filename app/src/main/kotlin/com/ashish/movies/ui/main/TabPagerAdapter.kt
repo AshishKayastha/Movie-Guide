@@ -11,7 +11,7 @@ import com.ashish.movies.ui.movies.MoviesFragment
 class TabPagerAdapter constructor(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment? {
-        return MoviesFragment.newInstance()
+        return MoviesFragment.newInstance(position)
     }
 
     override fun getCount() = 2

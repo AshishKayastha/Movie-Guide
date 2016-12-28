@@ -1,10 +1,10 @@
 package com.ashish.movies.ui.movies
 
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ashish.movies.R
+import com.ashish.movies.extensions.inflate
 import kotlinx.android.synthetic.main.list_item_movie.view.*
 
 /**
@@ -13,8 +13,7 @@ import kotlinx.android.synthetic.main.list_item_movie.view.*
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_movie, parent, false)
-        return MoviesHolder(view)
+        return MoviesHolder(parent.inflate(R.layout.list_item_movie)!!)
     }
 
     override fun onBindViewHolder(holder: MoviesHolder, position: Int) {

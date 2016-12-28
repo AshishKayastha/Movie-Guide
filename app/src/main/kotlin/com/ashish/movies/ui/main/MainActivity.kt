@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.view.MenuItem
 import com.ashish.movies.R
-import com.ashish.movies.ui.base.BaseActivity
+import com.ashish.movies.ui.base.common.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
