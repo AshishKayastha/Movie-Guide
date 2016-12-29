@@ -30,10 +30,9 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
 
         const val ARG_MOVIE_TYPE = "movie_type"
 
-        const val LATEST_MOVIES = 1
-        const val POPULAR_MOVIES = 2
-        const val TOP_RATED_MOVIES = 3
-        const val UPCOMING_MOVIES = 4
+        const val POPULAR_MOVIES = 1
+        const val TOP_RATED_MOVIES = 2
+        const val UPCOMING_MOVIES = 3
 
         fun newInstance(movieType: Int): MoviesFragment {
             val extras = Bundle()
@@ -75,7 +74,7 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
     }
 
     override fun onRefresh() {
-        presenter.getMovieList(movieType)
+        presenter.getMovieList(movieType, showProgress = false)
     }
 
     override fun showProgress() {

@@ -6,7 +6,6 @@
 
     <!-- Movie List Types -->
     <string name="now_playing_txt">Now Playing</string>
-    <string name="latest_txt">Latest</string>
     <string name="popular_txt">Popular</string>
     <string name="top_rated_txt">Top Rated</string>
     <string name="upcoming_txt">Upcoming</string>

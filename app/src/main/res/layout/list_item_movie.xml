@@ -27,6 +27,7 @@
                 android:id="@+id/movieTitle"
                 style="@style/PrimaryText"
                 android:ellipsize="end"
+                android:lineSpacingExtra="@dimen/spacing_micro"
                 android:maxLines="2"
                 tools:text="Movie Title" />
 

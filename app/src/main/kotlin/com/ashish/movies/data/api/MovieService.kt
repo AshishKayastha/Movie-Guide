@@ -13,7 +13,6 @@ interface MovieService {
 
     companion object {
         const val NOW_PLAYING = "now_playing"
-        const val LATEST = "latest"
         const val POPULAR = "popular"
         const val UPCOMING = "upcoming"
         const val TOP_RATED = "top_rated"
