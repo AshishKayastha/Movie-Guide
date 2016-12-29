@@ -17,6 +17,8 @@
                 android:id="@+id/recyclerView"
                 style="@style/Match" />
 
+            <include layout="@layout/layout_material_progress_bar" />
+
         </FrameLayout>
 
     </com.ashish.movies.ui.widget.MultiSwipeRefreshLayout>

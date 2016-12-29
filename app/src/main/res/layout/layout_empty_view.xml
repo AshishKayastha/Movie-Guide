@@ -23,7 +23,7 @@
             android:id="@+id/emptyTextView"
             style="@style/PrimaryText"
             android:gravity="center"
-            tools:text="No Movies Available" />
+            android:text="No Movies Available" />
 
     </LinearLayout>
 

@@ -7,9 +7,13 @@ import android.view.View
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.di.components.AppComponent
+import com.ashish.movies.extensions.hide
+import com.ashish.movies.extensions.setVisibility
+import com.ashish.movies.extensions.show
 import com.ashish.movies.ui.base.common.BaseFragment
 import kotlinx.android.synthetic.main.fragment_movies.*
 import kotlinx.android.synthetic.main.layout_empty_view.*
+import kotlinx.android.synthetic.main.layout_material_progress_bar.*
 
 /**
  * Created by Ashish on Dec 26.
@@ -25,7 +29,6 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
 
         const val ARG_MOVIE_TYPE = "movie_type"
 
-        const val NOW_PLAYING_MOVIES = 0
         const val LATEST_MOVIES = 1
         const val POPULAR_MOVIES = 2
         const val TOP_RATED_MOVIES = 3
@@ -74,9 +77,13 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
     }
 
     override fun showProgress() {
+        emptyView.hide()
+        materialProgressBar.show()
     }
 
     override fun hideProgress() {
+        emptyView.setVisibility(moviesAdapter?.itemCount === 0)
+        materialProgressBar.hide()
         swipeRefresh.isRefreshing = false
     }
 

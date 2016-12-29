@@ -3,6 +3,7 @@ package com.ashish.movies.data.interactors
 import com.ashish.movies.data.api.MovieService
 import com.ashish.movies.data.models.MovieResults
 import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 /**
@@ -10,7 +11,8 @@ import javax.inject.Inject
  */
 class MovieInteractor @Inject constructor(val movieService: MovieService) {
 
-    fun getMovies(movieType: String, page: Int? = null): Observable<MovieResults> {
+    fun getMoviesByType(movieType: String, page: Int? = null): Observable<MovieResults> {
         return movieService.getMovies(movieType, page)
+                .observeOn(AndroidSchedulers.mainThread())
     }
 }

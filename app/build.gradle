@@ -51,6 +51,7 @@ dependencies {
     compile "com.android.support:cardview-v7:${supportLibVersion}"
 
     compile 'com.jakewharton.timber:timber:4.4.0'
+    compile 'com.afollestad.material-dialogs:core:0.9.1.0'
 
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"

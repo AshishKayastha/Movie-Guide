@@ -32,7 +32,7 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
 
     private fun getMoviesByType(movieType: String, page: Int?) {
         getView()?.showProgress()
-        addSubscription(movieInteractor.getMovies(movieType, page)
+        addSubscription(movieInteractor.getMoviesByType(movieType, page)
                 .subscribe({ movieResults -> showMovieList(movieResults) }, { t -> handleGetMovieError(t) }))
     }
 

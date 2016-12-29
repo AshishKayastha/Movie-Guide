@@ -21,4 +21,7 @@
     <dimen name="text_size_normal">14sp</dimen>
     <dimen name="text_size_large">16sp</dimen>
     <dimen name="text_size_xlarge">18sp</dimen>
+
+    <dimen name="progress_bar_size">50dp</dimen>
+    <dimen name="progress_bar_size_small">44dp</dimen>
 </resources>
