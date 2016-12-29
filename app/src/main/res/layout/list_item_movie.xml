@@ -14,6 +14,7 @@
             android:id="@+id/thumbnailImage"
             style="@style/Match.Width"
             android:scaleType="centerCrop"
+            app:heightRatio="1.5"
             tools:ignore="ContentDescription" />
 
         <LinearLayout

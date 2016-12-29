@@ -9,7 +9,9 @@
 
         <com.ashish.movies.ui.widget.EmptyRecyclerView
             android:id="@+id/recyclerView"
-            style="@style/Match" />
+            style="@style/Match"
+            android:clipToPadding="false"
+            android:padding="@dimen/spacing_micro" />
 
         <include layout="@layout/layout_material_progress_bar" />
 

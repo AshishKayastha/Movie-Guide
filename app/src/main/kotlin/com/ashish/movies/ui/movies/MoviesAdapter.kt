@@ -3,6 +3,7 @@ package com.ashish.movies.ui.movies
 import android.graphics.Bitmap
 import android.support.v7.graphics.Palette
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import com.ashish.movies.R
@@ -46,19 +47,26 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
                 itemView.movieTitle.text = title
                 itemView.movieSubtitle.text = releaseDate
 
-                Glide.with(itemView.context)
-                        .load(POSTER_PATH_URL_PREFIX + posterPath)
-                        .asBitmap()
-                        .into(object : SimpleTarget<Bitmap>() {
-                            override fun onResourceReady(bitmap: Bitmap?, animation: GlideAnimation<in Bitmap>?) {
-                                itemView.thumbnailImage.setImageBitmap(bitmap)
-                                generatePalette(bitmap)
-                            }
-                        })
+                if (!TextUtils.isEmpty(posterPath)) {
+                    Glide.with(itemView.context)
+                            .load(POSTER_PATH_URL_PREFIX + posterPath)
+                            .asBitmap()
+                            .centerCrop()
+                            .into(object : SimpleTarget<Bitmap>() {
+                                override fun onResourceReady(bitmap: Bitmap?, animation: GlideAnimation<in Bitmap>?) {
+                                    if (bitmap != null) {
+                                        itemView.thumbnailImage.setImageBitmap(bitmap)
+                                        generatePaletteFromPosterBitmap(bitmap)
+                                    }
+                                }
+                            })
+                } else {
+                    Glide.clear(itemView.thumbnailImage)
+                }
             }
         }
 
-        private fun generatePalette(bitmap: Bitmap?) {
+        private fun generatePaletteFromPosterBitmap(bitmap: Bitmap) {
             Palette.from(bitmap).generate { palette ->
                 val swatch = palette.getSwatchWithMostPopulation()
                 if (swatch != null) {

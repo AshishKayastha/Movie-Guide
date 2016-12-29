@@ -15,13 +15,6 @@ class ItemOffsetDecoration : RecyclerView.ItemDecoration() {
     }
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
-        if (parent.paddingLeft != ITEM_SPACING) {
-            parent.setPadding(ITEM_SPACING, parent.paddingTop, ITEM_SPACING, ITEM_SPACING)
-            parent.clipToPadding = false
-        }
-
-        outRect.left = ITEM_SPACING
-        outRect.right = ITEM_SPACING
-        outRect.bottom = ITEM_SPACING
+        outRect.set(ITEM_SPACING, ITEM_SPACING, ITEM_SPACING, ITEM_SPACING)
     }
 }

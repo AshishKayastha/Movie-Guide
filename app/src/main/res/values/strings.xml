@@ -10,6 +10,7 @@
     <string name="popular_txt">Popular</string>
     <string name="top_rated_txt">Top Rated</string>
     <string name="upcoming_txt">Upcoming</string>
-    <string name="close_drawer">Close Drawer</string>
+
     <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
 </resources>
