@@ -10,13 +10,14 @@ import com.ashish.movies.di.components.DaggerAppComponent
  */
 class MoviesApp : Application() {
 
-    companion object {
-        private val appComponent: AppComponent by lazy {
-            DaggerAppComponent.builder().build()
-        }
+    private val appComponent: AppComponent by lazy {
+        DaggerAppComponent.builder().build()
+    }
 
+    companion object {
         fun getAppComponent(context: Context): AppComponent {
-            return appComponent
+            val app = context as MoviesApp
+            return app.appComponent
         }
     }
 

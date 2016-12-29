@@ -32,12 +32,11 @@ abstract class BaseFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpVi
 
     abstract fun getLayoutId(): Int
 
+    @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.attachView(getMvpView())
+        presenter.attachView(this as V)
     }
-
-    protected abstract fun getMvpView(): V
 
     override fun onDestroyView() {
         presenter.detachView()

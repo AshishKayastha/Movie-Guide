@@ -67,8 +67,6 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
         swipeRefresh.setOnRefreshListener(this)
     }
 
-    override fun getMvpView() = this
-
     override fun onRefresh() {
         presenter.getMovieList(movieType)
     }
