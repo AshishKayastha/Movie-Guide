@@ -14,13 +14,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
 import kotlinx.android.synthetic.main.list_item_movie.view.*
+import java.util.*
 
 /**
  * Created by Ashish on Dec 27.
  */
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
 
-    private var moviesList: List<Movie>? = null
+    private var moviesList: MutableList<Movie>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesHolder {
         return MoviesHolder(parent.inflate(R.layout.list_item_movie)!!)
@@ -34,7 +35,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
     override fun getItemCount(): Int = moviesList?.size ?: 0
 
     fun updateMoviesList(moviesList: List<Movie>?) {
-        this.moviesList = moviesList
+        this.moviesList = ArrayList(moviesList)
         notifyDataSetChanged()
     }
 
