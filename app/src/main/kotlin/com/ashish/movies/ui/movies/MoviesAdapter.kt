@@ -35,17 +35,18 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
 
     override fun getItemCount(): Int = moviesList?.size ?: 0
 
-    fun updateMoviesList(moviesList: List<Movie>?) {
-        this.moviesList = ArrayList(moviesList)
+    fun updateMoviesList(newMoviesList: List<Movie>?) {
+        moviesList = ArrayList(newMoviesList)
         notifyDataSetChanged()
     }
 
-    fun addMovieItems(moviesList: List<Movie>?) {
-        this.moviesList?.addAll(ArrayList(moviesList))
-        notifyDataSetChanged()
+    fun addMovieItems(newMoviesList: List<Movie>?) {
+        val initPosition = moviesList!!.size
+        moviesList!!.addAll(ArrayList(newMoviesList))
+        notifyItemRangeChanged(initPosition, moviesList!!.size)
     }
 
-    class MoviesHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MoviesHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindData(movie: Movie) {
             with(movie) {
