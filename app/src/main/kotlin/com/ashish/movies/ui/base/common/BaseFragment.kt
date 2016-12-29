@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.ashish.movies.app.MoviesApp
 import com.ashish.movies.di.components.AppComponent
-import com.ashish.movies.extensions.inflate
 import com.ashish.movies.ui.base.mvp.MvpView
 import com.ashish.movies.ui.base.mvp.RxPresenter
+import com.ashish.movies.utils.extensions.inflate
 import javax.inject.Inject
 
 /**

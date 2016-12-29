@@ -4,7 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
-import com.ashish.movies.extensions.setVisibility
+import com.ashish.movies.utils.extensions.setVisibility
 
 /**
  * Created by Ashish on Dec 27.

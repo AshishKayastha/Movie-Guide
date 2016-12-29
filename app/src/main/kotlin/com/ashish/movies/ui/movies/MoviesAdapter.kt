@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
-import com.ashish.movies.extensions.getSwatchWithMostPixels
-import com.ashish.movies.extensions.inflate
 import com.ashish.movies.utils.Constants.Companion.POSTER_PATH_URL_PREFIX
+import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
+import com.ashish.movies.utils.extensions.inflate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget

@@ -7,12 +7,12 @@ import android.view.View
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.di.components.AppComponent
-import com.ashish.movies.extensions.hide
-import com.ashish.movies.extensions.setVisibility
-import com.ashish.movies.extensions.show
 import com.ashish.movies.listeners.RecyclerViewScrollListener
 import com.ashish.movies.ui.base.common.BaseFragment
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
+import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.setVisibility
+import com.ashish.movies.utils.extensions.show
 import kotlinx.android.synthetic.main.fragment_movies.*
 import kotlinx.android.synthetic.main.layout_empty_view.*
 import kotlinx.android.synthetic.main.layout_material_progress_bar.*

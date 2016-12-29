@@ -1,4 +1,4 @@
-package com.ashish.movies.extensions
+package com.ashish.movies.utils.extensions
 
 import android.view.LayoutInflater
 import android.view.View
