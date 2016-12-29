@@ -10,7 +10,7 @@
         style="@style/Match.Width"
         android:orientation="vertical">
 
-        <ImageView
+        <com.ashish.movies.ui.widget.AspectRatioImageView
             android:id="@+id/thumbnailImage"
             style="@style/Match.Width"
             android:scaleType="centerCrop"

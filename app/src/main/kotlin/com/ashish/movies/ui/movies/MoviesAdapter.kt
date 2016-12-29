@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.extensions.inflate
+import com.ashish.movies.extensions.loadImageUrl
+import com.ashish.movies.utils.Constants
 import kotlinx.android.synthetic.main.list_item_movie.view.*
 
 /**
@@ -20,7 +22,14 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
     }
 
     override fun onBindViewHolder(holder: MoviesHolder, position: Int) {
-        holder.itemView.movieTitle.text = moviesList?.get(position)?.title
+        val movie = moviesList?.get(position)
+        if (movie != null) {
+            with(movie) {
+                holder.itemView.movieTitle.text = title
+                holder.itemView.movieSubtitle.text = releaseDate
+                holder.itemView.thumbnailImage.loadImageUrl(Constants.POSTER_PATH_URL_PRFIX + posterPath)
+            }
+        }
     }
 
     override fun getItemCount(): Int = moviesList?.size ?: 0
@@ -30,7 +39,5 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
         notifyDataSetChanged()
     }
 
-    class MoviesHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    }
+    inner class MoviesHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView)
 }
