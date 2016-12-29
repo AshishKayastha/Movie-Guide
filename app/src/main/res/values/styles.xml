@@ -4,6 +4,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Action Mode styles -->
+        <item name="actionModeStyle">@style/Custom.Widget.ActionMode</item>
+        <item name="actionModeCloseButtonStyle">@style/Custom.Widget.ActionButton.CloseMode</item>
+
+        <!-- Toolbar styles -->
+        <item name="toolbarStyle">@style/Custom.Widget.Toolbar</item>
+        <item name="toolbarNavigationButtonStyle">@style/Custom.Toolbar.Button.Navigation</item>
+        <item name="actionOverflowButtonStyle">@style/Custom.Widget.ActionButton.Overflow</item>
     </style>
 
     <style name="Match">
@@ -29,6 +38,19 @@
     <style name="SecondaryText" parent="PrimaryText">
         <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="android:textColor">@color/secondary_text_light</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?actionBarSize</item>
+        <item name="android:background">?colorPrimary</item>
+        <item name="android:theme">@style/ToolbarText</item>
+        <item name="contentInsetStart">@dimen/second_keyline</item>
+    </style>
+
+    <style name="ToolbarText" parent="@style/ThemeOverlay.AppCompat.Dark">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
     </style>
 
     <style name="MaterialProgressBar" parent="@style/Widget.MaterialProgressBar.ProgressBar">

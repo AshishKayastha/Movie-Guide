@@ -66,7 +66,7 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
         moviesAdapter = MoviesAdapter()
         recyclerView.adapter = moviesAdapter
 
-        swipeRefresh.setSwipeableViews(emptyView)
+        swipeRefresh.setSwipeableViews(emptyView, recyclerView)
         swipeRefresh.setOnRefreshListener(this)
 
         presenter.getMovieList(movieType)

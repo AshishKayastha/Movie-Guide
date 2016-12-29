@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.ashish.movies.ui.widget.MultiSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefresh"
     style="@style/Match">
 
-    <com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
-        android:id="@+id/swipeRefresh"
-        style="@style/Match">
+    <FrameLayout style="@style/Match">
 
-        <FrameLayout
-            style="@style/Match"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <include layout="@layout/layout_empty_view" />
 
-            <include layout="@layout/layout_empty_view" />
+        <com.ashish.movies.ui.widget.EmptyRecyclerView
+            android:id="@+id/recyclerView"
+            style="@style/Match" />
 
-            <com.ashish.movies.ui.widget.EmptyRecyclerView
-                android:id="@+id/recyclerView"
-                style="@style/Match" />
+        <include layout="@layout/layout_material_progress_bar" />
 
-            <include layout="@layout/layout_material_progress_bar" />
+    </FrameLayout>
 
-        </FrameLayout>
-
-    </com.ashish.movies.ui.widget.MultiSwipeRefreshLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+</com.ashish.movies.ui.widget.MultiSwipeRefreshLayout>
