@@ -10,6 +10,7 @@ import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.extensions.hide
 import com.ashish.movies.extensions.setVisibility
 import com.ashish.movies.extensions.show
+import com.ashish.movies.listeners.RecyclerViewScrollListener
 import com.ashish.movies.ui.base.common.BaseFragment
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import kotlinx.android.synthetic.main.fragment_movies.*
@@ -23,7 +24,6 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
         SwipeRefreshLayout.OnRefreshListener {
 
     private var movieType: Int? = null
-
     private var moviesAdapter: MoviesAdapter? = null
 
     companion object {
@@ -43,9 +43,10 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
+    private val scrollListener: RecyclerViewScrollListener = object : RecyclerViewScrollListener() {
+        override fun onLoadMore(currentPage: Int) {
+            if (currentPage > 1) presenter.loadMoreMovies(movieType, currentPage)
+        }
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
@@ -64,6 +65,8 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
         recyclerView.addItemDecoration(ItemOffsetDecoration())
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
+        recyclerView.addOnScrollListener(scrollListener)
+
         moviesAdapter = MoviesAdapter()
         recyclerView.adapter = moviesAdapter
 
@@ -74,7 +77,8 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
     }
 
     override fun onRefresh() {
-        presenter.getMovieList(movieType, showProgress = false)
+        scrollListener.resetPageCount()
+        presenter.getMovieList(movieType, showProgress = moviesAdapter?.itemCount == 0)
     }
 
     override fun showProgress() {
@@ -83,12 +87,23 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
     }
 
     override fun hideProgress() {
-        emptyView.setVisibility(moviesAdapter?.itemCount === 0)
         materialProgressBar.hide()
         swipeRefresh.isRefreshing = false
+        emptyView.setVisibility(moviesAdapter?.itemCount == 0)
     }
 
     override fun showMoviesList(moviesList: List<Movie>?) {
         moviesAdapter?.updateMoviesList(moviesList)
+    }
+
+    override fun addMovieItems(moviesList: List<Movie>?) {
+        moviesAdapter?.addMovieItems(moviesList)
+    }
+
+    override fun onDestroyView() {
+        recyclerView.adapter = null
+        swipeRefresh.clearAnimation()
+        recyclerView.removeOnScrollListener(scrollListener)
+        super.onDestroyView()
     }
 }

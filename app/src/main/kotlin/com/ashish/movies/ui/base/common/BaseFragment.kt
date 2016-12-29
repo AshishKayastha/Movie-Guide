@@ -22,6 +22,7 @@ abstract class BaseFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpVi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDependencies(MoviesApp.getAppComponent(activity))
+        retainInstance = true
     }
 
     abstract fun injectDependencies(appComponent: AppComponent)

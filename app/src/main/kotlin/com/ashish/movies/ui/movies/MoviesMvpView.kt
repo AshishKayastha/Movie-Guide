@@ -9,4 +9,6 @@ import com.ashish.movies.ui.base.mvp.LceView
 interface MoviesMvpView : LceView {
 
     fun showMoviesList(moviesList: List<Movie>?)
+
+    fun addMovieItems(moviesList: List<Movie>?)
 }

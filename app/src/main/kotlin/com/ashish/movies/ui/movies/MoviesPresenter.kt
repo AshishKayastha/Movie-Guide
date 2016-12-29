@@ -18,7 +18,9 @@ import javax.inject.Inject
  */
 class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) : RxPresenter<MoviesMvpView>() {
 
-    fun getMovieList(movieType: Int?, page: Int? = null, showProgress: Boolean = true) {
+    private var totalPages = 1
+
+    fun getMovieList(movieType: Int?, page: Int = 1, showProgress: Boolean = true) {
         when (movieType) {
             POPULAR_MOVIES -> getMoviesByType(POPULAR, page, showProgress)
             TOP_RATED_MOVIES -> getMoviesByType(TOP_RATED, page, showProgress)
@@ -27,15 +29,37 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
         }
     }
 
-    private fun getMoviesByType(movieType: String, page: Int?, showProgress: Boolean) {
+    private fun getMoviesByType(movieType: String, page: Int, showProgress: Boolean) {
         if (showProgress) getView()?.showProgress()
         addSubscription(movieInteractor.getMoviesByType(movieType, page)
+                .doOnNext { movieResults -> totalPages = movieResults.totalPages }
                 .subscribe({ movieResults -> showMovieList(movieResults) }, { t -> handleGetMovieError(t) }))
     }
 
     private fun showMovieList(movieResults: MovieResults?) {
         getView()?.hideProgress()
         getView()?.showMoviesList(movieResults?.results)
+    }
+
+    fun loadMoreMovies(movieType: Int?, page: Int) {
+        when (movieType) {
+            POPULAR_MOVIES -> getMoreMoviesByType(POPULAR, page)
+            TOP_RATED_MOVIES -> getMoreMoviesByType(TOP_RATED, page)
+            UPCOMING_MOVIES -> getMoreMoviesByType(UPCOMING, page)
+            else -> getMoreMoviesByType(NOW_PLAYING, page)
+        }
+    }
+
+    private fun getMoreMoviesByType(movieType: String, page: Int) {
+        if (page <= totalPages) {
+            addSubscription(movieInteractor.getMoviesByType(movieType, page)
+                    .subscribe({ movieResults -> addMovieItems(movieResults) }, { t -> handleGetMovieError(t) }))
+        }
+    }
+
+    private fun addMovieItems(movieResults: MovieResults?) {
+        getView()?.hideProgress()
+        getView()?.addMovieItems(movieResults?.results)
     }
 
     private fun handleGetMovieError(t: Throwable) {

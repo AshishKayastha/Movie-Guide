@@ -40,6 +40,11 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
         notifyDataSetChanged()
     }
 
+    fun addMovieItems(moviesList: List<Movie>?) {
+        this.moviesList?.addAll(ArrayList(moviesList))
+        notifyDataSetChanged()
+    }
+
     class MoviesHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindData(movie: Movie) {

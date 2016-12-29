@@ -11,7 +11,7 @@ import javax.inject.Inject
  */
 class MovieInteractor @Inject constructor(val movieService: MovieService) {
 
-    fun getMoviesByType(movieType: String, page: Int? = null): Observable<MovieResults> {
+    fun getMoviesByType(movieType: String, page: Int = 1): Observable<MovieResults> {
         return movieService.getMovies(movieType, page)
                 .observeOn(AndroidSchedulers.mainThread())
     }
