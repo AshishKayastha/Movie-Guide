@@ -1,13 +1,18 @@
 package com.ashish.movies.ui.movies
 
+import android.graphics.Bitmap
+import android.support.v7.graphics.Palette
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
+import com.ashish.movies.extensions.getSwatchWithMostPopulation
 import com.ashish.movies.extensions.inflate
-import com.ashish.movies.extensions.loadImageUrl
-import com.ashish.movies.utils.Constants
+import com.ashish.movies.utils.Constants.Companion.POSTER_PATH_URL_PREFIX
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.animation.GlideAnimation
+import com.bumptech.glide.request.target.SimpleTarget
 import kotlinx.android.synthetic.main.list_item_movie.view.*
 
 /**
@@ -23,13 +28,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
 
     override fun onBindViewHolder(holder: MoviesHolder, position: Int) {
         val movie = moviesList?.get(position)
-        if (movie != null) {
-            with(movie) {
-                holder.itemView.movieTitle.text = title
-                holder.itemView.movieSubtitle.text = releaseDate
-                holder.itemView.thumbnailImage.loadImageUrl(Constants.POSTER_PATH_URL_PRFIX + posterPath)
-            }
-        }
+        if (movie != null) holder.bindData(movie)
     }
 
     override fun getItemCount(): Int = moviesList?.size ?: 0
@@ -39,5 +38,36 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class MoviesHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class MoviesHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        fun bindData(movie: Movie) {
+            with(movie) {
+                itemView.movieTitle.text = title
+                itemView.movieSubtitle.text = releaseDate
+
+                Glide.with(itemView.context)
+                        .load(POSTER_PATH_URL_PREFIX + posterPath)
+                        .asBitmap()
+                        .into(object : SimpleTarget<Bitmap>() {
+                            override fun onResourceReady(bitmap: Bitmap?, animation: GlideAnimation<in Bitmap>?) {
+                                itemView.thumbnailImage.setImageBitmap(bitmap)
+                                generatePalette(bitmap)
+                            }
+                        })
+            }
+        }
+
+        private fun generatePalette(bitmap: Bitmap?) {
+            Palette.from(bitmap).generate { palette ->
+                val swatch = palette.getSwatchWithMostPopulation()
+                if (swatch != null) {
+                    with(swatch) {
+                        itemView.movieInfoView.setBackgroundColor(rgb)
+                        itemView.movieTitle.setTextColor(titleTextColor)
+                        itemView.movieSubtitle.setTextColor(bodyTextColor)
+                    }
+                }
+            }
+        }
+    }
 }

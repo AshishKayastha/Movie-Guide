@@ -7,6 +7,6 @@ class Constants private constructor() {
 
     companion object {
         const val BASE_API_URL = "https://api.themoviedb.org/3/"
-        const val POSTER_PATH_URL_PRFIX = "http://image.tmdb.org/t/p/w185"
+        const val POSTER_PATH_URL_PREFIX = "http://image.tmdb.org/t/p/w342"
     }
 }
