@@ -16,7 +16,7 @@ class MoviesApp : Application() {
 
     companion object {
         fun getAppComponent(context: Context): AppComponent {
-            val app = context as MoviesApp
+            val app = context.applicationContext as MoviesApp
             return app.appComponent
         }
     }
