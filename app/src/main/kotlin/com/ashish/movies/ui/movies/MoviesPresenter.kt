@@ -42,19 +42,19 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
     }
 
     fun loadMoreMovies(movieType: Int?, page: Int) {
-        when (movieType) {
-            POPULAR_MOVIES -> getMoreMoviesByType(POPULAR, page)
-            TOP_RATED_MOVIES -> getMoreMoviesByType(TOP_RATED, page)
-            UPCOMING_MOVIES -> getMoreMoviesByType(UPCOMING, page)
-            else -> getMoreMoviesByType(NOW_PLAYING, page)
+        if (page <= totalPages) {
+            when (movieType) {
+                POPULAR_MOVIES -> getMoreMoviesByType(POPULAR, page)
+                TOP_RATED_MOVIES -> getMoreMoviesByType(TOP_RATED, page)
+                UPCOMING_MOVIES -> getMoreMoviesByType(UPCOMING, page)
+                else -> getMoreMoviesByType(NOW_PLAYING, page)
+            }
         }
     }
 
     private fun getMoreMoviesByType(movieType: String, page: Int) {
-        if (page <= totalPages) {
-            addSubscription(movieInteractor.getMoviesByType(movieType, page)
-                    .subscribe({ movieResults -> addMovieItems(movieResults) }, { t -> handleGetMovieError(t) }))
-        }
+        addSubscription(movieInteractor.getMoviesByType(movieType, page)
+                .subscribe({ movieResults -> addMovieItems(movieResults) }, { t -> handleGetMovieError(t) }))
     }
 
     private fun addMovieItems(movieResults: MovieResults?) {
