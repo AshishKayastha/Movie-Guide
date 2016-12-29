@@ -13,6 +13,14 @@ fun View.setVisibility(visible: Boolean) {
     visibility = if (visible) VISIBLE else GONE
 }
 
+fun View.show() {
+    visibility = VISIBLE
+}
+
+fun View.hide() {
+    visibility = GONE
+}
+
 fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View? {
     return LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 }

@@ -9,7 +9,6 @@ import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.MovieResults
 import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.ui.movies.MoviesFragment.Companion.LATEST_MOVIES
-import com.ashish.movies.ui.movies.MoviesFragment.Companion.NOW_PLAYING_MOVIES
 import com.ashish.movies.ui.movies.MoviesFragment.Companion.POPULAR_MOVIES
 import com.ashish.movies.ui.movies.MoviesFragment.Companion.TOP_RATED_MOVIES
 import com.ashish.movies.ui.movies.MoviesFragment.Companion.UPCOMING_MOVIES
@@ -23,11 +22,11 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
 
     fun getMovieList(movieType: Int?, page: Int? = null) {
         when (movieType) {
-            NOW_PLAYING_MOVIES -> getMoviesByType(NOW_PLAYING, page)
             LATEST_MOVIES -> getMoviesByType(LATEST, page)
             POPULAR_MOVIES -> getMoviesByType(POPULAR, page)
             TOP_RATED_MOVIES -> getMoviesByType(TOP_RATED, page)
             UPCOMING_MOVIES -> getMoviesByType(UPCOMING, page)
+            else -> getMoviesByType(NOW_PLAYING, page)
         }
     }
 

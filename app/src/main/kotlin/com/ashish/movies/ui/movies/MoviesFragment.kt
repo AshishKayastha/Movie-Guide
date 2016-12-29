@@ -65,6 +65,8 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
 
         swipeRefresh.setSwipeableViews(emptyView)
         swipeRefresh.setOnRefreshListener(this)
+
+        presenter.getMovieList(movieType)
     }
 
     override fun onRefresh() {
@@ -75,6 +77,7 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
     }
 
     override fun hideProgress() {
+        swipeRefresh.isRefreshing = false
     }
 
     override fun showMoviesList(moviesList: List<Movie>?) {

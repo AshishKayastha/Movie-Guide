@@ -27,6 +27,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
 
     fun updateMoviesList(moviesList: List<Movie>?) {
         this.moviesList = moviesList
+        notifyDataSetChanged()
     }
 
     class MoviesHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {

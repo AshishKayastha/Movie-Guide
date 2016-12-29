@@ -6,7 +6,6 @@ import android.view.MenuItem
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 
 class MainActivity : BaseActivity() {
 
@@ -17,9 +16,12 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
 
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
         movieTabTitles = resources.getStringArray(R.array.movie_list_type_array)
         tabPagerAdapter = TabPagerAdapter(supportFragmentManager, movieTabTitles!!)
         viewPager.adapter = tabPagerAdapter
+        tabLayout.setupWithViewPager(viewPager)
 
         navigationView.setNavigationItemSelectedListener { item ->
             item.isChecked = true
