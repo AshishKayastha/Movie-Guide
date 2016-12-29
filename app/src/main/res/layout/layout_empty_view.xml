@@ -19,7 +19,7 @@
             app:srcCompat="@drawable/ic_movies_white_100dp"
             tools:ignore="ContentDescription" />
 
-        <TextView
+        <com.ashish.movies.ui.widget.FontTextView
             android:id="@+id/emptyTextView"
             style="@style/PrimaryText"
             android:gravity="center"

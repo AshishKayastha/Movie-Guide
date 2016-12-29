@@ -33,6 +33,7 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textColor">@color/primary_text_light</item>
+        <item name="fontName">@string/font_montserrat_regular</item>
     </style>
 
     <style name="SecondaryText" parent="PrimaryText">

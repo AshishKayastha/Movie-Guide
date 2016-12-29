@@ -23,15 +23,16 @@
             android:orientation="vertical"
             android:padding="@dimen/spacing_large">
 
-            <TextView
+            <com.ashish.movies.ui.widget.FontTextView
                 android:id="@+id/movieTitle"
                 style="@style/PrimaryText"
                 android:ellipsize="end"
                 android:lineSpacingExtra="@dimen/spacing_micro"
                 android:maxLines="2"
+                app:fontName="@string/font_montserrat_medium"
                 tools:text="Movie Title" />
 
-            <TextView
+            <com.ashish.movies.ui.widget.FontTextView
                 android:id="@+id/movieSubtitle"
                 style="@style/SecondaryText"
                 android:layout_marginTop="@dimen/spacing_micro"
