@@ -38,7 +38,7 @@ class MovieDelegateAdapter : ViewTypeDelegateAdapter {
 
                 if (!TextUtils.isEmpty(posterPath)) {
                     Glide.with(itemView.context)
-                            .load(Constants.POSTER_PATH_URL_PREFIX + posterPath)
+                            .load(Constants.POSTER_PATH_W500_URL_PREFIX + posterPath)
                             .asBitmap()
                             .centerCrop()
                             .into(object : SimpleTarget<Bitmap>() {

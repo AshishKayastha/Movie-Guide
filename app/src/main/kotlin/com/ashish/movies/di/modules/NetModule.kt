@@ -2,7 +2,7 @@ package com.ashish.movies.di.modules
 
 import com.ashish.movies.BuildConfig
 import com.ashish.movies.utils.ApiKeyInterceptor
-import com.ashish.movies.utils.Constants.Companion.BASE_API_URL
+import com.ashish.movies.utils.Constants.BASE_API_URL
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor

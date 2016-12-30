@@ -12,39 +12,36 @@ import com.ashish.movies.R
 /**
  * Created by Ashish on Dec 29.
  */
-class FontUtils private constructor() {
+object FontUtils {
 
-    companion object {
+    private val TYPEFACE_CACHE = SimpleArrayMap<String, Typeface>()
 
-        private val TYPEFACE_CACHE = SimpleArrayMap<String, Typeface>()
+    fun getTypeface(context: Context, fontName: String): Typeface {
+        synchronized(TYPEFACE_CACHE) {
+            if (!TYPEFACE_CACHE.containsKey(fontName)) {
+                val tf = Typeface.createFromAsset(context.assets, "fonts/$fontName.ttf")
+                TYPEFACE_CACHE.put(fontName, tf)
+                return tf
+            }
+            return TYPEFACE_CACHE.get(fontName)
+        }
+    }
 
-        fun getTypeface(context: Context, fontName: String): Typeface {
-            synchronized(TYPEFACE_CACHE) {
-                if (!TYPEFACE_CACHE.containsKey(fontName)) {
-                    val tf = Typeface.createFromAsset(context.assets, "fonts/$fontName.ttf")
-                    TYPEFACE_CACHE.put(fontName, tf)
-                    return tf
-                }
-                return TYPEFACE_CACHE.get(fontName)
+    fun setFontStyle(textView: TextView, fontName: String) {
+        if (!TextUtils.isEmpty(fontName)) {
+            textView.apply {
+                paintFlags = textView.paintFlags or Paint.SUBPIXEL_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+                typeface = getTypeface(textView.context, fontName)
             }
         }
+    }
 
-        fun setFontStyle(textView: TextView, fontName: String) {
-            if (!TextUtils.isEmpty(fontName)) {
-                textView.apply {
-                    paintFlags = textView.paintFlags or Paint.SUBPIXEL_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-                    typeface = getTypeface(textView.context, fontName)
-                }
-            }
-        }
-
-        fun applyFont(textView: TextView, attrs: AttributeSet?) {
-            if (attrs != null) {
-                val ta = textView.context.theme.obtainStyledAttributes(attrs, R.styleable.FontTextView, 0, 0)
-                val fontName = ta.getString(R.styleable.FontTextView_fontName)
-                setFontStyle(textView, fontName)
-                ta.recycle()
-            }
+    fun applyFont(textView: TextView, attrs: AttributeSet?) {
+        if (attrs != null) {
+            val ta = textView.context.theme.obtainStyledAttributes(attrs, R.styleable.FontTextView, 0, 0)
+            val fontName = ta.getString(R.styleable.FontTextView_fontName)
+            setFontStyle(textView, fontName)
+            ta.recycle()
         }
     }
 }
