@@ -10,6 +10,7 @@ import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.ui.movies.MoviesFragment.Companion.POPULAR_MOVIES
 import com.ashish.movies.ui.movies.MoviesFragment.Companion.TOP_RATED_MOVIES
 import com.ashish.movies.ui.movies.MoviesFragment.Companion.UPCOMING_MOVIES
+import com.ashish.movies.utils.Utils
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,11 +22,13 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
     private var totalPages = 1
 
     fun getMovieList(movieType: Int?, page: Int = 1, showProgress: Boolean = true) {
-        when (movieType) {
-            POPULAR_MOVIES -> getMoviesByType(POPULAR, page, showProgress)
-            TOP_RATED_MOVIES -> getMoviesByType(TOP_RATED, page, showProgress)
-            UPCOMING_MOVIES -> getMoviesByType(UPCOMING, page, showProgress)
-            else -> getMoviesByType(NOW_PLAYING, page, showProgress)
+        if (Utils.isOnline()) {
+            when (movieType) {
+                POPULAR_MOVIES -> getMoviesByType(POPULAR, page, showProgress)
+                TOP_RATED_MOVIES -> getMoviesByType(TOP_RATED, page, showProgress)
+                UPCOMING_MOVIES -> getMoviesByType(UPCOMING, page, showProgress)
+                else -> getMoviesByType(NOW_PLAYING, page, showProgress)
+            }
         }
     }
 
@@ -44,12 +47,14 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
     }
 
     fun loadMoreMovies(movieType: Int?, page: Int) {
-        if (page <= totalPages) {
-            when (movieType) {
-                POPULAR_MOVIES -> getMoreMoviesByType(POPULAR, page)
-                TOP_RATED_MOVIES -> getMoreMoviesByType(TOP_RATED, page)
-                UPCOMING_MOVIES -> getMoreMoviesByType(UPCOMING, page)
-                else -> getMoreMoviesByType(NOW_PLAYING, page)
+        if (Utils.isOnline()) {
+            if (page <= totalPages) {
+                when (movieType) {
+                    POPULAR_MOVIES -> getMoreMoviesByType(POPULAR, page)
+                    TOP_RATED_MOVIES -> getMoreMoviesByType(TOP_RATED, page)
+                    UPCOMING_MOVIES -> getMoreMoviesByType(UPCOMING, page)
+                    else -> getMoreMoviesByType(NOW_PLAYING, page)
+                }
             }
         }
     }
@@ -68,6 +73,8 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
 
     private fun handleGetMovieError(t: Throwable) {
         Timber.e(t)
-        getView()?.hideProgress()
+        getView()?.apply {
+            hideProgress()
+        }
     }
 }

@@ -6,4 +6,11 @@
         <item>@string/top_rated_txt</item>
         <item>@string/upcoming_txt</item>
     </string-array>
+
+    <string-array name="tv_show_list_type_array">
+        <item>@string/on_air_txt</item>
+        <item>@string/popular_txt</item>
+        <item>@string/top_rated_txt</item>
+        <item>@string/airing_today_txt</item>
+    </string-array>
 </resources>

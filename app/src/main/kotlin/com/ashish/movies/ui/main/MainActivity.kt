@@ -21,8 +21,10 @@ class MainActivity : BaseActivity() {
     val drawerLayout: DrawerLayout by bindView(R.id.drawer_layout)
     val navigationView: NavigationView by bindView(R.id.navigation_view)
 
-    private var movieTabTitles: Array<String>? = null
-    private var tabPagerAdapter: TabPagerAdapter? = null
+    private lateinit var movieTabTitles: Array<String>
+    private lateinit var tvShowTabTitles: Array<String>
+
+    private lateinit var tabPagerAdapter: TabPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,14 +50,23 @@ class MainActivity : BaseActivity() {
         actionBarDrawerToggle.syncState()
 
         movieTabTitles = resources.getStringArray(R.array.movie_list_type_array)
-        tabPagerAdapter = TabPagerAdapter(supportFragmentManager, movieTabTitles!!)
-        viewPager.adapter = tabPagerAdapter
-        viewPager.offscreenPageLimit = 2
+        tvShowTabTitles = resources.getStringArray(R.array.tv_show_list_type_array)
+
+        tabPagerAdapter = TabPagerAdapter(supportFragmentManager, movieTabTitles)
+        viewPager.apply {
+            adapter = tabPagerAdapter
+            offscreenPageLimit = 2
+        }
+
         tabLayout.setupWithViewPager(viewPager)
 
         navigationView.setNavigationItemSelectedListener { item ->
             item.isChecked = true
             drawerLayout.closeDrawers()
+            when (item.itemId) {
+                R.id.action_movies -> tabPagerAdapter.updateTabTitles(movieTabTitles)
+                R.id.action_tv_shows -> tabPagerAdapter.updateTabTitles(tvShowTabTitles)
+            }
             true
         }
     }

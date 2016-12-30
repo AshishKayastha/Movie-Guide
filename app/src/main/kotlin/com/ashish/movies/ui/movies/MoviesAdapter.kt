@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.ui.common.LoadingDelegateAdapter
 import com.ashish.movies.ui.common.ViewType
+import com.ashish.movies.ui.common.ViewType.Companion.CONTENT_VIEW
+import com.ashish.movies.ui.common.ViewType.Companion.LOADING_VIEW
 import com.ashish.movies.ui.common.ViewTypeDelegateAdapter
 import java.util.*
 
@@ -18,12 +20,12 @@ class MoviesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     private val loadingItem = object : ViewType {
-        override fun getViewType() = ViewType.LOADING_VIEW
+        override fun getViewType() = LOADING_VIEW
     }
 
     init {
-        delegateAdapters.put(ViewType.LOADING_VIEW, LoadingDelegateAdapter())
-        delegateAdapters.put(ViewType.CONTENT_VIEW, MovieDelegateAdapter())
+        delegateAdapters.put(LOADING_VIEW, LoadingDelegateAdapter())
+        delegateAdapters.put(CONTENT_VIEW, MovieDelegateAdapter())
         itemList = ArrayList()
         itemList.add(loadingItem)
     }
@@ -37,7 +39,7 @@ class MoviesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return this.itemList[position].getViewType()
+        return itemList[position].getViewType()
     }
 
     override fun getItemCount(): Int = itemList.size

@@ -19,7 +19,9 @@ class MoviesApp : Application() {
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         }
 
-        fun getAppComponent(context: Context): AppComponent {
+        @JvmStatic lateinit var context: Context
+
+        @JvmStatic fun getAppComponent(context: Context): AppComponent {
             val app = context.applicationContext as MoviesApp
             return app.appComponent
         }
@@ -27,6 +29,7 @@ class MoviesApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        context = this
         initTimber()
     }
 

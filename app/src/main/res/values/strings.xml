@@ -10,6 +10,10 @@
     <string name="top_rated_txt">Top Rated</string>
     <string name="upcoming_txt">Upcoming</string>
 
+    <!-- TV Show List Types -->
+    <string name="on_air_txt">On Air</string>
+    <string name="airing_today_txt">Now Playing</string>
+
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
 

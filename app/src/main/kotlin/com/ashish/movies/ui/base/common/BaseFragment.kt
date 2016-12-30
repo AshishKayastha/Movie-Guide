@@ -39,6 +39,10 @@ abstract class BaseFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpVi
         presenter.attachView(this as V)
     }
 
+    override fun showMessage(messageId: Int) {
+
+    }
+
     override fun onDestroyView() {
         presenter.detachView()
         super.onDestroyView()

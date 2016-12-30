@@ -23,5 +23,5 @@
     <dimen name="text_size_xlarge">18sp</dimen>
 
     <dimen name="progress_bar_size">50dp</dimen>
-    <dimen name="progress_bar_size_small">44dp</dimen>
+    <dimen name="progress_bar_size_small">40dp</dimen>
 </resources>
