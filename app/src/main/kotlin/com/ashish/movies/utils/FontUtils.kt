@@ -31,8 +31,10 @@ class FontUtils private constructor() {
 
         fun setFontStyle(textView: TextView, fontName: String) {
             if (!TextUtils.isEmpty(fontName)) {
-                textView.paintFlags = textView.paintFlags or Paint.SUBPIXEL_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-                textView.typeface = getTypeface(textView.context, fontName)
+                textView.apply {
+                    paintFlags = textView.paintFlags or Paint.SUBPIXEL_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+                    typeface = getTypeface(textView.context, fontName)
+                }
             }
         }
 

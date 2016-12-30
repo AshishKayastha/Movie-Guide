@@ -1,4 +1,4 @@
-package com.ashish.movies.listeners
+package com.ashish.movies.ui.common
 
 import android.support.v7.widget.OrientationHelper
 import android.support.v7.widget.RecyclerView

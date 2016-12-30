@@ -37,8 +37,10 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
     }
 
     private fun showMovieList(movieResults: MovieResults?) {
-        getView()?.hideProgress()
-        getView()?.showMoviesList(movieResults?.results)
+        getView()?.apply {
+            hideProgress()
+            showMoviesList(movieResults?.results)
+        }
     }
 
     fun loadMoreMovies(movieType: Int?, page: Int) {
@@ -58,8 +60,10 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
     }
 
     private fun addMovieItems(movieResults: MovieResults?) {
-        getView()?.hideProgress()
-        getView()?.addMovieItems(movieResults?.results)
+        getView()?.apply {
+            hideProgress()
+            addMovieItems(movieResults?.results)
+        }
     }
 
     private fun handleGetMovieError(t: Throwable) {

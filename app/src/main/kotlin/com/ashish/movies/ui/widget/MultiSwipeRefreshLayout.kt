@@ -5,6 +5,7 @@ import android.support.v4.view.ViewCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.util.AttributeSet
 import android.view.View
+import java.util.*
 
 /**
  * Created by Ashish on Dec 27.
@@ -12,7 +13,7 @@ import android.view.View
 class MultiSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
     : SwipeRefreshLayout(context, attrs) {
 
-    var swipeableChildren = mutableListOf<View>()
+    var swipeableChildren = ArrayList<View>()
 
     fun setSwipeableViews(vararg views: View) {
         for (view in views) {

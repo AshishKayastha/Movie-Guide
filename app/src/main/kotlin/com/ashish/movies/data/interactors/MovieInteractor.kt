@@ -5,10 +5,12 @@ import com.ashish.movies.data.models.MovieResults
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by Ashish on Dec 28.
  */
+@Singleton
 class MovieInteractor @Inject constructor(val movieService: MovieService) {
 
     fun getMoviesByType(movieType: String, page: Int = 1): Observable<MovieResults> {

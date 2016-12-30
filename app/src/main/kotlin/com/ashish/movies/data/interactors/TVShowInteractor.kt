@@ -5,10 +5,12 @@ import com.ashish.movies.data.models.TVShowResults
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by Ashish on Dec 29.
  */
+@Singleton
 class TVShowInteractor @Inject constructor(val tvShowService: TVShowService) {
 
     fun getTVShowsByType(tvShowType: String, page: Int = 1): Observable<TVShowResults> {

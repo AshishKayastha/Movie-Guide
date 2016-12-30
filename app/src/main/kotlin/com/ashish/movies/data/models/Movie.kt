@@ -1,5 +1,6 @@
 package com.ashish.movies.data.models
 
+import com.ashish.movies.ui.common.ViewType
 import com.squareup.moshi.Json
 
 /**
@@ -20,4 +21,7 @@ data class Movie(
         @Json(name = "release_date") val releaseDate: String? = null,
         @Json(name = "vote_average") val voteAverage: Double? = null,
         @Json(name = "vote_count") val voteCount: Int? = null
-)
+) : ViewType {
+
+    override fun getViewType() = ViewType.CONTENT_VIEW
+}

@@ -11,6 +11,7 @@ class ApiKeyInterceptor : Interceptor {
     companion object {
         const val API_KEY = "api_key"
         const val LANGUAGE = "language"
+        const val US_ENGLISH = "en-US"
         const val TMDB_API_KEY = "21962412093fb3887ace2f97f2253eae"
     }
 
@@ -20,7 +21,7 @@ class ApiKeyInterceptor : Interceptor {
 
             val httpUrlBuilder = originalRequest.url().newBuilder()
             httpUrlBuilder.addQueryParameter(API_KEY, TMDB_API_KEY)
-            httpUrlBuilder.addQueryParameter(LANGUAGE, "en-US")
+            httpUrlBuilder.addQueryParameter(LANGUAGE, US_ENGLISH)
 
             val newRequest = originalRequest.newBuilder()
                     .url(httpUrlBuilder.build())

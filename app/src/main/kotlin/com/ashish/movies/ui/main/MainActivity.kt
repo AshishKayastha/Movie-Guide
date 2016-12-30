@@ -19,8 +19,10 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
 
-        actionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.apply {
+            setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
+            setDisplayHomeAsUpEnabled(true)
+        }
 
         val actionBarDrawerToggle = object : ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.open_drawer, R.string.close_drawer) {

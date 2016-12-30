@@ -1,88 +1,59 @@
 package com.ashish.movies.ui.movies
 
-import android.graphics.Bitmap
-import android.support.v7.graphics.Palette
+import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
-import android.view.View
 import android.view.ViewGroup
-import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
-import com.ashish.movies.utils.Constants.Companion.POSTER_PATH_URL_PREFIX
-import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
-import com.ashish.movies.utils.extensions.inflate
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
-import kotlinx.android.synthetic.main.list_item_movie.view.*
+import com.ashish.movies.ui.common.LoadingDelegateAdapter
+import com.ashish.movies.ui.common.ViewType
+import com.ashish.movies.ui.common.ViewTypeDelegateAdapter
 import java.util.*
 
 /**
  * Created by Ashish on Dec 27.
  */
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
+class MoviesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var moviesList: MutableList<Movie>? = null
+    private var itemList: ArrayList<ViewType>
+    private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesHolder {
-        return MoviesHolder(parent.inflate(R.layout.list_item_movie)!!)
+    private val loadingItem = object : ViewType {
+        override fun getViewType() = ViewType.LOADING_VIEW
     }
 
-    override fun onBindViewHolder(holder: MoviesHolder, position: Int) {
-        val movie = moviesList?.get(position)
-        if (movie != null) holder.bindData(movie)
+    init {
+        delegateAdapters.put(ViewType.LOADING_VIEW, LoadingDelegateAdapter())
+        delegateAdapters.put(ViewType.CONTENT_VIEW, MovieDelegateAdapter())
+        itemList = ArrayList()
+        itemList.add(loadingItem)
     }
 
-    override fun getItemCount(): Int = moviesList?.size ?: 0
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return delegateAdapters.get(viewType).onCreateViewHolder(parent)
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, itemList[position])
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return this.itemList[position].getViewType()
+    }
+
+    override fun getItemCount(): Int = itemList.size
 
     fun updateMoviesList(newMoviesList: List<Movie>?) {
-        moviesList = ArrayList(newMoviesList)
+        itemList = ArrayList(newMoviesList)
         notifyDataSetChanged()
     }
 
     fun addMovieItems(newMoviesList: List<Movie>?) {
-        val initPosition = moviesList!!.size
-        moviesList!!.addAll(ArrayList(newMoviesList))
-        notifyItemRangeChanged(initPosition, moviesList!!.size)
-    }
+        val initPosition = itemList.size - 1
+        itemList.removeAt(initPosition)
+        notifyItemRemoved(initPosition)
 
-    inner class MoviesHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        fun bindData(movie: Movie) {
-            with(movie) {
-                itemView.movieTitle.text = title
-                itemView.movieSubtitle.text = releaseDate
-
-                if (!TextUtils.isEmpty(posterPath)) {
-                    Glide.with(itemView.context)
-                            .load(POSTER_PATH_URL_PREFIX + posterPath)
-                            .asBitmap()
-                            .centerCrop()
-                            .into(object : SimpleTarget<Bitmap>() {
-                                override fun onResourceReady(bitmap: Bitmap?, animation: GlideAnimation<in Bitmap>?) {
-                                    if (bitmap != null) {
-                                        itemView.thumbnailImage.setImageBitmap(bitmap)
-                                        generatePaletteFromPosterBitmap(bitmap)
-                                    }
-                                }
-                            })
-                } else {
-                    Glide.clear(itemView.thumbnailImage)
-                }
-            }
-        }
-
-        private fun generatePaletteFromPosterBitmap(bitmap: Bitmap) {
-            Palette.from(bitmap).generate { palette ->
-                val swatch = palette.getSwatchWithMostPixels()
-                if (swatch != null) {
-                    with(swatch) {
-                        itemView.movieInfoView.setBackgroundColor(rgb)
-                        itemView.movieTitle.setTextColor(titleTextColor)
-                        itemView.movieSubtitle.setTextColor(bodyTextColor)
-                    }
-                }
-            }
-        }
+        newMoviesList?.let { itemList.addAll(it) }
+        itemList.add(loadingItem)
+        notifyItemRangeChanged(initPosition, itemList.size + 1)
     }
 }
