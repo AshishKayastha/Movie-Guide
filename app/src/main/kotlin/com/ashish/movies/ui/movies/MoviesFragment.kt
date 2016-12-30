@@ -4,18 +4,19 @@ import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
+import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.common.BaseFragment
 import com.ashish.movies.ui.common.RecyclerViewScrollListener
+import com.ashish.movies.ui.widget.EmptyRecyclerView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
+import com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.setVisibility
 import com.ashish.movies.utils.extensions.show
-import kotlinx.android.synthetic.main.fragment_movies.*
-import kotlinx.android.synthetic.main.layout_empty_view.*
-import kotlinx.android.synthetic.main.layout_material_progress_bar.*
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 
 /**
  * Created by Ashish on Dec 26.
@@ -23,8 +24,13 @@ import kotlinx.android.synthetic.main.layout_material_progress_bar.*
 class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvpView,
         SwipeRefreshLayout.OnRefreshListener {
 
+    val emptyContentView: View by bindView(R.id.empty_view)
+    val recyclerView: EmptyRecyclerView by bindView(R.id.recycler_view)
+    val progressBar: MaterialProgressBar by bindView(R.id.material_progress_bar)
+    val swipeRefreshLayout: MultiSwipeRefreshLayout by bindView(R.id.swipe_refresh)
+
     private var movieType: Int? = null
-    private var moviesAdapter: MoviesAdapter? = null
+    private lateinit var moviesAdapter: MoviesAdapter
 
     companion object {
 
@@ -71,7 +77,7 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
             adapter = moviesAdapter
         }
 
-        swipeRefresh.apply {
+        swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.colorAccent)
             setSwipeableViews(emptyContentView, recyclerView)
             setOnRefreshListener(this@MoviesFragment)
@@ -82,31 +88,31 @@ class MoviesFragment : BaseFragment<MoviesMvpView, MoviesPresenter>(), MoviesMvp
 
     override fun onRefresh() {
         scrollListener.resetPageCount()
-        presenter.getMovieList(movieType, showProgress = moviesAdapter?.itemCount == 0)
+        presenter.getMovieList(movieType, showProgress = moviesAdapter.itemCount == 0)
     }
 
     override fun showProgress() {
         emptyContentView.hide()
-        materialProgressBar.show()
+        progressBar.show()
     }
 
     override fun hideProgress() {
-        materialProgressBar.hide()
-        swipeRefresh.isRefreshing = false
-        emptyContentView.setVisibility(moviesAdapter?.itemCount == 0)
+        progressBar.hide()
+        swipeRefreshLayout.isRefreshing = false
+        emptyContentView.setVisibility(moviesAdapter.itemCount == 0)
     }
 
     override fun showMoviesList(moviesList: List<Movie>?) {
-        moviesAdapter?.updateMoviesList(moviesList)
+        moviesAdapter.updateMoviesList(moviesList)
     }
 
     override fun addMovieItems(moviesList: List<Movie>?) {
-        moviesAdapter?.addMovieItems(moviesList)
+        moviesAdapter.addMovieItems(moviesList)
     }
 
     override fun onDestroyView() {
         recyclerView.adapter = null
-        swipeRefresh.clearAnimation()
+        swipeRefreshLayout.clearAnimation()
         recyclerView.clearOnScrollListeners()
         super.onDestroyView()
     }

@@ -5,7 +5,7 @@
     style="@style/Match">
 
     <LinearLayout
-        android:id="@+id/emptyContentView"
+        android:id="@+id/empty_view"
         style="@style/Match.Width"
         android:layout_gravity="center"
         android:gravity="center"
@@ -13,14 +13,14 @@
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:id="@+id/emptyImageView"
+            android:id="@+id/empty_image_view"
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:srcCompat="@drawable/ic_movies_white_100dp"
             tools:ignore="ContentDescription" />
 
         <com.ashish.movies.ui.widget.FontTextView
-            android:id="@+id/emptyTextView"
+            android:id="@+id/empty_text"
             style="@style/PrimaryText"
             android:gravity="center"
             android:text="No Movies Available" />

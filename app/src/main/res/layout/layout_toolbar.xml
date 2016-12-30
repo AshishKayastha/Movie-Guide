@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/appbar"
+    android:id="@+id/app_bar"
     style="@style/Match.Width"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 

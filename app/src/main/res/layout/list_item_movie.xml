@@ -11,20 +11,20 @@
         android:orientation="vertical">
 
         <com.ashish.movies.ui.widget.AspectRatioImageView
-            android:id="@+id/thumbnailImage"
+            android:id="@+id/poster_image"
             style="@style/Match.Width"
             android:scaleType="centerCrop"
             app:heightRatio="1.5"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
-            android:id="@+id/movieInfoView"
+            android:id="@+id/movie_info_view"
             style="@style/Match.Width"
             android:orientation="vertical"
             android:padding="@dimen/spacing_large">
 
             <com.ashish.movies.ui.widget.FontTextView
-                android:id="@+id/movieTitle"
+                android:id="@+id/movie_title"
                 style="@style/PrimaryText"
                 android:ellipsize="end"
                 android:lineSpacingExtra="@dimen/spacing_micro"
@@ -33,7 +33,7 @@
                 tools:text="Movie Title" />
 
             <com.ashish.movies.ui.widget.FontTextView
-                android:id="@+id/movieSubtitle"
+                android:id="@+id/movie_subtitle"
                 style="@style/SecondaryText"
                 android:layout_marginTop="@dimen/spacing_micro"
                 android:ellipsize="end"

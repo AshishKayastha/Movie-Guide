@@ -1,16 +1,25 @@
 package com.ashish.movies.ui.main
 
 import android.os.Bundle
+import android.support.design.widget.NavigationView
+import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.ViewPager
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
+import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 class MainActivity : BaseActivity() {
+
+    val viewPager: ViewPager by bindView(R.id.view_pager)
+    val tabLayout: TabLayout by bindView(R.id.tab_layout)
+    val drawerLayout: DrawerLayout by bindView(R.id.drawer_layout)
+    val navigationView: NavigationView by bindView(R.id.navigation_view)
 
     private var movieTabTitles: Array<String>? = null
     private var tabPagerAdapter: TabPagerAdapter? = null

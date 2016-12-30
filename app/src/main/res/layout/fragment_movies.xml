@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.ashish.movies.ui.widget.MultiSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipeRefresh"
+    android:id="@+id/swipe_refresh"
     style="@style/Match">
 
     <FrameLayout style="@style/Match">
@@ -8,7 +8,7 @@
         <include layout="@layout/layout_empty_view" />
 
         <com.ashish.movies.ui.widget.EmptyRecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recycler_view"
             style="@style/Match"
             android:clipToPadding="false"
             android:padding="@dimen/spacing_micro" />

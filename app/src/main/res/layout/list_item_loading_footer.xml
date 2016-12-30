@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-        android:id="@+id/materialProgressBar"
+        android:id="@+id/material_progress_bar"
         style="@style/MaterialProgressBar.Small"
         tools:visibility="visible" />
 

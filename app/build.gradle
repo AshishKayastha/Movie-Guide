@@ -43,6 +43,7 @@ kapt {
 
 repositories {
     maven { url "https://clojars.org/repo/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
@@ -53,6 +54,7 @@ dependencies {
 
     compile 'com.jakewharton.timber:timber:4.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
     compile 'com.afollestad.material-dialogs:core:0.9.1.0'
 
     // Kotlin
