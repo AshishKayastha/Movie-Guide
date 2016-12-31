@@ -13,4 +13,10 @@
         <item>@string/top_rated_txt</item>
         <item>@string/airing_today_txt</item>
     </string-array>
+
+    <string-array name="toolbar_title_array">
+        <item>@string/title_movies</item>
+        <item>@string/title_tv_shows</item>
+        <item>@string/title_people</item>
+    </string-array>
 </resources>

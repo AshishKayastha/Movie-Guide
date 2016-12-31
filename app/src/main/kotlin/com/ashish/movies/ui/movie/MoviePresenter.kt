@@ -6,6 +6,7 @@ import com.ashish.movies.data.api.MovieService.Companion.TOP_RATED
 import com.ashish.movies.data.api.MovieService.Companion.UPCOMING
 import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.Movie
+import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movies.utils.Utils
 import javax.inject.Inject
@@ -14,7 +15,7 @@ import javax.inject.Inject
  * Created by Ashish on Dec 27.
  */
 class MoviePresenter @Inject constructor(val movieInteractor: MovieInteractor)
-    : BaseRecyclerViewPresenter<Movie, MovieMvpView>() {
+    : BaseRecyclerViewPresenter<Movie, BaseRecyclerViewMvpView<Movie>>() {
 
     companion object {
         private val MOVIE_TYPES = arrayOf(NOW_PLAYING, POPULAR, TOP_RATED, UPCOMING)
@@ -34,5 +35,5 @@ class MoviePresenter @Inject constructor(val movieInteractor: MovieInteractor)
         }
     }
 
-    override fun getData(type: String, page: Int) = movieInteractor.getMoviesByType(type, page)
+    override fun getData(type: String?, page: Int) = movieInteractor.getMoviesByType(type, page)
 }

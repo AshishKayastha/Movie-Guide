@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Singleton
 class TVShowInteractor @Inject constructor(val tvShowService: TVShowService) {
 
-    fun getTVShowsByType(tvShowType: String, page: Int = 1): Observable<Results<TVShow>> {
+    fun getTVShowsByType(tvShowType: String?, page: Int = 1): Observable<Results<TVShow>> {
         return tvShowService.getTVShows(tvShowType, page)
                 .observeOn(AndroidSchedulers.mainThread())
     }

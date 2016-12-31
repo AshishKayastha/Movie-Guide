@@ -3,6 +3,7 @@ package com.ashish.movies.ui.main
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.ashish.movies.ui.movie.MovieFragment
+import com.ashish.movies.ui.people.PeopleFragment
 import com.ashish.movies.ui.tvshow.TVShowFragment
 
 /**
@@ -19,7 +20,7 @@ class TabPagerAdapter constructor(val contentType: Int, fragmentManager: Fragmen
 
     override fun getItem(position: Int) = when (contentType) {
         CONTENT_TYPE_TV_SHOW -> TVShowFragment.newInstance(position)
-        CONTENT_TYPE_PEOPLE -> TVShowFragment.newInstance(position)
+        CONTENT_TYPE_PEOPLE -> PeopleFragment.newInstance()
         else -> MovieFragment.newInstance(position)
     }
 

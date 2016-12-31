@@ -11,5 +11,5 @@ import dagger.Provides
 class MovieModule {
 
     @Provides
-    fun provideMoviesPresenter(movieInteractor: MovieInteractor) = MoviePresenter(movieInteractor)
+    fun provideMoviePresenter(movieInteractor: MovieInteractor) = MoviePresenter(movieInteractor)
 }

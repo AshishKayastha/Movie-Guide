@@ -20,5 +20,5 @@ interface MovieService {
     }
 
     @GET("movie/{movieType}")
-    fun getMovies(@Path("movieType") movieType: String, @Query("page") page: Int = 1): Observable<Results<Movie>>
+    fun getMovies(@Path("movieType") movieType: String?, @Query("page") page: Int = 1): Observable<Results<Movie>>
 }

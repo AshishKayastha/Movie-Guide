@@ -6,6 +6,7 @@ import com.ashish.movies.data.api.TVShowService.Companion.POPULAR
 import com.ashish.movies.data.api.TVShowService.Companion.TOP_RATED
 import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.TVShow
+import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movies.utils.Utils
 import javax.inject.Inject
@@ -14,7 +15,7 @@ import javax.inject.Inject
  * Created by Ashish on Dec 30.
  */
 class TVShowPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor)
-    : BaseRecyclerViewPresenter<TVShow, TVShowMvpView>() {
+    : BaseRecyclerViewPresenter<TVShow, BaseRecyclerViewMvpView<TVShow>>() {
 
     companion object {
         private val TV_SHOW_TYPES = arrayOf(ON_THE_AIR, POPULAR, TOP_RATED, AIRING_TODAY)
@@ -34,5 +35,5 @@ class TVShowPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor
         }
     }
 
-    override fun getData(type: String, page: Int) = tvShowInteractor.getTVShowsByType(type, page)
+    override fun getData(type: String?, page: Int) = tvShowInteractor.getTVShowsByType(type, page)
 }

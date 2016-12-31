@@ -15,14 +15,14 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     abstract fun loadData(type: Int?, page: Int = 1, showProgress: Boolean = true)
 
-    protected fun getDataByType(type: String, page: Int, showProgress: Boolean) {
+    protected fun getDataByType(type: String?, page: Int, showProgress: Boolean) {
         if (showProgress) getView()?.showProgress()
         addSubscription(getData(type, page)
                 .doOnNext { results -> totalPages = results.totalPages }
                 .subscribe({ results -> showData(results) }, { t -> handleError(t) }))
     }
 
-    abstract fun getData(type: String, page: Int): Observable<Results<I>>
+    abstract fun getData(type: String?, page: Int): Observable<Results<I>>
 
     protected fun showData(data: Results<I>?) {
         getView()?.apply {
@@ -33,7 +33,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     abstract fun loadMoreData(type: Int?, page: Int)
 
-    protected fun getMoreDataByType(type: String, page: Int) {
+    protected fun getMoreDataByType(type: String?, page: Int) {
         addSubscription(getData(type, page)
                 .subscribe({ results -> addNewItems(results) }, { t -> handleError(t) }))
     }

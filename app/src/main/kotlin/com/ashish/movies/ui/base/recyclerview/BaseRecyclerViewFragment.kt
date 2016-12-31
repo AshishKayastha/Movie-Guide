@@ -8,6 +8,7 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseFragment
 import com.ashish.movies.ui.common.adapter.InfiniteScrollListener
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.widget.EmptyRecyclerView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
@@ -29,7 +30,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     val progressBar: MaterialProgressBar by bindView(R.id.material_progress_bar)
     val swipeRefreshLayout: MultiSwipeRefreshLayout by bindView(R.id.swipe_refresh)
 
-    lateinit var recyclerViewAdapter: BaseRecyclerViewAdapter<I>
+    lateinit var recyclerViewAdapter: RecyclerViewAdapter<I>
 
     protected var type: Int? = null
 

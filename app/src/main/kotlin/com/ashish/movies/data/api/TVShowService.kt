@@ -20,5 +20,5 @@ interface TVShowService {
     }
 
     @GET("tv/{tvShowType}")
-    fun getTVShows(@Path("tvShowType") tvShowType: String, @Query("page") page: Int = 1): Observable<Results<TVShow>>
+    fun getTVShows(@Path("tvShowType") tvShowType: String?, @Query("page") page: Int = 1): Observable<Results<TVShow>>
 }

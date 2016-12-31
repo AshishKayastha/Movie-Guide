@@ -1,21 +1,37 @@
-package com.ashish.movies.ui.base.recyclerview
+package com.ashish.movies.ui.common.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.util.SparseArray
 import android.view.ViewGroup
-import com.ashish.movies.ui.common.adapter.LoadingView
-import com.ashish.movies.ui.common.adapter.ViewType
-import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
+import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
+import com.ashish.movies.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
+import com.ashish.movies.ui.common.adapter.ViewType.Companion.LOADING_VIEW
+import com.ashish.movies.ui.movie.MovieDelegateAdapter
+import com.ashish.movies.ui.people.PeopleDelegateAdapter
+import com.ashish.movies.ui.tvshow.TVShowDelegateAdapter
 import com.bumptech.glide.Glide
 import java.util.*
 
 /**
  * Created by Ashish on Dec 30.
  */
-abstract class BaseRecyclerViewAdapter<in I : ViewType> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecyclerViewAdapter<in I : ViewType>(adapterType: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    protected var itemList: ArrayList<ViewType> = ArrayList()
-    protected var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()
+    companion object {
+        const val ADAPTER_TYPE_MOVIE = 0
+        const val ADAPTER_TYPE_TV_SHOW = 1
+        const val ADAPTER_TYPE_PEOPLE = 2
+
+        val DELEGATE_ADAPTERS = arrayOf(MovieDelegateAdapter(), TVShowDelegateAdapter(), PeopleDelegateAdapter())
+    }
+
+    private var itemList: ArrayList<ViewType> = ArrayList()
+    private var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()
+
+    init {
+        delegateAdapters.put(LOADING_VIEW, LoadingDelegateAdapter())
+        delegateAdapters.put(CONTENT_VIEW, DELEGATE_ADAPTERS[adapterType])
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             = delegateAdapters.get(viewType).onCreateViewHolder(parent)

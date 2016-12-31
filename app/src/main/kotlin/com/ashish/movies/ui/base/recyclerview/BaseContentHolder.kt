@@ -1,7 +1,6 @@
 package com.ashish.movies.ui.base.recyclerview
 
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import butterknife.bindView
@@ -12,7 +11,6 @@ import com.ashish.movies.ui.common.palette.PaletteBitmapTranscoder
 import com.ashish.movies.ui.common.palette.PaletteImageViewTarget
 import com.ashish.movies.ui.widget.AspectRatioImageView
 import com.ashish.movies.ui.widget.FontTextView
-import com.ashish.movies.utils.Constants.POSTER_PATH_W500_URL_PREFIX
 import com.ashish.movies.utils.extensions.inflate
 import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
@@ -40,16 +38,11 @@ abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup) : RecyclerV
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
 
-    open fun bindData(item: I) = loadPosterImage(item)
+    open fun bindData(item: I) = loadImage(item)
 
-    private fun loadPosterImage(item: I) {
-        val posterPath = getPosterPath(item)
-        if (!TextUtils.isEmpty(posterPath)) {
-            requestBuilder.load(POSTER_PATH_W500_URL_PREFIX + posterPath).into(target)
-        } else {
-            Glide.clear(posterImage)
-        }
+    private fun loadImage(item: I) {
+        requestBuilder.load(getImageUrl(item)).into(target)
     }
 
-    abstract fun getPosterPath(item: I): String?
+    abstract fun getImageUrl(item: I): String?
 }

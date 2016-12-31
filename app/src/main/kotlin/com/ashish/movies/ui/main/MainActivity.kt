@@ -6,9 +6,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat.START
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import butterknife.bindView
@@ -20,7 +18,6 @@ import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
 import com.ashish.movies.utils.extensions.changeTypeface
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 class MainActivity : BaseActivity() {
 
     val viewPager: ViewPager by bindView(R.id.view_pager)
@@ -28,8 +25,10 @@ class MainActivity : BaseActivity() {
     val drawerLayout: DrawerLayout by bindView(R.id.drawer_layout)
     val navigationView: NavigationView by bindView(R.id.navigation_view)
 
+    private lateinit var toolbarTitles: Array<String>
     private lateinit var movieTabTitles: Array<String>
     private lateinit var tvShowTabTitles: Array<String>
+    private lateinit var peopleTabTitles: Array<String>
 
     private lateinit var tabPagerAdapter: TabPagerAdapter
 
@@ -37,27 +36,15 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
 
-        actionBar?.apply {
+        supportActionBar?.apply {
             setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
             setDisplayHomeAsUpEnabled(true)
         }
 
-        val actionBarDrawerToggle = object : ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.open_drawer, R.string.close_drawer) {
-            override fun onDrawerClosed(drawerView: View) {
-                super.onDrawerClosed(drawerView)
-            }
-
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-            }
-        }
-
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
-
+        toolbarTitles = resources.getStringArray(R.array.toolbar_title_array)
         movieTabTitles = resources.getStringArray(R.array.movie_list_type_array)
         tvShowTabTitles = resources.getStringArray(R.array.tv_show_list_type_array)
+        peopleTabTitles = arrayOf(getString(R.string.popular_txt))
 
         replaceFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
         tabLayout.setupWithViewPager(viewPager)
@@ -66,10 +53,11 @@ class MainActivity : BaseActivity() {
         navigationView.setNavigationItemSelectedListener { item ->
             item.isChecked = true
             drawerLayout.closeDrawers()
+
             when (item.itemId) {
                 R.id.action_movies -> replaceFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
                 R.id.action_tv_shows -> replaceFragment(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
-                R.id.action_people -> replaceFragment(CONTENT_TYPE_PEOPLE, tvShowTabTitles)
+                R.id.action_people -> replaceFragment(CONTENT_TYPE_PEOPLE, peopleTabTitles)
             }
 
             changeTabFont()
@@ -80,10 +68,11 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_main
 
     private fun replaceFragment(contentType: Int, titleArray: Array<String>) {
+        supportActionBar?.title = toolbarTitles[contentType]
         tabPagerAdapter = TabPagerAdapter(contentType, supportFragmentManager, titleArray)
         viewPager.apply {
             adapter = tabPagerAdapter
-            offscreenPageLimit = 2
+            offscreenPageLimit = tabPagerAdapter.count - 1
         }
     }
 

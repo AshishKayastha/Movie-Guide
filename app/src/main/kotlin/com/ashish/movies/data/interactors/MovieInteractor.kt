@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Singleton
 class MovieInteractor @Inject constructor(val movieService: MovieService) {
 
-    fun getMoviesByType(movieType: String, page: Int = 1): Observable<Results<Movie>> {
+    fun getMoviesByType(movieType: String?, page: Int = 1): Observable<Results<Movie>> {
         return movieService.getMovies(movieType, page)
                 .observeOn(AndroidSchedulers.mainThread())
     }

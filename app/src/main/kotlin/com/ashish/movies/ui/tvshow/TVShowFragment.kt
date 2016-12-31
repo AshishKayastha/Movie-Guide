@@ -4,11 +4,13 @@ import android.os.Bundle
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
+import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 
 /**
  * Created by Ashish on Dec 29.
  */
-class TVShowFragment : BaseRecyclerViewFragment<TVShow, TVShowMvpView, TVShowPresenter>(), TVShowMvpView {
+class TVShowFragment : BaseRecyclerViewFragment<TVShow, BaseRecyclerViewMvpView<TVShow>, TVShowPresenter>() {
 
     companion object {
         private const val ARG_TV_SHOW_TYPE = "tv_show_type"
@@ -28,6 +30,6 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow, TVShowMvpView, TVShowPre
 
     override fun initView() {
         type = arguments.getInt(ARG_TV_SHOW_TYPE)
-        recyclerViewAdapter = TVShowAdapter()
+        recyclerViewAdapter = RecyclerViewAdapter(RecyclerViewAdapter.ADAPTER_TYPE_TV_SHOW)
     }
 }

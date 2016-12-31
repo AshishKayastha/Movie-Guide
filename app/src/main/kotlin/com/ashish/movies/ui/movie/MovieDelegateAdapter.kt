@@ -6,6 +6,7 @@ import com.ashish.movies.data.models.Movie
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
+import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
 
 /**
  * Created by Ashish on Dec 30.
@@ -26,6 +27,6 @@ class MovieDelegateAdapter : ViewTypeDelegateAdapter {
             super.bindData(item)
         }
 
-        override fun getPosterPath(item: Movie) = item.posterPath
+        override fun getImageUrl(item: Movie) = POSTER_W500_URL_PREFIX + item.posterPath
     }
 }
