@@ -9,12 +9,17 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseActivity
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
+import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_PEOPLE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
+import com.ashish.movies.utils.extensions.changeTypeface
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : BaseActivity() {
 
@@ -54,27 +59,45 @@ class MainActivity : BaseActivity() {
         movieTabTitles = resources.getStringArray(R.array.movie_list_type_array)
         tvShowTabTitles = resources.getStringArray(R.array.tv_show_list_type_array)
 
-        tabPagerAdapter = TabPagerAdapter(CONTENT_TYPE_MOVIE, supportFragmentManager, movieTabTitles)
-        viewPager.apply {
-            adapter = tabPagerAdapter
-            offscreenPageLimit = 2
-        }
-
+        replaceFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
         tabLayout.setupWithViewPager(viewPager)
+        changeTabFont()
 
         navigationView.setNavigationItemSelectedListener { item ->
             item.isChecked = true
             drawerLayout.closeDrawers()
             when (item.itemId) {
-                R.id.action_movies -> tabPagerAdapter.updateTabTitles(CONTENT_TYPE_MOVIE, movieTabTitles)
-                R.id.action_tv_shows -> tabPagerAdapter.updateTabTitles(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
-                R.id.action_people -> tabPagerAdapter.updateTabTitles(CONTENT_TYPE_MOVIE, movieTabTitles)
+                R.id.action_movies -> replaceFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
+                R.id.action_tv_shows -> replaceFragment(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
+                R.id.action_people -> replaceFragment(CONTENT_TYPE_PEOPLE, tvShowTabTitles)
             }
+
+            changeTabFont()
             true
         }
     }
 
     override fun getLayoutId() = R.layout.activity_main
+
+    private fun replaceFragment(contentType: Int, titleArray: Array<String>) {
+        tabPagerAdapter = TabPagerAdapter(contentType, supportFragmentManager, titleArray)
+        viewPager.apply {
+            adapter = tabPagerAdapter
+            offscreenPageLimit = 2
+        }
+    }
+
+    private fun changeTabFont() {
+        val vg = tabLayout.getChildAt(0) as ViewGroup
+        (0..vg.childCount - 1)
+                .map { vg.getChildAt(it) as ViewGroup }
+                .forEach { vgTab ->
+                    (0..vgTab.childCount - 1)
+                            .map { vgTab.getChildAt(it) }
+                            .filterIsInstance<TextView>()
+                            .forEach { it.changeTypeface() }
+                }
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId === android.R.id.home) {
