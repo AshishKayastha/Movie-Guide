@@ -3,7 +3,7 @@ package com.ashish.movies.ui.main
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
-import android.support.v4.view.GravityCompat
+import android.support.v4.view.GravityCompat.START
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -12,6 +12,8 @@ import android.view.View
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseActivity
+import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
+import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -52,7 +54,7 @@ class MainActivity : BaseActivity() {
         movieTabTitles = resources.getStringArray(R.array.movie_list_type_array)
         tvShowTabTitles = resources.getStringArray(R.array.tv_show_list_type_array)
 
-        tabPagerAdapter = TabPagerAdapter(supportFragmentManager, movieTabTitles)
+        tabPagerAdapter = TabPagerAdapter(CONTENT_TYPE_MOVIE, supportFragmentManager, movieTabTitles)
         viewPager.apply {
             adapter = tabPagerAdapter
             offscreenPageLimit = 2
@@ -64,8 +66,9 @@ class MainActivity : BaseActivity() {
             item.isChecked = true
             drawerLayout.closeDrawers()
             when (item.itemId) {
-                R.id.action_movies -> tabPagerAdapter.updateTabTitles(movieTabTitles)
-                R.id.action_tv_shows -> tabPagerAdapter.updateTabTitles(tvShowTabTitles)
+                R.id.action_movies -> tabPagerAdapter.updateTabTitles(CONTENT_TYPE_MOVIE, movieTabTitles)
+                R.id.action_tv_shows -> tabPagerAdapter.updateTabTitles(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
+                R.id.action_people -> tabPagerAdapter.updateTabTitles(CONTENT_TYPE_MOVIE, movieTabTitles)
             }
             true
         }
@@ -75,15 +78,15 @@ class MainActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId === android.R.id.home) {
-            drawerLayout.openDrawer(GravityCompat.START)
+            drawerLayout.openDrawer(START)
         }
 
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
+        if (drawerLayout.isDrawerOpen(START)) {
+            drawerLayout.closeDrawer(START)
         } else {
             super.onBackPressed()
         }

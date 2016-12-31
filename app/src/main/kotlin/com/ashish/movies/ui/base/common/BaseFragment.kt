@@ -5,11 +5,13 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ashish.movies.R
 import com.ashish.movies.app.MoviesApp
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.mvp.MvpView
 import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.utils.extensions.inflate
+import com.ashish.movies.utils.extensions.showSnackBar
 import javax.inject.Inject
 
 /**
@@ -18,6 +20,8 @@ import javax.inject.Inject
 abstract class BaseFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpView {
 
     @Inject lateinit var presenter: P
+
+    private var rootView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +40,12 @@ abstract class BaseFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpVi
     @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        rootView = activity?.findViewById(R.id.content_layout)
         presenter.attachView(this as V)
     }
 
     override fun showMessage(messageId: Int) {
-
+        rootView?.showSnackBar(messageId)
     }
 
     override fun onDestroyView() {

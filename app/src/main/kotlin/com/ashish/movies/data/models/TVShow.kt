@@ -1,5 +1,7 @@
 package com.ashish.movies.data.models
 
+import com.ashish.movies.ui.common.ViewType
+import com.ashish.movies.ui.common.ViewType.Companion.CONTENT_VIEW
 import com.squareup.moshi.Json
 
 data class TVShow(
@@ -16,4 +18,7 @@ data class TVShow(
         @Json(name = "first_air_date") val firstAirDate: String? = null,
         @Json(name = "original_language") val originalLanguage: String? = null,
         @Json(name = "origin_country") val originCountry: List<String?>? = null
-)
+) : ViewType {
+
+    override fun getViewType() = CONTENT_VIEW
+}

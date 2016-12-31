@@ -2,5 +2,5 @@
 <me.zhanghai.android.materialprogressbar.MaterialProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/material_progress_bar"
     style="@style/MaterialProgressBar.Small"
-    android:layout_margin="@dimen/spacing_micro"
+    android:layout_margin="@dimen/padding_2dp"
     android:visibility="visible" />

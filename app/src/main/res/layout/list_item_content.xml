@@ -18,13 +18,13 @@
             tools:ignore="ContentDescription" />
 
         <LinearLayout
-            android:id="@+id/movie_info_view"
+            android:id="@+id/content_view"
             style="@style/Match.Width"
             android:orientation="vertical"
             android:padding="@dimen/spacing_large">
 
             <com.ashish.movies.ui.widget.FontTextView
-                android:id="@+id/movie_title"
+                android:id="@+id/content_title"
                 style="@style/PrimaryText"
                 android:ellipsize="end"
                 android:lineSpacingExtra="@dimen/spacing_micro"
@@ -33,7 +33,7 @@
                 tools:text="Movie Title" />
 
             <com.ashish.movies.ui.widget.FontTextView
-                android:id="@+id/movie_subtitle"
+                android:id="@+id/content_subtitle"
                 style="@style/SecondaryText"
                 android:layout_marginTop="@dimen/spacing_micro"
                 android:ellipsize="end"

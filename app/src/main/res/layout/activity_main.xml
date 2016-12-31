@@ -6,7 +6,9 @@
     style="@style/Match"
     android:fitsSystemWindows="true">
 
-    <android.support.design.widget.CoordinatorLayout style="@style/Match">
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/content_layout"
+        style="@style/Match">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar"

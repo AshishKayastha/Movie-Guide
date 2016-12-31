@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.movies
+package com.ashish.movies.ui.movie
 
 import com.ashish.movies.data.api.MovieService.Companion.NOW_PLAYING
 import com.ashish.movies.data.api.MovieService.Companion.POPULAR
@@ -7,9 +7,9 @@ import com.ashish.movies.data.api.MovieService.Companion.UPCOMING
 import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.MovieResults
 import com.ashish.movies.ui.base.mvp.RxPresenter
-import com.ashish.movies.ui.movies.MoviesFragment.Companion.POPULAR_MOVIES
-import com.ashish.movies.ui.movies.MoviesFragment.Companion.TOP_RATED_MOVIES
-import com.ashish.movies.ui.movies.MoviesFragment.Companion.UPCOMING_MOVIES
+import com.ashish.movies.ui.movie.MovieFragment.Companion.POPULAR_MOVIES
+import com.ashish.movies.ui.movie.MovieFragment.Companion.TOP_RATED_MOVIES
+import com.ashish.movies.ui.movie.MovieFragment.Companion.UPCOMING_MOVIES
 import com.ashish.movies.utils.Utils
 import timber.log.Timber
 import javax.inject.Inject
@@ -17,7 +17,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 27.
  */
-class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) : RxPresenter<MoviesMvpView>() {
+class MoviePresenter @Inject constructor(val movieInteractor: MovieInteractor) : RxPresenter<MovieMvpView>() {
 
     private var totalPages = 1
 
@@ -41,8 +41,8 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
 
     private fun showMovieList(movieResults: MovieResults?) {
         getView()?.apply {
+            showItemList(movieResults?.results)
             hideProgress()
-            showMoviesList(movieResults?.results)
         }
     }
 
@@ -66,8 +66,8 @@ class MoviesPresenter @Inject constructor(val movieInteractor: MovieInteractor) 
 
     private fun addMovieItems(movieResults: MovieResults?) {
         getView()?.apply {
+            addNewItems(movieResults?.results)
             hideProgress()
-            addMovieItems(movieResults?.results)
         }
     }
 
