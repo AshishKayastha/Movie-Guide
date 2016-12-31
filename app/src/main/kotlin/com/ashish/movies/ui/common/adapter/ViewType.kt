@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.common
+package com.ashish.movies.ui.common.adapter
 
 /**
  * Created by Ashish on Dec 30.

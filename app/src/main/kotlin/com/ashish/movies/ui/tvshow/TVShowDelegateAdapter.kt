@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
-import com.ashish.movies.ui.common.ViewType
-import com.ashish.movies.ui.common.ViewTypeDelegateAdapter
+import com.ashish.movies.ui.common.adapter.ViewType
+import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
 
 /**
  * Created by Ashish on Dec 30.

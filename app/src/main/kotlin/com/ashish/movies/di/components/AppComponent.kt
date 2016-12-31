@@ -4,8 +4,8 @@ import com.ashish.movies.di.modules.ApiModule
 import com.ashish.movies.di.modules.NetModule
 import com.ashish.movies.ui.movie.MovieModule
 import com.ashish.movies.ui.movie.MovieSubComponent
-import com.ashish.movies.ui.movie.TVShowModule
-import com.ashish.movies.ui.movie.TVShowSubComponent
+import com.ashish.movies.ui.tvshow.TVShowModule
+import com.ashish.movies.ui.tvshow.TVShowSubComponent
 import dagger.Component
 import javax.inject.Singleton
 

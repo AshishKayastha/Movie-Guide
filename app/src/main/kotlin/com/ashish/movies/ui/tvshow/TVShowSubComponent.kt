@@ -1,6 +1,5 @@
-package com.ashish.movies.ui.movie
+package com.ashish.movies.ui.tvshow
 
-import com.ashish.movies.ui.tvshow.TVShowFragment
 import dagger.Subcomponent
 
 /**

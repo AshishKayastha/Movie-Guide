@@ -12,7 +12,7 @@
 
     <!-- TV Show List Types -->
     <string name="on_air_txt">On Air</string>
-    <string name="airing_today_txt">Now Playing</string>
+    <string name="airing_today_txt">Airing Today</string>
 
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>

@@ -1,7 +1,6 @@
-package com.ashish.movies.ui.movie
+package com.ashish.movies.ui.tvshow
 
 import com.ashish.movies.data.interactors.TVShowInteractor
-import com.ashish.movies.ui.tvshow.TVShowPresenter
 import dagger.Module
 import dagger.Provides
 
@@ -12,5 +11,5 @@ import dagger.Provides
 class TVShowModule {
 
     @Provides
-    fun provideTVShowPresenter(tvShowInteractor: TVShowInteractor): TVShowPresenter = TVShowPresenter(tvShowInteractor)
+    fun provideTVShowPresenter(tvShowInteractor: TVShowInteractor) = TVShowPresenter(tvShowInteractor)
 }

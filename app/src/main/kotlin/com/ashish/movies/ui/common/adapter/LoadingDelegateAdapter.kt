@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.common
+package com.ashish.movies.ui.common.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
@@ -13,10 +13,9 @@ class LoadingDelegateAdapter : ViewTypeDelegateAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val holder = LoadingViewHolder(parent)
-        val itemView = holder.itemView
-        val params = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
+        val params = holder.itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
         params.isFullSpan = true
-        itemView.layoutParams = params
+        holder.itemView.layoutParams = params
         return holder
     }
 

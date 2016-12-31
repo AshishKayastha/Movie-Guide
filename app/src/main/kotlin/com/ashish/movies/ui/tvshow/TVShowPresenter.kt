@@ -5,76 +5,34 @@ import com.ashish.movies.data.api.TVShowService.Companion.ON_THE_AIR
 import com.ashish.movies.data.api.TVShowService.Companion.POPULAR
 import com.ashish.movies.data.api.TVShowService.Companion.TOP_RATED
 import com.ashish.movies.data.interactors.TVShowInteractor
-import com.ashish.movies.data.models.TVShowResults
-import com.ashish.movies.ui.base.mvp.RxPresenter
-import com.ashish.movies.ui.tvshow.TVShowFragment.Companion.AIRING_TODAY_TV_SHOWS
-import com.ashish.movies.ui.tvshow.TVShowFragment.Companion.POPULAR_TV_SHOWS
-import com.ashish.movies.ui.tvshow.TVShowFragment.Companion.TOP_RATED_TV_SHOWS
+import com.ashish.movies.data.models.TVShow
+import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movies.utils.Utils
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 30.
  */
-class TVShowPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor) : RxPresenter<TVShowMvpView>() {
+class TVShowPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor)
+    : BaseRecyclerViewPresenter<TVShow, TVShowMvpView>() {
 
-    private var totalPages = 1
+    companion object {
+        private val TV_SHOW_TYPES = arrayOf(ON_THE_AIR, POPULAR, TOP_RATED, AIRING_TODAY)
+    }
 
-    fun getTVShowList(tvShowType: Int?, page: Int = 1, showProgress: Boolean = true) {
+    override fun loadData(type: Int?, page: Int, showProgress: Boolean) {
         if (Utils.isOnline()) {
-            when (tvShowType) {
-                POPULAR_TV_SHOWS -> getTVShowsByType(POPULAR, page, showProgress)
-                TOP_RATED_TV_SHOWS -> getTVShowsByType(TOP_RATED, page, showProgress)
-                AIRING_TODAY_TV_SHOWS -> getTVShowsByType(AIRING_TODAY, page, showProgress)
-                else -> getTVShowsByType(ON_THE_AIR, page, showProgress)
-            }
+            getDataByType(TV_SHOW_TYPES[type ?: 0], page, showProgress)
         }
     }
 
-    private fun getTVShowsByType(tvShowType: String, page: Int, showProgress: Boolean) {
-        if (showProgress) getView()?.showProgress()
-        addSubscription(tvShowInteractor.getTVShowsByType(tvShowType, page)
-                .doOnNext { tvShowResults -> totalPages = tvShowResults.totalPages }
-                .subscribe({ tvShowResults -> showTVShowList(tvShowResults) }, { t -> handleGetTVShowError(t) }))
-    }
-
-    private fun showTVShowList(tvShowResults: TVShowResults) {
-        getView()?.apply {
-            hideProgress()
-            showItemList(tvShowResults.results)
-        }
-    }
-
-    fun loadMoreTVShows(tvShowType: Int?, page: Int) {
+    override fun loadMoreData(type: Int?, page: Int) {
         if (Utils.isOnline()) {
             if (page <= totalPages) {
-                when (tvShowType) {
-                    POPULAR_TV_SHOWS -> getMoreTVShowsByType(POPULAR, page)
-                    TOP_RATED_TV_SHOWS -> getMoreTVShowsByType(TOP_RATED, page)
-                    AIRING_TODAY_TV_SHOWS -> getMoreTVShowsByType(AIRING_TODAY, page)
-                    else -> getMoreTVShowsByType(ON_THE_AIR, page)
-                }
+                getMoreDataByType(TV_SHOW_TYPES[type ?: 0], page)
             }
         }
     }
 
-    private fun getMoreTVShowsByType(movieType: String, page: Int) {
-        addSubscription(tvShowInteractor.getTVShowsByType(movieType, page)
-                .subscribe({ tvShowResults -> addTVShowItems(tvShowResults) }, { t -> handleGetTVShowError(t) }))
-    }
-
-    private fun addTVShowItems(tvShowResults: TVShowResults?) {
-        getView()?.apply {
-            hideProgress()
-            addNewItems(tvShowResults?.results)
-        }
-    }
-
-    private fun handleGetTVShowError(t: Throwable) {
-        Timber.e(t)
-        getView()?.apply {
-            hideProgress()
-        }
-    }
+    override fun getData(type: String, page: Int) = tvShowInteractor.getTVShowsByType(type, page)
 }

@@ -1,7 +1,7 @@
 package com.ashish.movies.data.models
 
-import com.ashish.movies.ui.common.ViewType
-import com.ashish.movies.ui.common.ViewType.Companion.CONTENT_VIEW
+import com.ashish.movies.ui.common.adapter.ViewType
+import com.ashish.movies.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.squareup.moshi.Json
 
 data class TVShow(

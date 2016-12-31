@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.common
+package com.ashish.movies.ui.common.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
