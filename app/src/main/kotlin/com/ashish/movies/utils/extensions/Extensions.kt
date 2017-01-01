@@ -2,6 +2,7 @@ package com.ashish.movies.utils.extensions
 
 import android.content.Context
 import android.content.res.Resources
+import android.support.v4.content.ContextCompat
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.common.palette.PaletteBitmapTranscoder
 import com.bumptech.glide.BitmapRequestBuilder
@@ -24,3 +25,5 @@ fun RequestManager.transcodePaletteBitmap(context: Context): BitmapRequestBuilde
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
 }
+
+fun Context.getColorCompat(colorResId: Int) = ContextCompat.getColor(this, colorResId)
