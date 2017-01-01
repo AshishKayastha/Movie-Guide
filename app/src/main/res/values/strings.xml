@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">Movies</string>
+    <!-- General -->
+    <string name="error_no_internet">No Internet Connection</string>
+
+    <!-- Movie -->
     <string name="title_movies">Movies</string>
-    <string name="title_tv_shows">TV Shows</string>
-    <string name="title_people">People</string>
+    <string name="no_movies_available">No Movies Available</string>
 
     <!-- Movie List Types -->
     <string name="now_playing_txt">Now Playing</string>
@@ -10,12 +12,15 @@
     <string name="top_rated_txt">Top Rated</string>
     <string name="upcoming_txt">Upcoming</string>
 
+    <!-- TV Show -->
+    <string name="title_tv_shows">TV Shows</string>
+    <string name="no_tv_shows_available">No TV Shows Available</string>
+
     <!-- TV Show List Types -->
     <string name="on_air_txt">On Air</string>
     <string name="airing_today_txt">Airing Today</string>
 
-    <string name="font_montserrat_regular" translatable="false">Montserrat-Regular</string>
-    <string name="font_montserrat_light" translatable="false">Montserrat-Light</string>
-    <string name="font_montserrat_medium" translatable="false">Montserrat-Medium</string>
-    <string name="font_montserrat_bold" translatable="false">Montserrat-Bold</string>
+    <!-- People -->
+    <string name="title_people">People</string>
+    <string name="no_people_available">No People Available</string>
 </resources>

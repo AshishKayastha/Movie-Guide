@@ -5,7 +5,7 @@ import com.ashish.movies.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.squareup.moshi.Json
 
 data class TVShow(
-        val id: Int? = null,
+        val id: Long? = null,
         val name: String? = null,
         val overview: String? = null,
         val popularity: Double? = null,

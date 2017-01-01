@@ -15,15 +15,19 @@ import java.util.*
 /**
  * Created by Ashish on Dec 30.
  */
-class RecyclerViewAdapter<in I : ViewType>(adapterType: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecyclerViewAdapter<in I : ViewType>(adapterType: Int, onItemClickListener: OnItemClickListener)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val ADAPTER_TYPE_MOVIE = 0
         const val ADAPTER_TYPE_TV_SHOW = 1
         const val ADAPTER_TYPE_PEOPLE = 2
-
-        val DELEGATE_ADAPTERS = arrayOf(MovieDelegateAdapter(), TVShowDelegateAdapter(), PeopleDelegateAdapter())
     }
+
+    private val DELEGATE_ADAPTERS = arrayOf(
+            MovieDelegateAdapter(onItemClickListener),
+            TVShowDelegateAdapter(onItemClickListener),
+            PeopleDelegateAdapter(onItemClickListener))
 
     private var itemList: ArrayList<ViewType> = ArrayList()
     private var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()
@@ -48,6 +52,9 @@ class RecyclerViewAdapter<in I : ViewType>(adapterType: Int) : RecyclerView.Adap
     }
 
     override fun getItemCount() = itemList.size
+
+    @Suppress("UNCHECKED_CAST")
+    fun <I> getItem(position: Int) = itemList[position] as I
 
     fun showItemList(newItemList: List<I>?) {
         newItemList?.let { itemList.addAll(it) }

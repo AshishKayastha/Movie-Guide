@@ -1,11 +1,14 @@
 package com.ashish.movies.ui.movie
 
 import android.os.Bundle
+import android.view.View
+import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MOVIE
+import com.ashish.movies.ui.moviedetail.MovieDetailActivity
 
 /**
  * Created by Ashish on Dec 26.
@@ -28,8 +31,21 @@ class MovieFragment : BaseRecyclerViewFragment<Movie, BaseRecyclerViewMvpView<Mo
         appComponent.plus(MovieModule()).inject(this)
     }
 
-    override fun initView() {
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        emptyTextView.setText(R.string.no_movies_available)
+        emptyImageView.setImageResource(R.drawable.ic_movie_white_100dp)
+    }
+
+    override fun getFragmentArguments() {
         type = arguments.getInt(ARG_MOVIE_TYPE)
-        recyclerViewAdapter = RecyclerViewAdapter(RecyclerViewAdapter.ADAPTER_TYPE_MOVIE)
+    }
+
+    override fun getAdapterType() = ADAPTER_TYPE_MOVIE
+
+    override fun onItemClick(position: Int) {
+        val movie = recyclerViewAdapter.getItem<Movie>(position)
+        startActivity(MovieDetailActivity.createIntent(activity, movie))
     }
 }

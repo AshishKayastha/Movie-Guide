@@ -8,7 +8,6 @@ import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewPresenter
-import com.ashish.movies.utils.Utils
 import javax.inject.Inject
 
 /**
@@ -22,17 +21,11 @@ class MoviePresenter @Inject constructor(val movieInteractor: MovieInteractor)
     }
 
     override fun loadData(type: Int?, page: Int, showProgress: Boolean) {
-        if (Utils.isOnline()) {
-            getDataByType(MOVIE_TYPES[type ?: 0], page, showProgress)
-        }
+        getDataByType(MOVIE_TYPES[type ?: 0], page, showProgress)
     }
 
     override fun loadMoreData(type: Int?, page: Int) {
-        if (Utils.isOnline()) {
-            if (page <= totalPages) {
-                getMoreDataByType(MOVIE_TYPES[type ?: 0], page)
-            }
-        }
+        if (page <= totalPages) getMoreDataByType(MOVIE_TYPES[type ?: 0], page)
     }
 
     override fun getData(type: String?, page: Int) = movieInteractor.getMoviesByType(type, page)

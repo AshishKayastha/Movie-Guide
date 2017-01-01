@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.ashish.movies.utils.FontUtils
 
-
 /**
  * Created by Ashish on Dec 27.
  */

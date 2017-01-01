@@ -2,6 +2,9 @@ package com.ashish.movies.ui.base.common
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
+import com.ashish.movies.app.MoviesApp
+import com.ashish.movies.di.components.AppComponent
 
 /**
  * Created by Ashish on Dec 26.
@@ -9,9 +12,21 @@ import android.support.v7.app.AppCompatActivity
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        injectDependencies(MoviesApp.getAppComponent(this))
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
     }
 
+    open fun injectDependencies(appComponent: AppComponent) {}
+
     abstract fun getLayoutId(): Int
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            onBackPressed()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 }

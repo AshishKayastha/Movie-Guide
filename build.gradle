@@ -6,6 +6,7 @@ buildscript {
         leakCanaryVersion = '1.5'
         retrofitVersion = '2.1.0'
         supportLibVersion = '25.0.1'
+        paperParcelVersion = '2.0.0-beta2'
     }
 
     repositories {

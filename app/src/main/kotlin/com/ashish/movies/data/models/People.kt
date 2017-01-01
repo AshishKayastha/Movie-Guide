@@ -4,7 +4,7 @@ import com.ashish.movies.ui.common.adapter.ViewType
 import com.squareup.moshi.Json
 
 data class People(
-        val id: Int? = null,
+        val id: Long? = null,
         val name: String? = null,
         val adult: Boolean? = null,
         val popularity: Double? = null,

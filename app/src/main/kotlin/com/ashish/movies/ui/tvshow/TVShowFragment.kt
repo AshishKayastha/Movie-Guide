@@ -1,11 +1,13 @@
 package com.ashish.movies.ui.tvshow
 
 import android.os.Bundle
+import android.view.View
+import com.ashish.movies.R
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
 
 /**
  * Created by Ashish on Dec 29.
@@ -28,8 +30,20 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow, BaseRecyclerViewMvpView<
         appComponent.plus(TVShowModule()).inject(this)
     }
 
-    override fun initView() {
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        emptyTextView.setText(R.string.no_tv_shows_available)
+        emptyImageView.setImageResource(R.drawable.ic_tv_white_100dp)
+    }
+
+    override fun getFragmentArguments() {
         type = arguments.getInt(ARG_TV_SHOW_TYPE)
-        recyclerViewAdapter = RecyclerViewAdapter(RecyclerViewAdapter.ADAPTER_TYPE_TV_SHOW)
+    }
+
+    override fun getAdapterType() = ADAPTER_TYPE_TV_SHOW
+
+    override fun onItemClick(position: Int) {
+
     }
 }

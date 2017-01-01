@@ -19,7 +19,7 @@
         android:layout_centerInParent="true"
         android:layout_marginBottom="@dimen/spacing_normal"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_movies_white_100dp" />
+        tools:src="@drawable/ic_movie_white_100dp" />
 
     <TextView
         android:id="@+id/user_name_text"

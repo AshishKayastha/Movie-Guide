@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.ashish.movies.data.models.People
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
+import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movies.utils.Constants.PROFILE_ORIGINAL_URL_PREFIX
@@ -11,7 +12,7 @@ import com.ashish.movies.utils.Constants.PROFILE_ORIGINAL_URL_PREFIX
 /**
  * Created by Ashish on Dec 31.
  */
-class PeopleDelegateAdapter : ViewTypeDelegateAdapter {
+class PeopleDelegateAdapter(val onItemClickListener: OnItemClickListener) : ViewTypeDelegateAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup) = PeopleHolder(parent)
 
@@ -23,6 +24,7 @@ class PeopleDelegateAdapter : ViewTypeDelegateAdapter {
 
         override fun bindData(item: People) = with(item) {
             contentTitle.text = name
+            itemView.setOnClickListener { onItemClickListener.onItemClick(adapterPosition) }
             super.bindData(item)
         }
 
