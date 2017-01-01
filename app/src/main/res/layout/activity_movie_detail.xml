@@ -19,8 +19,7 @@
             style="@style/Match"
             android:fitsSystemWindows="true"
             app:collapsedTitleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:title="">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
                 android:id="@+id/backdrop_image"
@@ -38,5 +37,45 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        style="@style/Match"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        app:behavior_overlapTop="156dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            style="@style/Match.Width"
+            android:animateLayoutChanges="true"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/Match.Width"
+                android:layout_marginLeft="@dimen/first_keyline"
+                android:layout_marginRight="@dimen/first_keyline"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/movie_poster_image"
+                    android:layout_width="110dp"
+                    android:layout_height="156dp"
+                    android:scaleType="centerCrop"
+                    tools:ignore="ContentDescription" />
+
+                <com.ashish.movies.ui.widget.FontTextView
+                    android:id="@+id/movie_title_text"
+                    style="@style/PrimaryText"
+                    android:layout_gravity="bottom"
+                    android:maxLines="3"
+                    android:padding="@dimen/spacing_large" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

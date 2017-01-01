@@ -1,13 +1,12 @@
 package com.ashish.movies.ui.common.palette
 
 import android.graphics.Color
-import android.support.v7.graphics.Palette
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.utils.extensions.animateBackgroundColorChange
 import com.ashish.movies.utils.extensions.animateTextColorChange
 import com.ashish.movies.utils.extensions.getColorCompat
-import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
+import com.ashish.movies.utils.extensions.setPaletteColor
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.ImageViewTarget
 
@@ -24,18 +23,14 @@ class PaletteImageViewTarget(val holder: BaseContentHolder<*>) : ImageViewTarget
             setResource(resource)
         }
 
-        setColors(resource?.palette)
-    }
-
-    override fun setResource(resource: PaletteBitmap?) = super.view.setImageBitmap(resource?.bitmap)
-
-    private fun setColors(palette: Palette?) {
-        palette.getSwatchWithMostPixels()?.apply {
+        resource.setPaletteColor { swatch ->
             with(holder) {
-                contentView.animateBackgroundColorChange(Color.TRANSPARENT, rgb)
-                contentTitle.animateTextColorChange(primaryTextColor, titleTextColor)
-                contentSubtitle.animateTextColorChange(secondaryTextColor, bodyTextColor)
+                contentView.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
+                contentTitle.animateTextColorChange(primaryTextColor, swatch.titleTextColor)
+                contentSubtitle.animateTextColorChange(secondaryTextColor, swatch.bodyTextColor)
             }
         }
     }
+
+    override fun setResource(resource: PaletteBitmap?) = super.view.setImageBitmap(resource?.bitmap)
 }
