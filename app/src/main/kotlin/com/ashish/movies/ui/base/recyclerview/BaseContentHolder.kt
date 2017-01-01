@@ -7,15 +7,14 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.palette.PaletteBitmap
-import com.ashish.movies.ui.common.palette.PaletteBitmapTranscoder
 import com.ashish.movies.ui.common.palette.PaletteImageViewTarget
 import com.ashish.movies.ui.widget.AspectRatioImageView
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.LabelLayout
 import com.ashish.movies.utils.extensions.inflate
+import com.ashish.movies.utils.extensions.transcodePaletteBitmap
 import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.Target
 
 /**
@@ -24,7 +23,7 @@ import com.bumptech.glide.request.target.Target
 abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup) : RecyclerView.ViewHolder(
         parent.inflate(R.layout.list_item_content)) {
 
-    val contentView: View by bindView(R.id.content_view)
+    val contentView: View by bindView(R.id.item_content_view)
     val contentTitle: FontTextView by bindView(R.id.content_title)
     val contentSubtitle: FontTextView by bindView(R.id.content_subtitle)
     val averageVoteText: LabelLayout by bindView(R.id.avg_vote_text)
@@ -34,11 +33,7 @@ abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup) : RecyclerV
     val target: Target<PaletteBitmap> = PaletteImageViewTarget(this)
 
     val requestBuilder: BitmapRequestBuilder<String, PaletteBitmap> = Glide.with(itemView.context)
-            .fromString()
-            .asBitmap()
-            .transcode(PaletteBitmapTranscoder(itemView.context), PaletteBitmap::class.java)
-            .centerCrop()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .transcodePaletteBitmap(itemView.context)
 
     open fun bindData(item: I) = loadImage(item)
 

@@ -6,7 +6,9 @@
     android:foreground="?selectableItemBackground"
     app:cardCornerRadius="@dimen/padding_2dp">
 
-    <RelativeLayout style="@style/Match.Width">
+    <RelativeLayout
+        android:id="@+id/item_content_view"
+        style="@style/Match.Width">
 
         <com.ashish.movies.ui.widget.AspectRatioImageView
             android:id="@+id/poster_image"
@@ -20,37 +22,36 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="2016"
-            android:textSize="16sp"
-            app:labelBackground="@android:color/holo_red_dark"
+            android:textSize="@dimen/text_size_large"
+            app:labelBackground="#D50000"
             app:labelGravity="topLeft"
             app:labelHeight="36dp"
-            app:labelTextColor="@android:color/white" />
+            app:labelTextColor="@android:color/white"
+            tools:ignore="HardcodedText" />
 
-        <LinearLayout
-            android:id="@+id/content_view"
-            style="@style/Match.Width"
+        <com.ashish.movies.ui.widget.FontTextView
+            android:id="@+id/content_title"
+            style="@style/PrimaryText"
             android:layout_below="@id/poster_image"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_large">
+            android:lineSpacingExtra="@dimen/spacing_micro"
+            android:maxLines="2"
+            android:paddingEnd="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingTop="@dimen/spacing_large"
+            app:fontName="@string/font_montserrat_medium"
+            tools:text="Movie Title" />
 
-            <com.ashish.movies.ui.widget.FontTextView
-                android:id="@+id/content_title"
-                style="@style/PrimaryText"
-                android:ellipsize="end"
-                android:lineSpacingExtra="@dimen/spacing_micro"
-                android:maxLines="2"
-                app:fontName="@string/font_montserrat_medium"
-                tools:text="Movie Title" />
-
-            <com.ashish.movies.ui.widget.FontTextView
-                android:id="@+id/content_subtitle"
-                style="@style/SecondaryText"
-                android:layout_marginTop="@dimen/spacing_micro"
-                android:ellipsize="end"
-                android:maxLines="1"
-                tools:text="Movie SubTitle" />
-
-        </LinearLayout>
+        <com.ashish.movies.ui.widget.FontTextView
+            android:id="@+id/content_subtitle"
+            style="@style/SecondaryText"
+            android:layout_below="@id/content_title"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingTop="@dimen/padding_2dp"
+            tools:text="Movie SubTitle" />
 
     </RelativeLayout>
 
