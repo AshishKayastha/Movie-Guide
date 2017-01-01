@@ -24,6 +24,7 @@ class MovieDelegateAdapter : ViewTypeDelegateAdapter {
         override fun bindData(item: Movie) = with(item) {
             contentTitle.text = title
             contentSubtitle.text = releaseDate
+            averageVoteText.setLabelText(voteAverage.toString())
             super.bindData(item)
         }
 

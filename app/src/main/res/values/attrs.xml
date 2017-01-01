@@ -7,4 +7,21 @@
     <declare-styleable name="FontTextView">
         <attr name="fontName" format="string|reference" />
     </declare-styleable>
+
+    <declare-styleable name="LabelLayout">
+        <attr name="labelHeight" format="dimension" />
+        <attr name="labelDistance" format="dimension" />
+        <attr name="labelBackground" format="reference|color" />
+        <attr name="labelTextColor" format="reference|color" />
+
+        <attr name="labelGravity" format="enum">
+            <enum name="topLeft" value="0" />
+            <enum name="topRight" value="1" />
+            <enum name="bottomRight" value="2" />
+            <enum name="bottomLeft" value="3" />
+        </attr>
+
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+    </declare-styleable>
 </resources>

@@ -24,4 +24,6 @@
 
     <dimen name="progress_bar_size">50dp</dimen>
     <dimen name="progress_bar_size_small">44dp</dimen>
+
+    <dimen name="detail_backdrop_height">256dp</dimen>
 </resources>

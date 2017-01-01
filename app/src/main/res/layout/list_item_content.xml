@@ -6,9 +6,7 @@
     android:foreground="?selectableItemBackground"
     app:cardCornerRadius="@dimen/padding_2dp">
 
-    <LinearLayout
-        style="@style/Match.Width"
-        android:orientation="vertical">
+    <RelativeLayout style="@style/Match.Width">
 
         <com.ashish.movies.ui.widget.AspectRatioImageView
             android:id="@+id/poster_image"
@@ -17,9 +15,21 @@
             app:heightRatio="1.5"
             tools:ignore="ContentDescription" />
 
+        <com.ashish.movies.ui.widget.LabelLayout
+            android:id="@+id/avg_vote_text"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="2016"
+            android:textSize="16sp"
+            app:labelBackground="@android:color/holo_red_dark"
+            app:labelGravity="topLeft"
+            app:labelHeight="36dp"
+            app:labelTextColor="@android:color/white" />
+
         <LinearLayout
             android:id="@+id/content_view"
             style="@style/Match.Width"
+            android:layout_below="@id/poster_image"
             android:orientation="vertical"
             android:padding="@dimen/spacing_large">
 
@@ -42,6 +52,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

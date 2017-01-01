@@ -24,6 +24,7 @@ class TVShowDelegateAdapter : ViewTypeDelegateAdapter {
         override fun bindData(item: TVShow) = with(item) {
             contentTitle.text = name
             contentSubtitle.text = firstAirDate
+            averageVoteText.setLabelText(voteAverage.toString())
             super.bindData(item)
         }
 

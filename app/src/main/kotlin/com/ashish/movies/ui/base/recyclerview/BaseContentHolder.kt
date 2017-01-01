@@ -11,6 +11,7 @@ import com.ashish.movies.ui.common.palette.PaletteBitmapTranscoder
 import com.ashish.movies.ui.common.palette.PaletteImageViewTarget
 import com.ashish.movies.ui.widget.AspectRatioImageView
 import com.ashish.movies.ui.widget.FontTextView
+import com.ashish.movies.ui.widget.LabelLayout
 import com.ashish.movies.utils.extensions.inflate
 import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
@@ -26,6 +27,7 @@ abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup) : RecyclerV
     val contentView: View by bindView(R.id.content_view)
     val contentTitle: FontTextView by bindView(R.id.content_title)
     val contentSubtitle: FontTextView by bindView(R.id.content_subtitle)
+    val averageVoteText: LabelLayout by bindView(R.id.avg_vote_text)
     val posterImage: AspectRatioImageView by bindView(R.id.poster_image)
 
     @Suppress("LeakingThis")
