@@ -7,7 +7,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v4.widget.NestedScrollView
-import android.support.v7.widget.Toolbar
 import android.widget.ImageView
 import butterknife.bindView
 import com.ashish.movies.R
@@ -37,7 +36,6 @@ import timber.log.Timber
  */
 class MovieDetailActivity : MvpActivity<LceView, MovieDetailPresenter>(), LceView, NestedScrollView.OnScrollChangeListener {
 
-    val toolbar: Toolbar by bindView(R.id.toolbar)
     val backdropImage: ImageView by bindView(R.id.backdrop_image)
     val movieTitle: FontTextView by bindView(R.id.movie_title_text)
     val moviePosterImage: ImageView by bindView(R.id.movie_poster_image)
@@ -68,7 +66,6 @@ class MovieDetailActivity : MvpActivity<LceView, MovieDetailPresenter>(), LceVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {

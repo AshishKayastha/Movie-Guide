@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.base.common
+package com.ashish.movies.ui.base.mvp
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import com.ashish.movies.R
 import com.ashish.movies.app.MoviesApp
 import com.ashish.movies.di.components.AppComponent
-import com.ashish.movies.ui.base.mvp.MvpView
-import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.utils.extensions.inflate
 import com.ashish.movies.utils.extensions.showSnackBar
 import javax.inject.Inject
@@ -17,7 +15,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 26.
  */
-abstract class BaseFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpView {
+abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpView {
 
     @Inject lateinit var presenter: P
 

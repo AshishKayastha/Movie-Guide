@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import butterknife.bindView
 import com.ashish.movies.R
-import com.ashish.movies.ui.base.common.BaseFragment
+import com.ashish.movies.ui.base.mvp.MvpFragment
 import com.ashish.movies.ui.common.adapter.InfiniteScrollListener
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
@@ -25,7 +25,7 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar
  * Created by Ashish on Dec 30.
  */
 abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpView<I>,
-        P : BaseRecyclerViewPresenter<I, V>> : BaseFragment<V, P>(), BaseRecyclerViewMvpView<I>,
+        P : BaseRecyclerViewPresenter<I, V>> : MvpFragment<V, P>(), BaseRecyclerViewMvpView<I>,
         SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
     protected val emptyContentView: View by bindView(R.id.empty_view)
