@@ -12,13 +12,7 @@ import javax.inject.Inject
 class PeoplePresenter @Inject constructor(val peopleInteractor: PeopleInteractor)
     : BaseRecyclerViewPresenter<People, BaseRecyclerViewMvpView<People>>() {
 
-    override fun loadData(type: Int?, page: Int, showProgress: Boolean) {
-        getDataByType(null, page, showProgress)
-    }
+    override fun getType(type: Int?) = null
 
-    override fun loadMoreData(type: Int?, page: Int) {
-        if (page <= totalPages) getMoreDataByType(null, page)
-    }
-
-    override fun getData(type: String?, page: Int) = peopleInteractor.getPopularPeople(page)
+    override fun getResultsObservable(type: String?, page: Int) = peopleInteractor.getPopularPeople(page)
 }

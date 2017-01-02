@@ -20,13 +20,7 @@ class MoviePresenter @Inject constructor(val movieInteractor: MovieInteractor)
         private val MOVIE_TYPES = arrayOf(NOW_PLAYING, POPULAR, TOP_RATED, UPCOMING)
     }
 
-    override fun loadData(type: Int?, page: Int, showProgress: Boolean) {
-        getDataByType(MOVIE_TYPES[type ?: 0], page, showProgress)
-    }
+    override fun getType(type: Int?) = MOVIE_TYPES[type ?: 0]
 
-    override fun loadMoreData(type: Int?, page: Int) {
-        if (page <= totalPages) getMoreDataByType(MOVIE_TYPES[type ?: 0], page)
-    }
-
-    override fun getData(type: String?, page: Int) = movieInteractor.getMoviesByType(type, page)
+    override fun getResultsObservable(type: String?, page: Int) = movieInteractor.getMoviesByType(type, page)
 }

@@ -20,13 +20,7 @@ class TVShowPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor
         private val TV_SHOW_TYPES = arrayOf(ON_THE_AIR, POPULAR, TOP_RATED, AIRING_TODAY)
     }
 
-    override fun loadData(type: Int?, page: Int, showProgress: Boolean) {
-        getDataByType(TV_SHOW_TYPES[type ?: 0], page, showProgress)
-    }
+    override fun getType(type: Int?) = TV_SHOW_TYPES[type ?: 0]
 
-    override fun loadMoreData(type: Int?, page: Int) {
-        if (page <= totalPages) getMoreDataByType(TV_SHOW_TYPES[type ?: 0], page)
-    }
-
-    override fun getData(type: String?, page: Int) = tvShowInteractor.getTVShowsByType(type, page)
+    override fun getResultsObservable(type: String?, page: Int) = tvShowInteractor.getTVShowsByType(type, page)
 }

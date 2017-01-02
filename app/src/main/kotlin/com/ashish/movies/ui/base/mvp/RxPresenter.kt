@@ -19,7 +19,7 @@ abstract class RxPresenter<V : MvpView> {
 
     protected fun getView() = viewWeakRef?.get()
 
-    protected fun addSubscription(disposable: Disposable) {
+    protected fun addDisposable(disposable: Disposable) {
         compositeDisposable.add(disposable)
     }
 

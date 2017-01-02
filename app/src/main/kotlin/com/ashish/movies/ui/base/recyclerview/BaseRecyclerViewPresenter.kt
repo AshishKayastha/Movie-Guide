@@ -13,14 +13,12 @@ import timber.log.Timber
  */
 abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpView<I>> : RxPresenter<V>() {
 
-    protected var totalPages = 1
+    private var totalPages = 1
 
-    abstract fun loadData(type: Int?, page: Int = 1, showProgress: Boolean = true)
-
-    protected fun getDataByType(type: String?, page: Int, showProgress: Boolean) {
+    fun loadData(type: Int?, page: Int = 1, showProgress: Boolean = true) {
         if (Utils.isOnline()) {
             if (showProgress) getView()?.showProgress()
-            addSubscription(getData(type, page)
+            addDisposable(getResultsObservable(getType(type), page)
                     .doOnNext { totalPages = it.totalPages }
                     .subscribe({ showItemList(it) }, { handleError(it) }))
         } else {
@@ -28,7 +26,9 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         }
     }
 
-    abstract fun getData(type: String?, page: Int): Observable<Results<I>>
+    abstract fun getType(type: Int?): String?
+
+    abstract fun getResultsObservable(type: String?, page: Int): Observable<Results<I>>
 
     protected fun showItemList(data: Results<I>?) {
         getView()?.apply {
@@ -37,11 +37,9 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         }
     }
 
-    abstract fun loadMoreData(type: Int?, page: Int)
-
-    protected fun getMoreDataByType(type: String?, page: Int) {
+    fun loadMoreData(type: Int?, page: Int) {
         if (Utils.isOnline()) {
-            addSubscription(getData(type, page)
+            addDisposable(getResultsObservable(getType(type), page)
                     .subscribe({ addNewItemList(it) },
                             {
                                 handleError(it)
