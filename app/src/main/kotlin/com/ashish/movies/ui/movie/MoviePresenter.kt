@@ -1,9 +1,9 @@
 package com.ashish.movies.ui.movie
 
-import com.ashish.movies.data.api.MovieService.Companion.NOW_PLAYING
-import com.ashish.movies.data.api.MovieService.Companion.POPULAR
-import com.ashish.movies.data.api.MovieService.Companion.TOP_RATED
-import com.ashish.movies.data.api.MovieService.Companion.UPCOMING
+import com.ashish.movies.data.api.MovieApi.Companion.NOW_PLAYING
+import com.ashish.movies.data.api.MovieApi.Companion.POPULAR
+import com.ashish.movies.data.api.MovieApi.Companion.TOP_RATED
+import com.ashish.movies.data.api.MovieApi.Companion.UPCOMING
 import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView

@@ -32,11 +32,15 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View? {
 }
 
 fun View.showSnackBar(message: CharSequence, duration: Int = Snackbar.LENGTH_LONG) {
-    Snackbar.make(this, message, duration).show()
+    Snackbar.make(this, message, duration)
+            .setAction(android.R.string.ok, { })
+            .show()
 }
 
 fun View.showSnackBar(messageId: Int, duration: Int = Snackbar.LENGTH_LONG) {
-    Snackbar.make(this, messageId, duration).show()
+    Snackbar.make(this, messageId, duration)
+            .setAction(android.R.string.ok, { })
+            .show()
 }
 
 fun TextView.changeTypeface() {

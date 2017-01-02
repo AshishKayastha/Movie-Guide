@@ -1,9 +1,9 @@
 package com.ashish.movies.ui.tvshow
 
-import com.ashish.movies.data.api.TVShowService.Companion.AIRING_TODAY
-import com.ashish.movies.data.api.TVShowService.Companion.ON_THE_AIR
-import com.ashish.movies.data.api.TVShowService.Companion.POPULAR
-import com.ashish.movies.data.api.TVShowService.Companion.TOP_RATED
+import com.ashish.movies.data.api.TVShowApi.Companion.AIRING_TODAY
+import com.ashish.movies.data.api.TVShowApi.Companion.ON_THE_AIR
+import com.ashish.movies.data.api.TVShowApi.Companion.POPULAR
+import com.ashish.movies.data.api.TVShowApi.Companion.TOP_RATED
 import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView

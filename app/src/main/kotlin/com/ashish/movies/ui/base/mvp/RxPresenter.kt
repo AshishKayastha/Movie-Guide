@@ -1,7 +1,7 @@
 package com.ashish.movies.ui.base.mvp
 
-import rx.Subscription
-import rx.subscriptions.CompositeSubscription
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import java.lang.ref.WeakReference
 
 /**
@@ -10,20 +10,21 @@ import java.lang.ref.WeakReference
 abstract class RxPresenter<V : MvpView> {
 
     private var viewWeakRef: WeakReference<V>? = null
-    private var compositeSubscription: CompositeSubscription = CompositeSubscription()
+    private lateinit var compositeDisposable: CompositeDisposable
 
     open fun attachView(view: V) {
         viewWeakRef = WeakReference(view)
+        compositeDisposable = CompositeDisposable()
     }
 
-    protected fun getView(): V? = viewWeakRef?.get()
+    protected fun getView() = viewWeakRef?.get()
 
-    protected fun addSubscription(subscription: Subscription) {
-        compositeSubscription.add(subscription)
+    protected fun addSubscription(disposable: Disposable) {
+        compositeDisposable.add(disposable)
     }
 
     open fun detachView() {
-        compositeSubscription.unsubscribe()
+        compositeDisposable.clear()
         viewWeakRef?.clear()
         viewWeakRef = null
     }

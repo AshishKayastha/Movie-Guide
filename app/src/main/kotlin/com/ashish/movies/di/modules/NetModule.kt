@@ -3,17 +3,17 @@ package com.ashish.movies.di.modules
 import com.ashish.movies.BuildConfig
 import com.ashish.movies.utils.ApiKeyInterceptor
 import com.ashish.movies.utils.Constants.BASE_API_URL
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import io.reactivex.schedulers.Schedulers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
-import rx.schedulers.Schedulers
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Singleton
 
@@ -63,7 +63,7 @@ class NetModule {
     fun provideRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory): Retrofit {
         return Retrofit.Builder()
                 .addConverterFactory(moshiConverterFactory)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .baseUrl(BASE_API_URL)
                 .client(client)
                 .build()

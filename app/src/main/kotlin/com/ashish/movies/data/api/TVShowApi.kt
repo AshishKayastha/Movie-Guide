@@ -2,15 +2,15 @@ package com.ashish.movies.data.api
 
 import com.ashish.movies.data.models.Results
 import com.ashish.movies.data.models.TVShow
+import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import rx.Observable
 
 /**
  * Created by Ashish on Dec 29.
  */
-interface TVShowService {
+interface TVShowApi {
 
     companion object {
         const val ON_THE_AIR = "on_the_air"

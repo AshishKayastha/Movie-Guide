@@ -1,8 +1,8 @@
 package com.ashish.movies.di.modules
 
-import com.ashish.movies.data.api.MovieService
-import com.ashish.movies.data.api.PeopleService
-import com.ashish.movies.data.api.TVShowService
+import com.ashish.movies.data.api.MovieApi
+import com.ashish.movies.data.api.PeopleApi
+import com.ashish.movies.data.api.TVShowApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -16,16 +16,13 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideMovieService(retrofit: Retrofit): MovieService
-            = retrofit.create<MovieService>(MovieService::class.java)
+    fun provideMovieApi(retrofit: Retrofit): MovieApi = retrofit.create<MovieApi>(MovieApi::class.java)
 
     @Provides
     @Singleton
-    fun provideTVShowService(retrofit: Retrofit): TVShowService
-            = retrofit.create<TVShowService>(TVShowService::class.java)
+    fun provideTVShowApi(retrofit: Retrofit): TVShowApi = retrofit.create<TVShowApi>(TVShowApi::class.java)
 
     @Provides
     @Singleton
-    fun providePeopleService(retrofit: Retrofit): PeopleService
-            = retrofit.create<PeopleService>(PeopleService::class.java)
+    fun providePeopleApi(retrofit: Retrofit): PeopleApi = retrofit.create<PeopleApi>(PeopleApi::class.java)
 }

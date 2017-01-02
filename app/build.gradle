@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -63,15 +62,15 @@ dependencies {
 
     // Retrofit 2
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
     // OkHttp
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
 
-    // RxJava/RxAndroid
-    compile 'io.reactivex:rxjava:1.2.4'
-    compile 'io.reactivex:rxandroid:1.2.1'
+    // RxJava 2/RxAndroid 2
+    compile 'io.reactivex.rxjava2:rxjava:2.0.3'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     // Dagger 2
     compile "com.google.dagger:dagger:$daggerVersion"
@@ -80,10 +79,6 @@ dependencies {
     // Paper Parcel
     compile "nz.bradcampbell:paperparcel:$paperParcelVersion"
     kapt "nz.bradcampbell:paperparcel-compiler:$paperParcelVersion"
-
-    // IcePick
-    compile "frankiesardo:icepick:$icepickVersion"
-    kapt "frankiesardo:icepick-processor:$icepickVersion"
 
     // Leak Canary
     debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"

@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat.START
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.TextView
@@ -16,10 +17,10 @@ import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_PEOPLE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
 import com.ashish.movies.utils.extensions.changeTypeface
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
+    val toolbar: Toolbar by bindView(R.id.toolbar)
     val viewPager: ViewPager by bindView(R.id.view_pager)
     val tabLayout: TabLayout by bindView(R.id.tab_layout)
     val drawerLayout: DrawerLayout by bindView(R.id.drawer_layout)

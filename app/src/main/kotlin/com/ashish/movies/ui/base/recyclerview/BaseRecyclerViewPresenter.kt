@@ -5,7 +5,7 @@ import com.ashish.movies.data.models.Results
 import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.utils.Utils
-import rx.Observable
+import io.reactivex.Observable
 import timber.log.Timber
 
 /**
