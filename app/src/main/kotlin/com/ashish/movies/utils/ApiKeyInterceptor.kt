@@ -1,27 +1,27 @@
 package com.ashish.movies.utils
 
+import com.ashish.movies.utils.ApiConstants.API_KEY
+import com.ashish.movies.utils.ApiConstants.LANGUAGE
+import com.ashish.movies.utils.ApiConstants.TMDB_API_KEY
+import com.ashish.movies.utils.ApiConstants.US_ENGLISH
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.io.IOException
 
 /**
  * Created by Ashish on Dec 28.
  */
 class ApiKeyInterceptor : Interceptor {
 
-    companion object {
-        const val API_KEY = "api_key"
-        const val LANGUAGE = "language"
-        const val US_ENGLISH = "en-US"
-        const val TMDB_API_KEY = "21962412093fb3887ace2f97f2253eae"
-    }
-
+    @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain?): Response? {
         if (chain != null) {
             val originalRequest = chain.request()
 
-            val httpUrlBuilder = originalRequest.url().newBuilder()
-            httpUrlBuilder.addQueryParameter(API_KEY, TMDB_API_KEY)
-            httpUrlBuilder.addQueryParameter(LANGUAGE, US_ENGLISH)
+            val httpUrlBuilder = originalRequest.url()
+                    .newBuilder()
+                    .addQueryParameter(API_KEY, TMDB_API_KEY)
+                    .addQueryParameter(LANGUAGE, US_ENGLISH)
 
             val newRequest = originalRequest.newBuilder()
                     .url(httpUrlBuilder.build())

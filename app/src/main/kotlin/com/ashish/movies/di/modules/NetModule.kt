@@ -12,6 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
+import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit.SECONDS
@@ -34,11 +35,23 @@ class NetModule {
     @Provides
     @Singleton
     fun provideOkHttpClientBuilder(): OkHttpClient.Builder {
-        val builder = OkHttpClient.Builder()
-        builder.connectTimeout(30, SECONDS)
-        builder.readTimeout(30, SECONDS)
-        builder.writeTimeout(30, SECONDS)
-        return builder
+        return OkHttpClient.Builder()
+                .connectTimeout(30, SECONDS)
+                .readTimeout(30, SECONDS)
+                .writeTimeout(30, SECONDS)
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiKeyInterceptor(): Interceptor = ApiKeyInterceptor()
+
+    @Provides
+    @Singleton
+    fun provideClient(builder: OkHttpClient.Builder, apiKeyInterceptor: Interceptor,
+                      loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        return builder.addNetworkInterceptor(apiKeyInterceptor)
+                .addInterceptor(loggingInterceptor)
+                .build()
     }
 
     @Provides
@@ -47,25 +60,18 @@ class NetModule {
 
     @Provides
     @Singleton
-    fun provideApiKeyInterceptor(): Interceptor = ApiKeyInterceptor()
+    fun provideCallAdapterFactory(): CallAdapter.Factory
+            = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
 
     @Provides
     @Singleton
-    fun provideClient(builder: OkHttpClient.Builder, interceptor: Interceptor,
-                      loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        builder.addNetworkInterceptor(interceptor)
-        builder.addInterceptor(loggingInterceptor)
-        return builder.build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory): Retrofit {
+    fun provideRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
+                        callAdapterFactory: CallAdapter.Factory): Retrofit {
         return Retrofit.Builder()
-                .addConverterFactory(moshiConverterFactory)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .baseUrl(BASE_API_URL)
                 .client(client)
+                .addConverterFactory(moshiConverterFactory)
+                .addCallAdapterFactory(callAdapterFactory)
                 .build()
     }
 }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatDelegate
 import com.ashish.movies.BuildConfig
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.di.components.DaggerAppComponent
+import com.ashish.movies.di.modules.AppModule
 import com.ashish.movies.utils.ReleaseTree
 import timber.log.Timber
 
@@ -34,7 +35,9 @@ class MoviesApp : Application() {
     }
 
     private val appComponent: AppComponent by lazy {
-        DaggerAppComponent.builder().build()
+        DaggerAppComponent.builder()
+                .appModule(AppModule(this))
+                .build()
     }
 
     private fun initTimber() {
