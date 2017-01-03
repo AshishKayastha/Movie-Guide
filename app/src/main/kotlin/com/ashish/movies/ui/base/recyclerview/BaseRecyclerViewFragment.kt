@@ -110,7 +110,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         super.onDestroyView()
     }
 
-    private fun performCleanup() {
+    protected fun performCleanup() {
         recyclerView.adapter = null
         swipeRefreshLayout.clearAnimation()
         recyclerView.clearOnScrollListeners()

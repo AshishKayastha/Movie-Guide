@@ -50,4 +50,9 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpVie
         presenter.detachView()
         super.onDestroyView()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MoviesApp.getRefWatcher(activity).watch(this)
+    }
 }
