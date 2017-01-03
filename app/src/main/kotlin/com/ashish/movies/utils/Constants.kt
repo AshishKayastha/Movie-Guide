@@ -10,4 +10,7 @@ object Constants {
     const val POSTER_W500_URL_PREFIX = BASE_IMAGE_URL + "w500"
     const val BACKDROP_W780_URL_PREFIX = BASE_IMAGE_URL + "w780"
     const val PROFILE_ORIGINAL_URL_PREFIX = BASE_IMAGE_URL + "original"
+
+    const val NOT_AVAILABLE = "N/A"
+    const val DEFAULT_DATE_PATTERN = "yyyy-MM-dd"
 }

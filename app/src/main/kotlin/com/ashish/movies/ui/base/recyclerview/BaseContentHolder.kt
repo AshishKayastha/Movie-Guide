@@ -2,6 +2,7 @@ package com.ashish.movies.ui.base.recyclerview
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import butterknife.bindOptionalView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.common.adapter.ViewType
@@ -19,12 +20,12 @@ import com.bumptech.glide.request.target.Target
 /**
  * Created by Ashish on Dec 30.
  */
-abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup) : RecyclerView.ViewHolder(
-        parent.inflate(R.layout.list_item_content)) {
+abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup, layoutId: Int = R.layout.list_item_content)
+    : RecyclerView.ViewHolder(parent.inflate(layoutId)) {
 
     val contentTitle: FontTextView by bindView(R.id.content_title)
-    val averageVoteText: LabelLayout by bindView(R.id.avg_vote_text)
     val posterImage: AspectRatioImageView by bindView(R.id.poster_image)
+    val averageVoteText: LabelLayout? by bindOptionalView(R.id.avg_vote_text)
 
     @Suppress("LeakingThis")
     val target: Target<PaletteBitmap> = PaletteImageViewTarget(this)

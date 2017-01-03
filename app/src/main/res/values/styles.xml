@@ -37,9 +37,21 @@
         <item name="fontName">@string/font_montserrat_regular</item>
     </style>
 
+    <style name="PrimaryText.Title">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:layout_marginTop">@dimen/spacing_medium</item>
+        <item name="fontName">@string/font_montserrat_medium</item>
+    </style>
+
     <style name="SecondaryText" parent="PrimaryText">
         <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="android:textColor">@color/secondary_text_light</item>
+    </style>
+
+    <style name="SecondaryText.Title">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:lineSpacingExtra">@dimen/line_spacing</item>
+        <item name="android:layout_marginTop">@dimen/spacing_normal</item>
     </style>
 
     <style name="Toolbar">
@@ -68,5 +80,17 @@
     <style name="MaterialProgressBar.Small">
         <item name="android:layout_width">@dimen/progress_bar_size_small</item>
         <item name="android:layout_height">@dimen/progress_bar_size_small</item>
+    </style>
+
+    <style name="MovieDetailTitle" parent="PrimaryText.Title">
+        <item name="android:paddingStart">@dimen/first_keyline</item>
+        <item name="android:paddingEnd">@dimen/first_keyline</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="MovieDetailRecyclerView" parent="Wrap">
+        <item name="android:paddingEnd">@dimen/spacing_normal</item>
+        <item name="android:paddingStart">@dimen/spacing_normal</item>
     </style>
 </resources>

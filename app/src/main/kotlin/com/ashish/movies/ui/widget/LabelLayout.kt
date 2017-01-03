@@ -14,6 +14,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.ashish.movies.R
 import com.ashish.movies.utils.FontUtils
+import com.ashish.movies.utils.extensions.show
 import com.ashish.movies.utils.extensions.spToPx
 
 /**
@@ -103,6 +104,7 @@ class LabelLayout @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     fun setLabelText(labelText: String) {
+        show()
         this.labelText = labelText
         invalidate()
     }

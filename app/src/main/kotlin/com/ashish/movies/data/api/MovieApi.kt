@@ -1,7 +1,7 @@
 package com.ashish.movies.data.api
 
+import com.ashish.movies.data.models.CreditResults
 import com.ashish.movies.data.models.Movie
-import com.ashish.movies.data.models.MovieDetail
 import com.ashish.movies.data.models.Results
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -24,5 +24,11 @@ interface MovieApi {
     fun getMovies(@Path("movieType") movieType: String?, @Query("page") page: Int = 1): Observable<Results<Movie>>
 
     @GET("movie/{movieId}")
-    fun getMovieDetail(@Path("movieId") movieId: Long): Observable<MovieDetail>
+    fun getMovieDetail(@Path("movieId") movieId: Long): Observable<Movie>
+
+    @GET("movie/{movieId}/credits")
+    fun getMovieCredits(@Path("movieId") movieId: Long): Observable<CreditResults>
+
+    @GET("movie/{movieId}/similar")
+    fun getSimilarMovies(@Path("movieId") movieId: Long): Observable<Results<Movie>>
 }

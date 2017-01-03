@@ -1,6 +1,7 @@
 <resources>
     <!-- General -->
     <string name="error_no_internet">No Internet Connection</string>
+    <string name="transition_poster_image">transition_poster_image</string>
 
     <!-- Movie -->
     <string name="title_movies">Movies</string>
@@ -23,5 +24,16 @@
     <!-- People -->
     <string name="title_people">People</string>
     <string name="no_people_available">No People Available</string>
-    <string name="transition_poster_image">transition_poster_image</string>
+
+    <!-- Movie Detail -->
+    <string name="overview_title">Overview:</string>
+    <string name="genre_title">Genres:</string>
+    <string name="runtime_title">Runtime:</string>
+    <string name="status_title">Status:</string>
+    <string name="release_date_title">Release Date:</string>
+    <string name="budget_title">Budget:</string>
+    <string name="revenue_title">Revenue:</string>
+    <string name="similar_movies_title">Similar Movies</string>
+    <string name="crew_title">Crew</string>
+    <string name="cast_title">Casts</string>
 </resources>

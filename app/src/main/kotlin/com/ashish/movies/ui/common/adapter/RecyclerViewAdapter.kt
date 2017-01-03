@@ -3,6 +3,7 @@ package com.ashish.movies.ui.common.adapter
 import android.support.v7.widget.RecyclerView
 import android.util.SparseArray
 import android.view.ViewGroup
+import com.ashish.movies.R
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.LOADING_VIEW
@@ -15,19 +16,22 @@ import java.util.*
 /**
  * Created by Ashish on Dec 30.
  */
-class RecyclerViewAdapter<in I : ViewType>(val adapterType: Int, onItemClickListener: OnItemClickListener?)
+class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_item_content, val adapterType: Int,
+                                           onItemClickListener: OnItemClickListener?)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
 
     companion object {
         const val ADAPTER_TYPE_MOVIE = 0
         const val ADAPTER_TYPE_TV_SHOW = 1
         const val ADAPTER_TYPE_PEOPLE = 2
+        const val ADAPTER_TYPE_CREDIT = 3
     }
 
     private val DELEGATE_ADAPTERS = arrayOf(
-            MovieDelegateAdapter(onItemClickListener),
-            TVShowDelegateAdapter(onItemClickListener),
-            PeopleDelegateAdapter(onItemClickListener))
+            MovieDelegateAdapter(layoutId, onItemClickListener),
+            TVShowDelegateAdapter(layoutId, onItemClickListener),
+            PeopleDelegateAdapter(layoutId, onItemClickListener),
+            CreditDelegateAdapter(layoutId, onItemClickListener))
 
     private var itemList: ArrayList<ViewType> = ArrayList()
     private var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()

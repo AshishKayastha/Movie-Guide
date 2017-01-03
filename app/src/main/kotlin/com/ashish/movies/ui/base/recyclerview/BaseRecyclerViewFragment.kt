@@ -60,7 +60,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         super.onViewCreated(view, savedInstanceState)
         getFragmentArguments()
 
-        recyclerViewAdapter = RecyclerViewAdapter(getAdapterType(), this)
+        recyclerViewAdapter = RecyclerViewAdapter(adapterType = getAdapterType(), onItemClickListener = this)
         recyclerView.apply {
             setHasFixedSize(true)
             emptyView = emptyContentView

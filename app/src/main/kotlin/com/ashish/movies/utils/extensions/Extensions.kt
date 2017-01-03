@@ -17,24 +17,17 @@ fun Float.dpToPx() = this * Resources.getSystem().displayMetrics.density
 
 fun Float.spToPx() = this * Resources.getSystem().displayMetrics.scaledDensity
 
-fun String?.isNotNullOrEmpty() = !this.isNullOrEmpty()
-
 fun RequestManager.transcodePaletteBitmap(context: Context): BitmapRequestBuilder<String, PaletteBitmap> {
     return fromString()
             .asBitmap()
             .transcode(PaletteBitmapTranscoder(context), PaletteBitmap::class.java)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .centerCrop()
 }
 
 fun Context.getColorCompat(colorResId: Int) = ContextCompat.getColor(this, colorResId)
 
-fun isLollipopOrAbove(func: () -> Unit) {
+inline fun isLollipopOrAbove(func: () -> Unit) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         func()
     }
-}
-
-fun String?.getYearOnly(): String {
-    return if (isNotNullOrEmpty()) this!!.slice(0..3) else ""
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Match.Width"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/spacing_medium">
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/crew_title"
+        style="@style/MovieDetailTitle"
+        android:text="@string/crew_title" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/crew_recycler_view"
+        style="@style/MovieDetailRecyclerView" />
+
+</LinearLayout>

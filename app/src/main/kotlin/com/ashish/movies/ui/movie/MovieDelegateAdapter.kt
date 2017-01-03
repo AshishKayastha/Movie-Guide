@@ -2,6 +2,7 @@ package com.ashish.movies.ui.movie
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
@@ -9,12 +10,14 @@ import com.ashish.movies.ui.common.adapter.RemoveListener
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
-import com.ashish.movies.utils.extensions.getYearOnly
+import com.ashish.movies.utils.extensions.setTitleAndYear
 
 /**
  * Created by Ashish on Dec 30.
  */
-class MovieDelegateAdapter(var onItemClickListener: OnItemClickListener?) : ViewTypeDelegateAdapter, RemoveListener {
+class MovieDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
+                           var onItemClickListener: OnItemClickListener?)
+    : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = MovieHolder(parent)
 
@@ -26,13 +29,11 @@ class MovieDelegateAdapter(var onItemClickListener: OnItemClickListener?) : View
         onItemClickListener = null
     }
 
-    inner class MovieHolder(parent: ViewGroup) : BaseContentHolder<Movie>(parent) {
+    inner class MovieHolder(parent: ViewGroup) : BaseContentHolder<Movie>(parent, layoutId) {
 
         override fun bindData(item: Movie) = with(item) {
-            val yearOnly = releaseDate.getYearOnly()
-            contentTitle.text = if (yearOnly.isNotEmpty()) "$title ($yearOnly)" else "$title"
-
-            averageVoteText.setLabelText(voteAverage.toString())
+            contentTitle.setTitleAndYear(title, releaseDate)
+            averageVoteText?.setLabelText(voteAverage.toString())
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }

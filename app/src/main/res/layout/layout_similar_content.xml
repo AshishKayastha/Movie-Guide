@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Match.Width"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/spacing_medium">
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/similar_content_title"
+        style="@style/MovieDetailTitle"
+        android:text="@string/similar_movies_title" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/similar_content_recycler_view"
+        style="@style/MovieDetailRecyclerView" />
+
+</LinearLayout>

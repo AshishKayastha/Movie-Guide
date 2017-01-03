@@ -2,46 +2,33 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Match.Width"
+    style="@style/Wrap"
     android:foreground="?selectableItemBackground"
     app:cardCornerRadius="@dimen/padding_2dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/item_content_view"
-        style="@style/Match.Width">
+        style="@style/Match.Width"
+        android:orientation="vertical">
 
         <com.ashish.movies.ui.widget.AspectRatioImageView
             android:id="@+id/poster_image"
-            style="@style/Match.Width"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:transitionName="@string/transition_poster_image"
             app:heightRatio="1.5"
             tools:ignore="ContentDescription"
             tools:targetApi="lollipop" />
 
-        <com.ashish.movies.ui.widget.LabelLayout
-            android:id="@+id/avg_vote_text"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="2016"
-            android:textSize="@dimen/text_size_large"
-            android:visibility="gone"
-            app:labelBackground="#D50000"
-            app:labelGravity="topLeft"
-            app:labelHeight="36dp"
-            app:labelTextColor="@android:color/white"
-            tools:ignore="HardcodedText" />
-
         <com.ashish.movies.ui.widget.FontTextView
             android:id="@+id/content_title"
             style="@style/PrimaryText"
-            android:layout_below="@id/poster_image"
             android:lineSpacingExtra="@dimen/spacing_micro"
             android:maxLines="3"
             android:padding="@dimen/spacing_large"
             app:fontName="@string/font_montserrat_medium"
             tools:text="Movie Title" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

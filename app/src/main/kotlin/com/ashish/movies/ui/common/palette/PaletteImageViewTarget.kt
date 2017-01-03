@@ -30,5 +30,5 @@ class PaletteImageViewTarget(val holder: BaseContentHolder<*>) : ImageViewTarget
         }
     }
 
-    override fun setResource(resource: PaletteBitmap?) = super.view.setImageBitmap(resource?.bitmap)
+    override fun setResource(paletteBitmap: PaletteBitmap?) = super.view.setImageBitmap(paletteBitmap?.bitmap)
 }

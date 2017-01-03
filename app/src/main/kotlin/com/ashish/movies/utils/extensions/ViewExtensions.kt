@@ -10,9 +10,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.ashish.movies.R
+import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.utils.FontUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.ImageViewTarget
 
 /**
  * Created by Ashish on Dec 27.
@@ -70,4 +74,21 @@ inline fun animateColorChange(startColor: Int, endColor: Int, crossinline func: 
 fun View.getPosterImagePair(transitionName: String): Pair<View, String>? {
     val posterImageView = findViewById(R.id.poster_image)
     return if (posterImageView != null) Pair.create(posterImageView, transitionName) else null
+}
+
+fun TextView.setTitleAndYear(title: String?, releaseDate: String?) {
+    val yearOnly = releaseDate.getYearOnly()
+    text = if (yearOnly.isNotEmpty()) "$title ($yearOnly)" else "$title"
+}
+
+fun ImageView.loadPaletteBitmap(imageUrl: String, func: ((PaletteBitmap?) -> Unit)? = null) {
+    Glide.with(context)
+            .transcodePaletteBitmap(context)
+            .load(imageUrl)
+            .into(object : ImageViewTarget<PaletteBitmap>(this) {
+                override fun setResource(paletteBitmap: PaletteBitmap?) {
+                    super.view.setImageBitmap(paletteBitmap?.bitmap)
+                    func?.invoke(paletteBitmap)
+                }
+            })
 }
