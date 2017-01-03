@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Match.Width"
     android:foreground="?selectableItemBackground"
-    app:cardCornerRadius="@dimen/padding_2dp">
+    android:stateListAnimator="@animator/raise"
+    app:cardCornerRadius="@dimen/padding_2dp"
+    tools:targetApi="lollipop">
 
     <RelativeLayout
         android:id="@+id/item_content_view"
