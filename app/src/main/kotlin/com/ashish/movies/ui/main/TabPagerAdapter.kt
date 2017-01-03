@@ -2,9 +2,9 @@ package com.ashish.movies.ui.main
 
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
-import com.ashish.movies.ui.movie.MovieFragment
-import com.ashish.movies.ui.people.PeopleFragment
-import com.ashish.movies.ui.tvshow.TVShowFragment
+import com.ashish.movies.ui.movie.list.MovieFragment
+import com.ashish.movies.ui.people.list.PeopleFragment
+import com.ashish.movies.ui.tvshow.list.TVShowFragment
 
 /**
  * Created by Ashish on Dec 27.

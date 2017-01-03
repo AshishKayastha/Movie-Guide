@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.tvshow
+package com.ashish.movies.ui.tvshow.list
 
 import com.ashish.movies.data.interactors.TVShowInteractor
 import dagger.Module

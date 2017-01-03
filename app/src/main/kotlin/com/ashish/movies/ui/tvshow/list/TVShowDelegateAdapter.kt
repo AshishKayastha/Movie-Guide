@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.tvshow
+package com.ashish.movies.ui.tvshow.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup

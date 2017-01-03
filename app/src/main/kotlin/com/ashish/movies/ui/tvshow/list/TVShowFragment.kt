@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.tvshow
+package com.ashish.movies.ui.tvshow.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
+import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
 
 /**
  * Created by Ashish on Dec 29.
@@ -45,6 +46,7 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow, BaseRecyclerViewMvpView<
     override fun getAdapterType() = ADAPTER_TYPE_TV_SHOW
 
     override fun getDetailIntent(position: Int): Intent? {
-        return null
+        val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
+        return TVShowDetailActivity.createIntent(activity, tvShow)
     }
 }

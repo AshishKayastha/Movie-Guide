@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.movie
+package com.ashish.movies.ui.movie.list
 
 import com.ashish.movies.data.interactors.MovieInteractor
 import dagger.Module

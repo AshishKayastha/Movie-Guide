@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.movie
+package com.ashish.movies.ui.movie.list
 
 import dagger.Subcomponent
 

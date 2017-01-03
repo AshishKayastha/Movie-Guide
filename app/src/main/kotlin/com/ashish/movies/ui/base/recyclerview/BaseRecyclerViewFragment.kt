@@ -129,5 +129,6 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         recyclerViewAdapter.removeListener()
         swipeRefreshLayout.clearAnimation()
         recyclerView.clearOnScrollListeners()
+        swipeRefreshLayout.setOnRefreshListener(null)
     }
 }

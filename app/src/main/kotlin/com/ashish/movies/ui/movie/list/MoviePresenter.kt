@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.movie
+package com.ashish.movies.ui.movie.list
 
 import com.ashish.movies.data.api.MovieApi.Companion.NOW_PLAYING
 import com.ashish.movies.data.api.MovieApi.Companion.POPULAR

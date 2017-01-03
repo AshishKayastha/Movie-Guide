@@ -1,9 +1,9 @@
-package com.ashish.movies.ui.moviedetail
+package com.ashish.movies.ui.movie.detail
 
 import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.CreditResults
+import com.ashish.movies.data.models.DetailResults
 import com.ashish.movies.data.models.Movie
-import com.ashish.movies.data.models.MovieDetail
 import com.ashish.movies.data.models.Results
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
 import io.reactivex.Observable
@@ -23,23 +23,24 @@ class MovieDetailPresenter @Inject constructor(val movieInteractor: MovieInterac
                 movieInteractor.getMovieDetail(id),
                 movieInteractor.getMovieCredits(id),
                 movieInteractor.getSimilarMovies(id),
-                Function3<Movie, CreditResults, Results<Movie>, MovieDetail> { movie, creditsResults, similarMovieResults
+                Function3<Movie, CreditResults, Results<Movie>, DetailResults<Movie>> { movie, creditsResults,
+                                                                                        similarMovieResults
                     ->
-                    MovieDetail(movie, creditsResults, similarMovieResults?.results)
+                    DetailResults(movie, creditsResults, similarMovieResults?.results)
                 })
                 .subscribe({ showMovieDetailContents(it) }, { Timber.e(it) })
     }
 
-    private fun showMovieDetailContents(movieDetail: MovieDetail) {
+    private fun showMovieDetailContents(detailResults: DetailResults<Movie>) {
         getView()?.apply {
             hideProgress()
-            showDetailContent(movieDetail.movie)
+            showDetailContent(detailResults.item)
 
-            val creditResults = movieDetail.creditResults
+            val creditResults = detailResults.creditResults
             showItemList(creditResults?.cast) { showCastList(it) }
             showItemList(creditResults?.crew) { showCrewList(it) }
 
-            showItemList(movieDetail.similarMovies) { showSimilarContentList(it) }
+            showItemList(detailResults.similarItems) { showSimilarContentList(it) }
         }
     }
 }

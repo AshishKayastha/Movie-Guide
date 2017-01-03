@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.moviedetail
+package com.ashish.movies.ui.movie.detail
 
 import android.content.Context
 import android.content.Intent

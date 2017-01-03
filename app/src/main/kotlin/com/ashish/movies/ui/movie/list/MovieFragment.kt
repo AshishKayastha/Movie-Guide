@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.movie
+package com.ashish.movies.ui.movie.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,7 @@ import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MOVIE
-import com.ashish.movies.ui.moviedetail.MovieDetailActivity
+import com.ashish.movies.ui.movie.detail.MovieDetailActivity
 
 /**
  * Created by Ashish on Dec 26.

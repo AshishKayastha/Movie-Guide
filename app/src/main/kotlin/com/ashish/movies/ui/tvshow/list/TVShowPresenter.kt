@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.tvshow
+package com.ashish.movies.ui.tvshow.list
 
 import com.ashish.movies.data.api.TVShowApi.Companion.AIRING_TODAY
 import com.ashish.movies.data.api.TVShowApi.Companion.ON_THE_AIR

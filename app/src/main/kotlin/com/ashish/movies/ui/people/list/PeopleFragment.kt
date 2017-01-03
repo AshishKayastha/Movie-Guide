@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.people
+package com.ashish.movies.ui.people.list
 
 import android.content.Intent
 import android.os.Bundle

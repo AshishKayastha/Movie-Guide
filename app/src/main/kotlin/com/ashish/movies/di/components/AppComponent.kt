@@ -3,14 +3,16 @@ package com.ashish.movies.di.components
 import com.ashish.movies.di.modules.ApiModule
 import com.ashish.movies.di.modules.AppModule
 import com.ashish.movies.di.modules.NetModule
-import com.ashish.movies.ui.movie.MovieModule
-import com.ashish.movies.ui.movie.MovieSubComponent
-import com.ashish.movies.ui.moviedetail.MovieDetailModule
-import com.ashish.movies.ui.moviedetail.MovieDetailSubComponent
-import com.ashish.movies.ui.people.PeopleModule
-import com.ashish.movies.ui.people.PeopleSubComponent
-import com.ashish.movies.ui.tvshow.TVShowModule
-import com.ashish.movies.ui.tvshow.TVShowSubComponent
+import com.ashish.movies.ui.movie.detail.MovieDetailModule
+import com.ashish.movies.ui.movie.detail.MovieDetailSubComponent
+import com.ashish.movies.ui.movie.list.MovieModule
+import com.ashish.movies.ui.movie.list.MovieSubComponent
+import com.ashish.movies.ui.people.list.PeopleModule
+import com.ashish.movies.ui.people.list.PeopleSubComponent
+import com.ashish.movies.ui.tvshow.detail.TVShowDetailModule
+import com.ashish.movies.ui.tvshow.detail.TVShowDetailSubComponent
+import com.ashish.movies.ui.tvshow.list.TVShowModule
+import com.ashish.movies.ui.tvshow.list.TVShowSubComponent
 import dagger.Component
 import javax.inject.Singleton
 
@@ -28,4 +30,6 @@ interface AppComponent {
     fun plus(peopleModule: PeopleModule): PeopleSubComponent
 
     fun plus(movieDetailModule: MovieDetailModule): MovieDetailSubComponent
+
+    fun plus(tvShowDetailModule: TVShowDetailModule): TVShowDetailSubComponent
 }

@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.people
+package com.ashish.movies.ui.people.list
 
 import com.ashish.movies.data.interactors.PeopleInteractor
 import dagger.Module

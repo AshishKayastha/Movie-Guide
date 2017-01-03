@@ -88,7 +88,9 @@ abstract class BaseDetailActivity<I : ViewType, V : BaseDetailMvpView<I>, P : Ba
         supportPostponeEnterTransition()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        getIntentExtras(intent.extras)
+        if (savedInstanceState == null) {
+            getIntentExtras(intent.extras)
+        }
 
         showPosterImage()
         showBackdropImage()

@@ -1,5 +1,6 @@
 package com.ashish.movies.data.api
 
+import com.ashish.movies.data.models.CreditResults
 import com.ashish.movies.data.models.Results
 import com.ashish.movies.data.models.TVShow
 import io.reactivex.Observable
@@ -21,4 +22,13 @@ interface TVShowApi {
 
     @GET("tv/{tvShowType}")
     fun getTVShows(@Path("tvShowType") tvShowType: String?, @Query("page") page: Int = 1): Observable<Results<TVShow>>
+
+    @GET("tv/{tvId}")
+    fun getTVShowDetail(@Path("tvId") tvId: Long): Observable<TVShow>
+
+    @GET("tv/{tvId}/credits")
+    fun getTVShowCredits(@Path("tvId") tvId: Long): Observable<CreditResults>
+
+    @GET("tv/{tvId}/similar")
+    fun getSimilarTVShows(@Path("tvId") tvId: Long): Observable<Results<TVShow>>
 }

@@ -20,12 +20,10 @@ data class Movie(
         val revenue: Int? = null,
         val status: String? = null,
         val tagline: String? = null,
-        val popularity: Double? = null,
         val genres: List<Genre>? = null,
+        @Json(name = "imdb_id") val imdbId: String? = null,
         @Json(name = "poster_path") val posterPath: String? = null,
         @Json(name = "backdrop_path") val backdropPath: String? = null,
-        @Json(name = "imdb_id") val imdbId: String? = null,
-        @Json(name = "vote_count") val voteCount: Int? = null,
         @Json(name = "release_date") val releaseDate: String? = null,
         @Json(name = "vote_average") val voteAverage: Double? = null
 ) : ViewType, Parcelable {
@@ -33,7 +31,6 @@ data class Movie(
     override fun getViewType() = CONTENT_VIEW
 
     companion object {
-
         @JvmField @Suppress("unused")
         val CREATOR = PaperParcelMovie.CREATOR
     }

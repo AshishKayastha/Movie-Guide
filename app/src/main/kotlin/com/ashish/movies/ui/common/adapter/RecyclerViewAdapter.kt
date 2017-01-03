@@ -7,9 +7,9 @@ import com.ashish.movies.R
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.LOADING_VIEW
-import com.ashish.movies.ui.movie.MovieDelegateAdapter
-import com.ashish.movies.ui.people.PeopleDelegateAdapter
-import com.ashish.movies.ui.tvshow.TVShowDelegateAdapter
+import com.ashish.movies.ui.movie.list.MovieDelegateAdapter
+import com.ashish.movies.ui.people.list.PeopleDelegateAdapter
+import com.ashish.movies.ui.tvshow.list.TVShowDelegateAdapter
 import com.bumptech.glide.Glide
 import java.util.*
 

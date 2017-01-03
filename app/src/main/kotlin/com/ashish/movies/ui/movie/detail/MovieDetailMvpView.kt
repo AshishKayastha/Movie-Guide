@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.moviedetail
+package com.ashish.movies.ui.movie.detail
 
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.ui.base.detail.BaseDetailMvpView

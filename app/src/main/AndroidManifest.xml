@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name="com.ashish.movies.ui.main.MainActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,7 +22,11 @@
         </activity>
 
         <activity
-            android:name=".ui.moviedetail.MovieDetailActivity"
+            android:name=".ui.movie.detail.MovieDetailActivity"
+            android:label="" />
+
+        <activity
+            android:name=".ui.tvshow.detail.TVShowDetailActivity"
             android:label="" />
 
     </application>
