@@ -2,6 +2,7 @@ package com.ashish.movies.ui.base.detail
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.annotation.StringRes
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView
 import android.transition.Transition
 import android.view.View
 import android.view.ViewStub
+import android.widget.ImageButton
 import android.widget.ImageView
 import butterknife.bindView
 import com.ashish.movies.R
@@ -21,17 +23,22 @@ import com.ashish.movies.ui.base.mvp.MvpActivity
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_CREDIT
 import com.ashish.movies.ui.common.adapter.ViewType
+import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.extensions.animateBackgroundColorChange
+import com.ashish.movies.utils.extensions.animateColorChange
 import com.ashish.movies.utils.extensions.animateTextColorChange
 import com.ashish.movies.utils.extensions.dpToPx
 import com.ashish.movies.utils.extensions.getActivityOptionsCompat
 import com.ashish.movies.utils.extensions.getColorCompat
 import com.ashish.movies.utils.extensions.getPosterImagePair
 import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.isDark
 import com.ashish.movies.utils.extensions.loadPaletteBitmap
+import com.ashish.movies.utils.extensions.scrimify
+import com.ashish.movies.utils.extensions.setLightStatusBar
 import com.ashish.movies.utils.extensions.setPaletteColor
 import com.ashish.movies.utils.extensions.show
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
@@ -63,6 +70,7 @@ abstract class BaseDetailActivity<I : ViewType, V : BaseDetailMvpView<I>, P : Ba
 
     protected var item: I? = null
 
+    private var statusBarColor: Int = 0
     private var loadContent: Boolean = true
     private lateinit var sharedElementEnterTransition: Transition
 
@@ -129,9 +137,41 @@ abstract class BaseDetailActivity<I : ViewType, V : BaseDetailMvpView<I>, P : Ba
                 supportStartPostponedEnterTransition()
 
                 paletteBitmap.setPaletteColor { swatch ->
-                    titleText.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
+                    val rgbColor = swatch.rgb
+                    setTopBarColorAndAnimate(paletteBitmap, rgbColor)
+                    titleText.animateBackgroundColorChange(Color.TRANSPARENT, rgbColor)
                     titleText.animateTextColorChange(getColorCompat(R.color.primary_text_light), swatch.bodyTextColor)
                 }
+            }
+        }
+    }
+
+    private fun setTopBarColorAndAnimate(paletteBitmap: PaletteBitmap?, rgbColor: Int) {
+        if (paletteBitmap != null) {
+            val isDark = paletteBitmap.bitmap.isDark(paletteBitmap.palette)
+
+            if (!isDark) {
+                window.decorView.setLightStatusBar()
+                val backButton = toolbar?.getChildAt(0) as ImageButton
+
+                val transBlack = getColorCompat(R.color.black_80_transparent)
+                backButton.setColorFilter(transBlack)
+                collapsingToolbar.setCollapsedTitleTextColor(transBlack)
+            }
+
+            /**
+             * Color the status bar. Set a complementary dark color on L,
+             * light or dark color on M (with matching status bar icons)
+             */
+            statusBarColor = window.statusBarColor
+            collapsingToolbar.setContentScrimColor(rgbColor)
+
+            if (isDark || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                statusBarColor = rgbColor.scrimify(isDark)
+            }
+
+            if (statusBarColor != window.statusBarColor) {
+                animateColorChange(window.statusBarColor, statusBarColor, 500L) { window.statusBarColor = it }
             }
         }
     }

@@ -31,3 +31,9 @@ inline fun isLollipopOrAbove(func: () -> Unit) {
         func()
     }
 }
+
+inline fun isMarshmallowOrAbove(func: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        func()
+    }
+}

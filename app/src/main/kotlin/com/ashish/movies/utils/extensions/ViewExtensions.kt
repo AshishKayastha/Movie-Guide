@@ -2,6 +2,7 @@ package com.ashish.movies.utils.extensions
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.support.design.widget.Snackbar
 import android.support.v4.util.Pair
 import android.support.v4.view.animation.FastOutSlowInInterpolator
@@ -17,6 +18,7 @@ import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.utils.FontUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.ImageViewTarget
+
 
 /**
  * Created by Ashish on Dec 27.
@@ -54,18 +56,19 @@ fun TextView.changeTypeface() {
 }
 
 fun View.animateBackgroundColorChange(startColor: Int, endColor: Int) {
-    animateColorChange(startColor, endColor, { setBackgroundColor(it) })
+    animateColorChange(startColor, endColor, onAnimationUpdate = { setBackgroundColor(it) })
 }
 
 fun TextView.animateTextColorChange(startColor: Int, endColor: Int) {
-    animateColorChange(startColor, endColor, { setTextColor(it) })
+    animateColorChange(startColor, endColor, onAnimationUpdate = { setTextColor(it) })
 }
 
-inline fun animateColorChange(startColor: Int, endColor: Int, crossinline func: (color: Int) -> Unit) {
+inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 800L,
+                              crossinline onAnimationUpdate: (color: Int) -> Unit) {
     val colorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), startColor, endColor)
     colorAnimator.apply {
-        addUpdateListener { animation -> func(animation.animatedValue as Int) }
-        duration = 800L
+        addUpdateListener { animation -> onAnimationUpdate(animation.animatedValue as Int) }
+        this.duration = duration
         interpolator = FastOutSlowInInterpolator()
         start()
     }
@@ -99,5 +102,14 @@ fun TextView.applyText(text: String?) {
         this.text = text
     } else {
         hide()
+    }
+}
+
+@SuppressLint("InlinedApi")
+fun View.setLightStatusBar() {
+    isMarshmallowOrAbove {
+        var flags = systemUiVisibility
+        flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        systemUiVisibility = flags
     }
 }
