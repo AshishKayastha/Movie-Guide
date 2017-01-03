@@ -1,5 +1,6 @@
 package com.ashish.movies.ui.people
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movies.R
@@ -31,7 +32,7 @@ class PeopleFragment : BaseRecyclerViewFragment<People, BaseRecyclerViewMvpView<
 
     override fun getAdapterType() = ADAPTER_TYPE_PEOPLE
 
-    override fun onItemClick(position: Int) {
-
+    override fun getDetailIntent(position: Int): Intent? {
+        return null
     }
 }

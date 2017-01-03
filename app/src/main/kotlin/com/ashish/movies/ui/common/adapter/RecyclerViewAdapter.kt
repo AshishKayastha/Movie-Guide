@@ -15,8 +15,8 @@ import java.util.*
 /**
  * Created by Ashish on Dec 30.
  */
-class RecyclerViewAdapter<in I : ViewType>(adapterType: Int, onItemClickListener: OnItemClickListener)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecyclerViewAdapter<in I : ViewType>(val adapterType: Int, onItemClickListener: OnItemClickListener?)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
 
     companion object {
         const val ADAPTER_TYPE_MOVIE = 0
@@ -34,7 +34,7 @@ class RecyclerViewAdapter<in I : ViewType>(adapterType: Int, onItemClickListener
 
     init {
         delegateAdapters.put(LOADING_VIEW, LoadingDelegateAdapter())
-        delegateAdapters.put(CONTENT_VIEW, DELEGATE_ADAPTERS[adapterType])
+        delegateAdapters.put(CONTENT_VIEW, DELEGATE_ADAPTERS[adapterType] as ViewTypeDelegateAdapter)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -79,4 +79,6 @@ class RecyclerViewAdapter<in I : ViewType>(adapterType: Int, onItemClickListener
         notifyItemRangeChanged(loadingItemPosition, itemCount)
         return loadingItemPosition
     }
+
+    override fun removeListener() = (DELEGATE_ADAPTERS[adapterType] as RemoveListener).removeListener()
 }

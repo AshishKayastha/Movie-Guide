@@ -1,5 +1,6 @@
 package com.ashish.movies.ui.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movies.R
@@ -44,8 +45,8 @@ class MovieFragment : BaseRecyclerViewFragment<Movie, BaseRecyclerViewMvpView<Mo
 
     override fun getAdapterType() = ADAPTER_TYPE_MOVIE
 
-    override fun onItemClick(position: Int) {
+    override fun getDetailIntent(position: Int): Intent? {
         val movie = recyclerViewAdapter.getItem<Movie>(position)
-        startActivity(MovieDetailActivity.createIntent(activity, movie))
+        return MovieDetailActivity.createIntent(activity, movie)
     }
 }

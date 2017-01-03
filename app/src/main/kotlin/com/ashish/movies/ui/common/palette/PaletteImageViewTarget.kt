@@ -16,7 +16,6 @@ import com.bumptech.glide.request.target.ImageViewTarget
 class PaletteImageViewTarget(val holder: BaseContentHolder<*>) : ImageViewTarget<PaletteBitmap>(holder.posterImage) {
 
     private val primaryTextColor = holder.itemView.context.getColorCompat(R.color.primary_text_light)
-    private val secondaryTextColor = holder.itemView.context.getColorCompat(R.color.secondary_text_light)
 
     override fun onResourceReady(resource: PaletteBitmap?, glideAnimation: GlideAnimation<in PaletteBitmap>?) {
         if (glideAnimation == null || !glideAnimation.animate(resource, this)) {
@@ -25,9 +24,8 @@ class PaletteImageViewTarget(val holder: BaseContentHolder<*>) : ImageViewTarget
 
         resource.setPaletteColor { swatch ->
             with(holder) {
-                contentView.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
+                contentTitle.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
                 contentTitle.animateTextColorChange(primaryTextColor, swatch.titleTextColor)
-                contentSubtitle.animateTextColorChange(secondaryTextColor, swatch.bodyTextColor)
             }
         }
     }

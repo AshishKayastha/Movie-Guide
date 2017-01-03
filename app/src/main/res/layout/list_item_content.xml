@@ -14,8 +14,10 @@
             android:id="@+id/poster_image"
             style="@style/Match.Width"
             android:scaleType="centerCrop"
+            android:transitionName="@string/transition_poster_image"
             app:heightRatio="1.5"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:targetApi="lollipop" />
 
         <com.ashish.movies.ui.widget.LabelLayout
             android:id="@+id/avg_vote_text"
@@ -34,24 +36,10 @@
             style="@style/PrimaryText"
             android:layout_below="@id/poster_image"
             android:lineSpacingExtra="@dimen/spacing_micro"
-            android:maxLines="2"
-            android:paddingEnd="@dimen/spacing_large"
-            android:paddingStart="@dimen/spacing_large"
-            android:paddingTop="@dimen/spacing_large"
+            android:maxLines="3"
+            android:padding="@dimen/spacing_large"
             app:fontName="@string/font_montserrat_medium"
             tools:text="Movie Title" />
-
-        <com.ashish.movies.ui.widget.FontTextView
-            android:id="@+id/content_subtitle"
-            style="@style/SecondaryText"
-            android:layout_below="@id/content_title"
-            android:layout_marginTop="@dimen/spacing_micro"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/spacing_large"
-            android:paddingEnd="@dimen/spacing_large"
-            android:paddingStart="@dimen/spacing_large"
-            android:paddingTop="@dimen/padding_2dp"
-            tools:text="Movie SubTitle" />
 
     </RelativeLayout>
 

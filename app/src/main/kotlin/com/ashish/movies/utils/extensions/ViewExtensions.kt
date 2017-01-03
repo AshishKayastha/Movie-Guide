@@ -3,6 +3,7 @@ package com.ashish.movies.utils.extensions
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.support.design.widget.Snackbar
+import android.support.v4.util.Pair
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
+import com.ashish.movies.R
 import com.ashish.movies.utils.FontUtils
 
 /**
@@ -55,7 +57,7 @@ fun TextView.animateTextColorChange(startColor: Int, endColor: Int) {
     animateColorChange(startColor, endColor, { setTextColor(it) })
 }
 
-fun animateColorChange(startColor: Int, endColor: Int, func: (color: Int) -> Unit) {
+inline fun animateColorChange(startColor: Int, endColor: Int, crossinline func: (color: Int) -> Unit) {
     val colorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), startColor, endColor)
     colorAnimator.apply {
         addUpdateListener { animation -> func(animation.animatedValue as Int) }
@@ -63,4 +65,9 @@ fun animateColorChange(startColor: Int, endColor: Int, func: (color: Int) -> Uni
         interpolator = FastOutSlowInInterpolator()
         start()
     }
+}
+
+fun View.getPosterImagePair(transitionName: String): Pair<View, String>? {
+    val posterImageView = findViewById(R.id.poster_image)
+    return if (posterImageView != null) Pair.create(posterImageView, transitionName) else null
 }

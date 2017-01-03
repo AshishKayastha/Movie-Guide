@@ -2,6 +2,7 @@ package com.ashish.movies.utils.extensions
 
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import android.support.v4.content.ContextCompat
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.common.palette.PaletteBitmapTranscoder
@@ -27,3 +28,13 @@ fun RequestManager.transcodePaletteBitmap(context: Context): BitmapRequestBuilde
 }
 
 fun Context.getColorCompat(colorResId: Int) = ContextCompat.getColor(this, colorResId)
+
+fun isLollipopOrAbove(func: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        func()
+    }
+}
+
+fun String?.getYearOnly(): String {
+    return if (isNotNullOrEmpty()) this!!.slice(0..3) else ""
+}

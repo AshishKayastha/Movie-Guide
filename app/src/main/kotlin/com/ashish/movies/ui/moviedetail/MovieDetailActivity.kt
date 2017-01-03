@@ -66,6 +66,8 @@ class MovieDetailActivity : MvpActivity<LceView, MovieDetailPresenter>(), LceVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportPostponeEnterTransition()
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
@@ -110,6 +112,7 @@ class MovieDetailActivity : MvpActivity<LceView, MovieDetailPresenter>(), LceVie
                     .into(object : ImageViewTarget<PaletteBitmap>(moviePosterImage) {
                         override fun setResource(resource: PaletteBitmap?) {
                             super.view.setImageBitmap(resource?.bitmap)
+                            supportStartPostponedEnterTransition()
 
                             resource.setPaletteColor { swatch ->
                                 movieTitle.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)

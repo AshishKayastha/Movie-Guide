@@ -1,6 +1,8 @@
 package com.ashish.movies.ui.base.recyclerview
 
+import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
@@ -16,6 +18,8 @@ import com.ashish.movies.ui.widget.EmptyRecyclerView
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
+import com.ashish.movies.utils.extensions.getActivityOptionsCompat
+import com.ashish.movies.utils.extensions.getPosterImagePair
 import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.setVisibility
 import com.ashish.movies.utils.extensions.show
@@ -105,6 +109,16 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     override fun resetLoading() = scrollListener.resetLoading()
 
+    override fun onItemClick(position: Int, view: View) {
+        val posterImagePair = view.getPosterImagePair(getString(R.string.transition_poster_image))
+        val options = activity.getActivityOptionsCompat(posterImagePair)
+
+        activity.window.exitTransition = null
+        ActivityCompat.startActivity(activity, getDetailIntent(position), options?.toBundle())
+    }
+
+    abstract fun getDetailIntent(position: Int): Intent?
+
     override fun onDestroyView() {
         performCleanup()
         super.onDestroyView()
@@ -112,6 +126,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     protected fun performCleanup() {
         recyclerView.adapter = null
+        recyclerViewAdapter.removeListener()
         swipeRefreshLayout.clearAnimation()
         recyclerView.clearOnScrollListeners()
     }

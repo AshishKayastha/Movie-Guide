@@ -1,5 +1,6 @@
 package com.ashish.movies.ui.tvshow
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movies.R
@@ -43,7 +44,7 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow, BaseRecyclerViewMvpView<
 
     override fun getAdapterType() = ADAPTER_TYPE_TV_SHOW
 
-    override fun onItemClick(position: Int) {
-
+    override fun getDetailIntent(position: Int): Intent? {
+        return null
     }
 }

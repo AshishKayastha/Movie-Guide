@@ -23,4 +23,5 @@
     <!-- People -->
     <string name="title_people">People</string>
     <string name="no_people_available">No People Available</string>
+    <string name="transition_poster_image">transition_poster_image</string>
 </resources>

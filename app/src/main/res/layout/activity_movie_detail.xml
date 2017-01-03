@@ -63,6 +63,7 @@
                     android:layout_width="110dp"
                     android:layout_height="156dp"
                     android:scaleType="centerCrop"
+                    android:transitionName="@string/transition_poster_image"
                     tools:ignore="ContentDescription" />
 
                 <com.ashish.movies.ui.widget.FontTextView
