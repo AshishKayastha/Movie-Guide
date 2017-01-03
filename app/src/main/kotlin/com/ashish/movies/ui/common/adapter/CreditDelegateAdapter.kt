@@ -6,6 +6,8 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.utils.Constants.PROFILE_ORIGINAL_URL_PREFIX
+import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 
 /**
  * Created by Ashish on Jan 03.
@@ -27,7 +29,8 @@ class CreditDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
     inner class CreditHolder(parent: ViewGroup) : BaseContentHolder<Credit>(parent, layoutId) {
 
         override fun bindData(item: Credit) = with(item) {
-            contentTitle.text = name
+            contentTitle.applyText(name)
+            contentSubtitle.applyText(if (job.isNotNullOrEmpty()) job else character)
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }

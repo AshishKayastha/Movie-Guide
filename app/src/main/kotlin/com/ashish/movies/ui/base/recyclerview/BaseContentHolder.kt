@@ -1,6 +1,7 @@
 package com.ashish.movies.ui.base.recyclerview
 
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewGroup
 import butterknife.bindOptionalView
 import butterknife.bindView
@@ -23,7 +24,9 @@ import com.bumptech.glide.request.target.Target
 abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup, layoutId: Int = R.layout.list_item_content)
     : RecyclerView.ViewHolder(parent.inflate(layoutId)) {
 
+    val contentView: View by bindView(R.id.content_view)
     val contentTitle: FontTextView by bindView(R.id.content_title)
+    val contentSubtitle: FontTextView by bindView(R.id.content_subtitle)
     val posterImage: AspectRatioImageView by bindView(R.id.poster_image)
     val averageVoteText: LabelLayout? by bindOptionalView(R.id.avg_vote_text)
 

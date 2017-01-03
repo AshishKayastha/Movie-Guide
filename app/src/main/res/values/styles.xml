@@ -18,6 +18,7 @@
     <style name="Match">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="Match.Width">
@@ -27,6 +28,7 @@
     <style name="Wrap">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="PrimaryText" parent="Match.Width">
@@ -44,7 +46,6 @@
     </style>
 
     <style name="SecondaryText" parent="PrimaryText">
-        <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="android:textColor">@color/secondary_text_light</item>
     </style>
 

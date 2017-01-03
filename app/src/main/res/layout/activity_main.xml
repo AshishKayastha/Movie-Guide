@@ -26,7 +26,7 @@
                 style="@style/Match.Width"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@android:color/white"
-                app:tabIndicatorHeight="@dimen/spacing_micro"
+                app:tabIndicatorHeight="3dp"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@android:color/white"
                 app:tabTextColor="@color/greyish_white" />

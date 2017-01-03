@@ -8,8 +8,7 @@
 
     <LinearLayout
         android:id="@+id/item_content_view"
-        style="@style/Match.Width"
-        android:orientation="vertical">
+        style="@style/Match.Width">
 
         <com.ashish.movies.ui.widget.AspectRatioImageView
             android:id="@+id/poster_image"
@@ -20,14 +19,27 @@
             tools:ignore="ContentDescription"
             tools:targetApi="lollipop" />
 
-        <com.ashish.movies.ui.widget.FontTextView
-            android:id="@+id/content_title"
-            style="@style/PrimaryText"
-            android:lineSpacingExtra="@dimen/spacing_micro"
-            android:maxLines="3"
-            android:padding="@dimen/spacing_large"
-            app:fontName="@string/font_montserrat_medium"
-            tools:text="Movie Title" />
+        <LinearLayout
+            android:id="@+id/content_view"
+            style="@style/Match.Width"
+            android:padding="@dimen/spacing_large">
+
+            <com.ashish.movies.ui.widget.FontTextView
+                android:id="@+id/content_title"
+                style="@style/PrimaryText"
+                android:lineSpacingExtra="@dimen/spacing_micro"
+                android:maxLines="1"
+                app:fontName="@string/font_montserrat_medium"
+                tools:text="Movie Title" />
+
+            <com.ashish.movies.ui.widget.FontTextView
+                android:id="@+id/content_subtitle"
+                style="@style/SecondaryText"
+                android:layout_marginTop="@dimen/spacing_micro"
+                android:maxLines="1"
+                tools:text="Movie Subtitle" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

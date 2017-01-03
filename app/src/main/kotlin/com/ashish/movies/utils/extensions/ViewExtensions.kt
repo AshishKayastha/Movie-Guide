@@ -92,3 +92,12 @@ fun ImageView.loadPaletteBitmap(imageUrl: String, func: ((PaletteBitmap?) -> Uni
                 }
             })
 }
+
+fun TextView.applyText(text: String?) {
+    if (text.isNotNullOrEmpty()) {
+        show()
+        this.text = text
+    } else {
+        hide()
+    }
+}

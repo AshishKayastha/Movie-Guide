@@ -32,15 +32,28 @@
             app:labelTextColor="@android:color/white"
             tools:ignore="HardcodedText" />
 
-        <com.ashish.movies.ui.widget.FontTextView
-            android:id="@+id/content_title"
-            style="@style/PrimaryText"
+        <LinearLayout
+            android:id="@+id/content_view"
+            style="@style/Match.Width"
             android:layout_below="@id/poster_image"
-            android:lineSpacingExtra="@dimen/spacing_micro"
-            android:maxLines="3"
-            android:padding="@dimen/spacing_large"
-            app:fontName="@string/font_montserrat_medium"
-            tools:text="Movie Title" />
+            android:padding="@dimen/spacing_large">
+
+            <com.ashish.movies.ui.widget.FontTextView
+                android:id="@+id/content_title"
+                style="@style/PrimaryText"
+                android:lineSpacingExtra="@dimen/spacing_micro"
+                android:maxLines="2"
+                app:fontName="@string/font_montserrat_medium"
+                tools:text="Movie Title" />
+
+            <com.ashish.movies.ui.widget.FontTextView
+                android:id="@+id/content_subtitle"
+                style="@style/SecondaryText"
+                android:layout_marginTop="@dimen/spacing_micro"
+                android:maxLines="1"
+                tools:text="Movie Subtitle" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

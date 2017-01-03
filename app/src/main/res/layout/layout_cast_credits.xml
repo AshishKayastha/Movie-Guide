@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Match.Width"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/spacing_medium">
 
     <com.ashish.movies.ui.widget.FontTextView
-        android:id="@+id/cast_title"
+        android:id="@+id/cast_credits_title"
         style="@style/MovieDetailTitle"
-        android:text="@string/cast_title" />
+        android:text="@string/cast_credits_title" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cast_recycler_view"

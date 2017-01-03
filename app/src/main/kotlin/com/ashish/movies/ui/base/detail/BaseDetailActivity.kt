@@ -62,15 +62,22 @@ abstract class BaseDetailActivity<I : ViewType, V : BaseDetailMvpView<I>, P : Ba
     protected val crewViewStub: ViewStub by bindView(R.id.crew_view_stub)
 
     protected var item: I? = null
-    protected lateinit var sharedElementEnterTransition: Transition
 
-    protected lateinit var castAdapter: RecyclerViewAdapter<Credit>
-    protected lateinit var crewAdapter: RecyclerViewAdapter<Credit>
+    private var loadContent: Boolean = true
+    private lateinit var sharedElementEnterTransition: Transition
+
+    private lateinit var castAdapter: RecyclerViewAdapter<Credit>
+    private lateinit var crewAdapter: RecyclerViewAdapter<Credit>
 
     protected val transitionListener = object : Transition.TransitionListener {
         override fun onTransitionStart(transition: Transition) {}
 
-        override fun onTransitionEnd(transition: Transition) = loadDetailContent()
+        override fun onTransitionEnd(transition: Transition) {
+            if (loadContent) {
+                loadDetailContent()
+                loadContent = false
+            }
+        }
 
         override fun onTransitionCancel(transition: Transition) {}
 

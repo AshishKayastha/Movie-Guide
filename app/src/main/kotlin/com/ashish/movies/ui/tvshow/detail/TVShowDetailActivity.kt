@@ -14,6 +14,7 @@ import com.ashish.movies.ui.base.detail.BaseDetailMvpView
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
+import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import com.ashish.movies.utils.extensions.getFormattedGenres
@@ -85,6 +86,11 @@ class TVShowDetailActivity : BaseDetailActivity<TVShow, BaseDetailMvpView<TVShow
     override fun showSimilarContentList(similarItemList: List<TVShow>) {
         similarTVShowsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_TV_SHOW,
                 onSimilarTVShowItemClickLitener)
+
+        similarTVShowsViewStub.setOnInflateListener { viewStub, view ->
+            val textView = view.findViewById(R.id.similar_content_title) as FontTextView
+            textView.setText(R.string.similar_tv_shows_title)
+        }
 
         inflateViewStubRecyclerView(similarTVShowsViewStub, R.id.similar_content_recycler_view,
                 similarTVShowsAdapter, similarItemList)

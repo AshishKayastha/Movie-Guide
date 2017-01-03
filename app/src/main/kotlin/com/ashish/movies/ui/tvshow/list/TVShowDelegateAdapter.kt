@@ -10,7 +10,8 @@ import com.ashish.movies.ui.common.adapter.RemoveListener
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
-import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.getYearOnly
 
 /**
  * Created by Ashish on Dec 30.
@@ -32,7 +33,8 @@ class TVShowDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
     inner class TVShowHolder(parent: ViewGroup) : BaseContentHolder<TVShow>(parent, layoutId) {
 
         override fun bindData(item: TVShow) = with(item) {
-            contentTitle.setTitleAndYear(name, firstAirDate)
+            contentTitle.applyText(name)
+            contentSubtitle.applyText(firstAirDate.getYearOnly())
             averageVoteText?.setLabelText(voteAverage.toString())
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)

@@ -33,7 +33,9 @@
     <string name="release_date_title">Release Date:</string>
     <string name="budget_title">Budget:</string>
     <string name="revenue_title">Revenue:</string>
+
+    <string name="cast_credits_title">Cast Credits</string>
+    <string name="crew_credits_title">Crew Credits</string>
     <string name="similar_movies_title">Similar Movies</string>
-    <string name="crew_title">Crew</string>
-    <string name="cast_title">Casts</string>
+    <string name="similar_tv_shows_title">Simiilar Television Shows</string>
 </resources>

@@ -10,7 +10,8 @@ import com.ashish.movies.ui.common.adapter.RemoveListener
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
-import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.getYearOnly
 
 /**
  * Created by Ashish on Dec 30.
@@ -32,7 +33,8 @@ class MovieDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
     inner class MovieHolder(parent: ViewGroup) : BaseContentHolder<Movie>(parent, layoutId) {
 
         override fun bindData(item: Movie) = with(item) {
-            contentTitle.setTitleAndYear(title, releaseDate)
+            contentTitle.applyText(title)
+            contentSubtitle.applyText(releaseDate.getYearOnly())
             averageVoteText?.setLabelText(voteAverage.toString())
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
