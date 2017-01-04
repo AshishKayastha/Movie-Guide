@@ -39,9 +39,11 @@ class EmptyRecyclerView @JvmOverloads constructor(context: Context, attrs: Attri
         }
     }
 
-    fun showEmptyView() {
+    private fun showEmptyView() {
         val hasItems = adapter.itemCount > 0
         setVisibility(hasItems)
         emptyView?.setVisibility(!hasItems)
     }
+
+    fun removeDataObserver() = adapter?.unregisterAdapterDataObserver(dataObserver)
 }

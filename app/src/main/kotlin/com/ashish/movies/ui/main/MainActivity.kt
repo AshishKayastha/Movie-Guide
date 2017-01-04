@@ -6,6 +6,9 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat.START
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.TypefaceSpan
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.TextView
@@ -15,6 +18,9 @@ import com.ashish.movies.ui.base.common.BaseActivity
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_PEOPLE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
+import com.ashish.movies.utils.CustomTypefaceSpan
+import com.ashish.movies.utils.FontUtils
+import com.ashish.movies.utils.FontUtils.MONTSERRAT_REGULAR
 import com.ashish.movies.utils.extensions.changeTypeface
 
 class MainActivity : BaseActivity() {
@@ -30,6 +36,7 @@ class MainActivity : BaseActivity() {
     private lateinit var peopleTabTitles: Array<String>
 
     private lateinit var tabPagerAdapter: TabPagerAdapter
+    private lateinit var customTypefaceSpan: TypefaceSpan
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +46,9 @@ class MainActivity : BaseActivity() {
             setDisplayHomeAsUpEnabled(true)
         }
 
+        val typeface = FontUtils.getTypeface(this, MONTSERRAT_REGULAR)
+        customTypefaceSpan = CustomTypefaceSpan(typeface)
+
         toolbarTitles = resources.getStringArray(R.array.toolbar_title_array)
         movieTabTitles = resources.getStringArray(R.array.movie_list_type_array)
         tvShowTabTitles = resources.getStringArray(R.array.tv_show_list_type_array)
@@ -46,7 +56,9 @@ class MainActivity : BaseActivity() {
 
         replaceFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
         tabLayout.setupWithViewPager(viewPager)
+
         changeTabFont()
+        changeNavigationMenuFont()
 
         navigationView.setNavigationItemSelectedListener { item ->
             item.isChecked = true
@@ -86,6 +98,19 @@ class MainActivity : BaseActivity() {
                 }
     }
 
+    private fun changeNavigationMenuFont() {
+        val size = navigationView.menu.size()
+        (0..size - 1)
+                .map { navigationView.menu.getItem(it) }
+                .filterNotNull()
+                .forEach { menuItem ->
+                    val spannableString = SpannableString(menuItem.title)
+                    spannableString.setSpan(customTypefaceSpan, 0, spannableString.length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    menuItem.title = spannableString
+                }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == android.R.id.home) {
             drawerLayout.openDrawer(START)
@@ -101,5 +126,11 @@ class MainActivity : BaseActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onDestroy() {
+        viewPager.adapter = null
+        navigationView.setNavigationItemSelectedListener(null)
+        super.onDestroy()
     }
 }

@@ -110,11 +110,14 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     override fun resetLoading() = scrollListener.resetLoading()
 
     override fun onItemClick(position: Int, view: View) {
-        val posterImagePair = view.getPosterImagePair(getString(R.string.transition_poster_image))
-        val options = activity.getActivityOptionsCompat(posterImagePair)
+        val intent = getDetailIntent(position)
+        if (intent != null) {
+            val posterImagePair = view.getPosterImagePair(getString(R.string.transition_poster_image))
+            val options = activity.getActivityOptionsCompat(posterImagePair)
 
-        activity.window.exitTransition = null
-        ActivityCompat.startActivity(activity, getDetailIntent(position), options?.toBundle())
+            activity.window.exitTransition = null
+            ActivityCompat.startActivity(activity, intent, options?.toBundle())
+        }
     }
 
     abstract fun getDetailIntent(position: Int): Intent?
@@ -124,11 +127,12 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         super.onDestroyView()
     }
 
-    protected fun performCleanup() {
-        recyclerView.adapter = null
+    protected open fun performCleanup() {
+        recyclerView.removeDataObserver()
         recyclerViewAdapter.removeListener()
-        swipeRefreshLayout.clearAnimation()
         recyclerView.clearOnScrollListeners()
+        recyclerView.adapter = null
+        swipeRefreshLayout.clearAnimation()
         swipeRefreshLayout.setOnRefreshListener(null)
     }
 }
