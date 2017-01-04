@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewStub
 import butterknife.bindView
 import com.ashish.movies.R
+import com.ashish.movies.data.models.Credit
+import com.ashish.movies.data.models.People
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.di.components.AppComponent
@@ -14,6 +16,7 @@ import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
+import com.ashish.movies.ui.people.detail.PeopleDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants.BACKDROP_W780_URL_PREFIX
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
@@ -40,6 +43,25 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
 
     private var tvShow: TVShow? = null
     private lateinit var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>
+
+    private val onCastItemClickListener = object : OnItemClickListener {
+        override fun onItemClick(position: Int, view: View) {
+            onTVShowCreditItemClicked(castAdapter, position, view)
+        }
+    }
+
+    private val onCrewItemClickListener = object : OnItemClickListener {
+        override fun onItemClick(position: Int, view: View) {
+            onTVShowCreditItemClicked(crewAdapter, position, view)
+        }
+    }
+
+    private fun onTVShowCreditItemClicked(adapter: RecyclerViewAdapter<Credit>?, position: Int, view: View) {
+        val credit = adapter?.getItem<Credit>(position)
+        val people = People(credit?.id, credit?.name, profilePath = credit?.profilePath)
+        val intent = PeopleDetailActivity.createIntent(this@TVShowDetailActivity, people)
+        startActivityWithTransition(R.string.transition_poster_image, view, intent)
+    }
 
     private val onSimilarTVShowItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -82,6 +104,10 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
 
     override fun showDetailContent(detailContent: TVShowDetail?) {
         detailContent?.apply {
+            if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
+                showBackdropImage(BACKDROP_W780_URL_PREFIX + backdropPath)
+            }
+
             titleText.setTitleAndYear(name, firstAirDate)
             overviewText.text = overview ?: NOT_AVAILABLE
             statusText.text = status ?: NOT_AVAILABLE
@@ -96,6 +122,10 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
     }
 
     override fun getItemTitle(): String = tvShow?.name ?: ""
+
+    override fun getCastItemClickListener() = onCastItemClickListener
+
+    override fun getCrewItemClickListener() = onCrewItemClickListener
 
     override fun showSimilarTVShowList(similarTVShowList: List<TVShow>) {
         similarTVShowsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_TV_SHOW,

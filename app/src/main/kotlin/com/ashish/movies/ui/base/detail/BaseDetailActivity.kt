@@ -19,6 +19,7 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.ui.base.mvp.MvpActivity
+import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_CREDIT
 import com.ashish.movies.ui.common.adapter.ViewType
@@ -36,7 +37,6 @@ import com.ashish.movies.utils.extensions.getPosterImagePair
 import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
 import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.isDark
-import com.ashish.movies.utils.extensions.isMarshmallowOrAbove
 import com.ashish.movies.utils.extensions.loadPaletteBitmap
 import com.ashish.movies.utils.extensions.scrimify
 import com.ashish.movies.utils.extensions.setLightStatusBar
@@ -67,8 +67,8 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
     private var loadContent: Boolean = true
     private lateinit var sharedElementEnterTransition: Transition
 
-    private var castAdapter: RecyclerViewAdapter<Credit>? = null
-    private var crewAdapter: RecyclerViewAdapter<Credit>? = null
+    protected var castAdapter: RecyclerViewAdapter<Credit>? = null
+    protected var crewAdapter: RecyclerViewAdapter<Credit>? = null
 
     protected val transitionListener = object : Transition.TransitionListener {
         override fun onTransitionStart(transition: Transition) {}
@@ -100,8 +100,8 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
             getIntentExtras(intent.extras)
         }
 
-        showPosterImage()
-        showBackdropImage()
+        showPosterImage(getPosterPath())
+        showBackdropImage(getBackdropPath())
         appBarLayout.addOnOffsetChangedListener(this)
 
         backdropImage.setOnClickListener { }
@@ -118,8 +118,7 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
 
     abstract fun loadDetailContent(): Unit
 
-    fun showBackdropImage() {
-        val backdropPath = getBackdropPath()
+    fun showBackdropImage(backdropPath: String) {
         if (backdropPath.isNotEmpty()) backdropImage.loadPaletteBitmap(backdropPath) {
             setTopBarColorAndAnimate(it)
         }
@@ -149,11 +148,8 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
             val rgbColor = palette.getSwatchWithMostPixels()?.rgb
 
             if (rgbColor != null) {
+                statusBarColor = rgbColor.scrimify(isDark)
                 collapsingToolbar.setContentScrimColor(rgbColor)
-
-                if (isDark) {
-                    isMarshmallowOrAbove { statusBarColor = rgbColor.scrimify(isDark) }
-                }
 
                 if (statusBarColor != window.statusBarColor) {
                     animateColorChange(window.statusBarColor, statusBarColor, 500L) { window.statusBarColor = it }
@@ -162,10 +158,9 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
         }
     }
 
-    fun showPosterImage() {
-        val posterPath = getPosterPath()
-        if (posterPath.isNotEmpty()) {
-            posterImage.loadPaletteBitmap(posterPath) {
+    fun showPosterImage(posterImagePath: String) {
+        if (posterImagePath.isNotEmpty()) {
+            posterImage.loadPaletteBitmap(posterImagePath) {
                 supportStartPostponedEnterTransition()
 
                 it.setPaletteColor { swatch ->
@@ -185,14 +180,22 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
     override fun hideProgress() = progressBar.hide()
 
     override fun showCastList(castList: List<Credit>) {
-        castAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT, null)
+        castAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT,
+                getCastItemClickListener())
+
         inflateViewStubRecyclerView(castViewStub, R.id.cast_recycler_view, castAdapter!!, castList)
     }
 
+    abstract fun getCastItemClickListener(): OnItemClickListener?
+
     override fun showCrewList(crewList: List<Credit>) {
-        crewAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT, null)
+        crewAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT,
+                getCrewItemClickListener())
+
         inflateViewStubRecyclerView(crewViewStub, R.id.crew_recycler_view, crewAdapter!!, crewList)
     }
+
+    abstract fun getCrewItemClickListener(): OnItemClickListener?
 
     protected fun <I : ViewType> inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
                                                              adapter: RecyclerViewAdapter<I>, itemList: List<I>) {
