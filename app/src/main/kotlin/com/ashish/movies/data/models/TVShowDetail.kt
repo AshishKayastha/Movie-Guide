@@ -22,7 +22,6 @@ data class TVShowDetail(
         @Json(name = "last_air_date") val lastAirDate: String? = null,
         @Json(name = "backdrop_path") val backdropPath: String? = null,
         @Json(name = "first_air_date") val firstAirDate: String? = null,
-        @Json(name = "in_production") val inProduction: Boolean? = null,
         @Json(name = "number_of_seasons") val numberOfSeasons: Int? = null,
         @Json(name = "number_of_episodes") val numberOfEpisodes: Int? = null,
         @Json(name = "episode_run_time") val episodeRunTime: List<Int>? = null,

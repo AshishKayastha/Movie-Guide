@@ -40,7 +40,13 @@
 
                     <include layout="@layout/layout_detail_status" />
 
-                    <include layout="@layout/layout_detail_release_date" />
+                    <com.ashish.movies.ui.widget.FontTextView
+                        style="@style/PrimaryText.Title"
+                        android:text="@string/first_air_date_title" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        android:id="@+id/first_air_date_text"
+                        style="@style/SecondaryText.Title" />
 
                     <com.ashish.movies.ui.widget.FontTextView
                         style="@style/PrimaryText.Title"

@@ -47,7 +47,7 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 /**
  * Created by Ashish on Jan 03.
  */
-abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
+abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
     : MvpActivity<V, P>(), BaseDetailMvpView<I>, AppBarLayout.OnOffsetChangedListener {
 
     protected val overviewText: FontTextView by bindView(R.id.overview_text)

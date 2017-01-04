@@ -19,7 +19,7 @@ import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants.BACKDROP_W780_URL_PREFIX
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
-import com.ashish.movies.utils.extensions.getFormattedGenres
+import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedNumber
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
 import com.ashish.movies.utils.extensions.getFormattedRuntime
@@ -90,11 +90,11 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
             titleText.setTitleAndYear(title, releaseDate)
             overviewText.text = overview ?: NOT_AVAILABLE
             taglineText.text = tagline ?: NOT_AVAILABLE
-            genresText.text = genres.getFormattedGenres()
             statusText.text = status ?: NOT_AVAILABLE
             budgetText.text = budget.getFormattedNumber()
             revenueText.text = revenue.getFormattedNumber()
             runtimeText.text = runtime.getFormattedRuntime()
+            genresText.text = genres.convertListToCommaSeparatedText { it.name.toString() }
             releaseDateText.text = releaseDate.getFormattedReleaseDate(this@MovieDetailActivity)
         }
         super.showDetailContent(detailContent)

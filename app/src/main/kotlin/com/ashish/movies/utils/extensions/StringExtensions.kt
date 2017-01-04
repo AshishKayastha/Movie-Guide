@@ -2,7 +2,6 @@ package com.ashish.movies.utils.extensions
 
 import android.content.Context
 import android.text.format.DateFormat
-import com.ashish.movies.data.models.Genre
 import com.ashish.movies.utils.Constants.DEFAULT_DATE_PATTERN
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import timber.log.Timber
@@ -71,10 +70,10 @@ fun String?.getFormattedReleaseDate(context: Context): String {
     return formattedReleaseDate
 }
 
-fun List<Genre>?.getFormattedGenres(): String {
+inline fun <reified T> List<T>?.convertListToCommaSeparatedText(crossinline func: (T) -> String): String {
     var formattedGenre = NOT_AVAILABLE
     if (this != null && isNotEmpty()) {
-        formattedGenre = joinToString { genre -> genre.name.toString() }
+        formattedGenre = joinToString { func(it) }
     }
     return formattedGenre
 }

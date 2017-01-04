@@ -18,7 +18,7 @@ import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants.BACKDROP_W780_URL_PREFIX
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
-import com.ashish.movies.utils.extensions.getFormattedGenres
+import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTitleAndYear
@@ -29,10 +29,14 @@ import com.ashish.movies.utils.extensions.setTitleAndYear
 class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpView, TVShowDetailPresenter>(),
         TVShowDetailMvpView {
 
-    val statusText: FontTextView by bindView(R.id.status_text)
-    val genresText: FontTextView by bindView(R.id.genres_text)
-    val releaseDateText: FontTextView by bindView(R.id.release_date_text)
-    val similarTVShowsViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
+    private val statusText: FontTextView by bindView(R.id.status_text)
+    private val genresText: FontTextView by bindView(R.id.genres_text)
+    private val seasonsText: FontTextView by bindView(R.id.season_text)
+    private val networkText: FontTextView by bindView(R.id.network_text)
+    private val episodesText: FontTextView by bindView(R.id.episodes_text)
+    private val lastAirDateText: FontTextView by bindView(R.id.last_air_date_text)
+    private val firstAirDateText: FontTextView by bindView(R.id.first_air_date_text)
+    private val similarTVShowsViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
     private var tvShow: TVShow? = null
     private lateinit var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>
@@ -58,7 +62,7 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
         appComponent.plus(TVShowDetailModule()).inject(this)
     }
 
-    override fun getLayoutId() = R.layout.activity_detail_movie
+    override fun getLayoutId() = R.layout.acivity_detail_tv_show
 
     override fun getIntentExtras(extras: Bundle?) {
         tvShow = extras?.getParcelable(EXTRA_TV_SHOW)
@@ -80,9 +84,13 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
         detailContent?.apply {
             titleText.setTitleAndYear(name, firstAirDate)
             overviewText.text = overview ?: NOT_AVAILABLE
-            genresText.text = genres.getFormattedGenres()
             statusText.text = status ?: NOT_AVAILABLE
-            releaseDateText.text = firstAirDate.getFormattedReleaseDate(this@TVShowDetailActivity)
+            seasonsText.text = numberOfSeasons.toString()
+            episodesText.text = numberOfEpisodes.toString()
+            genresText.text = genres.convertListToCommaSeparatedText { it.name.toString() }
+            networkText.text = networks.convertListToCommaSeparatedText { it.name.toString() }
+            lastAirDateText.text = lastAirDate.getFormattedReleaseDate(this@TVShowDetailActivity)
+            firstAirDateText.text = firstAirDate.getFormattedReleaseDate(this@TVShowDetailActivity)
         }
         super.showDetailContent(detailContent)
     }

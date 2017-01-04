@@ -19,10 +19,10 @@ import com.ashish.movies.utils.extensions.changeTypeface
 
 class MainActivity : BaseActivity() {
 
-    val viewPager: ViewPager by bindView(R.id.view_pager)
-    val tabLayout: TabLayout by bindView(R.id.tab_layout)
-    val drawerLayout: DrawerLayout by bindView(R.id.drawer_layout)
-    val navigationView: NavigationView by bindView(R.id.navigation_view)
+    private val viewPager: ViewPager by bindView(R.id.view_pager)
+    private val tabLayout: TabLayout by bindView(R.id.tab_layout)
+    private val drawerLayout: DrawerLayout by bindView(R.id.drawer_layout)
+    private val navigationView: NavigationView by bindView(R.id.navigation_view)
 
     private lateinit var toolbarTitles: Array<String>
     private lateinit var movieTabTitles: Array<String>
