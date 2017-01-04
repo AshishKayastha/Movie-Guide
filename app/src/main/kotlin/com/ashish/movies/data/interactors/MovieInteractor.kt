@@ -24,8 +24,4 @@ class MovieInteractor @Inject constructor(val movieApi: MovieApi) {
         return movieApi.getMovieDetailWithAppendedResponse(movieId, ApiConstants.CREDITS_AND_SIMILAR)
                 .observeOn(AndroidSchedulers.mainThread())
     }
-
-    fun getSimilarMovies(movieId: Long, page: Int = 1): Observable<Results<Movie>> {
-        return movieApi.getSimilarMovies(movieId, page).observeOn(AndroidSchedulers.mainThread())
-    }
 }

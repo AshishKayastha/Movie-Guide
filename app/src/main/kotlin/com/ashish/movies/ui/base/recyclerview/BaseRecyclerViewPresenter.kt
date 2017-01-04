@@ -37,16 +37,22 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         }
     }
 
+    protected fun handleError(t: Throwable) {
+        Timber.e(t)
+        getView()?.apply {
+            hideProgress()
+        }
+    }
+
     fun loadMoreData(type: Int?, page: Int) {
         if (Utils.isOnline()) {
             addDisposable(getResultsObservable(getType(type), page)
-                    .subscribe({ addNewItemList(it) },
-                            {
-                                handleError(it)
-                                getView()?.resetLoading()
-                            }))
+                    .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))
         } else {
-            getView()?.showMessage(R.string.error_no_internet)
+            getView()?.apply {
+                resetLoading()
+                showMessage(R.string.error_no_internet)
+            }
         }
     }
 
@@ -60,10 +66,11 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         }
     }
 
-    protected fun handleError(t: Throwable) {
+    protected fun handleLoadMoreError(t: Throwable) {
         Timber.e(t)
         getView()?.apply {
-            hideProgress()
+            removeLoadingItem()
+            resetLoading()
         }
     }
 }

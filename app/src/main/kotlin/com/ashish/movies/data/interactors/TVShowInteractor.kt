@@ -24,8 +24,4 @@ class TVShowInteractor @Inject constructor(val tvShowApi: TVShowApi) {
         return tvShowApi.getTVShowDetailWithAppendedResponse(tvId, ApiConstants.CREDITS_AND_SIMILAR)
                 .observeOn(AndroidSchedulers.mainThread())
     }
-
-    fun getSimilarTVShows(tvId: Long, page: Int = 1): Observable<Results<TVShow>> {
-        return tvShowApi.getSimilarTVShows(tvId, page).observeOn(AndroidSchedulers.mainThread())
-    }
 }

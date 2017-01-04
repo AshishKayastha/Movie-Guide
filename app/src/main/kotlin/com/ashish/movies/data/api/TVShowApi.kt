@@ -26,7 +26,4 @@ interface TVShowApi {
     @GET("tv/{tvId}")
     fun getTVShowDetailWithAppendedResponse(@Path("tvId") tvId: Long,
                                             @Query("append_to_response") appendedResponse: String): Observable<TVShowDetail>
-
-    @GET("tv/{tvId}/similar")
-    fun getSimilarTVShows(@Path("tvId") tvId: Long, @Query("page") page: Int = 1): Observable<Results<TVShow>>
 }

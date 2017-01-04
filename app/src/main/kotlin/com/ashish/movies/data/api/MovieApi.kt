@@ -26,7 +26,4 @@ interface MovieApi {
     @GET("movie/{movieId}")
     fun getMovieDetailWithAppendedResponse(@Path("movieId") movieId: Long,
                                            @Query("append_to_response") appendedResponse: String): Observable<MovieDetail>
-
-    @GET("movie/{movieId}/similar")
-    fun getSimilarMovies(@Path("movieId") movieId: Long, @Query("page") page: Int = 1): Observable<Results<Movie>>
 }
