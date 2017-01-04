@@ -5,11 +5,11 @@
 
     <com.ashish.movies.ui.widget.FontTextView
         android:id="@+id/similar_content_title"
-        style="@style/MovieDetailTitle"
+        style="@style/DetailTitle"
         android:text="@string/similar_movies_title" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/similar_content_recycler_view"
-        style="@style/MovieDetailRecyclerView" />
+        style="@style/DetailRecyclerView" />
 
 </LinearLayout>

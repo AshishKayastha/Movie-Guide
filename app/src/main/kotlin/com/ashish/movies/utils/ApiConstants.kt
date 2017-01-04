@@ -10,4 +10,5 @@ object ApiConstants {
     const val LANGUAGE = "language"
     const val US_ENGLISH = "en-US"
     const val TMDB_API_KEY = BuildConfig.TMDB_API_KEY
+    const val CREDITS_AND_SIMILAR = "credits,similar"
 }

@@ -11,21 +11,13 @@ import paperparcel.PaperParcel
 data class TVShow(
         val id: Long? = null,
         val name: String? = null,
-        val type: String? = null,
-        val status: String? = null,
         val overview: String? = null,
-        val homepage: String? = null,
-        val genres: List<Genre>? = null,
-        val seasons: List<TVShowSeason>? = null,
+        val popularity: Double? = null,
+        @Json(name = "vote_count") val voteCount: Int? = null,
         @Json(name = "poster_path") val posterPath: String? = null,
         @Json(name = "vote_average") val voteAverage: Double? = null,
-        @Json(name = "last_air_date") val lastAirDate: String? = null,
         @Json(name = "backdrop_path") val backdropPath: String? = null,
-        @Json(name = "first_air_date") val firstAirDate: String? = null,
-        @Json(name = "in_production") val inProduction: Boolean? = null,
-        @Json(name = "number_of_seasons") val numberOfSeasons: Int? = null,
-        @Json(name = "number_of_episodes") val numberOfEpisodes: Int? = null,
-        @Json(name = "episode_run_time") val episodeRunTime: List<Int>? = null
+        @Json(name = "first_air_date") val firstAirDate: String? = null
 ) : ViewType, Parcelable {
 
     override fun getViewType() = CONTENT_VIEW

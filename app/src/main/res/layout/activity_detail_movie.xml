@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_layout"
+    style="@style/Match"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/layout_detail_app_bar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        style="@style/DetailNestedScrollView">
+
+        <FrameLayout style="@style/Match.Width">
+
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:id="@+id/material_progress_bar"
+                style="@style/MaterialProgressBar"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="@dimen/spacing_large"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/detail_container"
+                style="@style/Match.Width"
+                android:paddingBottom="@dimen/spacing_large"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    style="@style/Match.Width"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:paddingEnd="@dimen/first_keyline"
+                    android:paddingStart="@dimen/first_keyline"
+                    android:paddingTop="@dimen/spacing_large">
+
+                    <include layout="@layout/layout_detail_overview" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        style="@style/PrimaryText.Title"
+                        android:text="@string/tagline_title" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        android:id="@+id/tagline_text"
+                        style="@style/SecondaryText.Title" />
+
+                    <include layout="@layout/layout_detail_genres" />
+
+                    <include layout="@layout/layout_detail_status" />
+
+                    <include layout="@layout/layout_detail_release_date" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        style="@style/PrimaryText.Title"
+                        android:text="@string/runtime_title" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        android:id="@+id/runtime_text"
+                        style="@style/SecondaryText.Title" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        style="@style/PrimaryText.Title"
+                        android:text="@string/budget_title" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        android:id="@+id/budget_text"
+                        style="@style/SecondaryText.Title" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        style="@style/PrimaryText.Title"
+                        android:text="@string/revenue_title" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        android:id="@+id/revenue_text"
+                        style="@style/SecondaryText.Title" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_detail_cast_credits_view_stub" />
+
+                <include layout="@layout/layout_detail_crew_credits_view_stub" />
+
+                <include layout="@layout/layout_detail_similar_content_view_stub" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

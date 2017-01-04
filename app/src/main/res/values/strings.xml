@@ -30,12 +30,20 @@
     <string name="genre_title">Genres:</string>
     <string name="runtime_title">Runtime:</string>
     <string name="status_title">Status:</string>
-    <string name="release_date_title">Release Date:</string>
     <string name="budget_title">Budget:</string>
     <string name="revenue_title">Revenue:</string>
+    <string name="tagline_title">Tagline:</string>
+    <string name="release_date_title">Release Date:</string>
 
     <string name="cast_credits_title">Cast Credits</string>
     <string name="crew_credits_title">Crew Credits</string>
     <string name="similar_movies_title">Similar Movies</string>
+
+    <!-- TV Show Detail -->
+    <string name="seasons_title">Seasons:</string>
+    <string name="network_title">Network:</string>
+    <string name="episodes_title">Episodes:</string>
+    <string name="first_air_date_title">First Air Date:</string>
+    <string name="last_air_date_title">Last Air Date:</string>
     <string name="similar_tv_shows_title">Simiilar Television Shows</string>
 </resources>

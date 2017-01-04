@@ -1,9 +1,10 @@
 package com.ashish.movies.data.interactors
 
 import com.ashish.movies.data.api.TVShowApi
-import com.ashish.movies.data.models.CreditResults
 import com.ashish.movies.data.models.Results
 import com.ashish.movies.data.models.TVShow
+import com.ashish.movies.data.models.TVShowDetail
+import com.ashish.movies.utils.ApiConstants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
@@ -19,15 +20,12 @@ class TVShowInteractor @Inject constructor(val tvShowApi: TVShowApi) {
         return tvShowApi.getTVShows(tvShowType, page).observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun getTVShowDetail(tvId: Long): Observable<TVShow> {
-        return tvShowApi.getTVShowDetail(tvId).observeOn(AndroidSchedulers.mainThread())
+    fun getTVShowDetailWithCreditsAndSimilarTVShows(tvId: Long): Observable<TVShowDetail> {
+        return tvShowApi.getTVShowDetailWithAppendedResponse(tvId, ApiConstants.CREDITS_AND_SIMILAR)
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun getTVShowCredits(tvId: Long): Observable<CreditResults> {
-        return tvShowApi.getTVShowCredits(tvId).observeOn(AndroidSchedulers.mainThread())
-    }
-
-    fun getSimilarTVShows(tvId: Long): Observable<Results<TVShow>> {
-        return tvShowApi.getSimilarTVShows(tvId).observeOn(AndroidSchedulers.mainThread())
+    fun getSimilarTVShows(tvId: Long, page: Int = 1): Observable<Results<TVShow>> {
+        return tvShowApi.getSimilarTVShows(tvId, page).observeOn(AndroidSchedulers.mainThread())
     }
 }

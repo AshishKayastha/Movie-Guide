@@ -2,7 +2,6 @@ package com.ashish.movies.ui.base.detail
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.annotation.StringRes
@@ -34,8 +33,10 @@ import com.ashish.movies.utils.extensions.dpToPx
 import com.ashish.movies.utils.extensions.getActivityOptionsCompat
 import com.ashish.movies.utils.extensions.getColorCompat
 import com.ashish.movies.utils.extensions.getPosterImagePair
+import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
 import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.isDark
+import com.ashish.movies.utils.extensions.isMarshmallowOrAbove
 import com.ashish.movies.utils.extensions.loadPaletteBitmap
 import com.ashish.movies.utils.extensions.scrimify
 import com.ashish.movies.utils.extensions.setLightStatusBar
@@ -46,36 +47,28 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 /**
  * Created by Ashish on Jan 03.
  */
-abstract class BaseDetailActivity<I : ViewType, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
+abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
     : MvpActivity<V, P>(), BaseDetailMvpView<I>, AppBarLayout.OnOffsetChangedListener {
 
-    protected val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
-    protected val backdropImage: ImageView by bindView(R.id.backdrop_image)
-    protected val posterImage: ImageView by bindView(R.id.poster_image)
-    protected val detailContainer: View by bindView(R.id.detail_container)
-    protected val progressBar: MaterialProgressBar by bindView(R.id.material_progress_bar)
-    protected val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
-
-    protected val statusText: FontTextView by bindView(R.id.status_text)
-    protected val budgetText: FontTextView by bindView(R.id.budget_text)
-    protected val genresText: FontTextView by bindView(R.id.genres_text)
-    protected val runtimeText: FontTextView by bindView(R.id.runtime_text)
-    protected val revenueText: FontTextView by bindView(R.id.revenue_text)
     protected val overviewText: FontTextView by bindView(R.id.overview_text)
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
-    protected val releaseDateText: FontTextView by bindView(R.id.release_date_text)
 
-    protected val castViewStub: ViewStub by bindView(R.id.cast_view_stub)
-    protected val crewViewStub: ViewStub by bindView(R.id.crew_view_stub)
+    private val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
+    private val posterImage: ImageView by bindView(R.id.poster_image)
+    private val detailContainer: View by bindView(R.id.detail_container)
+    private val backdropImage: ImageView by bindView(R.id.backdrop_image)
+    private val progressBar: MaterialProgressBar by bindView(R.id.material_progress_bar)
+    private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
 
-    protected var item: I? = null
+    private val castViewStub: ViewStub by bindView(R.id.cast_view_stub)
+    private val crewViewStub: ViewStub by bindView(R.id.crew_view_stub)
 
     private var statusBarColor: Int = 0
     private var loadContent: Boolean = true
     private lateinit var sharedElementEnterTransition: Transition
 
-    private lateinit var castAdapter: RecyclerViewAdapter<Credit>
-    private lateinit var crewAdapter: RecyclerViewAdapter<Credit>
+    private var castAdapter: RecyclerViewAdapter<Credit>? = null
+    private var crewAdapter: RecyclerViewAdapter<Credit>? = null
 
     protected val transitionListener = object : Transition.TransitionListener {
         override fun onTransitionStart(transition: Transition) {}
@@ -111,6 +104,8 @@ abstract class BaseDetailActivity<I : ViewType, V : BaseDetailMvpView<I>, P : Ba
         showBackdropImage()
         appBarLayout.addOnOffsetChangedListener(this)
 
+        backdropImage.setOnClickListener { }
+
         sharedElementEnterTransition = window.sharedElementEnterTransition
         sharedElementEnterTransition.addListener(transitionListener)
 
@@ -125,30 +120,17 @@ abstract class BaseDetailActivity<I : ViewType, V : BaseDetailMvpView<I>, P : Ba
 
     fun showBackdropImage() {
         val backdropPath = getBackdropPath()
-        if (backdropPath.isNotEmpty()) backdropImage.loadPaletteBitmap(backdropPath)
+        if (backdropPath.isNotEmpty()) backdropImage.loadPaletteBitmap(backdropPath) {
+            setTopBarColorAndAnimate(it)
+        }
     }
 
     abstract fun getBackdropPath(): String
 
-    fun showPosterImage() {
-        val posterPath = getPosterPath()
-        if (posterPath.isNotEmpty()) {
-            posterImage.loadPaletteBitmap(posterPath) { paletteBitmap ->
-                supportStartPostponedEnterTransition()
-
-                paletteBitmap.setPaletteColor { swatch ->
-                    val rgbColor = swatch.rgb
-                    setTopBarColorAndAnimate(paletteBitmap, rgbColor)
-                    titleText.animateBackgroundColorChange(Color.TRANSPARENT, rgbColor)
-                    titleText.animateTextColorChange(getColorCompat(R.color.primary_text_light), swatch.bodyTextColor)
-                }
-            }
-        }
-    }
-
-    private fun setTopBarColorAndAnimate(paletteBitmap: PaletteBitmap?, rgbColor: Int) {
+    private fun setTopBarColorAndAnimate(paletteBitmap: PaletteBitmap?) {
         if (paletteBitmap != null) {
-            val isDark = paletteBitmap.bitmap.isDark(paletteBitmap.palette)
+            val palette = paletteBitmap.palette
+            val isDark = paletteBitmap.bitmap.isDark(palette)
 
             if (!isDark) {
                 window.decorView.setLightStatusBar()
@@ -164,21 +146,39 @@ abstract class BaseDetailActivity<I : ViewType, V : BaseDetailMvpView<I>, P : Ba
              * light or dark color on M (with matching status bar icons)
              */
             statusBarColor = window.statusBarColor
-            collapsingToolbar.setContentScrimColor(rgbColor)
+            val rgbColor = palette.getSwatchWithMostPixels()?.rgb
 
-            if (isDark || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                statusBarColor = rgbColor.scrimify(isDark)
+            if (rgbColor != null) {
+                collapsingToolbar.setContentScrimColor(rgbColor)
+
+                if (isDark) {
+                    isMarshmallowOrAbove { statusBarColor = rgbColor.scrimify(isDark) }
+                }
+
+                if (statusBarColor != window.statusBarColor) {
+                    animateColorChange(window.statusBarColor, statusBarColor, 500L) { window.statusBarColor = it }
+                }
             }
+        }
+    }
 
-            if (statusBarColor != window.statusBarColor) {
-                animateColorChange(window.statusBarColor, statusBarColor, 500L) { window.statusBarColor = it }
+    fun showPosterImage() {
+        val posterPath = getPosterPath()
+        if (posterPath.isNotEmpty()) {
+            posterImage.loadPaletteBitmap(posterPath) {
+                supportStartPostponedEnterTransition()
+
+                it.setPaletteColor { swatch ->
+                    titleText.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
+                    titleText.animateTextColorChange(getColorCompat(R.color.primary_text_light), swatch.bodyTextColor)
+                }
             }
         }
     }
 
     abstract fun getPosterPath(): String
 
-    override fun showDetailContent(item: I?) = detailContainer.show()
+    override fun showDetailContent(detailContent: I?) = detailContainer.show()
 
     override fun showProgress() = progressBar.show()
 
@@ -186,12 +186,12 @@ abstract class BaseDetailActivity<I : ViewType, V : BaseDetailMvpView<I>, P : Ba
 
     override fun showCastList(castList: List<Credit>) {
         castAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT, null)
-        inflateViewStubRecyclerView(castViewStub, R.id.cast_recycler_view, castAdapter, castList)
+        inflateViewStubRecyclerView(castViewStub, R.id.cast_recycler_view, castAdapter!!, castList)
     }
 
     override fun showCrewList(crewList: List<Credit>) {
         crewAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT, null)
-        inflateViewStubRecyclerView(crewViewStub, R.id.crew_recycler_view, crewAdapter, crewList)
+        inflateViewStubRecyclerView(crewViewStub, R.id.crew_recycler_view, crewAdapter!!, crewList)
     }
 
     protected fun <I : ViewType> inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
@@ -233,8 +233,8 @@ abstract class BaseDetailActivity<I : ViewType, V : BaseDetailMvpView<I>, P : Ba
     }
 
     protected open fun performCleanup() {
-        castAdapter.removeListener()
-        crewAdapter.removeListener()
+        castAdapter?.removeListener()
+        crewAdapter?.removeListener()
         appBarLayout.removeOnOffsetChangedListener(this)
         sharedElementEnterTransition.removeListener(transitionListener)
     }

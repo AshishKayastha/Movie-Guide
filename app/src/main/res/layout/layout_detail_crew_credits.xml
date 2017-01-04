@@ -4,12 +4,12 @@
     android:paddingBottom="@dimen/spacing_medium">
 
     <com.ashish.movies.ui.widget.FontTextView
-        android:id="@+id/cast_credits_title"
-        style="@style/MovieDetailTitle"
-        android:text="@string/cast_credits_title" />
+        android:id="@+id/crew_credits_title"
+        style="@style/DetailTitle"
+        android:text="@string/crew_credits_title" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/cast_recycler_view"
-        style="@style/MovieDetailRecyclerView" />
+        android:id="@+id/crew_recycler_view"
+        style="@style/DetailRecyclerView" />
 
 </LinearLayout>

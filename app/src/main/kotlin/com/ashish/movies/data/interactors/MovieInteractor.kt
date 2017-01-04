@@ -1,9 +1,10 @@
 package com.ashish.movies.data.interactors
 
 import com.ashish.movies.data.api.MovieApi
-import com.ashish.movies.data.models.CreditResults
 import com.ashish.movies.data.models.Movie
+import com.ashish.movies.data.models.MovieDetail
 import com.ashish.movies.data.models.Results
+import com.ashish.movies.utils.ApiConstants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
@@ -19,15 +20,12 @@ class MovieInteractor @Inject constructor(val movieApi: MovieApi) {
         return movieApi.getMovies(movieType, page).observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun getMovieDetail(movieId: Long): Observable<Movie> {
-        return movieApi.getMovieDetail(movieId).observeOn(AndroidSchedulers.mainThread())
+    fun getMovieDetailWithCreditsAndSimilarMovies(movieId: Long): Observable<MovieDetail> {
+        return movieApi.getMovieDetailWithAppendedResponse(movieId, ApiConstants.CREDITS_AND_SIMILAR)
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun getMovieCredits(movieId: Long): Observable<CreditResults> {
-        return movieApi.getMovieCredits(movieId).observeOn(AndroidSchedulers.mainThread())
-    }
-
-    fun getSimilarMovies(movieId: Long): Observable<Results<Movie>> {
-        return movieApi.getSimilarMovies(movieId).observeOn(AndroidSchedulers.mainThread())
+    fun getSimilarMovies(movieId: Long, page: Int = 1): Observable<Results<Movie>> {
+        return movieApi.getSimilarMovies(movieId, page).observeOn(AndroidSchedulers.mainThread())
     }
 }
