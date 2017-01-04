@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
+import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.Constants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
@@ -29,12 +30,20 @@ class CreditDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
     inner class CreditHolder(parent: ViewGroup) : BaseContentHolder<Credit>(parent, layoutId) {
 
         override fun bindData(item: Credit) = with(item) {
-            contentTitle.applyText(name)
+            contentTitle.applyText(if (title.isNotNullOrEmpty()) title else name)
             contentSubtitle.applyText(if (job.isNotNullOrEmpty()) job else character)
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }
 
-        override fun getImageUrl(item: Credit) = PROFILE_ORIGINAL_URL_PREFIX + item.profilePath
+        override fun getImageUrl(item: Credit): String? {
+            if (item.profilePath.isNotNullOrEmpty()) {
+                return PROFILE_ORIGINAL_URL_PREFIX + item.profilePath
+            } else if (item.posterPath.isNotNullOrEmpty()) {
+                return POSTER_W500_URL_PREFIX + item.posterPath
+            } else {
+                return null
+            }
+        }
     }
 }

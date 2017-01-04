@@ -9,10 +9,13 @@ import com.squareup.moshi.Json
 data class Credit(
         val id: Long? = null,
         val name: String? = null,
+        val title: String? = null,
         val job: String? = null,
         val character: String? = null,
         val department: String? = null,
-        @Json(name = "credit_id") val creditId: String? = null,
+        @Json(name = "media_type") val mediaType: String? = null,
+        @Json(name = "poster_path") val posterPath: String? = null,
+        @Json(name = "release_date") val releaseDate: String? = null,
         @Json(name = "profile_path") val profilePath: String? = null
 ) : ViewType {
 

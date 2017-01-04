@@ -13,6 +13,7 @@ import com.ashish.movies.ui.widget.AspectRatioImageView
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.LabelLayout
 import com.ashish.movies.utils.extensions.inflate
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.transcodePaletteBitmap
 import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
@@ -39,7 +40,12 @@ abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup, layoutId: I
     open fun bindData(item: I) = loadImage(item)
 
     private fun loadImage(item: I) {
-        requestBuilder.load(getImageUrl(item)).into(target)
+        val imageUrl = getImageUrl(item)
+        if (imageUrl.isNotNullOrEmpty()) {
+            requestBuilder.load(imageUrl).into(target)
+        } else {
+            Glide.clear(posterImage)
+        }
     }
 
     abstract fun getImageUrl(item: I): String?

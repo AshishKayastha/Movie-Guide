@@ -20,7 +20,7 @@ abstract class BaseDetailPresenter<in I, V : BaseDetailMvpView<I>> : RxPresenter
 
     abstract fun getDetailContent(id: Long): Disposable
 
-    protected fun <I> showItemList(itemList: List<I>?, showData: (List<I>) -> Unit) {
+    protected fun <T> showItemList(itemList: List<T>?, showData: (List<T>) -> Unit) {
         if (itemList != null && itemList.isNotEmpty()) showData(itemList)
     }
 }

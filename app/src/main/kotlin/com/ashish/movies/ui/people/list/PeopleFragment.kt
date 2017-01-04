@@ -9,6 +9,7 @@ import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_PEOPLE
+import com.ashish.movies.ui.people.detail.PeopleDetailActivity
 
 /**
  * Created by Ashish on Dec 31.
@@ -33,6 +34,7 @@ class PeopleFragment : BaseRecyclerViewFragment<People, BaseRecyclerViewMvpView<
     override fun getAdapterType() = ADAPTER_TYPE_PEOPLE
 
     override fun getDetailIntent(position: Int): Intent? {
-        return null
+        val people = recyclerViewAdapter.getItem<People>(position)
+        return PeopleDetailActivity.createIntent(activity, people)
     }
 }

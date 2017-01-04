@@ -29,6 +29,10 @@
             android:name=".ui.tvshow.detail.TVShowDetailActivity"
             android:label="" />
 
+        <activity
+            android:name=".ui.people.detail.PeopleDetailActivity"
+            android:label="" />
+
     </application>
 
 </manifest>

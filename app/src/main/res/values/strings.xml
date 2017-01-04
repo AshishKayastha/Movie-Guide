@@ -46,4 +46,8 @@
     <string name="first_air_date_title">First Air Date:</string>
     <string name="last_air_date_title">Last Air Date:</string>
     <string name="similar_tv_shows_title">Simiilar Television Shows</string>
+
+    <!-- People -->
+    <string name="birthday_title">Birthday:</string>
+    <string name="place_of_birth_title">Place Of Birth:</string>
 </resources>
