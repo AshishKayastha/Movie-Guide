@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
+import android.view.Gravity
 import android.view.View
 import android.view.ViewStub
 import android.widget.ImageButton
@@ -27,6 +28,7 @@ import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.utils.FontUtils
+import com.ashish.movies.utils.GravitySnapHelper
 import com.ashish.movies.utils.extensions.animateBackgroundColorChange
 import com.ashish.movies.utils.extensions.animateColorChange
 import com.ashish.movies.utils.extensions.animateTextColorChange
@@ -207,6 +209,8 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
             recyclerView.layoutManager = layoutManager
             addItemDecoration(ItemOffsetDecoration(ITEM_SPACING))
             recyclerView.adapter = adapter
+            val snapHelper = GravitySnapHelper(Gravity.START)
+            snapHelper.attachToRecyclerView(this)
         }
 
         adapter.showItemList(itemList)
