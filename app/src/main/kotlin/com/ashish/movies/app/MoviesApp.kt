@@ -32,12 +32,14 @@ class MoviesApp : Application() {
 
         @JvmStatic lateinit var context: Context
 
-        @JvmStatic fun getAppComponent(context: Context): AppComponent {
+        @JvmStatic
+        fun getAppComponent(context: Context): AppComponent {
             val app = context.applicationContext as MoviesApp
             return app.appComponent
         }
 
-        @JvmStatic fun getRefWatcher(context: Context): RefWatcher {
+        @JvmStatic
+        fun getRefWatcher(context: Context): RefWatcher {
             val app = context.applicationContext as MoviesApp
             return app.refWatcher
         }
