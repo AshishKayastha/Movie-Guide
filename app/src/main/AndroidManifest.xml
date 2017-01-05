@@ -30,7 +30,7 @@
             android:label="" />
 
         <activity
-            android:name=".ui.people.detail.PeopleDetailActivity"
+            android:name=".ui.people.detail.PersonDetailActivity"
             android:label="" />
 
     </application>

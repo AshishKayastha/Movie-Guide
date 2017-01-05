@@ -3,8 +3,10 @@ package com.ashish.movies.utils.extensions
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v4.util.Pair
+import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.view.LayoutInflater
 import android.view.View
@@ -74,9 +76,9 @@ inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 8
     }
 }
 
-fun View.getPosterImagePair(transitionName: String): Pair<View, String>? {
+fun View.getPosterImagePair(): Pair<View, String>? {
     val posterImageView = findViewById(R.id.poster_image)
-    return if (posterImageView != null) Pair.create(posterImageView, transitionName) else null
+    return if (posterImageView != null) Pair.create(posterImageView, posterImageView.transitionName) else null
 }
 
 fun TextView.setTitleAndYear(title: String?, releaseDate: String?) {
@@ -112,4 +114,8 @@ fun View.setLightStatusBar() {
         flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         systemUiVisibility = flags
     }
+}
+
+fun View.setTransitionName(@StringRes transitionNameId: Int) {
+    ViewCompat.setTransitionName(this, context.getString(transitionNameId))
 }

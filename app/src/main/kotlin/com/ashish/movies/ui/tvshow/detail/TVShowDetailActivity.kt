@@ -18,7 +18,7 @@ import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_SEASON
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
-import com.ashish.movies.ui.people.detail.PeopleDetailActivity
+import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants.BACKDROP_W780_URL_PREFIX
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
@@ -27,6 +27,7 @@ import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Jan 03.
@@ -64,15 +65,15 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
     private fun onTVShowCreditItemClicked(adapter: RecyclerViewAdapter<Credit>?, position: Int, view: View) {
         val credit = adapter?.getItem<Credit>(position)
         val people = People(credit?.id, credit?.name, profilePath = credit?.profilePath)
-        val intent = PeopleDetailActivity.createIntent(this@TVShowDetailActivity, people)
-        startActivityWithTransition(R.string.transition_poster_image, view, intent)
+        val intent = PersonDetailActivity.createIntent(this@TVShowDetailActivity, people)
+        startActivityWithTransition(view, intent)
     }
 
     private val onSimilarTVShowItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
             val tvShow = similarTVShowsAdapter?.getItem<TVShow>(position)
             val intent = TVShowDetailActivity.createIntent(this@TVShowDetailActivity, tvShow)
-            startActivityWithTransition(R.string.transition_poster_image, view, intent)
+            startActivityWithTransition(view, intent)
         }
     }
 
@@ -93,6 +94,7 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
 
     override fun getIntentExtras(extras: Bundle?) {
         tvShow = extras?.getParcelable(EXTRA_TV_SHOW)
+        posterImage.setTransitionName(R.string.transition_tv_poster)
     }
 
     override fun loadDetailContent() = presenter.loadDetailContent(tvShow?.id)

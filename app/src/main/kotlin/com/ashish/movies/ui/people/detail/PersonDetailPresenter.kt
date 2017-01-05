@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 04.
  */
-class PeopleDetailPresenter @Inject constructor(val peopleInteractor: PeopleInteractor)
+class PersonDetailPresenter @Inject constructor(val peopleInteractor: PeopleInteractor)
     : BaseDetailPresenter<PeopleDetail, BaseDetailMvpView<PeopleDetail>>() {
 
     override fun getDetailContent(id: Long): Disposable {

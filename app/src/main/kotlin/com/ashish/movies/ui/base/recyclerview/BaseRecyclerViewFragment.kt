@@ -76,10 +76,14 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
             setOnRefreshListener(this@BaseRecyclerViewFragment)
         }
 
-        presenter.loadData(type)
+        loadData()
     }
 
     protected open fun getFragmentArguments() {}
+
+    protected open fun loadData() {
+        presenter.loadData(type)
+    }
 
     abstract fun getAdapterType(): Int
 
@@ -112,7 +116,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     override fun onItemClick(position: Int, view: View) {
         val intent = getDetailIntent(position)
         if (intent != null) {
-            val posterImagePair = view.getPosterImagePair(getString(R.string.transition_poster_image))
+            val posterImagePair = view.getPosterImagePair()
             val options = activity.getActivityOptionsCompat(posterImagePair)
 
             activity.window.exitTransition = null

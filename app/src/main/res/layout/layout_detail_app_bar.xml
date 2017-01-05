@@ -35,7 +35,7 @@
                 android:layout_height="@dimen/detail_poster_image_height"
                 android:layout_marginStart="@dimen/first_keyline"
                 android:scaleType="centerCrop"
-                android:transitionName="@string/transition_poster_image"
+                android:transitionName="@string/transition_movie_poster"
                 tools:ignore="ContentDescription"
                 tools:targetApi="lollipop" />
 

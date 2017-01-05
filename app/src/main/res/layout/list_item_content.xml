@@ -16,7 +16,7 @@
             android:id="@+id/poster_image"
             style="@style/Match.Width"
             android:scaleType="centerCrop"
-            android:transitionName="@string/transition_poster_image"
+            android:transitionName="@string/transition_movie_poster"
             app:heightRatio="1.5"
             tools:ignore="ContentDescription"
             tools:targetApi="lollipop" />

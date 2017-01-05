@@ -8,8 +8,8 @@ import dagger.Provides
  * Created by Ashish on Jan 04.
  */
 @Module
-class PeopleDetailModule {
+class PersonDetailModule {
 
     @Provides
-    fun providePeopleDetailPresenter(peopleInteractor: PeopleInteractor) = PeopleDetailPresenter(peopleInteractor)
+    fun providePersonDetailPresenter(peopleInteractor: PeopleInteractor) = PersonDetailPresenter(peopleInteractor)
 }

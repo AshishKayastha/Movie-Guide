@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.IdRes
-import android.support.annotation.StringRes
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v4.app.ActivityCompat
@@ -52,11 +51,11 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
     : MvpActivity<V, P>(), BaseDetailMvpView<I>, AppBarLayout.OnOffsetChangedListener {
 
+    protected val posterImage: ImageView by bindView(R.id.poster_image)
     protected val overviewText: FontTextView by bindView(R.id.overview_text)
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
 
     private val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
-    private val posterImage: ImageView by bindView(R.id.poster_image)
     private val detailContainer: View by bindView(R.id.detail_container)
     private val backdropImage: ImageView by bindView(R.id.backdrop_image)
     private val progressBar: MaterialProgressBar by bindView(R.id.material_progress_bar)
@@ -95,12 +94,13 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportPostponeEnterTransition()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
             getIntentExtras(intent.extras)
         }
+
+        supportPostponeEnterTransition()
 
         showPosterImage(getPosterPath())
         showBackdropImage(getBackdropPath())
@@ -226,8 +226,8 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
 
     abstract fun getItemTitle(): String
 
-    protected fun startActivityWithTransition(@StringRes transitionNameId: Int, view: View, intent: Intent) {
-        val imagePair = view.getPosterImagePair(getString(transitionNameId))
+    protected fun startActivityWithTransition(view: View, intent: Intent) {
+        val imagePair = view.getPosterImagePair()
         val options = getActivityOptionsCompat(imagePair)
 
         window.exitTransition = null

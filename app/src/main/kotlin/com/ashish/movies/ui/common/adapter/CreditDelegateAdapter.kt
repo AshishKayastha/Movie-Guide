@@ -9,6 +9,7 @@ import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.Constants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Jan 03.
@@ -32,17 +33,20 @@ class CreditDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
         override fun bindData(item: Credit) = with(item) {
             contentTitle.applyText(if (title.isNotNullOrEmpty()) title else name)
             contentSubtitle.applyText(if (job.isNotNullOrEmpty()) job else character)
+            posterImage.setTransitionName(R.string.transition_person_profile)
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }
 
         override fun getImageUrl(item: Credit): String? {
-            if (item.profilePath.isNotNullOrEmpty()) {
-                return PROFILE_ORIGINAL_URL_PREFIX + item.profilePath
-            } else if (item.posterPath.isNotNullOrEmpty()) {
-                return POSTER_W500_URL_PREFIX + item.posterPath
-            } else {
-                return null
+            with(item) {
+                if (profilePath.isNotNullOrEmpty()) {
+                    return PROFILE_ORIGINAL_URL_PREFIX + profilePath
+                } else if (posterPath.isNotNullOrEmpty()) {
+                    return POSTER_W500_URL_PREFIX + posterPath
+                } else {
+                    return ""
+                }
             }
         }
     }

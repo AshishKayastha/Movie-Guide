@@ -19,14 +19,17 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.movie.detail.MovieDetailActivity
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
+import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
+import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.Constants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Jan 04.
  */
-class PeopleDetailActivity : BaseDetailActivity<PeopleDetail, BaseDetailMvpView<PeopleDetail>, PeopleDetailPresenter>() {
+class PersonDetailActivity : BaseDetailActivity<PeopleDetail, BaseDetailMvpView<PeopleDetail>, PersonDetailPresenter>() {
 
     private val birthdayText: FontTextView by bindView(R.id.birthday_text)
     private val placeOfBirthText: FontTextView by bindView(R.id.place_of_birth_text)
@@ -47,20 +50,17 @@ class PeopleDetailActivity : BaseDetailActivity<PeopleDetail, BaseDetailMvpView<
 
     private fun onPersonCreditItemClicked(adapter: RecyclerViewAdapter<Credit>?, position: Int, view: View) {
         val credit = adapter?.getItem<Credit>(position)
-
-        var intent: Intent? = null
         val mediaType = credit?.mediaType
 
-        if ("movie" == mediaType) {
+        if (MEDIA_TYPE_MOVIE == mediaType) {
             val movie = Movie(credit?.id, credit?.title, posterPath = credit?.posterPath)
-            intent = MovieDetailActivity.createIntent(this@PeopleDetailActivity, movie)
-        } else if ("tv" == mediaType) {
-            val tvShow = TVShow(credit?.id, credit?.name, posterPath = credit?.posterPath)
-            intent = TVShowDetailActivity.createIntent(this@PeopleDetailActivity, tvShow)
-        }
+            val intent = MovieDetailActivity.createIntent(this@PersonDetailActivity, movie)
+            startActivityWithTransition(view, intent)
 
-        if (intent != null) {
-            startActivityWithTransition(R.string.transition_poster_image, view, intent)
+        } else if (MEDIA_TYPE_TV == mediaType) {
+            val tvShow = TVShow(credit?.id, credit?.name, posterPath = credit?.posterPath)
+            val intent = TVShowDetailActivity.createIntent(this@PersonDetailActivity, tvShow)
+            startActivityWithTransition(view, intent)
         }
     }
 
@@ -68,19 +68,20 @@ class PeopleDetailActivity : BaseDetailActivity<PeopleDetail, BaseDetailMvpView<
         const val EXTRA_PEOPLE = "people"
 
         fun createIntent(context: Context, people: People?): Intent {
-            return Intent(context, PeopleDetailActivity::class.java)
+            return Intent(context, PersonDetailActivity::class.java)
                     .putExtra(EXTRA_PEOPLE, people)
         }
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(PeopleDetailModule()).inject(this)
+        appComponent.plus(PersonDetailModule()).inject(this)
     }
 
     override fun getLayoutId() = R.layout.activity_detail_people
 
     override fun getIntentExtras(extras: Bundle?) {
         people = extras?.getParcelable(EXTRA_PEOPLE)
+        posterImage.setTransitionName(R.string.transition_person_profile)
     }
 
     override fun loadDetailContent() = presenter.loadDetailContent(people?.id)
