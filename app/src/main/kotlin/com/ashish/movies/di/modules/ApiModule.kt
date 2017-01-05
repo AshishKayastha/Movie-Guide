@@ -2,6 +2,7 @@ package com.ashish.movies.di.modules
 
 import com.ashish.movies.data.api.MovieApi
 import com.ashish.movies.data.api.PeopleApi
+import com.ashish.movies.data.api.SearchApi
 import com.ashish.movies.data.api.TVShowApi
 import dagger.Module
 import dagger.Provides
@@ -25,4 +26,8 @@ class ApiModule {
     @Provides
     @Singleton
     fun providePeopleApi(retrofit: Retrofit): PeopleApi = retrofit.create<PeopleApi>(PeopleApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideSearchApi(retrofit: Retrofit): SearchApi = retrofit.create<SearchApi>(SearchApi::class.java)
 }

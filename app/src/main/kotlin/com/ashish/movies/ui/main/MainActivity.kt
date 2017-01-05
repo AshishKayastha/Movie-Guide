@@ -1,5 +1,6 @@
 package com.ashish.movies.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
@@ -9,6 +10,7 @@ import android.support.v4.widget.DrawerLayout
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TypefaceSpan
+import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.TextView
@@ -18,6 +20,7 @@ import com.ashish.movies.ui.base.common.BaseActivity
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_PEOPLE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
+import com.ashish.movies.ui.multisearch.MultiSearchActivity
 import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.FontUtils.MONTSERRAT_REGULAR
@@ -111,9 +114,17 @@ class MainActivity : BaseActivity() {
                 }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == android.R.id.home) {
             drawerLayout.openDrawer(START)
+            return true
+        } else if (item?.itemId == R.id.action_search) {
+            startActivity(Intent(this, MultiSearchActivity::class.java))
             return true
         }
 

@@ -11,7 +11,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.ApiSpec"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <activity android:name=".ui.main.MainActivity">
@@ -31,6 +31,10 @@
 
         <activity
             android:name=".ui.people.detail.PersonDetailActivity"
+            android:label="" />
+
+        <activity
+            android:name=".ui.multisearch.MultiSearchActivity"
             android:label="" />
 
     </application>

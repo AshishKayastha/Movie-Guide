@@ -7,8 +7,10 @@ import com.ashish.movies.ui.movie.detail.MovieDetailModule
 import com.ashish.movies.ui.movie.detail.MovieDetailSubComponent
 import com.ashish.movies.ui.movie.list.MovieModule
 import com.ashish.movies.ui.movie.list.MovieSubComponent
-import com.ashish.movies.ui.people.detail.PeopleDetailModule
-import com.ashish.movies.ui.people.detail.PeopleDetailSubComponent
+import com.ashish.movies.ui.multisearch.MultiSearchModule
+import com.ashish.movies.ui.multisearch.MultiSearchSubComponent
+import com.ashish.movies.ui.people.detail.PersonDetailModule
+import com.ashish.movies.ui.people.detail.PersonDetailSubComponent
 import com.ashish.movies.ui.people.list.PeopleModule
 import com.ashish.movies.ui.people.list.PeopleSubComponent
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailModule
@@ -35,5 +37,7 @@ interface AppComponent {
 
     fun plus(tvShowDetailModule: TVShowDetailModule): TVShowDetailSubComponent
 
-    fun plus(peopleDetailModule: PeopleDetailModule): PeopleDetailSubComponent
+    fun plus(personDetailModule: PersonDetailModule): PersonDetailSubComponent
+
+    fun plus(multiSearchModule: MultiSearchModule): MultiSearchSubComponent
 }

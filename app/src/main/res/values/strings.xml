@@ -59,4 +59,8 @@
     <!-- People -->
     <string name="birthday_title">Birthday:</string>
     <string name="place_of_birth_title">Place Of Birth:</string>
+
+    <!-- Search -->
+    <string name="search">Search</string>
+    <string name="no_results_available">No Results Available</string>
 </resources>

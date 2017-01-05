@@ -8,6 +8,7 @@ import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.LOADING_VIEW
 import com.ashish.movies.ui.movie.list.MovieDelegateAdapter
+import com.ashish.movies.ui.multisearch.MultiSearchDelegateAdapter
 import com.ashish.movies.ui.people.list.PeopleDelegateAdapter
 import com.ashish.movies.ui.tvshow.detail.SeasonDelegateAdapter
 import com.ashish.movies.ui.tvshow.list.TVShowDelegateAdapter
@@ -27,6 +28,7 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
         const val ADAPTER_TYPE_PEOPLE = 2
         const val ADAPTER_TYPE_CREDIT = 3
         const val ADAPTER_TYPE_SEASON = 4
+        const val ADAPTER_TYPE_MULTI_SEARCH = 5
     }
 
     private val DELEGATE_ADAPTERS = arrayOf(
@@ -34,7 +36,8 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
             TVShowDelegateAdapter(layoutId, onItemClickListener),
             PeopleDelegateAdapter(layoutId, onItemClickListener),
             CreditDelegateAdapter(layoutId, onItemClickListener),
-            SeasonDelegateAdapter(layoutId, onItemClickListener))
+            SeasonDelegateAdapter(layoutId, onItemClickListener),
+            MultiSearchDelegateAdapter(layoutId, onItemClickListener))
 
     private var itemList: ArrayList<ViewType> = ArrayList()
     private var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()
