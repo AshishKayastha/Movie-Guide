@@ -58,7 +58,7 @@
 
                     <com.ashish.movies.ui.widget.FontTextView
                         style="@style/PrimaryText.Title"
-                        android:text="@string/seasons_title" />
+                        android:text="@string/seasons_count_title" />
 
                     <com.ashish.movies.ui.widget.FontTextView
                         android:id="@+id/season_text"
@@ -81,6 +81,8 @@
                         style="@style/SecondaryText.Title" />
 
                 </LinearLayout>
+
+                <include layout="@layout/layout_detail_seasons_view_stub" />
 
                 <include layout="@layout/layout_detail_cast_credits_view_stub" />
 

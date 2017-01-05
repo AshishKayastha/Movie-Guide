@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Match.Width"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/spacing_medium">
+
+    <com.ashish.movies.ui.widget.FontTextView
+        style="@style/DetailTitle"
+        android:text="@string/seasons_title" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/seasons_recycler_view"
+        style="@style/DetailRecyclerView" />
+
+</LinearLayout>

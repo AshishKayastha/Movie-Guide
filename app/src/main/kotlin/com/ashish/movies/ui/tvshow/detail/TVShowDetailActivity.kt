@@ -11,10 +11,12 @@ import com.ashish.movies.data.models.Credit
 import com.ashish.movies.data.models.People
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
+import com.ashish.movies.data.models.TVShowSeason
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_SEASON
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.ui.people.detail.PeopleDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
@@ -39,10 +41,13 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
     private val episodesText: FontTextView by bindView(R.id.episodes_text)
     private val lastAirDateText: FontTextView by bindView(R.id.last_air_date_text)
     private val firstAirDateText: FontTextView by bindView(R.id.first_air_date_text)
+
+    private val seasonsViewStub: ViewStub by bindView(R.id.seasons_view_stub)
     private val similarTVShowsViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
     private var tvShow: TVShow? = null
-    private lateinit var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>
+    private var seasonsAdapter: RecyclerViewAdapter<TVShowSeason>? = null
+    private var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>? = null
 
     private val onCastItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -65,7 +70,7 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
 
     private val onSimilarTVShowItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
-            val tvShow = similarTVShowsAdapter.getItem<TVShow>(position)
+            val tvShow = similarTVShowsAdapter?.getItem<TVShow>(position)
             val intent = TVShowDetailActivity.createIntent(this@TVShowDetailActivity, tvShow)
             startActivityWithTransition(R.string.transition_poster_image, view, intent)
         }
@@ -123,6 +128,11 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
 
     override fun getItemTitle(): String = tvShow?.name ?: ""
 
+    override fun showSeasonsList(seasonsList: List<TVShowSeason>) {
+        seasonsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_SEASON, null)
+        inflateViewStubRecyclerView(seasonsViewStub, R.id.seasons_recycler_view, seasonsAdapter!!, seasonsList)
+    }
+
     override fun getCastItemClickListener() = onCastItemClickListener
 
     override fun getCrewItemClickListener() = onCrewItemClickListener
@@ -137,6 +147,12 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
         }
 
         inflateViewStubRecyclerView(similarTVShowsViewStub, R.id.similar_content_recycler_view,
-                similarTVShowsAdapter, similarTVShowList)
+                similarTVShowsAdapter!!, similarTVShowList)
+    }
+
+    override fun performCleanup() {
+        seasonsAdapter?.removeListener()
+        similarTVShowsAdapter?.removeListener()
+        super.performCleanup()
     }
 }

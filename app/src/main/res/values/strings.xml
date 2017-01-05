@@ -40,7 +40,8 @@
     <string name="similar_movies_title">Similar Movies</string>
 
     <!-- TV Show Detail -->
-    <string name="seasons_title">Seasons:</string>
+    <string name="seasons_title">Seasons</string>
+    <string name="seasons_count_title">Seasons:</string>
     <string name="network_title">Network:</string>
     <string name="episodes_title">Episodes:</string>
     <string name="first_air_date_title">First Air Date:</string>

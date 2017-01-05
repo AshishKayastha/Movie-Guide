@@ -23,6 +23,8 @@ class TVShowDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInte
             hideProgress()
             showDetailContent(tvShowDetail)
 
+            showItemList(tvShowDetail?.seasons) { showSeasonsList(it) }
+
             val creditResults = tvShowDetail?.creditsResults
             showItemList(creditResults?.cast) { showCastList(it) }
             showItemList(creditResults?.crew) { showCrewList(it) }

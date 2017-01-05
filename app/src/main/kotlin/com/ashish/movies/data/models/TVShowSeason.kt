@@ -2,6 +2,7 @@ package com.ashish.movies.data.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.ashish.movies.ui.common.adapter.ViewType
 import com.squareup.moshi.Json
 import paperparcel.PaperParcel
 
@@ -12,7 +13,9 @@ data class TVShowSeason(
         @Json(name = "poster_path") val posterPath: String? = null,
         @Json(name = "episode_count") val episodeCount: Int? = null,
         @Json(name = "season_number") val seasonNumber: Int? = null
-) : Parcelable {
+) : ViewType, Parcelable {
+
+    override fun getViewType() = ViewType.CONTENT_VIEW
 
     companion object {
         @JvmField @Suppress("unused")
