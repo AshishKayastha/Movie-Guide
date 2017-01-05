@@ -1,8 +1,8 @@
 package com.ashish.movies.data.interactors
 
 import com.ashish.movies.data.api.PeopleApi
-import com.ashish.movies.data.models.People
-import com.ashish.movies.data.models.PeopleDetail
+import com.ashish.movies.data.models.Person
+import com.ashish.movies.data.models.PersonDetail
 import com.ashish.movies.data.models.Results
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,11 +13,11 @@ import javax.inject.Inject
  */
 class PeopleInteractor @Inject constructor(val peopleApi: PeopleApi) {
 
-    fun getPopularPeople(page: Int = 1): Observable<Results<People>> {
+    fun getPopularPeople(page: Int = 1): Observable<Results<Person>> {
         return peopleApi.getPopularPeople(page).observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun getPeopleDetailWithCombinedCredits(tvId: Long): Observable<PeopleDetail> {
+    fun getPeopleDetailWithCombinedCredits(tvId: Long): Observable<PersonDetail> {
         return peopleApi.getPeopleDetailWithAppendedResponse(tvId, "combined_credits")
                 .observeOn(AndroidSchedulers.mainThread())
     }

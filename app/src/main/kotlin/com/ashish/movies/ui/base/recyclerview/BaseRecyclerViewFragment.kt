@@ -24,6 +24,7 @@ import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.setVisibility
 import com.ashish.movies.utils.extensions.show
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
+import timber.log.Timber
 
 /**
  * Created by Ashish on Dec 30.
@@ -117,6 +118,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         val intent = getDetailIntent(position)
         if (intent != null) {
             val posterImagePair = view.getPosterImagePair()
+            Timber.v("Name: " + posterImagePair?.second)
             val options = activity.getActivityOptionsCompat(posterImagePair)
 
             activity.window.exitTransition = null

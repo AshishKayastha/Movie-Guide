@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movies.R
-import com.ashish.movies.data.models.People
+import com.ashish.movies.data.models.Person
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
@@ -14,7 +14,7 @@ import com.ashish.movies.ui.people.detail.PersonDetailActivity
 /**
  * Created by Ashish on Dec 31.
  */
-class PeopleFragment : BaseRecyclerViewFragment<People, BaseRecyclerViewMvpView<People>, PeoplePresenter>() {
+class PeopleFragment : BaseRecyclerViewFragment<Person, BaseRecyclerViewMvpView<Person>, PeoplePresenter>() {
 
     companion object {
         fun newInstance() = PeopleFragment()
@@ -34,7 +34,7 @@ class PeopleFragment : BaseRecyclerViewFragment<People, BaseRecyclerViewMvpView<
     override fun getAdapterType() = ADAPTER_TYPE_PEOPLE
 
     override fun getDetailIntent(position: Int): Intent? {
-        val people = recyclerViewAdapter.getItem<People>(position)
+        val people = recyclerViewAdapter.getItem<Person>(position)
         return PersonDetailActivity.createIntent(activity, people)
     }
 }

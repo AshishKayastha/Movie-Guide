@@ -51,9 +51,9 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
     : MvpActivity<V, P>(), BaseDetailMvpView<I>, AppBarLayout.OnOffsetChangedListener {
 
-    protected val posterImage: ImageView by bindView(R.id.poster_image)
     protected val overviewText: FontTextView by bindView(R.id.overview_text)
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
+    protected val posterImage: ImageView by bindView(R.id.detail_poster_image)
 
     private val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
     private val detailContainer: View by bindView(R.id.detail_container)

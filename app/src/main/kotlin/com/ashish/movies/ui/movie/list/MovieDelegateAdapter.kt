@@ -12,6 +12,7 @@ import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.getYearOnly
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Dec 30.
@@ -36,6 +37,7 @@ class MovieDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
             contentTitle.applyText(title)
             contentSubtitle.applyText(releaseDate.getYearOnly())
             averageVoteText?.setLabelText(voteAverage.toString())
+            posterImage.setTransitionName(R.string.transition_movie_poster)
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }

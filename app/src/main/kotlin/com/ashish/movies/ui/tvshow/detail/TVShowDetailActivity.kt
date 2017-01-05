@@ -8,7 +8,7 @@ import android.view.ViewStub
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
-import com.ashish.movies.data.models.People
+import com.ashish.movies.data.models.Person
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.data.models.TVShowSeason
@@ -64,8 +64,8 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
 
     private fun onTVShowCreditItemClicked(adapter: RecyclerViewAdapter<Credit>?, position: Int, view: View) {
         val credit = adapter?.getItem<Credit>(position)
-        val people = People(credit?.id, credit?.name, profilePath = credit?.profilePath)
-        val intent = PersonDetailActivity.createIntent(this@TVShowDetailActivity, people)
+        val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
+        val intent = PersonDetailActivity.createIntent(this, person)
         startActivityWithTransition(view, intent)
     }
 

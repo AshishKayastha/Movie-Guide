@@ -11,7 +11,7 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
-import com.ashish.movies.data.models.People
+import com.ashish.movies.data.models.Person
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
@@ -28,6 +28,7 @@ import com.ashish.movies.utils.extensions.getFormattedReleaseDate
 import com.ashish.movies.utils.extensions.getFormattedRuntime
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Dec 31.
@@ -70,8 +71,8 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
 
     private fun onMovieCreditItemClicked(adapter: RecyclerViewAdapter<Credit>?, position: Int, view: View) {
         val credit = adapter?.getItem<Credit>(position)
-        val people = People(credit?.id, credit?.name, profilePath = credit?.profilePath)
-        val intent = PersonDetailActivity.createIntent(this@MovieDetailActivity, people)
+        val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
+        val intent = PersonDetailActivity.createIntent(this@MovieDetailActivity, person)
         startActivityWithTransition(view, intent)
     }
 
@@ -91,6 +92,7 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
 
     override fun getIntentExtras(extras: Bundle?) {
         movie = extras?.getParcelable(EXTRA_MOVIE)
+        posterImage.setTransitionName(R.string.transition_movie_poster)
     }
 
     override fun loadDetailContent() = presenter.loadDetailContent(movie?.id)

@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 /**
  * Created by Ashish on Jan 04.
  */
-data class PeopleDetail(
+data class PersonDetail(
         val id: Int? = null,
         val name: String? = null,
         val imdbId: String? = null,

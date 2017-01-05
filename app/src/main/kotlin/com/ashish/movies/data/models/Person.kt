@@ -8,7 +8,7 @@ import com.squareup.moshi.Json
 import paperparcel.PaperParcel
 
 @PaperParcel
-data class People(
+data class Person(
         val id: Long? = null,
         val name: String? = null,
         val popularity: Double? = null,

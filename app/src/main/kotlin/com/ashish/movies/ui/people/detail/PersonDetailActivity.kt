@@ -8,8 +8,8 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.data.models.Movie
-import com.ashish.movies.data.models.People
-import com.ashish.movies.data.models.PeopleDetail
+import com.ashish.movies.data.models.Person
+import com.ashish.movies.data.models.PersonDetail
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
@@ -29,12 +29,12 @@ import com.ashish.movies.utils.extensions.setTransitionName
 /**
  * Created by Ashish on Jan 04.
  */
-class PersonDetailActivity : BaseDetailActivity<PeopleDetail, BaseDetailMvpView<PeopleDetail>, PersonDetailPresenter>() {
+class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<PersonDetail>, PersonDetailPresenter>() {
 
     private val birthdayText: FontTextView by bindView(R.id.birthday_text)
     private val placeOfBirthText: FontTextView by bindView(R.id.place_of_birth_text)
 
-    private var people: People? = null
+    private var person: Person? = null
 
     private val onCastItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -65,11 +65,11 @@ class PersonDetailActivity : BaseDetailActivity<PeopleDetail, BaseDetailMvpView<
     }
 
     companion object {
-        const val EXTRA_PEOPLE = "people"
+        const val EXTRA_PERSON = "person"
 
-        fun createIntent(context: Context, people: People?): Intent {
+        fun createIntent(context: Context, person: Person?): Intent {
             return Intent(context, PersonDetailActivity::class.java)
-                    .putExtra(EXTRA_PEOPLE, people)
+                    .putExtra(EXTRA_PERSON, person)
         }
     }
 
@@ -77,23 +77,23 @@ class PersonDetailActivity : BaseDetailActivity<PeopleDetail, BaseDetailMvpView<
         appComponent.plus(PersonDetailModule()).inject(this)
     }
 
-    override fun getLayoutId() = R.layout.activity_detail_people
+    override fun getLayoutId() = R.layout.activity_detail_person
 
     override fun getIntentExtras(extras: Bundle?) {
-        people = extras?.getParcelable(EXTRA_PEOPLE)
+        person = extras?.getParcelable(EXTRA_PERSON)
         posterImage.setTransitionName(R.string.transition_person_profile)
     }
 
-    override fun loadDetailContent() = presenter.loadDetailContent(people?.id)
+    override fun loadDetailContent() = presenter.loadDetailContent(person?.id)
 
     override fun getBackdropPath(): String {
-        val backdropPath = people?.profilePath
+        val backdropPath = person?.profilePath
         return if (backdropPath.isNotNullOrEmpty()) PROFILE_ORIGINAL_URL_PREFIX + backdropPath else ""
     }
 
     override fun getPosterPath() = getBackdropPath()
 
-    override fun showDetailContent(detailContent: PeopleDetail?) {
+    override fun showDetailContent(detailContent: PersonDetail?) {
         detailContent?.apply {
             titleText.text = name
             overviewText.text = detailContent.biography
@@ -103,7 +103,7 @@ class PersonDetailActivity : BaseDetailActivity<PeopleDetail, BaseDetailMvpView<
         super.showDetailContent(detailContent)
     }
 
-    override fun getItemTitle() = people?.name ?: ""
+    override fun getItemTitle() = person?.name ?: ""
 
     override fun getCastItemClickListener() = onCastItemClickListener
 
