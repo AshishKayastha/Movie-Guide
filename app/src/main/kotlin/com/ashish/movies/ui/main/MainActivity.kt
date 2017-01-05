@@ -62,6 +62,7 @@ class MainActivity : BaseActivity() {
 
         changeTabFont()
         changeNavigationMenuFont()
+        changeTextViewFont(toolbar!!)
 
         navigationView.setNavigationItemSelectedListener { item ->
             item.isChecked = true
@@ -93,12 +94,7 @@ class MainActivity : BaseActivity() {
         val vg = tabLayout.getChildAt(0) as ViewGroup
         (0..vg.childCount - 1)
                 .map { vg.getChildAt(it) as ViewGroup }
-                .forEach { vgTab ->
-                    (0..vgTab.childCount - 1)
-                            .map { vgTab.getChildAt(it) }
-                            .filterIsInstance<TextView>()
-                            .forEach { it.changeTypeface() }
-                }
+                .forEach { changeTextViewFont(it) }
     }
 
     private fun changeNavigationMenuFont() {
@@ -112,6 +108,14 @@ class MainActivity : BaseActivity() {
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                     menuItem.title = spannableString
                 }
+    }
+
+    private fun changeTextViewFont(viewGroup: ViewGroup) {
+        val size = viewGroup.childCount
+        (0..size - 1)
+                .map { viewGroup.getChildAt(it) }
+                .filterIsInstance<TextView>()
+                .forEach(TextView::changeTypeface)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

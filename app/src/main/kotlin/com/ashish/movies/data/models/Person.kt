@@ -19,12 +19,12 @@ data class Person(
 
     companion object {
         @JvmField @Suppress("unused")
-        val CREATOR = PaperParcelPeople.CREATOR
+        val CREATOR = PaperParcelPerson.CREATOR
     }
 
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        PaperParcelPeople.writeToParcel(this, dest, flags)
+        PaperParcelPerson.writeToParcel(this, dest, flags)
     }
 }
