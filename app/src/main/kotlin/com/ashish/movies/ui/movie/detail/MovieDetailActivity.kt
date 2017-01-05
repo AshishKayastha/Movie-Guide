@@ -3,7 +3,6 @@ package com.ashish.movies.ui.movie.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
 import android.view.View
 import android.view.ViewStub
 import butterknife.bindView
@@ -33,8 +32,8 @@ import com.ashish.movies.utils.extensions.setTransitionName
 /**
  * Created by Ashish on Dec 31.
  */
-class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, MovieDetailPresenter>(), MovieDetailMvpView,
-        AppBarLayout.OnOffsetChangedListener {
+class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, MovieDetailPresenter>(),
+        MovieDetailMvpView {
 
     private val statusText: FontTextView by bindView(R.id.status_text)
     private val budgetText: FontTextView by bindView(R.id.budget_text)

@@ -96,9 +96,9 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
     override fun showDetailContent(detailContent: PersonDetail?) {
         detailContent?.apply {
             titleText.text = name
-            overviewText.text = detailContent.biography
-            birthdayText.applyText(detailContent.birthday)
-            placeOfBirthText.applyText(detailContent.placeOfBirth)
+            overviewText.text = biography
+            birthdayText.applyText(birthday)
+            placeOfBirthText.applyText(placeOfBirth)
         }
         super.showDetailContent(detailContent)
     }
