@@ -11,8 +11,8 @@ import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_PERSON
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
-import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
-import com.ashish.movies.utils.Constants.PROFILE_ORIGINAL_URL_PREFIX
+import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
+import com.ashish.movies.utils.ApiConstants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.getYearOnly
 import com.ashish.movies.utils.extensions.hide

@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
-import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
-import com.ashish.movies.utils.Constants.PROFILE_ORIGINAL_URL_PREFIX
+import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
+import com.ashish.movies.utils.ApiConstants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTransitionName

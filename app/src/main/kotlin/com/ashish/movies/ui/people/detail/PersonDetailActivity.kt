@@ -21,7 +21,7 @@ import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
-import com.ashish.movies.utils.Constants.PROFILE_ORIGINAL_URL_PREFIX
+import com.ashish.movies.utils.ApiConstants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty

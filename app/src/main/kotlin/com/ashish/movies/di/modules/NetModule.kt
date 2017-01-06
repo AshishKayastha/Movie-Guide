@@ -1,8 +1,8 @@
 package com.ashish.movies.di.modules
 
 import com.ashish.movies.BuildConfig
+import com.ashish.movies.utils.ApiConstants.BASE_API_URL
 import com.ashish.movies.utils.ApiKeyInterceptor
-import com.ashish.movies.utils.Constants.BASE_API_URL
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides

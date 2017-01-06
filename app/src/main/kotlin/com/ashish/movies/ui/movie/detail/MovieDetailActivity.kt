@@ -18,9 +18,9 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MOVIE
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
-import com.ashish.movies.utils.Constants.BACKDROP_W780_URL_PREFIX
+import com.ashish.movies.utils.ApiConstants.BACKDROP_W780_URL_PREFIX
+import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
-import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedNumber
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
