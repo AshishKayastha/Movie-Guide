@@ -37,9 +37,6 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch, BaseRecyclerVi
 
         emptyTextView.setText(R.string.no_results_available)
         emptyImageView.setImageResource(R.drawable.ic_search_white_100dp)
-
-        // Just for test purpose
-        searchQuery("star")
     }
 
     override fun loadData() {
@@ -47,6 +44,7 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch, BaseRecyclerVi
     }
 
     fun searchQuery(query: String) {
+        recyclerViewAdapter.clearAll()
         presenter.setSearchQuery(query)
         presenter.loadData(null)
     }

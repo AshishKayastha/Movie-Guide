@@ -90,5 +90,10 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
         return loadingItemPosition
     }
 
+    fun clearAll() {
+        itemList.clear()
+        notifyDataSetChanged()
+    }
+
     override fun removeListener() = (DELEGATE_ADAPTERS[adapterType] as RemoveListener).removeListener()
 }

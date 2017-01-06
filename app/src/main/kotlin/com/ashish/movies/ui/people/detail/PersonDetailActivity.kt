@@ -23,6 +23,7 @@ import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.Constants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.getFormattedReleaseDate
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTransitionName
 
@@ -97,8 +98,8 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
         detailContent?.apply {
             titleText.text = name
             overviewText.text = biography
-            birthdayText.applyText(birthday)
             placeOfBirthText.applyText(placeOfBirth)
+            birthdayText.applyText(birthday.getFormattedReleaseDate(this@PersonDetailActivity))
         }
         super.showDetailContent(detailContent)
     }
