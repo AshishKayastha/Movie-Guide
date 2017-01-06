@@ -13,6 +13,7 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar"
             style="@style/Match.Width"
+            android:animateLayoutChanges="true"
             android:elevation="@dimen/toolbar_elevation"
             tools:ignore="UnusedAttribute">
 

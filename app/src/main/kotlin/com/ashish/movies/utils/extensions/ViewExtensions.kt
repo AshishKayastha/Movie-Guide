@@ -26,25 +26,19 @@ import com.bumptech.glide.request.target.ImageViewTarget
  * Created by Ashish on Dec 27.
  */
 fun View.setVisibility(visible: Boolean) {
-    visibility = if (visible) VISIBLE else GONE
+    if (visible) show() else hide()
 }
 
 fun View.show() {
-    visibility = VISIBLE
+    if (visibility != VISIBLE) visibility = VISIBLE
 }
 
 fun View.hide() {
-    visibility = GONE
+    if (visibility != GONE) visibility = GONE
 }
 
 fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View? {
     return LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
-}
-
-fun View.showSnackBar(message: CharSequence, duration: Int = Snackbar.LENGTH_LONG) {
-    Snackbar.make(this, message, duration)
-            .setAction(android.R.string.ok, { })
-            .show()
 }
 
 fun View.showSnackBar(messageId: Int, duration: Int = Snackbar.LENGTH_LONG) {

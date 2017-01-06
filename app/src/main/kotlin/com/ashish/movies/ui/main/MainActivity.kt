@@ -25,6 +25,7 @@ import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.FontUtils.MONTSERRAT_REGULAR
 import com.ashish.movies.utils.extensions.changeTypeface
+import com.ashish.movies.utils.extensions.setVisibility
 
 class MainActivity : BaseActivity() {
 
@@ -57,7 +58,7 @@ class MainActivity : BaseActivity() {
         tvShowTabTitles = resources.getStringArray(R.array.tv_show_list_type_array)
         peopleTabTitles = arrayOf(getString(R.string.popular_txt))
 
-        replaceFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
+        showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
         tabLayout.setupWithViewPager(viewPager)
 
         changeTabFont()
@@ -69,9 +70,9 @@ class MainActivity : BaseActivity() {
             drawerLayout.closeDrawers()
 
             when (item.itemId) {
-                R.id.action_movies -> replaceFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
-                R.id.action_tv_shows -> replaceFragment(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
-                R.id.action_people -> replaceFragment(CONTENT_TYPE_PEOPLE, peopleTabTitles)
+                R.id.action_movies -> showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
+                R.id.action_tv_shows -> showViewPagerFragment(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
+                R.id.action_people -> showViewPagerFragment(CONTENT_TYPE_PEOPLE, peopleTabTitles)
             }
 
             changeTabFont()
@@ -81,7 +82,8 @@ class MainActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_main
 
-    private fun replaceFragment(contentType: Int, titleArray: Array<String>) {
+    private fun showViewPagerFragment(contentType: Int, titleArray: Array<String>) {
+        tabLayout.setVisibility(contentType != CONTENT_TYPE_PEOPLE)
         supportActionBar?.title = toolbarTitles[contentType]
         tabPagerAdapter = TabPagerAdapter(contentType, supportFragmentManager, titleArray)
         viewPager.apply {
