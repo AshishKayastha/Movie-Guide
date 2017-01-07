@@ -3,6 +3,8 @@ package com.ashish.movies.di.components
 import com.ashish.movies.di.modules.ApiModule
 import com.ashish.movies.di.modules.AppModule
 import com.ashish.movies.di.modules.NetModule
+import com.ashish.movies.ui.discover.common.DiscoverModule
+import com.ashish.movies.ui.discover.common.DiscoverSubComponent
 import com.ashish.movies.ui.movie.detail.MovieDetailModule
 import com.ashish.movies.ui.movie.detail.MovieDetailSubComponent
 import com.ashish.movies.ui.movie.list.MovieModule
@@ -40,4 +42,6 @@ interface AppComponent {
     fun plus(personDetailModule: PersonDetailModule): PersonDetailSubComponent
 
     fun plus(multiSearchModule: MultiSearchModule): MultiSearchSubComponent
+
+    fun plus(discoverModule: DiscoverModule): DiscoverSubComponent
 }

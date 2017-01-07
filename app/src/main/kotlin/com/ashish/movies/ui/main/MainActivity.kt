@@ -17,6 +17,7 @@ import android.widget.TextView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseActivity
+import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_DISCOVER
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_PEOPLE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
@@ -38,6 +39,7 @@ class MainActivity : BaseActivity() {
     private lateinit var movieTabTitles: Array<String>
     private lateinit var tvShowTabTitles: Array<String>
     private lateinit var peopleTabTitles: Array<String>
+    private lateinit var discoverTabTitles: Array<String>
 
     private lateinit var tabPagerAdapter: TabPagerAdapter
     private lateinit var customTypefaceSpan: TypefaceSpan
@@ -53,10 +55,11 @@ class MainActivity : BaseActivity() {
         val typeface = FontUtils.getTypeface(this, MONTSERRAT_REGULAR)
         customTypefaceSpan = CustomTypefaceSpan(typeface)
 
+        peopleTabTitles = arrayOf(getString(R.string.popular_txt))
         toolbarTitles = resources.getStringArray(R.array.toolbar_title_array)
         movieTabTitles = resources.getStringArray(R.array.movie_list_type_array)
         tvShowTabTitles = resources.getStringArray(R.array.tv_show_list_type_array)
-        peopleTabTitles = arrayOf(getString(R.string.popular_txt))
+        discoverTabTitles = resources.getStringArray(R.array.discover_type_array)
 
         showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
         tabLayout.setupWithViewPager(viewPager)
@@ -73,6 +76,7 @@ class MainActivity : BaseActivity() {
                 R.id.action_movies -> showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
                 R.id.action_tv_shows -> showViewPagerFragment(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
                 R.id.action_people -> showViewPagerFragment(CONTENT_TYPE_PEOPLE, peopleTabTitles)
+                R.id.action_discover -> showViewPagerFragment(CONTENT_TYPE_DISCOVER, discoverTabTitles)
             }
 
             changeTabFont()
@@ -83,12 +87,19 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_main
 
     private fun showViewPagerFragment(contentType: Int, titleArray: Array<String>) {
-        tabLayout.setVisibility(contentType != CONTENT_TYPE_PEOPLE)
         supportActionBar?.title = toolbarTitles[contentType]
+        tabLayout.setVisibility(contentType != CONTENT_TYPE_PEOPLE)
+
         tabPagerAdapter = TabPagerAdapter(contentType, supportFragmentManager, titleArray)
         viewPager.apply {
             adapter = tabPagerAdapter
             offscreenPageLimit = tabPagerAdapter.count - 1
+        }
+
+        if (contentType == CONTENT_TYPE_DISCOVER) {
+            tabLayout.tabMode = TabLayout.MODE_FIXED
+        } else {
+            tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
         }
     }
 
@@ -125,11 +136,11 @@ class MainActivity : BaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == android.R.id.home) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
             drawerLayout.openDrawer(START)
             return true
-        } else if (item?.itemId == R.id.action_search) {
+        } else if (item.itemId == R.id.action_search) {
             startActivity(Intent(this, MultiSearchActivity::class.java))
             return true
         }

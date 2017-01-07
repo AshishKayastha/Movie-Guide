@@ -26,4 +26,10 @@ interface MovieApi {
     @GET("movie/{movieId}")
     fun getMovieDetailWithAppendedResponse(@Path("movieId") movieId: Long,
                                            @Query("append_to_response") appendedResponse: String): Observable<MovieDetail>
+
+    @GET("discover/movie")
+    fun discoverMovie(@Query("sort_by") sortBy: String = "popularity.desc",
+                      @Query("year") year: Int = 2016,
+                      @Query("with_genres") genres: String? = null,
+                      @Query("page") page: Int = 1): Observable<Results<Movie>>
 }

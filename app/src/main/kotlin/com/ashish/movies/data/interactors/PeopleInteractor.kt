@@ -7,10 +7,12 @@ import com.ashish.movies.data.models.Results
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by Ashish on Dec 31.
  */
+@Singleton
 class PeopleInteractor @Inject constructor(val peopleApi: PeopleApi) {
 
     fun getPopularPeople(page: Int = 1): Observable<Results<Person>> {

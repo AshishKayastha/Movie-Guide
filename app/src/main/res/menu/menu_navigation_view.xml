@@ -20,5 +20,11 @@
             android:icon="@drawable/ic_people_white_24dp"
             android:title="@string/title_people"
             app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/action_discover"
+            android:icon="@drawable/ic_discover_white_24dp"
+            android:title="@string/title_discover"
+            app:showAsAction="ifRoom" />
     </group>
 </menu>

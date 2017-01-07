@@ -18,5 +18,11 @@
         <item>@string/title_movies</item>
         <item>@string/title_tv_shows</item>
         <item>@string/title_people</item>
+        <item>@string/title_discover</item>
+    </string-array>
+
+    <string-array name="discover_type_array">
+        <item>@string/title_movies</item>
+        <item>@string/title_tv_shows</item>
     </string-array>
 </resources>

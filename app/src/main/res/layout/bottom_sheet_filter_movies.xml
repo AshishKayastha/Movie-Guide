@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/first_keyline"
+    android:paddingStart="@dimen/first_keyline">
+
+    <Space
+        android:id="@+id/centered_space"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_action_cb"
+        style="@style/LeftGenreCheckBox"
+        android:tag="28"
+        android:text="@string/genre_action" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_adventure_cb"
+        style="@style/GenreCheckBox"
+        android:text="@string/genre_adventure" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_animation_cb"
+        style="@style/LeftGenreCheckBox"
+        android:layout_below="@id/genre_action_cb"
+        android:text="@string/genre_animation" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_comedy_cb"
+        style="@style/GenreCheckBox"
+        android:layout_below="@id/genre_adventure_cb"
+        android:text="@string/genre_comedy" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_crime_cb"
+        style="@style/LeftGenreCheckBox"
+        android:layout_below="@id/genre_animation_cb"
+        android:text="@string/genre_crime" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_documentary_cb"
+        style="@style/GenreCheckBox"
+        android:layout_below="@id/genre_comedy_cb"
+        android:text="@string/genre_documentary" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_drama_cb"
+        style="@style/LeftGenreCheckBox"
+        android:layout_below="@id/genre_crime_cb"
+        android:text="@string/genre_drama" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_family_cb"
+        style="@style/GenreCheckBox"
+        android:layout_below="@id/genre_documentary_cb"
+        android:text="@string/genre_family" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_fantasy_cb"
+        style="@style/LeftGenreCheckBox"
+        android:layout_below="@id/genre_drama_cb"
+        android:text="@string/genre_fantasy" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_history_cb"
+        style="@style/GenreCheckBox"
+        android:layout_below="@id/genre_family_cb"
+        android:text="@string/genre_history" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_horror_cb"
+        style="@style/LeftGenreCheckBox"
+        android:layout_below="@id/genre_fantasy_cb"
+        android:text="@string/genre_horror" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_music_cb"
+        style="@style/GenreCheckBox"
+        android:layout_below="@id/genre_history_cb"
+        android:text="@string/genre_music" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_mystery_cb"
+        style="@style/LeftGenreCheckBox"
+        android:layout_below="@id/genre_horror_cb"
+        android:text="@string/genre_mystery" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_romance_cb"
+        style="@style/GenreCheckBox"
+        android:layout_below="@id/genre_music_cb"
+        android:text="@string/genre_romance" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_sci_fi_cb"
+        style="@style/LeftGenreCheckBox"
+        android:layout_below="@id/genre_mystery_cb"
+        android:text="@string/genre_sci_fi" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_thriller_cb"
+        style="@style/GenreCheckBox"
+        android:layout_below="@id/genre_romance_cb"
+        android:text="@string/genre_thriller" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_war_cb"
+        style="@style/LeftGenreCheckBox"
+        android:layout_below="@id/genre_sci_fi_cb"
+        android:text="@string/genre_war" />
+
+    <com.ashish.movies.ui.widget.FontCheckBox
+        android:id="@+id/genre_western_cb"
+        style="@style/GenreCheckBox"
+        android:layout_below="@id/genre_thriller_cb"
+        android:text="@string/genre_western" />
+
+</RelativeLayout>
