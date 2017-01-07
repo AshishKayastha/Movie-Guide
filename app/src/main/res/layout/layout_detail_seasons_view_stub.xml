@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ViewStub xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/seasons_view_stub"
-    style="@style/Match.Width"
-    android:layout="@layout/layout_detail_seasons"
-    tools:showIn="@layout/acivity_detail_tv_show" />

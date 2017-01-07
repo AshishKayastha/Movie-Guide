@@ -15,6 +15,7 @@
         style="@style/Match"
         android:fitsSystemWindows="true"
         app:collapsedTitleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+        app:contentScrim="?colorPrimary"
         app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
         <ImageView

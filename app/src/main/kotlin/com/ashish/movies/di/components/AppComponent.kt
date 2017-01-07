@@ -19,6 +19,8 @@ import com.ashish.movies.ui.tvshow.detail.TVShowDetailModule
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailSubComponent
 import com.ashish.movies.ui.tvshow.list.TVShowModule
 import com.ashish.movies.ui.tvshow.list.TVShowSubComponent
+import com.ashish.movies.ui.tvshow.season.SeasonDetailModule
+import com.ashish.movies.ui.tvshow.season.SeasonDetailSubComponent
 import dagger.Component
 import javax.inject.Singleton
 
@@ -44,4 +46,6 @@ interface AppComponent {
     fun plus(multiSearchModule: MultiSearchModule): MultiSearchSubComponent
 
     fun plus(discoverModule: DiscoverModule): DiscoverSubComponent
+
+    fun plus(seasonDetailModule: SeasonDetailModule): SeasonDetailSubComponent
 }

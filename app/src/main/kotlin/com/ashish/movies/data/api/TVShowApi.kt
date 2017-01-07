@@ -1,6 +1,7 @@
 package com.ashish.movies.data.api
 
 import com.ashish.movies.data.models.Results
+import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
 import io.reactivex.Observable
@@ -26,6 +27,11 @@ interface TVShowApi {
     @GET("tv/{tvId}")
     fun getTVShowDetailWithAppendedResponse(@Path("tvId") tvId: Long,
                                             @Query("append_to_response") appendedResponse: String): Observable<TVShowDetail>
+
+    @GET("tv/{tvId}/season/{seasonNumber}")
+    fun getSeasonDetail(@Path("tvId") tvId: Long,
+                        @Path("seasonNumber") seasonNumber: Int,
+                        @Query("append_to_response") appendedResponse: String): Observable<SeasonDetail>
 
     @GET("discover/tv")
     fun discoverTVShow(@Query("sort_by") sortBy: String = "popularity.desc",

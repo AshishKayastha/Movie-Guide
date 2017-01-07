@@ -10,8 +10,8 @@ import com.ashish.movies.ui.common.adapter.RemoveListener
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
-import com.ashish.movies.utils.extensions.getProfileUrl
 import com.ashish.movies.utils.extensions.getYearOnly
 import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
@@ -62,7 +62,7 @@ class MultiSearchDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
         override fun getImageUrl(item: MultiSearch): String? {
             with(item) {
                 if (profilePath.isNotNullOrEmpty()) {
-                    return profilePath.getProfileUrl()
+                    return profilePath.getOriginalImageUrl()
                 } else {
                     return posterPath.getPosterUrl()
                 }

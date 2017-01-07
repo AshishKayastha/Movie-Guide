@@ -9,7 +9,7 @@ import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RemoveListener
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
-import com.ashish.movies.utils.extensions.getProfileUrl
+import com.ashish.movies.utils.extensions.getOriginalImageUrl
 
 /**
  * Created by Ashish on Dec 31.
@@ -36,6 +36,6 @@ class PeopleDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
             super.bindData(item)
         }
 
-        override fun getImageUrl(item: Person) = item.profilePath.getProfileUrl()
+        override fun getImageUrl(item: Person) = item.profilePath.getOriginalImageUrl()
     }
 }

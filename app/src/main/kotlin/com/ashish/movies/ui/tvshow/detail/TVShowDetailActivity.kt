@@ -19,8 +19,8 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_SEASON
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
+import com.ashish.movies.ui.tvshow.season.SeasonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
-import com.ashish.movies.utils.ApiConstants.BACKDROP_W780_URL_PREFIX
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getBackdropUrl
@@ -70,6 +70,14 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
         startActivityWithTransition(view, R.string.transition_person_profile, intent)
     }
 
+    private val onSeasonItemClickLitener = object : OnItemClickListener {
+        override fun onItemClick(position: Int, view: View) {
+            val season = seasonsAdapter?.getItem<TVShowSeason>(position)
+            val intent = SeasonDetailActivity.createIntent(this@TVShowDetailActivity, tvShow?.id, season)
+            startActivityWithTransition(view, R.string.transition_season_poster, intent)
+        }
+    }
+
     private val onSimilarTVShowItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
             val tvShow = similarTVShowsAdapter?.getItem<TVShow>(position)
@@ -107,7 +115,7 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
     override fun showDetailContent(detailContent: TVShowDetail?) {
         detailContent?.apply {
             if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
-                showBackdropImage(BACKDROP_W780_URL_PREFIX + backdropPath)
+                showBackdropImage(backdropPath.getBackdropUrl())
             }
 
             imdbId = detailContent.externalIds?.imdbId
@@ -127,7 +135,9 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
     override fun getItemTitle(): String = tvShow?.name ?: ""
 
     override fun showSeasonsList(seasonsList: List<TVShowSeason>) {
-        seasonsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_SEASON, null)
+        seasonsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_SEASON,
+                onSeasonItemClickLitener)
+
         inflateViewStubRecyclerView(seasonsViewStub, R.id.seasons_recycler_view, seasonsAdapter!!, seasonsList)
     }
 

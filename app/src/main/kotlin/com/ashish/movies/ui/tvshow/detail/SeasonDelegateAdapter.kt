@@ -9,8 +9,8 @@ import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RemoveListener
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
-import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.getPosterUrl
 
 /**
  * Created by Ashish on Jan 04.
@@ -33,12 +33,12 @@ class SeasonDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
 
         override fun bindData(item: TVShowSeason) = with(item) {
             val context = itemView.context
-            contentTitle.applyText(String.format(context.getString(R.string.season_count_format), seasonNumber))
+            contentTitle.applyText(String.format(context.getString(R.string.season_number_format), seasonNumber))
             contentSubtitle.applyText(String.format(context.getString(R.string.episode_count_format), episodeCount))
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }
 
-        override fun getImageUrl(item: TVShowSeason) = POSTER_W500_URL_PREFIX + item.posterPath
+        override fun getImageUrl(item: TVShowSeason) = item.posterPath.getPosterUrl()
     }
 }

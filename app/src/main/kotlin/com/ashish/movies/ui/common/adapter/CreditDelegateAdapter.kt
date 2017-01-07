@@ -6,8 +6,8 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
-import com.ashish.movies.utils.extensions.getProfileUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 
 /**
@@ -39,7 +39,7 @@ class CreditDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
         override fun getImageUrl(item: Credit): String? {
             with(item) {
                 if (profilePath.isNotNullOrEmpty()) {
-                    return profilePath.getProfileUrl()
+                    return profilePath.getOriginalImageUrl()
                 } else {
                     return posterPath.getPosterUrl()
                 }

@@ -18,7 +18,6 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MOVIE
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
-import com.ashish.movies.utils.ApiConstants.BACKDROP_W780_URL_PREFIX
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getBackdropUrl
@@ -106,7 +105,7 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
     override fun showDetailContent(detailContent: MovieDetail?) {
         detailContent?.apply {
             if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
-                showBackdropImage(BACKDROP_W780_URL_PREFIX + backdropPath)
+                showBackdropImage(backdropPath.getBackdropUrl())
             }
 
             this@MovieDetailActivity.imdbId = imdbId

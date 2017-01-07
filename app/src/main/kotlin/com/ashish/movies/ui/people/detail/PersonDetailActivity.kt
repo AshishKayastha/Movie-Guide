@@ -23,7 +23,7 @@ import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
-import com.ashish.movies.utils.extensions.getProfileUrl
+import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
@@ -86,7 +86,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
 
     override fun loadDetailContent() = presenter.loadDetailContent(person?.id)
 
-    override fun getBackdropPath() = person?.profilePath.getProfileUrl()
+    override fun getBackdropPath() = person?.profilePath.getOriginalImageUrl()
 
     override fun getPosterPath() = getBackdropPath()
 

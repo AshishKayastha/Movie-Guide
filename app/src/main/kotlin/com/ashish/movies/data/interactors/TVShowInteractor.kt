@@ -2,6 +2,7 @@ package com.ashish.movies.data.interactors
 
 import com.ashish.movies.data.api.TVShowApi
 import com.ashish.movies.data.models.Results
+import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.utils.ApiConstants.CREDITS_AND_SIMILAR
@@ -22,6 +23,11 @@ class TVShowInteractor @Inject constructor(val tvShowApi: TVShowApi) {
 
     fun getTVShowDetailWithCreditsAndSimilarTVShows(tvId: Long): Observable<TVShowDetail> {
         return tvShowApi.getTVShowDetailWithAppendedResponse(tvId, CREDITS_AND_SIMILAR + ",external_ids")
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getSeasonDetail(tvId: Long, seasonNumber: Int): Observable<SeasonDetail> {
+        return tvShowApi.getSeasonDetail(tvId, seasonNumber, "credits,external_ids")
                 .observeOn(AndroidSchedulers.mainThread())
     }
 

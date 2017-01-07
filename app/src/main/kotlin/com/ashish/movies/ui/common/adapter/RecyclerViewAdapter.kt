@@ -12,6 +12,7 @@ import com.ashish.movies.ui.multisearch.MultiSearchDelegateAdapter
 import com.ashish.movies.ui.people.list.PeopleDelegateAdapter
 import com.ashish.movies.ui.tvshow.detail.SeasonDelegateAdapter
 import com.ashish.movies.ui.tvshow.list.TVShowDelegateAdapter
+import com.ashish.movies.ui.tvshow.season.EpisodeDelegateAdapter
 import com.bumptech.glide.Glide
 import java.util.*
 
@@ -29,6 +30,7 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
         const val ADAPTER_TYPE_CREDIT = 3
         const val ADAPTER_TYPE_SEASON = 4
         const val ADAPTER_TYPE_MULTI_SEARCH = 5
+        const val ADAPTER_TYPE_EPISODE = 6
     }
 
     private val loadingItem = object : ViewType {
@@ -41,7 +43,9 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
             PeopleDelegateAdapter(layoutId, onItemClickListener),
             CreditDelegateAdapter(layoutId, onItemClickListener),
             SeasonDelegateAdapter(layoutId, onItemClickListener),
-            MultiSearchDelegateAdapter(layoutId, onItemClickListener))
+            MultiSearchDelegateAdapter(layoutId, onItemClickListener),
+            EpisodeDelegateAdapter(layoutId, onItemClickListener)
+    )
 
     private var itemList: ArrayList<ViewType> = ArrayList()
     private var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()
