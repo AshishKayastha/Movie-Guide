@@ -31,6 +31,10 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
         const val ADAPTER_TYPE_MULTI_SEARCH = 5
     }
 
+    private val loadingItem = object : ViewType {
+        override fun getViewType() = LOADING_VIEW
+    }
+
     private val DELEGATE_ADAPTERS = arrayOf(
             MovieDelegateAdapter(layoutId, onItemClickListener),
             TVShowDelegateAdapter(layoutId, onItemClickListener),
@@ -72,7 +76,7 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
     }
 
     fun addLoadingItem() {
-        itemList.add(LoadingView())
+        itemList.add(loadingItem)
         notifyItemInserted(itemCount - 1)
     }
 
@@ -95,5 +99,7 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
         notifyDataSetChanged()
     }
 
-    override fun removeListener() = (DELEGATE_ADAPTERS[adapterType] as RemoveListener).removeListener()
+    override fun removeListener() {
+        (DELEGATE_ADAPTERS[adapterType] as RemoveListener).removeListener()
+    }
 }

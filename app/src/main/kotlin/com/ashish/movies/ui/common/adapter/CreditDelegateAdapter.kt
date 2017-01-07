@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
-import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
-import com.ashish.movies.utils.ApiConstants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.getPosterUrl
+import com.ashish.movies.utils.extensions.getProfileUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 
 /**
@@ -39,11 +39,9 @@ class CreditDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
         override fun getImageUrl(item: Credit): String? {
             with(item) {
                 if (profilePath.isNotNullOrEmpty()) {
-                    return PROFILE_ORIGINAL_URL_PREFIX + profilePath
-                } else if (posterPath.isNotNullOrEmpty()) {
-                    return POSTER_W500_URL_PREFIX + posterPath
+                    return profilePath.getProfileUrl()
                 } else {
-                    return ""
+                    return posterPath.getPosterUrl()
                 }
             }
         }

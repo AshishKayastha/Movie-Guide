@@ -21,10 +21,11 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.ApiConstants.BACKDROP_W780_URL_PREFIX
-import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
+import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
+import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTitleAndYear
 import com.ashish.movies.utils.extensions.setTransitionName
@@ -99,15 +100,9 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
 
     override fun loadDetailContent() = presenter.loadDetailContent(tvShow?.id)
 
-    override fun getBackdropPath(): String {
-        val backdropPath = tvShow?.backdropPath
-        return if (backdropPath.isNotNullOrEmpty()) BACKDROP_W780_URL_PREFIX + backdropPath else ""
-    }
+    override fun getBackdropPath() = tvShow?.backdropPath.getBackdropUrl()
 
-    override fun getPosterPath(): String {
-        val posterPath = tvShow?.posterPath
-        return if (posterPath.isNotNullOrEmpty()) POSTER_W500_URL_PREFIX + posterPath else ""
-    }
+    override fun getPosterPath() = tvShow?.posterPath.getPosterUrl()
 
     override fun showDetailContent(detailContent: TVShowDetail?) {
         detailContent?.apply {

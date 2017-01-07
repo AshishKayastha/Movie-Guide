@@ -24,7 +24,6 @@ import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.setVisibility
 import com.ashish.movies.utils.extensions.show
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
-import timber.log.Timber
 
 /**
  * Created by Ashish on Dec 30.
@@ -47,10 +46,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     protected val scrollListener: InfiniteScrollListener = object : InfiniteScrollListener() {
         override fun onLoadMore(currentPage: Int) {
             if (currentPage > 1) {
-                recyclerView.post {
-                    recyclerViewAdapter.addLoadingItem()
-                    presenter.loadMoreData(type, currentPage)
-                }
+                recyclerView.post { presenter.loadMoreData(type, currentPage) }
             }
         }
     }
@@ -60,8 +56,15 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getFragmentArguments()
+        initViews()
+        loadData()
+    }
 
+    protected open fun getFragmentArguments() {}
+
+    protected open fun initViews() {
         recyclerViewAdapter = RecyclerViewAdapter(adapterType = getAdapterType(), onItemClickListener = this)
+
         recyclerView.apply {
             setHasFixedSize(true)
             emptyView = emptyContentView
@@ -76,15 +79,9 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
             setSwipeableViews(emptyContentView, recyclerView)
             setOnRefreshListener(this@BaseRecyclerViewFragment)
         }
-
-        loadData()
     }
 
-    protected open fun getFragmentArguments() {}
-
-    protected open fun loadData() {
-        presenter.loadData(type)
-    }
+    protected open fun loadData() = presenter.loadData(type)
 
     abstract fun getAdapterType(): Int
 
@@ -106,6 +103,8 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     override fun showItemList(itemList: List<I>?) = recyclerViewAdapter.showItemList(itemList)
 
+    override fun showLoadingItem() = recyclerViewAdapter.addLoadingItem()
+
     override fun addNewItemList(itemList: List<I>?) = recyclerViewAdapter.addNewItemList(itemList)
 
     override fun removeLoadingItem() {
@@ -118,7 +117,6 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         val intent = getDetailIntent(position)
         if (intent != null) {
             val posterImagePair = view.getPosterImagePair(getTransitionNameId(position))
-            Timber.v("Name: " + posterImagePair?.second)
             val options = activity.getActivityOptionsCompat(posterImagePair)
 
             activity.window.exitTransition = null

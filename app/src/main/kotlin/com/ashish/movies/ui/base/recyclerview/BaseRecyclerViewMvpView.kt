@@ -10,6 +10,8 @@ interface BaseRecyclerViewMvpView<in I : ViewType> : LceView {
 
     fun showItemList(itemList: List<I>?)
 
+    fun showLoadingItem()
+
     fun addNewItemList(itemList: List<I>?)
 
     fun removeLoadingItem()

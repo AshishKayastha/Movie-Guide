@@ -46,6 +46,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     fun loadMoreData(type: Int?, page: Int) {
         if (Utils.isOnline()) {
+            getView()?.showLoadingItem()
             addDisposable(getResultsObservable(getType(type), page)
                     .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))
         } else {

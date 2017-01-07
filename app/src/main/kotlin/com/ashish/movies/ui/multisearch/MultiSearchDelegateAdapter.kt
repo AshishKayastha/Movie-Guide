@@ -9,9 +9,9 @@ import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RemoveListener
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
-import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
-import com.ashish.movies.utils.ApiConstants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.getPosterUrl
+import com.ashish.movies.utils.extensions.getProfileUrl
 import com.ashish.movies.utils.extensions.getYearOnly
 import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
@@ -53,10 +53,8 @@ class MultiSearchDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
             with(multiSearch) {
                 if (releaseDate.isNotNullOrEmpty()) {
                     return releaseDate.getYearOnly()
-                } else if (firstAirDate.isNotNullOrEmpty()) {
-                    return firstAirDate.getYearOnly()
                 } else {
-                    return ""
+                    return firstAirDate.getYearOnly()
                 }
             }
         }
@@ -64,11 +62,9 @@ class MultiSearchDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
         override fun getImageUrl(item: MultiSearch): String? {
             with(item) {
                 if (profilePath.isNotNullOrEmpty()) {
-                    return PROFILE_ORIGINAL_URL_PREFIX + profilePath
-                } else if (posterPath.isNotNullOrEmpty()) {
-                    return POSTER_W500_URL_PREFIX + posterPath
+                    return profilePath.getProfileUrl()
                 } else {
-                    return ""
+                    return posterPath.getPosterUrl()
                 }
             }
         }

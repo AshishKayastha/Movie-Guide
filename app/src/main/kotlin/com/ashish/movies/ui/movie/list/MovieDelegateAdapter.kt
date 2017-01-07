@@ -9,8 +9,8 @@ import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RemoveListener
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
-import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.getYearOnly
 
 /**
@@ -40,6 +40,6 @@ class MovieDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
             super.bindData(item)
         }
 
-        override fun getImageUrl(item: Movie) = POSTER_W500_URL_PREFIX + item.posterPath
+        override fun getImageUrl(item: Movie) = item.posterPath.getPosterUrl()
     }
 }

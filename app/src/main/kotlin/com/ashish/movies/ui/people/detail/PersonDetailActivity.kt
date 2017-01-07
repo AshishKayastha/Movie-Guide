@@ -21,10 +21,9 @@ import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
-import com.ashish.movies.utils.ApiConstants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.getProfileUrl
 import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
@@ -87,10 +86,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
 
     override fun loadDetailContent() = presenter.loadDetailContent(person?.id)
 
-    override fun getBackdropPath(): String {
-        val backdropPath = person?.profilePath
-        return if (backdropPath.isNotNullOrEmpty()) PROFILE_ORIGINAL_URL_PREFIX + backdropPath else ""
-    }
+    override fun getBackdropPath() = person?.profilePath.getProfileUrl()
 
     override fun getPosterPath() = getBackdropPath()
 

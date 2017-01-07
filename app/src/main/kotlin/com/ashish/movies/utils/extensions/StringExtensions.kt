@@ -2,6 +2,9 @@ package com.ashish.movies.utils.extensions
 
 import android.content.Context
 import android.text.format.DateFormat
+import com.ashish.movies.utils.ApiConstants.BACKDROP_W780_URL_PREFIX
+import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
+import com.ashish.movies.utils.ApiConstants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.Constants.DEFAULT_DATE_PATTERN
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import timber.log.Timber
@@ -76,4 +79,16 @@ inline fun <reified T> List<T>?.convertListToCommaSeparatedText(crossinline func
         formattedGenre = joinToString { func(it) }
     }
     return formattedGenre
+}
+
+fun String?.getBackdropUrl(): String {
+    return if (this.isNotNullOrEmpty()) BACKDROP_W780_URL_PREFIX + this else ""
+}
+
+fun String?.getPosterUrl(): String {
+    return if (this.isNotNullOrEmpty()) POSTER_W500_URL_PREFIX + this else ""
+}
+
+fun String?.getProfileUrl(): String {
+    return if (this.isNotNullOrEmpty()) PROFILE_ORIGINAL_URL_PREFIX + this else ""
 }

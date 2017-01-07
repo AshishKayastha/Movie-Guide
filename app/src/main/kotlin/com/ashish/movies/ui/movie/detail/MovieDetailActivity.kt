@@ -19,12 +19,13 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.ApiConstants.BACKDROP_W780_URL_PREFIX
-import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
+import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getFormattedNumber
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
 import com.ashish.movies.utils.extensions.getFormattedRuntime
+import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTitleAndYear
 import com.ashish.movies.utils.extensions.setTransitionName
@@ -71,7 +72,7 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
     private fun onMovieCreditItemClicked(adapter: RecyclerViewAdapter<Credit>?, position: Int, view: View) {
         val credit = adapter?.getItem<Credit>(position)
         val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
-        val intent = PersonDetailActivity.createIntent(this@MovieDetailActivity, person)
+        val intent = PersonDetailActivity.createIntent(this, person)
         startActivityWithTransition(view, R.string.transition_person_profile, intent)
     }
 
@@ -96,15 +97,9 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
 
     override fun loadDetailContent() = presenter.loadDetailContent(movie?.id)
 
-    override fun getBackdropPath(): String {
-        val backdropPath = movie?.backdropPath
-        return if (backdropPath.isNotNullOrEmpty()) BACKDROP_W780_URL_PREFIX + backdropPath else ""
-    }
+    override fun getBackdropPath() = movie?.backdropPath.getBackdropUrl()
 
-    override fun getPosterPath(): String {
-        val posterPath = movie?.posterPath
-        return if (posterPath.isNotNullOrEmpty()) POSTER_W500_URL_PREFIX + posterPath else ""
-    }
+    override fun getPosterPath() = movie?.posterPath.getPosterUrl()
 
     override fun getItemTitle(): String = movie?.title ?: ""
 
