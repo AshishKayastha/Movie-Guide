@@ -226,8 +226,8 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
 
     abstract fun getItemTitle(): String
 
-    protected fun startActivityWithTransition(view: View, intent: Intent) {
-        val imagePair = view.getPosterImagePair()
+    protected fun startActivityWithTransition(view: View, transitionNameId: Int, intent: Intent) {
+        val imagePair = view.getPosterImagePair(transitionNameId)
         val options = getActivityOptionsCompat(imagePair)
 
         window.exitTransition = null

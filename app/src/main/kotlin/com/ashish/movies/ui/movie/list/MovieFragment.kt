@@ -45,6 +45,8 @@ class MovieFragment : BaseRecyclerViewFragment<Movie, BaseRecyclerViewMvpView<Mo
 
     override fun getAdapterType() = ADAPTER_TYPE_MOVIE
 
+    override fun getTransitionNameId(position: Int) = R.string.transition_movie_poster
+
     override fun getDetailIntent(position: Int): Intent? {
         val movie = recyclerViewAdapter.getItem<Movie>(position)
         return MovieDetailActivity.createIntent(activity, movie)

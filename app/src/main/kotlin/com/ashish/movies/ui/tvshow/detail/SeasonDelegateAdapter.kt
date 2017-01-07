@@ -11,7 +11,6 @@ import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
-import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Jan 04.
@@ -34,7 +33,6 @@ class SeasonDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
 
         override fun bindData(item: TVShowSeason) = with(item) {
             val context = itemView.context
-            posterImage.setTransitionName(R.string.transition_season_poster)
             contentTitle.applyText(String.format(context.getString(R.string.season_count_format), seasonNumber))
             contentSubtitle.applyText(String.format(context.getString(R.string.episode_count_format), episodeCount))
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }

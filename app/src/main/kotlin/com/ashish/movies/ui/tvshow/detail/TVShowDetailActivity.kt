@@ -66,14 +66,14 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
         val credit = adapter?.getItem<Credit>(position)
         val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
         val intent = PersonDetailActivity.createIntent(this, person)
-        startActivityWithTransition(view, intent)
+        startActivityWithTransition(view, R.string.transition_person_profile, intent)
     }
 
     private val onSimilarTVShowItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
             val tvShow = similarTVShowsAdapter?.getItem<TVShow>(position)
             val intent = TVShowDetailActivity.createIntent(this@TVShowDetailActivity, tvShow)
-            startActivityWithTransition(view, intent)
+            startActivityWithTransition(view, R.string.transition_tv_poster, intent)
         }
     }
 

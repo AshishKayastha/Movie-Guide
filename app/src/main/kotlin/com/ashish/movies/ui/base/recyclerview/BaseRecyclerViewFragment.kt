@@ -117,7 +117,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     override fun onItemClick(position: Int, view: View) {
         val intent = getDetailIntent(position)
         if (intent != null) {
-            val posterImagePair = view.getPosterImagePair()
+            val posterImagePair = view.getPosterImagePair(getTransitionNameId(position))
             Timber.v("Name: " + posterImagePair?.second)
             val options = activity.getActivityOptionsCompat(posterImagePair)
 
@@ -125,6 +125,8 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
             ActivityCompat.startActivity(activity, intent, options?.toBundle())
         }
     }
+
+    abstract fun getTransitionNameId(position: Int): Int
 
     abstract fun getDetailIntent(position: Int): Intent?
 

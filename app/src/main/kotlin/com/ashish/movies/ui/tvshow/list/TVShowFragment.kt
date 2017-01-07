@@ -45,6 +45,8 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow, BaseRecyclerViewMvpView<
 
     override fun getAdapterType() = ADAPTER_TYPE_TV_SHOW
 
+    override fun getTransitionNameId(position: Int) = R.string.transition_tv_poster
+
     override fun getDetailIntent(position: Int): Intent? {
         val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
         return TVShowDetailActivity.createIntent(activity, tvShow)

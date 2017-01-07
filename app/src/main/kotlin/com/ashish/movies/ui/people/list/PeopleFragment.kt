@@ -33,6 +33,8 @@ class PeopleFragment : BaseRecyclerViewFragment<Person, BaseRecyclerViewMvpView<
 
     override fun getAdapterType() = ADAPTER_TYPE_PEOPLE
 
+    override fun getTransitionNameId(position: Int) = R.string.transition_person_profile
+
     override fun getDetailIntent(position: Int): Intent? {
         val people = recyclerViewAdapter.getItem<Person>(position)
         return PersonDetailActivity.createIntent(activity, people)

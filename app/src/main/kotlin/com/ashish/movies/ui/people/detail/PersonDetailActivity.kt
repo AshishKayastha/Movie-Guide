@@ -56,12 +56,12 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
         if (MEDIA_TYPE_MOVIE == mediaType) {
             val movie = Movie(credit?.id, credit?.title, posterPath = credit?.posterPath)
             val intent = MovieDetailActivity.createIntent(this@PersonDetailActivity, movie)
-            startActivityWithTransition(view, intent)
+            startActivityWithTransition(view, R.string.transition_movie_poster, intent)
 
         } else if (MEDIA_TYPE_TV == mediaType) {
             val tvShow = TVShow(credit?.id, credit?.name, posterPath = credit?.posterPath)
             val intent = TVShowDetailActivity.createIntent(this@PersonDetailActivity, tvShow)
-            startActivityWithTransition(view, intent)
+            startActivityWithTransition(view, R.string.transition_tv_poster, intent)
         }
     }
 

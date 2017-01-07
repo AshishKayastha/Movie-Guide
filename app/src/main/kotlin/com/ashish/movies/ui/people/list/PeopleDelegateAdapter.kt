@@ -10,7 +10,6 @@ import com.ashish.movies.ui.common.adapter.RemoveListener
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movies.utils.ApiConstants.PROFILE_ORIGINAL_URL_PREFIX
-import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Dec 31.
@@ -33,7 +32,6 @@ class PeopleDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
 
         override fun bindData(item: Person) = with(item) {
             contentTitle.text = name
-            posterImage.setTransitionName(R.string.transition_person_profile)
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }

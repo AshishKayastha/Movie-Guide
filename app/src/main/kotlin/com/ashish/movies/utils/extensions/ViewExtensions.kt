@@ -70,9 +70,9 @@ inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 8
     }
 }
 
-fun View.getPosterImagePair(): Pair<View, String>? {
+fun View.getPosterImagePair(transitionNameId: Int): Pair<View, String>? {
     val posterImageView = findViewById(R.id.poster_image)
-    return if (posterImageView != null) Pair.create(posterImageView, posterImageView.transitionName) else null
+    return if (posterImageView != null) Pair.create(posterImageView, context.getString(transitionNameId)) else null
 }
 
 fun TextView.setTitleAndYear(title: String?, releaseDate: String?) {

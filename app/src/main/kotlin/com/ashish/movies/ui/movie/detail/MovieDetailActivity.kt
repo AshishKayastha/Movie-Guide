@@ -72,14 +72,14 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
         val credit = adapter?.getItem<Credit>(position)
         val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
         val intent = PersonDetailActivity.createIntent(this@MovieDetailActivity, person)
-        startActivityWithTransition(view, intent)
+        startActivityWithTransition(view, R.string.transition_person_profile, intent)
     }
 
     private val onSimilarMovieItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
             val movie = similarMoviesAdapter?.getItem<Movie>(position)
             val intent = createIntent(this@MovieDetailActivity, movie)
-            startActivityWithTransition(view, intent)
+            startActivityWithTransition(view, R.string.transition_movie_poster, intent)
         }
     }
 

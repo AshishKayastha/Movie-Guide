@@ -9,7 +9,6 @@ import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.ApiConstants.PROFILE_ORIGINAL_URL_PREFIX
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Jan 03.
@@ -33,7 +32,6 @@ class CreditDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
         override fun bindData(item: Credit) = with(item) {
             contentTitle.applyText(if (title.isNotNullOrEmpty()) title else name)
             contentSubtitle.applyText(if (job.isNotNullOrEmpty()) job else character)
-            posterImage.setTransitionName(R.string.transition_person_profile)
             itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }

@@ -51,6 +51,19 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch, BaseRecyclerVi
 
     override fun getAdapterType() = ADAPTER_TYPE_MULTI_SEARCH
 
+    override fun getTransitionNameId(position: Int): Int {
+        val multiSearch = recyclerViewAdapter.getItem<MultiSearch>(position)
+        with(multiSearch) {
+            if (mediaType == MEDIA_TYPE_TV) {
+                return R.string.transition_tv_poster
+            } else if (mediaType == MEDIA_TYPE_PERSON) {
+                return R.string.transition_person_profile
+            } else {
+                return R.string.transition_movie_poster
+            }
+        }
+    }
+
     override fun getDetailIntent(position: Int): Intent? {
         val multiSearch = recyclerViewAdapter.getItem<MultiSearch>(position)
         with(multiSearch) {
