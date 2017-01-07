@@ -53,8 +53,11 @@
     <string name="last_air_date_title">Last Air Date:</string>
     <string name="similar_tv_shows_title">Simiilar Television Shows</string>
 
-    <string name="season_count_format">Season %d</string>
+    <!-- Season -->
+    <string name="season_title">Season</string>
+    <string name="season_number_format">Season %d</string>
     <string name="episode_count_format">%d Episodes</string>
+    <string name="episode_number_format">Episode %d</string>
 
     <!-- People -->
     <string name="birthday_title">Birthday:</string>

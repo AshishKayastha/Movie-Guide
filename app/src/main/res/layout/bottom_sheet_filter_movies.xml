@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -118,5 +119,19 @@
         style="@style/GenreCheckBox"
         android:layout_below="@id/genre_thriller_cb"
         android:text="@string/genre_western" />
+
+    <com.ashish.movies.ui.widget.FontButton
+        android:id="@+id/apply_btn"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/genre_western_cb"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:padding="20dp"
+        android:text="Apply Filter"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_size_large"
+        app:fontName="@string/font_montserrat_regular" />
 
 </RelativeLayout>

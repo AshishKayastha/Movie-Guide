@@ -81,6 +81,8 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseRecyclerViewPresenter<
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_filter) {
+            val filterBottomSheetDialog = FilterBottomSheetDialogFragment()
+            filterBottomSheetDialog.show(childFragmentManager, filterBottomSheetDialog.tag)
             return true
         }
 

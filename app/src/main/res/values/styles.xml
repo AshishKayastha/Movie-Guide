@@ -13,6 +13,8 @@
         <item name="toolbarStyle">@style/Custom.Widget.Toolbar</item>
         <item name="toolbarNavigationButtonStyle">@style/Custom.Toolbar.Button.Navigation</item>
         <item name="actionOverflowButtonStyle">@style/Custom.Widget.ActionButton.Overflow</item>
+
+        <item name="bottomSheetDialogTheme">@style/Theme.Design.BottomSheetDialog</item>
     </style>
 
     <style name="AppTheme.ApiSpec" />
