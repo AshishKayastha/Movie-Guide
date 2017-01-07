@@ -99,6 +99,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
             titleText.text = name
             overviewText.text = biography
             placeOfBirthText.applyText(placeOfBirth)
+            this@PersonDetailActivity.imdbId = imdbId
             birthdayText.applyText(birthday.getFormattedReleaseDate(this@PersonDetailActivity))
         }
         super.showDetailContent(detailContent)

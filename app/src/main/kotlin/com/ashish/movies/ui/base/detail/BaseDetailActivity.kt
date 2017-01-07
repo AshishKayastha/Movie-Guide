@@ -2,6 +2,7 @@ package com.ashish.movies.ui.base.detail
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.design.widget.AppBarLayout
@@ -11,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewStub
 import android.widget.ImageButton
@@ -26,6 +29,7 @@ import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
+import com.ashish.movies.utils.Constants.IMDB_BASE_URL
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.GravitySnapHelper
 import com.ashish.movies.utils.extensions.animateBackgroundColorChange
@@ -38,6 +42,7 @@ import com.ashish.movies.utils.extensions.getPosterImagePair
 import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
 import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.isDark
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.loadPaletteBitmap
 import com.ashish.movies.utils.extensions.scrimify
 import com.ashish.movies.utils.extensions.setLightStatusBar
@@ -68,6 +73,7 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
     private var loadContent: Boolean = true
     private lateinit var sharedElementEnterTransition: Transition
 
+    protected var imdbId: String? = null
     protected var castAdapter: RecyclerViewAdapter<Credit>? = null
     protected var crewAdapter: RecyclerViewAdapter<Credit>? = null
 
@@ -232,6 +238,21 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
 
         window.exitTransition = null
         ActivityCompat.startActivity(this, intent, options?.toBundle())
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_imdb) {
+            if (imdbId.isNotNullOrEmpty()) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_BASE_URL + imdbId)))
+            }
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

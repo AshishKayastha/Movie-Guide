@@ -115,6 +115,7 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
                 showBackdropImage(BACKDROP_W780_URL_PREFIX + backdropPath)
             }
 
+            imdbId = detailContent.externalIds?.imdbId
             titleText.setTitleAndYear(name, firstAirDate)
             overviewText.text = overview ?: NOT_AVAILABLE
             statusText.text = status ?: NOT_AVAILABLE

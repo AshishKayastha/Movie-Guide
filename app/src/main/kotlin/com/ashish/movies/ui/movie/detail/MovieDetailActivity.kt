@@ -114,6 +114,7 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
                 showBackdropImage(BACKDROP_W780_URL_PREFIX + backdropPath)
             }
 
+            this@MovieDetailActivity.imdbId = imdbId
             titleText.setTitleAndYear(title, releaseDate)
             overviewText.text = overview ?: NOT_AVAILABLE
             taglineText.text = tagline ?: NOT_AVAILABLE
