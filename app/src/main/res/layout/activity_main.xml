@@ -28,6 +28,7 @@
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@android:color/white"
                 app:tabIndicatorHeight="3dp"
+                app:tabMaxWidth="0dp"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@android:color/white"
                 app:tabTextColor="@color/greyish_white" />

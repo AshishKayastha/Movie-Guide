@@ -3,6 +3,7 @@
 
     <style name="AppTheme.ApiSpec">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowEnterTransition">@transition/enter_transition</item>
     </style>
 </resources>

@@ -8,7 +8,7 @@
         android:id="@+id/header_bg_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/drawer_header"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
