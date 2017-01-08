@@ -13,14 +13,14 @@ import javax.inject.Inject
 class SeasonDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor)
     : BaseDetailPresenter<SeasonDetail, SeasonDetailMvpView>() {
 
-    private var seasoNumber: Int = 1
+    private var seasonNumber: Int = 1
 
     fun setSeasonNumber(seasonNumber: Int) {
-        this.seasoNumber = seasoNumber
+        this.seasonNumber = seasonNumber
     }
 
     override fun getDetailContent(id: Long): Disposable {
-        return tvShowInteractor.getSeasonDetail(id, seasoNumber)
+        return tvShowInteractor.getSeasonDetail(id, seasonNumber)
                 .subscribe({ showSeasonDetailContents(it) }, { Timber.e(it) })
     }
 

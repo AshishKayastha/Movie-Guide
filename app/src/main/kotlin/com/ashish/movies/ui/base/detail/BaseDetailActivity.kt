@@ -1,5 +1,6 @@
 package com.ashish.movies.ui.base.detail
 
+import android.animation.Animator
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -15,6 +16,7 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewAnimationUtils
 import android.view.ViewStub
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -83,6 +85,7 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
         override fun onTransitionEnd(transition: Transition) {
             if (loadContent) {
                 loadDetailContent()
+                showBackdropImage(getBackdropPath())
                 loadContent = false
             }
         }
@@ -109,7 +112,6 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
         supportPostponeEnterTransition()
 
         showPosterImage(getPosterPath())
-        showBackdropImage(getBackdropPath())
         appBarLayout.addOnOffsetChangedListener(this)
 
         backdropImage.setOnClickListener { }
@@ -128,8 +130,34 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
 
     fun showBackdropImage(backdropPath: String) {
         if (backdropPath.isNotEmpty()) backdropImage.loadPaletteBitmap(backdropPath) {
+            revealBackdropImage()
             setTopBarColorAndAnimate(it)
         }
+    }
+
+    private fun revealBackdropImage() {
+        val cx = (backdropImage.left + backdropImage.right) / 2
+        val cy = backdropImage.bottom - titleText.height
+        val endRadius = Math.max(backdropImage.width, backdropImage.height).toFloat()
+
+        val animator = ViewAnimationUtils.createCircularReveal(backdropImage, cx, cy, 0f, endRadius)
+        animator.duration = 400L
+        animator.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {}
+
+            override fun onAnimationEnd(animation: Animator?) {
+                sharedElementEnterTransition.removeListener(transitionListener)
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+                sharedElementEnterTransition.removeListener(transitionListener)
+            }
+
+            override fun onAnimationRepeat(animation: Animator?) {}
+        })
+
+        backdropImage.show()
+        animator.start()
     }
 
     abstract fun getBackdropPath(): String
