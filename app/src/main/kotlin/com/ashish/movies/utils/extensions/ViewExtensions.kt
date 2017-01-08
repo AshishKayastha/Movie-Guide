@@ -8,11 +8,16 @@ import android.support.design.widget.Snackbar
 import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.TypefaceSpan
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.ashish.movies.R
@@ -113,10 +118,36 @@ fun View.setTransitionName(@StringRes transitionNameId: Int) {
     ViewCompat.setTransitionName(this, context.getString(transitionNameId))
 }
 
+fun Menu.changeMenuFont(typefaceSpan: TypefaceSpan) {
+    val size = size()
+    (0..size - 1)
+            .map { getItem(it) }
+            .filterNotNull()
+            .forEach { menuItem ->
+                val spannableString = SpannableString(menuItem.title)
+                spannableString.setSpan(typefaceSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                menuItem.title = spannableString
+            }
+}
+
 fun ViewGroup.changeViewGroupTextFont() {
     val size = childCount
     (0..size - 1)
             .map { getChildAt(it) }
             .filterIsInstance<TextView>()
             .forEach(TextView::changeTypeface)
+}
+
+fun View?.showKeyboard() {
+    if (this == null) return
+
+    requestFocus()
+
+    val imm = context.getImm()
+    imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+    imm.showSoftInput(this, 0)
+
+    if (!imm.isActive(this)) {
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+    }
 }

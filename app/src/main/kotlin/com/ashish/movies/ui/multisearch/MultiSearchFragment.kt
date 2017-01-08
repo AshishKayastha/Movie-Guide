@@ -29,12 +29,13 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch, BaseRecyclerVi
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(MultiSearchModule()).inject(this)
+        appComponent.plus(MultiSearchModule(activity)).inject(this)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        swipeRefreshLayout.isEnabled = false
         emptyTextView.setText(R.string.no_results_available)
         emptyImageView.setImageResource(R.drawable.ic_search_white_100dp)
     }

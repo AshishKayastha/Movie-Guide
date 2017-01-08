@@ -8,5 +8,7 @@ import dagger.Subcomponent
 @Subcomponent(modules = arrayOf(MultiSearchModule::class))
 interface MultiSearchSubComponent {
 
+    fun inject(multiSearchActivity: MultiSearchActivity)
+
     fun inject(multiSearchFragment: MultiSearchFragment)
 }

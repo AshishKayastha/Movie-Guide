@@ -73,7 +73,8 @@
     <string name="error_load_person_detail">An error occurred while trying to load person detail</string>
 
     <!-- Search -->
-    <string name="search">Search</string>
+    <string name="menu_search">Search</string>
+    <string name="hint_search">Search Movie, TV Show or Person</string>
     <string name="no_results_available">No Results Available</string>
     <string name="title_discover">Discover</string>
     <string name="menu_filter">Filter</string>

@@ -49,3 +49,10 @@ fun Activity?.getActivityOptionsCompat(posterImagePair: Pair<View, String>?): Ac
 
     return options
 }
+
+fun Activity?.hideKeyboard() {
+    if (this != null && currentFocus != null) {
+        val imm = this.getImm()
+        imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+    }
+}
