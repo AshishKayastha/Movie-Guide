@@ -33,7 +33,6 @@ fun RequestManager.transcodePaletteBitmap(context: Context): BitmapRequestBuilde
 
 fun Context.getColorCompat(colorResId: Int) = ContextCompat.getColor(this, colorResId)
 
-@Suppress("unused")
 fun Context.showToast(messageId: Int, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(this, messageId, duration).show()
 }

@@ -6,6 +6,7 @@ import butterknife.bindOptionalView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseActivity
 import com.ashish.movies.utils.extensions.showSnackBar
+import com.ashish.movies.utils.extensions.showToast
 import javax.inject.Inject
 
 /**
@@ -23,7 +24,7 @@ abstract class MvpActivity<V : MvpView, P : RxPresenter<V>> : BaseActivity(), Mv
         presenter.attachView(this as V)
     }
 
-    override fun showToast(messageId: Int) {
+    override fun showToastMessage(messageId: Int) {
         showToast(messageId)
     }
 

@@ -10,6 +10,7 @@ import com.ashish.movies.app.MoviesApp
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.utils.extensions.inflate
 import com.ashish.movies.utils.extensions.showSnackBar
+import com.ashish.movies.utils.extensions.showToast
 import javax.inject.Inject
 
 /**
@@ -42,8 +43,8 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpVie
         presenter.attachView(this as V)
     }
 
-    override fun showToast(messageId: Int) {
-        showToast(messageId)
+    override fun showToastMessage(messageId: Int) {
+        activity?.showToast(messageId)
     }
 
     override fun showMessage(messageId: Int) {

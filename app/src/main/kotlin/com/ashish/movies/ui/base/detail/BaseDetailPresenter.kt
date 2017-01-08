@@ -21,7 +21,7 @@ abstract class BaseDetailPresenter<in I, V : BaseDetailMvpView<I>> : RxPresenter
             }
         } else {
             getView()?.apply {
-                showToast(R.string.error_no_internet)
+                showToastMessage(R.string.error_no_internet)
                 finishActivity()
             }
         }
@@ -47,9 +47,9 @@ abstract class BaseDetailPresenter<in I, V : BaseDetailMvpView<I>> : RxPresenter
     protected fun showErrorToast(t: Throwable, messageId: Int) {
         getView()?.apply {
             if (t is IOException) {
-                showToast(R.string.error_no_internet)
+                showToastMessage(R.string.error_no_internet)
             } else {
-                showToast(messageId)
+                showToastMessage(messageId)
             }
         }
     }
