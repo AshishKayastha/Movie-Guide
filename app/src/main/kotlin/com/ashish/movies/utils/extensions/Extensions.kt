@@ -4,6 +4,10 @@ import android.content.Context
 import android.content.res.Resources
 import android.os.Build
 import android.support.v4.content.ContextCompat
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.TypefaceSpan
+import android.view.Menu
 import android.widget.Toast
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.common.palette.PaletteBitmapTranscoder
@@ -46,4 +50,16 @@ inline fun isMarshmallowOrAbove(func: () -> Unit) {
 
 fun <T> Observable<T>.observeOnMainThread(): Observable<T> {
     return this.observeOn(AndroidSchedulers.mainThread())
+}
+
+fun Menu.changeMenuFont(typefaceSpan: TypefaceSpan) {
+    val size = size()
+    (0..size - 1)
+            .map { getItem(it) }
+            .filterNotNull()
+            .forEach { menuItem ->
+                val spannableString = SpannableString(menuItem.title)
+                spannableString.setSpan(typefaceSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                menuItem.title = spannableString
+            }
 }

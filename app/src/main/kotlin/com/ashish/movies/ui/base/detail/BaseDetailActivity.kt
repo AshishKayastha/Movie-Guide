@@ -32,12 +32,14 @@ import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.utils.Constants.IMDB_BASE_URL
+import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.GravitySnapHelper
 import com.ashish.movies.utils.Utils
 import com.ashish.movies.utils.extensions.animateBackgroundColorChange
 import com.ashish.movies.utils.extensions.animateColorChange
 import com.ashish.movies.utils.extensions.animateTextColorChange
+import com.ashish.movies.utils.extensions.changeMenuFont
 import com.ashish.movies.utils.extensions.dpToPx
 import com.ashish.movies.utils.extensions.getActivityOptionsCompat
 import com.ashish.movies.utils.extensions.getColorCompat
@@ -215,6 +217,7 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
     override fun showDetailContent(detailContent: I?) {
         detailContainer.show()
         showOrHideIMDbMenu()
+        changeMenuItemFont()
     }
 
     override fun showProgress() = progressBar.show()
@@ -299,6 +302,12 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
     private fun showOrHideIMDbMenu() {
         val imdb = menu?.findItem(R.id.action_imdb)
         imdb?.isVisible = imdbId.isNotNullOrEmpty()
+    }
+
+    private fun changeMenuItemFont() {
+        val typeface = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
+        val customTypefaceSpan = CustomTypefaceSpan(typeface)
+        menu?.changeMenuFont(customTypefaceSpan)
     }
 
     override fun onDestroy() {

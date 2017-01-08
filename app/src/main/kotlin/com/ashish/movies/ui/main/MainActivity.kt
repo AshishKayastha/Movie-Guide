@@ -7,9 +7,6 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat.START
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.TypefaceSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -24,7 +21,7 @@ import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
 import com.ashish.movies.ui.multisearch.MultiSearchActivity
 import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
-import com.ashish.movies.utils.FontUtils.MONTSERRAT_REGULAR
+import com.ashish.movies.utils.extensions.changeMenuFont
 import com.ashish.movies.utils.extensions.changeTypeface
 import com.ashish.movies.utils.extensions.setVisibility
 
@@ -42,7 +39,6 @@ class MainActivity : BaseActivity() {
     private lateinit var discoverTabTitles: Array<String>
 
     private lateinit var tabPagerAdapter: TabPagerAdapter
-    private lateinit var customTypefaceSpan: TypefaceSpan
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +47,6 @@ class MainActivity : BaseActivity() {
             setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
             setDisplayHomeAsUpEnabled(true)
         }
-
-        val typeface = FontUtils.getTypeface(this, MONTSERRAT_REGULAR)
-        customTypefaceSpan = CustomTypefaceSpan(typeface)
 
         peopleTabTitles = arrayOf(getString(R.string.popular_txt))
         toolbarTitles = resources.getStringArray(R.array.toolbar_title_array)
@@ -65,8 +58,11 @@ class MainActivity : BaseActivity() {
         tabLayout.setupWithViewPager(viewPager)
 
         changeTabFont()
-        changeNavigationMenuFont()
         changeTextViewFont(toolbar!!)
+
+        val typeface = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
+        val customTypefaceSpan = CustomTypefaceSpan(typeface)
+        navigationView.menu.changeMenuFont(customTypefaceSpan)
 
         navigationView.setNavigationItemSelectedListener { item ->
             item.isChecked = true
@@ -108,19 +104,6 @@ class MainActivity : BaseActivity() {
         (0..vg.childCount - 1)
                 .map { vg.getChildAt(it) as ViewGroup }
                 .forEach { changeTextViewFont(it) }
-    }
-
-    private fun changeNavigationMenuFont() {
-        val size = navigationView.menu.size()
-        (0..size - 1)
-                .map { navigationView.menu.getItem(it) }
-                .filterNotNull()
-                .forEach { menuItem ->
-                    val spannableString = SpannableString(menuItem.title)
-                    spannableString.setSpan(customTypefaceSpan, 0, spannableString.length,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    menuItem.title = spannableString
-                }
     }
 
     private fun changeTextViewFont(viewGroup: ViewGroup) {
