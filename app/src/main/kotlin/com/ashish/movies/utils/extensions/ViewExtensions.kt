@@ -85,7 +85,7 @@ fun ImageView.loadPaletteBitmap(imageUrl: String, func: ((PaletteBitmap?) -> Uni
             .load(imageUrl)
             .into(object : ImageViewTarget<PaletteBitmap>(this) {
                 override fun setResource(paletteBitmap: PaletteBitmap?) {
-                    super.view.setImageBitmap(paletteBitmap?.bitmap)
+                    setImageBitmap(paletteBitmap?.bitmap)
                     func?.invoke(paletteBitmap)
                 }
             })
@@ -111,4 +111,12 @@ fun View.setLightStatusBar() {
 
 fun View.setTransitionName(@StringRes transitionNameId: Int) {
     ViewCompat.setTransitionName(this, context.getString(transitionNameId))
+}
+
+fun ViewGroup.changeViewGroupTextFont() {
+    val size = childCount
+    (0..size - 1)
+            .map { getChildAt(it) }
+            .filterIsInstance<TextView>()
+            .forEach(TextView::changeTypeface)
 }

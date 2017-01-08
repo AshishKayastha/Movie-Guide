@@ -18,12 +18,12 @@ class PaletteImageViewTarget(val holder: BaseContentHolder<*>) : ImageViewTarget
     private val primaryTextColor = holder.itemView.context.getColorCompat(R.color.primary_text_light)
     private val secondaryTextColor = holder.itemView.context.getColorCompat(R.color.secondary_text_light)
 
-    override fun onResourceReady(resource: PaletteBitmap?, glideAnimation: GlideAnimation<in PaletteBitmap>?) {
-        if (glideAnimation == null || !glideAnimation.animate(resource, this)) {
-            setResource(resource)
+    override fun onResourceReady(paletteBitmap: PaletteBitmap?, animation: GlideAnimation<in PaletteBitmap>?) {
+        if (animation == null || !animation.animate(paletteBitmap, this)) {
+            setResource(paletteBitmap)
         }
 
-        resource.setPaletteColor { swatch ->
+        paletteBitmap.setPaletteColor { swatch ->
             with(holder) {
                 contentView.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
                 contentTitle.animateTextColorChange(primaryTextColor, swatch.titleTextColor)

@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
-import android.widget.TextView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseActivity
@@ -22,7 +21,7 @@ import com.ashish.movies.ui.multisearch.MultiSearchActivity
 import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.extensions.changeMenuFont
-import com.ashish.movies.utils.extensions.changeTypeface
+import com.ashish.movies.utils.extensions.changeViewGroupTextFont
 import com.ashish.movies.utils.extensions.setVisibility
 
 class MainActivity : BaseActivity() {
@@ -58,7 +57,7 @@ class MainActivity : BaseActivity() {
         tabLayout.setupWithViewPager(viewPager)
 
         changeTabFont()
-        changeTextViewFont(toolbar!!)
+        toolbar?.changeViewGroupTextFont()
 
         val typeface = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
         val customTypefaceSpan = CustomTypefaceSpan(typeface)
@@ -103,15 +102,7 @@ class MainActivity : BaseActivity() {
         val vg = tabLayout.getChildAt(0) as ViewGroup
         (0..vg.childCount - 1)
                 .map { vg.getChildAt(it) as ViewGroup }
-                .forEach { changeTextViewFont(it) }
-    }
-
-    private fun changeTextViewFont(viewGroup: ViewGroup) {
-        val size = viewGroup.childCount
-        (0..size - 1)
-                .map { viewGroup.getChildAt(it) }
-                .filterIsInstance<TextView>()
-                .forEach(TextView::changeTypeface)
+                .forEach { it.changeViewGroupTextFont() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

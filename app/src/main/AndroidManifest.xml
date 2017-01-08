@@ -41,6 +41,11 @@
 
         <activity
             android:name=".ui.multisearch.MultiSearchActivity"
+            android:label=""
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".ui.imageviewer.ImageViewerActivity"
             android:label="" />
 
     </application>

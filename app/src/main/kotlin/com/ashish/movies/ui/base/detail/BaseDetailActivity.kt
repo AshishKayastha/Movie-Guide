@@ -29,6 +29,7 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_CREDIT
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.palette.PaletteBitmap
+import com.ashish.movies.ui.imageviewer.ImageViewerActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.utils.Constants.IMDB_BASE_URL
@@ -54,6 +55,7 @@ import com.ashish.movies.utils.extensions.setLightStatusBar
 import com.ashish.movies.utils.extensions.setPaletteColor
 import com.ashish.movies.utils.extensions.show
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
+import java.util.*
 
 /**
  * Created by Ashish on Jan 03.
@@ -81,6 +83,7 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
     private lateinit var sharedElementEnterTransition: Transition
 
     protected var imdbId: String? = null
+    protected var imageUrlList: ArrayList<String> = ArrayList()
     protected var castAdapter: RecyclerViewAdapter<Credit>? = null
     protected var crewAdapter: RecyclerViewAdapter<Credit>? = null
 
@@ -119,7 +122,11 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
         showPosterImage(getPosterPath())
         appBarLayout.addOnOffsetChangedListener(this)
 
-        backdropImage.setOnClickListener { }
+        backdropImage.setOnClickListener {
+            if (imageUrlList.isNotEmpty()) {
+                startActivity(ImageViewerActivity.createIntent(this@BaseDetailActivity, getItemTitle(), imageUrlList))
+            }
+        }
 
         sharedElementEnterTransition = window.sharedElementEnterTransition
         sharedElementEnterTransition.addListener(transitionListener)
@@ -134,9 +141,15 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
     abstract fun loadDetailContent(): Unit
 
     fun showBackdropImage(backdropPath: String) {
-        if (backdropPath.isNotEmpty()) backdropImage.loadPaletteBitmap(backdropPath) {
-            revealBackdropImage()
-            setTopBarColorAndAnimate(it)
+        if (backdropPath.isNotEmpty()) {
+            if (!imageUrlList.contains(backdropPath)) {
+                imageUrlList.add(backdropPath)
+            }
+
+            backdropImage.loadPaletteBitmap(backdropPath) {
+                revealBackdropImage()
+                setTopBarColorAndAnimate(it)
+            }
         }
     }
 
