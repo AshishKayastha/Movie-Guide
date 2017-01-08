@@ -8,6 +8,7 @@
     <string name="transition_movie_poster">movie_poster_image</string>
     <string name="transition_person_profile">person_profile_image</string>
     <string name="transition_season_poster">season_poster_image</string>
+    <string name="transition_episode_image">episode_still_image</string>
 
     <!-- Movie -->
     <string name="title_movies">Movies</string>
@@ -60,14 +61,19 @@
     <string name="error_load_tv_detail">An error occurred while trying to load tv show detail</string>
 
     <!-- Season -->
-    <string name="season_title">Season</string>
+    <string name="season_title">Season:</string>
+    <string name="air_date_title">Air Date:</string>
     <string name="season_number_format">Season %d</string>
     <string name="episode_count_format">%d Episodes</string>
     <string name="episode_number_format">Episode %d</string>
     <string name="error_load_season_detail">An error occurred while trying to load season detail</string>
 
+    <!-- Episode Detail -->
+    <string name="episode_title">Episode:</string>
+    <string name="error_load_episode_detail">An error occurred while trying to load episode detail</string>
+
     <!-- Person Detail -->
-    <string name="bio_title">Bio:</string>
+    <string name="biography_title">Biography:</string>
     <string name="birthday_title">Birthday:</string>
     <string name="place_of_birth_title">Place Of Birth:</string>
     <string name="error_load_person_detail">An error occurred while trying to load person detail</string>

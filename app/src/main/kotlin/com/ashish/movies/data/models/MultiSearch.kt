@@ -1,6 +1,7 @@
 package com.ashish.movies.data.models
 
 import com.ashish.movies.ui.common.adapter.ViewType
+import com.ashish.movies.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.squareup.moshi.Json
 
 data class MultiSearch(
@@ -16,5 +17,5 @@ data class MultiSearch(
         @Json(name = "first_air_date") val firstAirDate: String? = null
 ) : ViewType {
 
-    override fun getViewType() = ViewType.CONTENT_VIEW
+    override fun getViewType() = CONTENT_VIEW
 }

@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewStub
 import butterknife.bindView
 import com.ashish.movies.R
-import com.ashish.movies.data.models.Credit
 import com.ashish.movies.data.models.Episode
-import com.ashish.movies.data.models.Person
 import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.data.models.TVShowSeason
 import com.ashish.movies.di.components.AppComponent
@@ -17,7 +15,7 @@ import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_EPISODE
-import com.ashish.movies.ui.people.detail.PersonDetailActivity
+import com.ashish.movies.ui.tvshow.episode.EpisodeDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.extensions.applyText
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
@@ -33,8 +31,8 @@ class SeasonDetailActivity : BaseDetailActivity<SeasonDetail, SeasonDetailMvpVie
         SeasonDetailMvpView {
 
     private val seasonText: FontTextView by bindView(R.id.season_text)
+    private val airDateText: FontTextView by bindView(R.id.air_date_text)
     private val episodesViewStub: ViewStub by bindView(R.id.episodes_view_stub)
-    private val firstAirDateText: FontTextView by bindView(R.id.first_air_date_text)
 
     private var tvShowId: Long? = null
     private var tvShowSeason: TVShowSeason? = null
@@ -42,21 +40,22 @@ class SeasonDetailActivity : BaseDetailActivity<SeasonDetail, SeasonDetailMvpVie
 
     private val onCastItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
-            onSeasonCreditItemClicked(castAdapter, position, view)
+            startPersonDetailActivity(castAdapter, position, view)
         }
     }
 
     private val onCrewItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
-            onSeasonCreditItemClicked(crewAdapter, position, view)
+            startPersonDetailActivity(crewAdapter, position, view)
         }
     }
 
-    private fun onSeasonCreditItemClicked(adapter: RecyclerViewAdapter<Credit>?, position: Int, view: View) {
-        val credit = adapter?.getItem<Credit>(position)
-        val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
-        val intent = PersonDetailActivity.createIntent(this, person)
-        startActivityWithTransition(view, R.string.transition_person_profile, intent)
+    private val onEpisodeItemClickLitener = object : OnItemClickListener {
+        override fun onItemClick(position: Int, view: View) {
+            val episode = episodesAdapter?.getItem<Episode>(position)
+            val intent = EpisodeDetailActivity.createIntent(this@SeasonDetailActivity, tvShowId, episode)
+            startActivityWithTransition(view, R.string.transition_episode_image, intent)
+        }
     }
 
     companion object {
@@ -97,7 +96,7 @@ class SeasonDetailActivity : BaseDetailActivity<SeasonDetail, SeasonDetailMvpVie
             titleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
             seasonText.text = seasonNumber.toString()
-            firstAirDateText.text = airDate.getFormattedReleaseDate(this@SeasonDetailActivity)
+            airDateText.text = airDate.getFormattedReleaseDate(this@SeasonDetailActivity)
         }
         super.showDetailContent(detailContent)
     }
@@ -111,7 +110,9 @@ class SeasonDetailActivity : BaseDetailActivity<SeasonDetail, SeasonDetailMvpVie
     }
 
     override fun showEpisodeList(episodeList: List<Episode>) {
-        episodesAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_EPISODE, null)
+        episodesAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_EPISODE,
+                onEpisodeItemClickLitener)
+
         inflateViewStubRecyclerView(episodesViewStub, R.id.episodes_recycler_view, episodesAdapter!!, episodeList)
     }
 

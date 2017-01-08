@@ -36,6 +36,10 @@
             android:label="" />
 
         <activity
+            android:name=".ui.tvshow.episode.EpisodeDetailActivity"
+            android:label="" />
+
+        <activity
             android:name=".ui.people.detail.PersonDetailActivity"
             android:label="" />
 

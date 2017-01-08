@@ -65,7 +65,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
     }
 
     companion object {
-        const val EXTRA_PERSON = "person"
+        private const val EXTRA_PERSON = "person"
 
         fun createIntent(context: Context, person: Person?): Intent {
             return Intent(context, PersonDetailActivity::class.java)
@@ -94,7 +94,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
         detailContent?.apply {
             titleText.text = name
             overviewText.text = biography
-            overviewTitle.setText(R.string.bio_title)
+            overviewTitle.setText(R.string.biography_title)
             placeOfBirthText.applyText(placeOfBirth)
             this@PersonDetailActivity.imdbId = imdbId
             birthdayText.applyText(birthday.getFormattedReleaseDate(this@PersonDetailActivity))

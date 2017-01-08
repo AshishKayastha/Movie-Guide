@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewStub
 import butterknife.bindView
 import com.ashish.movies.R
-import com.ashish.movies.data.models.Credit
-import com.ashish.movies.data.models.Person
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.data.models.TVShowSeason
@@ -18,7 +16,6 @@ import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_SEASON
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
-import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.tvshow.season.SeasonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
@@ -53,21 +50,14 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
 
     private val onCastItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
-            onTVShowCreditItemClicked(castAdapter, position, view)
+            startPersonDetailActivity(castAdapter, position, view)
         }
     }
 
     private val onCrewItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
-            onTVShowCreditItemClicked(crewAdapter, position, view)
+            startPersonDetailActivity(crewAdapter, position, view)
         }
-    }
-
-    private fun onTVShowCreditItemClicked(adapter: RecyclerViewAdapter<Credit>?, position: Int, view: View) {
-        val credit = adapter?.getItem<Credit>(position)
-        val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
-        val intent = PersonDetailActivity.createIntent(this, person)
-        startActivityWithTransition(view, R.string.transition_person_profile, intent)
     }
 
     private val onSeasonItemClickLitener = object : OnItemClickListener {
@@ -87,7 +77,7 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
     }
 
     companion object {
-        const val EXTRA_TV_SHOW = "tv_show"
+        private const val EXTRA_TV_SHOW = "tv_show"
 
         fun createIntent(context: Context, tvShow: TVShow?): Intent {
             return Intent(context, TVShowDetailActivity::class.java)

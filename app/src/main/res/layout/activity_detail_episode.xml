@@ -40,7 +40,15 @@
                         android:text="@string/season_title" />
 
                     <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/season_text"
+                        android:id="@+id/season_num_text"
+                        style="@style/SecondaryText.Title" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        style="@style/PrimaryText.Title"
+                        android:text="@string/episode_title" />
+
+                    <com.ashish.movies.ui.widget.FontTextView
+                        android:id="@+id/episode_num_text"
                         style="@style/SecondaryText.Title" />
 
                     <com.ashish.movies.ui.widget.FontTextView
@@ -52,11 +60,6 @@
                         style="@style/SecondaryText.Title" />
 
                 </LinearLayout>
-
-                <ViewStub
-                    android:id="@+id/episodes_view_stub"
-                    style="@style/Match.Width"
-                    android:layout="@layout/layout_detail_episodes" />
 
                 <include layout="@layout/layout_detail_cast_credits_view_stub" />
 

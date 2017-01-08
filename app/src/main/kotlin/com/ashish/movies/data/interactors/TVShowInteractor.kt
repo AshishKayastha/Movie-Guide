@@ -1,6 +1,7 @@
 package com.ashish.movies.data.interactors
 
 import com.ashish.movies.data.api.TVShowApi
+import com.ashish.movies.data.models.EpisodeDetail
 import com.ashish.movies.data.models.Results
 import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.data.models.TVShow
@@ -28,6 +29,11 @@ class TVShowInteractor @Inject constructor(val tvShowApi: TVShowApi) {
 
     fun getSeasonDetail(tvId: Long, seasonNumber: Int): Observable<SeasonDetail> {
         return tvShowApi.getSeasonDetail(tvId, seasonNumber, "credits,external_ids")
+                .observeOnMainThread()
+    }
+
+    fun getEpisodeDetail(tvId: Long, seasonNumber: Int, episodeNumber: Int): Observable<EpisodeDetail> {
+        return tvShowApi.getEpisodeDetail(tvId, seasonNumber, episodeNumber, "credits,external_ids")
                 .observeOnMainThread()
     }
 

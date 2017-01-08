@@ -7,16 +7,13 @@ import android.view.View
 import android.view.ViewStub
 import butterknife.bindView
 import com.ashish.movies.R
-import com.ashish.movies.data.models.Credit
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
-import com.ashish.movies.data.models.Person
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MOVIE
-import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
@@ -48,7 +45,7 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
 
     companion object {
-        const val EXTRA_MOVIE = "movie"
+        private const val EXTRA_MOVIE = "movie"
 
         fun createIntent(context: Context, movie: Movie?): Intent {
             return Intent(context, MovieDetailActivity::class.java)
@@ -58,21 +55,14 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
 
     private val onCastItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
-            onMovieCreditItemClicked(castAdapter, position, view)
+            startPersonDetailActivity(castAdapter, position, view)
         }
     }
 
     private val onCrewItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
-            onMovieCreditItemClicked(crewAdapter, position, view)
+            startPersonDetailActivity(crewAdapter, position, view)
         }
-    }
-
-    private fun onMovieCreditItemClicked(adapter: RecyclerViewAdapter<Credit>?, position: Int, view: View) {
-        val credit = adapter?.getItem<Credit>(position)
-        val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
-        val intent = PersonDetailActivity.createIntent(this, person)
-        startActivityWithTransition(view, R.string.transition_person_profile, intent)
     }
 
     private val onSimilarMovieItemClickLitener = object : OnItemClickListener {

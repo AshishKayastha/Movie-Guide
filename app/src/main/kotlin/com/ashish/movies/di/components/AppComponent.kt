@@ -17,6 +17,8 @@ import com.ashish.movies.ui.people.list.PeopleModule
 import com.ashish.movies.ui.people.list.PeopleSubComponent
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailModule
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailSubComponent
+import com.ashish.movies.ui.tvshow.episode.EpisodeDetailModule
+import com.ashish.movies.ui.tvshow.episode.EpisodeDetailSubComponent
 import com.ashish.movies.ui.tvshow.list.TVShowModule
 import com.ashish.movies.ui.tvshow.list.TVShowSubComponent
 import com.ashish.movies.ui.tvshow.season.SeasonDetailModule
@@ -48,4 +50,6 @@ interface AppComponent {
     fun plus(discoverModule: DiscoverModule): DiscoverSubComponent
 
     fun plus(seasonDetailModule: SeasonDetailModule): SeasonDetailSubComponent
+
+    fun plus(episodeDetailModule: EpisodeDetailModule): EpisodeDetailSubComponent
 }
