@@ -1,14 +1,18 @@
 package com.ashish.movies.ui.multisearch
 
+import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.widget.SearchView
+import android.util.TypedValue
 import android.view.MotionEvent
-import android.view.inputmethod.EditorInfo
-import android.widget.ImageView
+import android.widget.ImageButton
+import android.widget.TextView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.common.BaseActivity
-import com.ashish.movies.ui.widget.FontEditText
+import com.ashish.movies.utils.FontUtils
+import com.ashish.movies.utils.Utils
 import com.ashish.movies.utils.extensions.hideKeyboard
 import com.ashish.movies.utils.extensions.showKeyboard
 import com.ashish.movies.utils.keyboardwatcher.KeyboardWatcher
@@ -21,8 +25,8 @@ class MultiSearchActivity : BaseActivity() {
 
     @Inject lateinit var keyboardWatcher: KeyboardWatcher
 
-    private val backIcon: ImageView by bindView(R.id.back_icon)
-    private val searchEditText: FontEditText by bindView(R.id.search_edit_text)
+    private val backIcon: ImageButton by bindView(R.id.back_icon)
+    private val searchView: SearchView by bindView(R.id.search_view)
 
     private var multiSearchFragment: MultiSearchFragment? = null
 
@@ -36,17 +40,9 @@ class MultiSearchActivity : BaseActivity() {
                     .commit()
         }
 
-        searchEditText.showKeyboard()
+        setupSearchView()
+        searchView.showKeyboard()
         backIcon.setOnClickListener { finish() }
-
-        searchEditText.setOnEditorActionListener { textView, actionId, keyEvent ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                hideKeyboard()
-                multiSearchFragment?.searchQuery(textView.text.toString())
-                return@setOnEditorActionListener true
-            }
-            false
-        }
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
@@ -55,12 +51,30 @@ class MultiSearchActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_multi_search
 
+    private fun setupSearchView() {
+        val searchText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as TextView
+        searchText.setTextColor(Color.WHITE)
+        searchText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+        FontUtils.setFontStyle(searchText, FontUtils.MONTSERRAT_REGULAR)
+
+        searchView.maxWidth = Utils.getScreenWidth()
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                hideKeyboard()
+                multiSearchFragment?.searchQuery(query)
+                return true
+            }
+
+            override fun onQueryTextChange(query: String) = true
+        })
+    }
+
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         return keyboardWatcher.dispatchEditTextTouchEvent(event, super.dispatchTouchEvent(event))
     }
 
     override fun onDestroy() {
-        searchEditText.setOnEditorActionListener(null)
+        searchView.setOnQueryTextListener(null)
         super.onDestroy()
     }
 }

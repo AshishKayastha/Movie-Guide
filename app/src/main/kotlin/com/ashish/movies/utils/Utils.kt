@@ -1,6 +1,7 @@
 package com.ashish.movies.utils
 
 import android.app.Service
+import android.content.res.Resources
 import android.net.ConnectivityManager
 import com.ashish.movies.app.MoviesApp
 
@@ -14,4 +15,6 @@ object Utils {
         val activeNetworkInfo = cm.activeNetworkInfo
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
+
+    fun getScreenWidth() = Resources.getSystem().displayMetrics.widthPixels
 }

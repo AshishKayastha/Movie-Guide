@@ -2,55 +2,47 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:id="@+id/content_layout"
+    style="@style/Match">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/Toolbar"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
         android:elevation="@dimen/toolbar_elevation"
-        android:padding="@dimen/spacing_normal"
-        app:contentInsetStart="0dp"
+        android:gravity="center_vertical"
         tools:targetApi="lollipop">
 
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/back_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/spacing_micro"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_arrow_back_white_24dp"
+            tools:ignore="ContentDescription" />
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            android:layout_marginStart="-4dp"
+            android:imeOptions="flagNoExtractUi|actionSearch"
+            android:inputType="text"
+            app:closeIcon="@drawable/ic_close_white_24dp"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null"
+            app:queryHint="@string/hint_search"
+            app:searchHintIcon="@null"
+            app:searchIcon="@null"
+            app:submitBackground="@null" />
 
-            <ImageView
-                android:id="@+id/back_icon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:padding="@dimen/spacing_medium"
-                app:srcCompat="@drawable/ic_arrow_back_white_24dp"
-                tools:ignore="ContentDescription" />
-
-            <com.ashish.movies.ui.widget.FontEditText
-                android:id="@+id/search_edit_text"
-                style="@style/PrimaryText"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/spacing_micro"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="@string/hint_search"
-                android:imeOptions="flagNoExtractUi|actionSearch"
-                android:inputType="text"
-                android:textColor="@android:color/white"
-                android:textColorHint="#aeffffff" />
-
-        </LinearLayout>
-
-    </android.support.v7.widget.Toolbar>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/Match"
         android:layout_marginTop="?actionBarSize" />
 
 </android.support.design.widget.CoordinatorLayout>
