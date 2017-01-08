@@ -12,7 +12,5 @@ import javax.inject.Inject
 class PeoplePresenter @Inject constructor(val peopleInteractor: PeopleInteractor)
     : BaseRecyclerViewPresenter<Person, BaseRecyclerViewMvpView<Person>>() {
 
-    override fun getType(type: Int?) = null
-
     override fun getResultsObservable(type: String?, page: Int) = peopleInteractor.getPopularPeople(page)
 }

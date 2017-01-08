@@ -24,8 +24,6 @@ class DiscoverTVShowPresenter @Inject constructor(val tvShowInteractor: TVShowIn
         this.genres = genres
     }
 
-    override fun getType(type: Int?) = null
-
     override fun getResultsObservable(type: String?, page: Int): Observable<Results<TVShow>> {
         return tvShowInteractor.discoverTVShow(sortBy, firstAirDateYear, genres, page)
     }

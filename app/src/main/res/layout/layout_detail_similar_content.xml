@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Match.Width"
-    android:orientation="vertical">
+    style="@style/Match.Width">
 
     <com.ashish.movies.ui.widget.FontTextView
         android:id="@+id/similar_content_title"

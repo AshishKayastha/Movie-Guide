@@ -1,6 +1,7 @@
 <resources>
     <!-- General -->
     <string name="error_no_internet">No Internet Connection</string>
+    <string name="error_load_data">An error occurred while trying to fetch data</string>
 
     <!-- Transition Names -->
     <string name="transition_tv_poster">tv_poster_image</string>
@@ -30,8 +31,11 @@
     <string name="title_people">People</string>
     <string name="no_people_available">No People Available</string>
 
-    <!-- Movie Detail -->
+    <!-- Detail -->
     <string name="overview_title">Overview:</string>
+    <string name="view_in_imdb">View in IMDb</string>
+
+    <!-- Movie Detail -->
     <string name="genre_title">Genres:</string>
     <string name="runtime_title">Runtime:</string>
     <string name="status_title">Status:</string>
@@ -43,6 +47,7 @@
     <string name="cast_credits_title">Cast Credits</string>
     <string name="crew_credits_title">Crew Credits</string>
     <string name="similar_movies_title">Similar Movies</string>
+    <string name="error_load_movie_detail">An error occurred while trying to load movie detail</string>
 
     <!-- TV Show Detail -->
     <string name="seasons_title">Seasons</string>
@@ -52,23 +57,26 @@
     <string name="first_air_date_title">First Air Date:</string>
     <string name="last_air_date_title">Last Air Date:</string>
     <string name="similar_tv_shows_title">Simiilar Television Shows</string>
+    <string name="error_load_tv_detail">An error occurred while trying to load tv show detail</string>
 
     <!-- Season -->
     <string name="season_title">Season</string>
     <string name="season_number_format">Season %d</string>
     <string name="episode_count_format">%d Episodes</string>
     <string name="episode_number_format">Episode %d</string>
+    <string name="error_load_season_detail">An error occurred while trying to load season detail</string>
 
-    <!-- People -->
+    <!-- Person Detail -->
+    <string name="bio_title">Bio:</string>
     <string name="birthday_title">Birthday:</string>
     <string name="place_of_birth_title">Place Of Birth:</string>
+    <string name="error_load_person_detail">An error occurred while trying to load person detail</string>
 
     <!-- Search -->
     <string name="search">Search</string>
     <string name="no_results_available">No Results Available</string>
     <string name="title_discover">Discover</string>
     <string name="menu_filter">Filter</string>
-    <string name="view_in_imdb">View in IMDB</string>
 
     <!-- Genres -->
     <string name="genre_action">Action</string>

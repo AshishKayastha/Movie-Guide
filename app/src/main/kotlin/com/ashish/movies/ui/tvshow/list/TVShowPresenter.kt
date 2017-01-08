@@ -17,7 +17,7 @@ class TVShowPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor
     : BaseRecyclerViewPresenter<TVShow, BaseRecyclerViewMvpView<TVShow>>() {
 
     companion object {
-        private val TV_SHOW_TYPES = arrayOf(ON_THE_AIR, POPULAR, TOP_RATED, AIRING_TODAY)
+        @JvmStatic private val TV_SHOW_TYPES = arrayOf(ON_THE_AIR, POPULAR, TOP_RATED, AIRING_TODAY)
     }
 
     override fun getType(type: Int?) = TV_SHOW_TYPES[type ?: 0]

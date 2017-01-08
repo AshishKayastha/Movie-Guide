@@ -34,6 +34,7 @@ import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.utils.Constants.IMDB_BASE_URL
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.GravitySnapHelper
+import com.ashish.movies.utils.Utils
 import com.ashish.movies.utils.extensions.animateBackgroundColorChange
 import com.ashish.movies.utils.extensions.animateColorChange
 import com.ashish.movies.utils.extensions.animateTextColorChange
@@ -59,6 +60,7 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
     : MvpActivity<V, P>(), BaseDetailMvpView<I>, AppBarLayout.OnOffsetChangedListener {
 
     protected val overviewText: FontTextView by bindView(R.id.overview_text)
+    protected val overviewTitle: FontTextView by bindView(R.id.overview_title)
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
     protected val posterImage: ImageView by bindView(R.id.detail_poster_image)
 
@@ -71,6 +73,7 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
     private val castViewStub: ViewStub by bindView(R.id.cast_view_stub)
     private val crewViewStub: ViewStub by bindView(R.id.crew_view_stub)
 
+    private var menu: Menu? = null
     private var statusBarColor: Int = 0
     private var loadContent: Boolean = true
     private lateinit var sharedElementEnterTransition: Transition
@@ -209,7 +212,10 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
 
     abstract fun getPosterPath(): String
 
-    override fun showDetailContent(detailContent: I?) = detailContainer.show()
+    override fun showDetailContent(detailContent: I?) {
+        detailContainer.show()
+        showOrHideIMDbMenu()
+    }
 
     override fun showProgress() = progressBar.show()
 
@@ -261,15 +267,22 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
     abstract fun getItemTitle(): String
 
     protected fun startActivityWithTransition(view: View, transitionNameId: Int, intent: Intent) {
-        val imagePair = view.getPosterImagePair(transitionNameId)
-        val options = getActivityOptionsCompat(imagePair)
+        if (Utils.isOnline()) {
+            val imagePair = view.getPosterImagePair(transitionNameId)
+            val options = getActivityOptionsCompat(imagePair)
 
-        window.exitTransition = null
-        ActivityCompat.startActivity(this, intent, options?.toBundle())
+            window.exitTransition = null
+            ActivityCompat.startActivity(this, intent, options?.toBundle())
+        } else {
+            showMessage(R.string.error_no_internet)
+        }
     }
+
+    override fun finishActivity() = supportFinishAfterTransition()
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_detail, menu)
+        this.menu = menu
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -281,6 +294,11 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showOrHideIMDbMenu() {
+        val imdb = menu?.findItem(R.id.action_imdb)
+        imdb?.isVisible = imdbId.isNotNullOrEmpty()
     }
 
     override fun onDestroy() {

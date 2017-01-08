@@ -21,7 +21,6 @@ import com.ashish.movies.utils.FontUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.ImageViewTarget
 
-
 /**
  * Created by Ashish on Dec 27.
  */
@@ -70,7 +69,7 @@ inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 8
     }
 }
 
-fun View.getPosterImagePair(transitionNameId: Int): Pair<View, String>? {
+fun View.getPosterImagePair(@StringRes transitionNameId: Int): Pair<View, String>? {
     val posterImageView = findViewById(R.id.poster_image)
     return if (posterImageView != null) Pair.create(posterImageView, context.getString(transitionNameId)) else null
 }

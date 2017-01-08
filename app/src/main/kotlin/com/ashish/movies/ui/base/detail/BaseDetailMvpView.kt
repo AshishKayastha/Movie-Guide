@@ -13,4 +13,6 @@ interface BaseDetailMvpView<in I> : LceView {
     fun showCastList(castList: List<Credit>)
 
     fun showCrewList(crewList: List<Credit>)
+
+    fun finishActivity()
 }

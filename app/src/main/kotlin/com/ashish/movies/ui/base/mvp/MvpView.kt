@@ -5,5 +5,7 @@ package com.ashish.movies.ui.base.mvp
  */
 interface MvpView {
 
+    fun showToast(messageId: Int)
+
     fun showMessage(messageId: Int)
 }

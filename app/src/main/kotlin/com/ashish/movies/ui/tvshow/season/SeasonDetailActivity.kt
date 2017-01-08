@@ -92,7 +92,6 @@ class SeasonDetailActivity : BaseDetailActivity<SeasonDetail, SeasonDetailMvpVie
     override fun getPosterPath() = tvShowSeason?.posterPath.getPosterUrl()
 
     override fun showDetailContent(detailContent: SeasonDetail?) {
-        super.showDetailContent(detailContent)
         detailContent?.apply {
             overviewText.applyText(overview)
             titleText.setTitleAndYear(name, airDate)
@@ -100,6 +99,7 @@ class SeasonDetailActivity : BaseDetailActivity<SeasonDetail, SeasonDetailMvpVie
             seasonText.text = seasonNumber.toString()
             firstAirDateText.text = airDate.getFormattedReleaseDate(this@SeasonDetailActivity)
         }
+        super.showDetailContent(detailContent)
     }
 
     override fun getCastItemClickListener() = onCastItemClickListener

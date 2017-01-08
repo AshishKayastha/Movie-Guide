@@ -18,6 +18,7 @@ import com.ashish.movies.ui.widget.EmptyRecyclerView
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
+import com.ashish.movies.utils.Utils
 import com.ashish.movies.utils.extensions.getActivityOptionsCompat
 import com.ashish.movies.utils.extensions.getPosterImagePair
 import com.ashish.movies.utils.extensions.hide
@@ -114,13 +115,17 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     override fun resetLoading() = scrollListener.resetLoading()
 
     override fun onItemClick(position: Int, view: View) {
-        val intent = getDetailIntent(position)
-        if (intent != null) {
-            val posterImagePair = view.getPosterImagePair(getTransitionNameId(position))
-            val options = activity.getActivityOptionsCompat(posterImagePair)
+        if (Utils.isOnline()) {
+            val intent = getDetailIntent(position)
+            if (intent != null) {
+                val posterImagePair = view.getPosterImagePair(getTransitionNameId(position))
+                val options = activity.getActivityOptionsCompat(posterImagePair)
 
-            activity.window.exitTransition = null
-            ActivityCompat.startActivity(activity, intent, options?.toBundle())
+                activity.window.exitTransition = null
+                ActivityCompat.startActivity(activity, intent, options?.toBundle())
+            }
+        } else {
+            showMessage(R.string.error_no_internet)
         }
     }
 

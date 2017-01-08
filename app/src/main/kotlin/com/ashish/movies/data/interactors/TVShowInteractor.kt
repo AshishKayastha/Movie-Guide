@@ -6,8 +6,8 @@ import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.utils.ApiConstants.CREDITS_AND_SIMILAR
+import com.ashish.movies.utils.extensions.observeOnMainThread
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,21 +18,20 @@ import javax.inject.Singleton
 class TVShowInteractor @Inject constructor(val tvShowApi: TVShowApi) {
 
     fun getTVShowsByType(tvShowType: String?, page: Int = 1): Observable<Results<TVShow>> {
-        return tvShowApi.getTVShows(tvShowType, page).observeOn(AndroidSchedulers.mainThread())
+        return tvShowApi.getTVShows(tvShowType, page).observeOnMainThread()
     }
 
     fun getTVShowDetailWithCreditsAndSimilarTVShows(tvId: Long): Observable<TVShowDetail> {
         return tvShowApi.getTVShowDetailWithAppendedResponse(tvId, CREDITS_AND_SIMILAR + ",external_ids")
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOnMainThread()
     }
 
     fun getSeasonDetail(tvId: Long, seasonNumber: Int): Observable<SeasonDetail> {
         return tvShowApi.getSeasonDetail(tvId, seasonNumber, "credits,external_ids")
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOnMainThread()
     }
 
     fun discoverTVShow(sortBy: String, year: Int, genres: String? = null, page: Int): Observable<Results<TVShow>> {
-        return tvShowApi.discoverTVShow(sortBy, year, genres, page)
-                .observeOn(AndroidSchedulers.mainThread())
+        return tvShowApi.discoverTVShow(sortBy, year, genres, page).observeOnMainThread()
     }
 }

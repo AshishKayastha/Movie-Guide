@@ -17,7 +17,7 @@ class MoviePresenter @Inject constructor(val movieInteractor: MovieInteractor)
     : BaseRecyclerViewPresenter<Movie, BaseRecyclerViewMvpView<Movie>>() {
 
     companion object {
-        private val MOVIE_TYPES = arrayOf(NOW_PLAYING, POPULAR, TOP_RATED, UPCOMING)
+        @JvmStatic private val MOVIE_TYPES = arrayOf(NOW_PLAYING, POPULAR, TOP_RATED, UPCOMING)
     }
 
     override fun getType(type: Int?) = MOVIE_TYPES[type ?: 0]

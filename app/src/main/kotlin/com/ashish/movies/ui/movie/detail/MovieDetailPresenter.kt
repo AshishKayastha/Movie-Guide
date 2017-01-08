@@ -1,10 +1,10 @@
 package com.ashish.movies.ui.movie.detail
 
+import com.ashish.movies.R
 import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.MovieDetail
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
 import io.reactivex.disposables.Disposable
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -15,18 +15,14 @@ class MovieDetailPresenter @Inject constructor(val movieInteractor: MovieInterac
 
     override fun getDetailContent(id: Long): Disposable {
         return movieInteractor.getMovieDetailWithCreditsAndSimilarMovies(id)
-                .subscribe({ showMovieDetailContents(it) }, { Timber.e(it) })
+                .subscribe({ showMovieDetailContents(it) }, { onLoadDetailError(it, R.string.error_load_movie_detail) })
     }
 
     private fun showMovieDetailContents(movieDetail: MovieDetail?) {
         getView()?.apply {
             hideProgress()
             showDetailContent(movieDetail)
-
-            val creditResults = movieDetail?.creditsResults
-            showItemList(creditResults?.cast) { showCastList(it) }
-            showItemList(creditResults?.crew) { showCrewList(it) }
-
+            showCredits(movieDetail?.creditsResults)
             showItemList(movieDetail?.similarMovieResults?.results) { showSimilarMoviesList(it) }
         }
     }

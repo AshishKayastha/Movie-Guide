@@ -7,6 +7,7 @@ import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.utils.Utils
 import io.reactivex.Observable
 import timber.log.Timber
+import java.io.IOException
 
 /**
  * Created by Ashish on Dec 31.
@@ -26,9 +27,9 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         }
     }
 
-    abstract fun getType(type: Int?): String?
+    protected open fun getType(type: Int?): String? = null
 
-    abstract fun getResultsObservable(type: String?, page: Int): Observable<Results<I>>
+    protected abstract fun getResultsObservable(type: String?, page: Int): Observable<Results<I>>
 
     protected fun showItemList(data: Results<I>?) {
         getView()?.apply {
@@ -41,14 +42,17 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         Timber.e(t)
         getView()?.apply {
             hideProgress()
+            showErrorMessage(t)
         }
     }
 
     fun loadMoreData(type: Int?, page: Int) {
         if (Utils.isOnline()) {
-            getView()?.showLoadingItem()
-            addDisposable(getResultsObservable(getType(type), page)
-                    .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))
+            if (page <= totalPages) {
+                getView()?.showLoadingItem()
+                addDisposable(getResultsObservable(getType(type), page)
+                        .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))
+            }
         } else {
             getView()?.apply {
                 resetLoading()
@@ -72,6 +76,17 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         getView()?.apply {
             removeLoadingItem()
             resetLoading()
+            showErrorMessage(t)
+        }
+    }
+
+    protected fun showErrorMessage(t: Throwable) {
+        getView()?.apply {
+            if (t is IOException) {
+                showMessage(R.string.error_no_internet)
+            } else {
+                showMessage(R.string.error_load_data)
+            }
         }
     }
 }

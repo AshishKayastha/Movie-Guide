@@ -4,6 +4,7 @@
     tools:showIn="@layout/acivity_detail_tv_show">
 
     <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/overview_title"
         style="@style/PrimaryText.Title"
         android:layout_marginTop="0dp"
         android:text="@string/overview_title" />

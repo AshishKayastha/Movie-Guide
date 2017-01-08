@@ -42,6 +42,10 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpVie
         presenter.attachView(this as V)
     }
 
+    override fun showToast(messageId: Int) {
+        showToast(messageId)
+    }
+
     override fun showMessage(messageId: Int) {
         rootView?.showSnackBar(messageId)
     }

@@ -1,10 +1,10 @@
 package com.ashish.movies.ui.tvshow.detail
 
+import com.ashish.movies.R
 import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
 import io.reactivex.disposables.Disposable
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -15,20 +15,15 @@ class TVShowDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInte
 
     override fun getDetailContent(id: Long): Disposable {
         return tvShowInteractor.getTVShowDetailWithCreditsAndSimilarTVShows(id)
-                .subscribe({ showTVShowDetailContents(it) }, { Timber.e(it) })
+                .subscribe({ showTVShowDetailContents(it) }, { onLoadDetailError(it, R.string.error_load_tv_detail) })
     }
 
     private fun showTVShowDetailContents(tvShowDetail: TVShowDetail?) {
         getView()?.apply {
             hideProgress()
             showDetailContent(tvShowDetail)
-
+            showCredits(tvShowDetail?.creditsResults)
             showItemList(tvShowDetail?.seasons) { showSeasonsList(it) }
-
-            val creditResults = tvShowDetail?.creditsResults
-            showItemList(creditResults?.cast) { showCastList(it) }
-            showItemList(creditResults?.crew) { showCrewList(it) }
-
             showItemList(tvShowDetail?.similarTVShowResults?.results) { showSimilarTVShowList(it) }
         }
     }
