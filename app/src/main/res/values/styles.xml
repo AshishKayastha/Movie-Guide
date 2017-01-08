@@ -19,7 +19,7 @@
 
     <style name="AppTheme.ApiSpec" />
 
-    <style name="AppTheme.ApiSpec.Transparent" />
+    <style name="AppTheme.ApiSpec.TransparentStatusBar" />
 
     <style name="Match">
         <item name="android:layout_width">match_parent</item>
