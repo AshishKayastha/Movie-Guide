@@ -90,8 +90,8 @@ class SeasonDetailActivity : BaseDetailActivity<SeasonDetail, SeasonDetailMvpVie
 
     override fun getPosterPath() = tvShowSeason?.posterPath.getPosterUrl()
 
-    override fun showDetailContent(detailContent: SeasonDetail?) {
-        detailContent?.apply {
+    override fun showDetailContent(detailContent: SeasonDetail) {
+        detailContent.apply {
             overviewText.applyText(overview)
             titleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId

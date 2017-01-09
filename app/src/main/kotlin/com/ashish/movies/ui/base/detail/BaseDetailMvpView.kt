@@ -1,6 +1,7 @@
 package com.ashish.movies.ui.base.detail
 
 import com.ashish.movies.data.models.Credit
+import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.ui.base.mvp.LceView
 
 /**
@@ -8,7 +9,9 @@ import com.ashish.movies.ui.base.mvp.LceView
  */
 interface BaseDetailMvpView<in I> : LceView {
 
-    fun showDetailContent(detailContent: I?)
+    fun showDetailContent(detailContent: I)
+
+    fun showOMDbDetail(omDbDetail: OMDbDetail)
 
     fun showCastList(castList: List<Credit>)
 

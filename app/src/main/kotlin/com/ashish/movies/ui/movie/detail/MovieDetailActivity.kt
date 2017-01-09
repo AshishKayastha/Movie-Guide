@@ -92,8 +92,8 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
 
     override fun getItemTitle(): String = movie?.title ?: ""
 
-    override fun showDetailContent(detailContent: MovieDetail?) {
-        detailContent?.apply {
+    override fun showDetailContent(detailContent: MovieDetail) {
+        detailContent.apply {
             if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
                 showBackdropImage(backdropPath.getBackdropUrl())
             }

@@ -2,6 +2,7 @@ package com.ashish.movies.di.modules
 
 import com.ashish.movies.BuildConfig
 import com.ashish.movies.utils.ApiConstants.BASE_API_URL
+import com.ashish.movies.utils.ApiConstants.OMDB_BASE_API_URL
 import com.ashish.movies.utils.ApiKeyInterceptor
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
@@ -16,6 +17,7 @@ import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit.SECONDS
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -69,6 +71,19 @@ class NetModule {
                         callAdapterFactory: CallAdapter.Factory): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(BASE_API_URL)
+                .client(client)
+                .addConverterFactory(moshiConverterFactory)
+                .addCallAdapterFactory(callAdapterFactory)
+                .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("omdb")
+    fun provideOMDbRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
+                            callAdapterFactory: CallAdapter.Factory): Retrofit {
+        return Retrofit.Builder()
+                .baseUrl(OMDB_BASE_API_URL)
                 .client(client)
                 .addConverterFactory(moshiConverterFactory)
                 .addCallAdapterFactory(callAdapterFactory)

@@ -1,7 +1,10 @@
 package com.ashish.movies.data.interactors
 
+import com.ashish.movies.data.api.OMDbApi
 import com.ashish.movies.data.api.TVShowApi
+import com.ashish.movies.data.api.convertToFullDetailContent
 import com.ashish.movies.data.models.EpisodeDetail
+import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.Results
 import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.data.models.TVShow
@@ -16,24 +19,28 @@ import javax.inject.Singleton
  * Created by Ashish on Dec 29.
  */
 @Singleton
-class TVShowInteractor @Inject constructor(val tvShowApi: TVShowApi) {
+class TVShowInteractor @Inject constructor(val tvShowApi: TVShowApi, val omDbApi: OMDbApi) {
 
     fun getTVShowsByType(tvShowType: String?, page: Int = 1): Observable<Results<TVShow>> {
         return tvShowApi.getTVShows(tvShowType, page).observeOnMainThread()
     }
 
-    fun getTVShowDetailWithCreditsAndSimilarTVShows(tvId: Long): Observable<TVShowDetail> {
-        return tvShowApi.getTVShowDetailWithAppendedResponse(tvId, CREDITS_AND_SIMILAR + ",external_ids")
+    fun getFullTVShowDetail(tvId: Long): Observable<FullDetailContent<TVShowDetail>> {
+        return tvShowApi.getTVShowDetail(tvId, CREDITS_AND_SIMILAR + ",external_ids")
+                .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
                 .observeOnMainThread()
     }
 
-    fun getSeasonDetail(tvId: Long, seasonNumber: Int): Observable<SeasonDetail> {
+    fun getFullSeasonDetail(tvId: Long, seasonNumber: Int): Observable<FullDetailContent<SeasonDetail>> {
         return tvShowApi.getSeasonDetail(tvId, seasonNumber, "credits,external_ids")
+                .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
                 .observeOnMainThread()
     }
 
-    fun getEpisodeDetail(tvId: Long, seasonNumber: Int, episodeNumber: Int): Observable<EpisodeDetail> {
+    fun getFullEpisodeDetail(tvId: Long, seasonNumber: Int,
+                             episodeNumber: Int): Observable<FullDetailContent<EpisodeDetail>> {
         return tvShowApi.getEpisodeDetail(tvId, seasonNumber, episodeNumber, "credits,external_ids")
+                .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
                 .observeOnMainThread()
     }
 

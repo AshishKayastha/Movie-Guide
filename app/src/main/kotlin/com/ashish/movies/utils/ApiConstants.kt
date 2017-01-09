@@ -9,6 +9,7 @@ object ApiConstants {
 
     const val BASE_API_URL = "https://api.themoviedb.org/3/"
     const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/"
+    const val OMDB_BASE_API_URL = "http://www.omdbapi.com/"
 
     const val POSTER_W500_URL_PREFIX = BASE_IMAGE_URL + "w500"
     const val BACKDROP_W780_URL_PREFIX = BASE_IMAGE_URL + "w780"

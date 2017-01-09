@@ -2,22 +2,24 @@ package com.ashish.movies.ui.base.detail
 
 import com.ashish.movies.R
 import com.ashish.movies.data.models.CreditResults
+import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.utils.Utils
-import io.reactivex.disposables.Disposable
+import io.reactivex.Observable
 import timber.log.Timber
 import java.io.IOException
 
 /**
  * Created by Ashish on Jan 03.
  */
-abstract class BaseDetailPresenter<in I, V : BaseDetailMvpView<I>> : RxPresenter<V>() {
+abstract class BaseDetailPresenter<I, V : BaseDetailMvpView<I>> : RxPresenter<V>() {
 
     open fun loadDetailContent(id: Long?) {
         if (Utils.isOnline()) {
             if (id != null) {
                 getView()?.showProgress()
-                addDisposable(getDetailContent(id))
+                addDisposable(getDetailContent(id)
+                        .subscribe({ showDetailContent(it) }, { onLoadDetailError(it, getErrorMessageId()) }))
             }
         } else {
             getView()?.apply {
@@ -27,7 +29,21 @@ abstract class BaseDetailPresenter<in I, V : BaseDetailMvpView<I>> : RxPresenter
         }
     }
 
-    abstract fun getDetailContent(id: Long): Disposable
+    abstract fun getDetailContent(id: Long): Observable<FullDetailContent<I>>
+
+    protected open fun showDetailContent(fullDetailContent: FullDetailContent<I>) {
+        getView()?.apply {
+            hideProgress()
+            val detailContent = fullDetailContent.detailContent
+            if (detailContent != null) showDetailContent(detailContent)
+            showCredits(getCredits(detailContent))
+
+            val omdbDetail = fullDetailContent.omdbDetail
+            if (omdbDetail != null) showOMDbDetail(omdbDetail)
+        }
+    }
+
+    abstract fun getCredits(detailContent: I?): CreditResults?
 
     protected fun showCredits(creditResults: CreditResults?) {
         getView()?.apply {
@@ -43,6 +59,8 @@ abstract class BaseDetailPresenter<in I, V : BaseDetailMvpView<I>> : RxPresenter
             finishActivity()
         }
     }
+
+    abstract fun getErrorMessageId(): Int
 
     protected fun showErrorToast(t: Throwable, messageId: Int) {
         getView()?.apply {

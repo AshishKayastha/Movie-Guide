@@ -1,6 +1,9 @@
 package com.ashish.movies.data.interactors
 
 import com.ashish.movies.data.api.MovieApi
+import com.ashish.movies.data.api.OMDbApi
+import com.ashish.movies.data.api.convertToFullDetailContent
+import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
 import com.ashish.movies.data.models.Results
@@ -14,14 +17,15 @@ import javax.inject.Singleton
  * Created by Ashish on Dec 28.
  */
 @Singleton
-class MovieInteractor @Inject constructor(val movieApi: MovieApi) {
+class MovieInteractor @Inject constructor(val movieApi: MovieApi, val omDbApi: OMDbApi) {
 
     fun getMoviesByType(movieType: String?, page: Int = 1): Observable<Results<Movie>> {
         return movieApi.getMovies(movieType, page).observeOnMainThread()
     }
 
-    fun getMovieDetailWithCreditsAndSimilarMovies(movieId: Long): Observable<MovieDetail> {
-        return movieApi.getMovieDetailWithAppendedResponse(movieId, CREDITS_AND_SIMILAR)
+    fun getFullMovieDetail(movieId: Long): Observable<FullDetailContent<MovieDetail>> {
+        return movieApi.getMovieDetail(movieId, CREDITS_AND_SIMILAR)
+                .flatMap { omDbApi.convertToFullDetailContent(it.imdbId, it) }
                 .observeOnMainThread()
     }
 

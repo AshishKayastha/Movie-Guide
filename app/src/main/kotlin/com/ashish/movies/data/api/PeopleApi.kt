@@ -17,6 +17,6 @@ interface PeopleApi {
     fun getPopularPeople(@Query("page") page: Int = 1): Observable<Results<Person>>
 
     @GET("person/{personId}")
-    fun getPeopleDetailWithAppendedResponse(@Path("personId") personId: Long,
-                                            @Query("append_to_response") appendedResponse: String): Observable<PersonDetail>
+    fun getPeopleDetail(@Path("personId") personId: Long,
+                        @Query("append_to_response") appendedResponse: String): Observable<PersonDetail>
 }

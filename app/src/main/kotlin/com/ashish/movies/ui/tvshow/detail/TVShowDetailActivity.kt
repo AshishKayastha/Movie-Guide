@@ -102,8 +102,8 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
 
     override fun getPosterPath() = tvShow?.posterPath.getPosterUrl()
 
-    override fun showDetailContent(detailContent: TVShowDetail?) {
-        detailContent?.apply {
+    override fun showDetailContent(detailContent: TVShowDetail) {
+        detailContent.apply {
             if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
                 showBackdropImage(backdropPath.getBackdropUrl())
             }

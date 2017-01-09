@@ -75,8 +75,8 @@ class EpisodeDetailActivity : BaseDetailActivity<EpisodeDetail, BaseDetailMvpVie
 
     override fun getPosterPath() = getBackdropPath()
 
-    override fun showDetailContent(detailContent: EpisodeDetail?) {
-        detailContent?.apply {
+    override fun showDetailContent(detailContent: EpisodeDetail) {
+        detailContent.apply {
             overviewText.applyText(overview)
             titleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId

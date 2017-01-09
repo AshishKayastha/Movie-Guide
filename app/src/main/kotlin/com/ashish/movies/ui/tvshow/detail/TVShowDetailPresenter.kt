@@ -2,9 +2,9 @@ package com.ashish.movies.ui.tvshow.detail
 
 import com.ashish.movies.R
 import com.ashish.movies.data.interactors.TVShowInteractor
+import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 /**
@@ -13,18 +13,19 @@ import javax.inject.Inject
 class TVShowDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor)
     : BaseDetailPresenter<TVShowDetail, TVShowDetailMvpView>() {
 
-    override fun getDetailContent(id: Long): Disposable {
-        return tvShowInteractor.getTVShowDetailWithCreditsAndSimilarTVShows(id)
-                .subscribe({ showTVShowDetailContents(it) }, { onLoadDetailError(it, R.string.error_load_tv_detail) })
-    }
+    override fun getDetailContent(id: Long) = tvShowInteractor.getFullTVShowDetail(id)
 
-    private fun showTVShowDetailContents(tvShowDetail: TVShowDetail?) {
+    override fun showDetailContent(fullDetailContent: FullDetailContent<TVShowDetail>) {
+        super.showDetailContent(fullDetailContent)
         getView()?.apply {
             hideProgress()
-            showDetailContent(tvShowDetail)
-            showCredits(tvShowDetail?.creditsResults)
+            val tvShowDetail = fullDetailContent.detailContent
             showItemList(tvShowDetail?.seasons) { showSeasonsList(it) }
             showItemList(tvShowDetail?.similarTVShowResults?.results) { showSimilarTVShowList(it) }
         }
     }
+
+    override fun getCredits(detailContent: TVShowDetail?) = detailContent?.creditsResults
+
+    override fun getErrorMessageId() = R.string.error_load_tv_detail
 }

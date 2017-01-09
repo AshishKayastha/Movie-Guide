@@ -26,8 +26,8 @@ interface TVShowApi {
     fun getTVShows(@Path("tvShowType") tvShowType: String?, @Query("page") page: Int = 1): Observable<Results<TVShow>>
 
     @GET("tv/{tvId}")
-    fun getTVShowDetailWithAppendedResponse(@Path("tvId") tvId: Long,
-                                            @Query("append_to_response") appendedResponse: String): Observable<TVShowDetail>
+    fun getTVShowDetail(@Path("tvId") tvId: Long,
+                        @Query("append_to_response") appendedResponse: String): Observable<TVShowDetail>
 
     @GET("tv/{tvId}/season/{seasonNumber}")
     fun getSeasonDetail(@Path("tvId") tvId: Long,

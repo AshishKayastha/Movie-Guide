@@ -1,12 +1,14 @@
 package com.ashish.movies.di.modules
 
 import com.ashish.movies.data.api.MovieApi
+import com.ashish.movies.data.api.OMDbApi
 import com.ashish.movies.data.api.PeopleApi
 import com.ashish.movies.data.api.SearchApi
 import com.ashish.movies.data.api.TVShowApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -30,4 +32,8 @@ class ApiModule {
     @Provides
     @Singleton
     fun provideSearchApi(retrofit: Retrofit): SearchApi = retrofit.create<SearchApi>(SearchApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideOMDbApi(@Named("omdb") retrofit: Retrofit): OMDbApi = retrofit.create<OMDbApi>(OMDbApi::class.java)
 }

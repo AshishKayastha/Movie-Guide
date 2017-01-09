@@ -2,9 +2,9 @@ package com.ashish.movies.ui.tvshow.season
 
 import com.ashish.movies.R
 import com.ashish.movies.data.interactors.TVShowInteractor
+import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 /**
@@ -19,19 +19,18 @@ class SeasonDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInte
         this.seasonNumber = seasonNumber
     }
 
-    override fun getDetailContent(id: Long): Disposable {
-        return tvShowInteractor.getSeasonDetail(id, seasonNumber)
-                .subscribe({ showSeasonDetailContents(it) }, {
-                    onLoadDetailError(it, R.string.error_load_season_detail)
-                })
-    }
+    override fun getDetailContent(id: Long) = tvShowInteractor.getFullSeasonDetail(id, seasonNumber)
 
-    private fun showSeasonDetailContents(seasonDetail: SeasonDetail?) {
+    override fun showDetailContent(fullDetailContent: FullDetailContent<SeasonDetail>) {
+        super.showDetailContent(fullDetailContent)
         getView()?.apply {
             hideProgress()
-            showDetailContent(seasonDetail)
-            showCredits(seasonDetail?.credits)
+            val seasonDetail = fullDetailContent.detailContent
             showItemList(seasonDetail?.episodes) { showEpisodeList(it) }
         }
     }
+
+    override fun getCredits(detailContent: SeasonDetail?) = detailContent?.credits
+
+    override fun getErrorMessageId() = R.string.error_load_season_detail
 }

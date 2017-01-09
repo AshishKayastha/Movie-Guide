@@ -23,6 +23,7 @@ import android.widget.ImageView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
+import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.data.models.Person
 import com.ashish.movies.ui.base.mvp.MvpActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
@@ -62,7 +63,7 @@ import java.util.*
 /**
  * Created by Ashish on Jan 03.
  */
-abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
+abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
     : MvpActivity<V, P>(), BaseDetailMvpView<I>, AppBarLayout.OnOffsetChangedListener {
 
     protected val overviewText: FontTextView by bindView(R.id.overview_text)
@@ -229,10 +230,14 @@ abstract class BaseDetailActivity<in I, V : BaseDetailMvpView<I>, P : BaseDetail
 
     abstract fun getPosterPath(): String
 
-    override fun showDetailContent(detailContent: I?) {
+    override fun showDetailContent(detailContent: I) {
         detailContainer.show()
         showOrHideIMDbMenu()
         changeMenuItemFont()
+    }
+
+    override fun showOMDbDetail(omDbDetail: OMDbDetail) {
+
     }
 
     override fun showProgress() = progressBar.show()

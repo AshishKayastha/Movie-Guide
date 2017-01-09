@@ -90,8 +90,8 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
 
     override fun getPosterPath() = getBackdropPath()
 
-    override fun showDetailContent(detailContent: PersonDetail?) {
-        detailContent?.apply {
+    override fun showDetailContent(detailContent: PersonDetail) {
+        detailContent.apply {
             titleText.text = name
             overviewText.text = biography
             overviewTitle.setText(R.string.biography_title)

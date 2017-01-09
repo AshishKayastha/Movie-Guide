@@ -5,7 +5,6 @@ import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.EpisodeDetail
 import com.ashish.movies.ui.base.detail.BaseDetailMvpView
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 /**
@@ -22,18 +21,9 @@ class EpisodeDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInt
         this.episodeNumber = episodeNumber
     }
 
-    override fun getDetailContent(id: Long): Disposable {
-        return tvShowInteractor.getEpisodeDetail(id, seasonNumber, episodeNumber)
-                .subscribe({ showEpisodeDetailContents(it) }, {
-                    onLoadDetailError(it, R.string.error_load_episode_detail)
-                })
-    }
+    override fun getDetailContent(id: Long) = tvShowInteractor.getFullEpisodeDetail(id, seasonNumber, episodeNumber)
 
-    private fun showEpisodeDetailContents(episodeDetail: EpisodeDetail?) {
-        getView()?.apply {
-            hideProgress()
-            showDetailContent(episodeDetail)
-            showCredits(episodeDetail?.credits)
-        }
-    }
+    override fun getCredits(detailContent: EpisodeDetail?) = detailContent?.credits
+
+    override fun getErrorMessageId() = R.string.error_load_episode_detail
 }
