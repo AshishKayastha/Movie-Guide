@@ -3,12 +3,15 @@ package com.ashish.movies.ui.movie.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.CardView
 import android.view.View
 import android.view.ViewStub
+import android.widget.TextView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
+import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
@@ -25,6 +28,7 @@ import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTitleAndYear
 import com.ashish.movies.utils.extensions.setTransitionName
+import com.ashish.movies.utils.extensions.show
 
 /**
  * Created by Ashish on Dec 31.
@@ -40,6 +44,19 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
     private val taglineText: FontTextView by bindView(R.id.tagline_text)
     private val releaseDateText: FontTextView by bindView(R.id.release_date_text)
     private val similarMoviesViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
+
+    private val ratingCardView: CardView by bindView(R.id.rating_card_view)
+    private val metascoreView: View by bindView(R.id.metascore_view)
+    private val imdbRatingView: View by bindView(R.id.imdb_rating_view)
+    private val tmdbRatingView: View by bindView(R.id.tmdb_rating_view)
+    private val flixterScoreView: View by bindView(R.id.flixter_score_view)
+    private val rottenCertifiedView: View by bindView(R.id.rotten_certified_score_view)
+
+    private val metascoreText: FontTextView by bindView(R.id.metascore_text)
+    private val imdbRatingText: FontTextView by bindView(R.id.imdb_rating_text)
+    private val tmdbRatingText: FontTextView by bindView(R.id.tmdb_rating_text)
+    private val flixterScoreText: FontTextView by bindView(R.id.flixter_score_text)
+    private val rottenCertifiedText: FontTextView by bindView(R.id.rotten_certified_score_text)
 
     private var movie: Movie? = null
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
@@ -108,8 +125,26 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
             runtimeText.text = runtime.getFormattedRuntime()
             genresText.text = genres.convertListToCommaSeparatedText { it.name.toString() }
             releaseDateText.text = releaseDate.getFormattedReleaseDate(this@MovieDetailActivity)
+            setRatingText(detailContent.voteAverage.toString(), tmdbRatingView, tmdbRatingText)
         }
         super.showDetailContent(detailContent)
+    }
+
+    override fun showOMDbDetail(omDbDetail: OMDbDetail) {
+        with(omDbDetail) {
+            ratingCardView.show()
+            setRatingText(omDbDetail.imdbRating, imdbRatingView, imdbRatingText)
+            setRatingText(omDbDetail.tomatoRating, rottenCertifiedView, rottenCertifiedText)
+            setRatingText(omDbDetail.tomatoUserRating, flixterScoreView, flixterScoreText)
+            setRatingText(omDbDetail.Metascore, metascoreView, metascoreText)
+        }
+    }
+
+    private fun setRatingText(ratingScore: String?, ratingView: View, ratingText: TextView) {
+        if (ratingScore.isNotNullOrEmpty() && !ratingScore.equals(NOT_AVAILABLE)) {
+            ratingView.show()
+            ratingText.text = ratingScore
+        }
     }
 
     override fun getCastItemClickListener() = onCastItemClickListener

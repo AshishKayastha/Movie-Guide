@@ -116,4 +116,27 @@
         <item name="android:layout_alignParentStart">true</item>
         <item name="android:layout_toStartOf">@id/centered_space</item>
     </style>
+
+    <style name="RatingView" parent="Wrap">
+        <item name="android:minWidth">50dp</item>
+        <item name="android:layout_marginStart">@dimen/spacing_medium</item>
+        <item name="android:layout_marginEnd">@dimen/spacing_medium</item>
+        <item name="android:foreground">?android:selectableItemBackground</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="RatingImage">
+        <item name="android:layout_width">@dimen/rating_image_size</item>
+        <item name="android:layout_height">@dimen/rating_image_size</item>
+    </style>
+
+    <style name="RatingText" parent="Wrap">
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/spacing_normal</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="fontName">@string/font_montserrat_regular</item>
+    </style>
 </resources>
