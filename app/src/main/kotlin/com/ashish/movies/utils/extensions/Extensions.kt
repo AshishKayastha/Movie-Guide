@@ -3,6 +3,8 @@ package com.ashish.movies.utils.extensions
 import android.content.Context
 import android.content.res.Resources
 import android.os.Build
+import android.view.View
+import android.widget.TextView
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.common.palette.PaletteBitmapTranscoder
 import com.bumptech.glide.BitmapRequestBuilder
@@ -37,4 +39,12 @@ inline fun isMarshmallowOrAbove(func: () -> Unit) {
 
 fun <T> Observable<T>.observeOnMainThread(): Observable<T> {
     return this.observeOn(AndroidSchedulers.mainThread())
+}
+
+fun TextView.setTMDbRating(voteAverage: Double?, tmdbRatingView: View) {
+    val tmdbRating = voteAverage.toString()
+    if (tmdbRating.isNotNullOrEmpty() && tmdbRating != "0") {
+        tmdbRatingView.show()
+        text = tmdbRating
+    }
 }

@@ -5,8 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewStub
+import android.widget.ImageView
 import butterknife.bindView
 import com.ashish.movies.R
+import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.data.models.TVShowSeason
@@ -24,7 +26,12 @@ import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getFormattedReleaseDate
 import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.setFlixterScore
+import com.ashish.movies.utils.extensions.setIMDbRating
+import com.ashish.movies.utils.extensions.setMetaScore
+import com.ashish.movies.utils.extensions.setTMDbRating
 import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.setTomatoRating
 import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
@@ -40,6 +47,21 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
     private val episodesText: FontTextView by bindView(R.id.episodes_text)
     private val lastAirDateText: FontTextView by bindView(R.id.last_air_date_text)
     private val firstAirDateText: FontTextView by bindView(R.id.first_air_date_text)
+
+    private val metascoreView: View by bindView(R.id.metascore_view)
+    private val imdbRatingView: View by bindView(R.id.imdb_rating_view)
+    private val tmdbRatingView: View by bindView(R.id.tmdb_rating_view)
+    private val flixterScoreView: View by bindView(R.id.flixter_score_view)
+    private val tomatoRatingView: View by bindView(R.id.tomato_rating_view)
+
+    private val flixterScoreImage: ImageView by bindView(R.id.flixter_score_image)
+    private val tomatoRatingImage: ImageView by bindView(R.id.tomato_rating_image)
+
+    private val metascoreText: FontTextView by bindView(R.id.metascore_text)
+    private val imdbRatingText: FontTextView by bindView(R.id.imdb_rating_text)
+    private val tmdbRatingText: FontTextView by bindView(R.id.tmdb_rating_text)
+    private val flixterScoreText: FontTextView by bindView(R.id.flixter_score_text)
+    private val tomatoRatingText: FontTextView by bindView(R.id.tomato_rating_text)
 
     private val seasonsViewStub: ViewStub by bindView(R.id.seasons_view_stub)
     private val similarTVShowsViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
@@ -114,12 +136,22 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
             statusText.text = status ?: NOT_AVAILABLE
             seasonsText.text = numberOfSeasons.toString()
             episodesText.text = numberOfEpisodes.toString()
+            tmdbRatingText.setTMDbRating(detailContent.voteAverage, tmdbRatingView)
             genresText.text = genres.convertListToCommaSeparatedText { it.name.toString() }
             networkText.text = networks.convertListToCommaSeparatedText { it.name.toString() }
             lastAirDateText.text = lastAirDate.getFormattedReleaseDate(this@TVShowDetailActivity)
             firstAirDateText.text = firstAirDate.getFormattedReleaseDate(this@TVShowDetailActivity)
         }
         super.showDetailContent(detailContent)
+    }
+
+    override fun showOMDbDetail(omDbDetail: OMDbDetail) {
+        with(omDbDetail) {
+            omDbDetail.setMetaScore(metascoreView, metascoreText)
+            omDbDetail.setIMDbRating(imdbRatingView, imdbRatingText)
+            omDbDetail.setTomatoRating(tomatoRatingView, tomatoRatingText, tomatoRatingImage)
+            omDbDetail.setFlixterScore(flixterScoreView, flixterScoreText, flixterScoreImage)
+        }
     }
 
     override fun getItemTitle(): String = tvShow?.name ?: ""

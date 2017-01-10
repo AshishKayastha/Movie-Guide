@@ -27,6 +27,8 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
+                <include layout="@layout/layout_detail_ratings" />
+
                 <LinearLayout
                     style="@style/Match.Width"
                     android:layout_marginBottom="@dimen/spacing_medium"

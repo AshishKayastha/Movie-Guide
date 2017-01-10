@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rating_card_view"
     style="@style/Match.Width"
-    android:visibility="gone"
     app:cardCornerRadius="0dp"
-    app:cardElevation="@dimen/padding_2dp"
-    tools:visibility="visible">
+    app:cardElevation="@dimen/padding_2dp">
 
     <HorizontalScrollView
         style="@style/Match.Width"
@@ -40,17 +38,18 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/rotten_certified_score_view"
+                android:id="@+id/tomato_rating_view"
                 style="@style/RatingView"
                 tools:visibility="visible">
 
                 <ImageView
+                    android:id="@+id/tomato_rating_image"
                     style="@style/RatingImage"
-                    android:src="@drawable/ic_tomato_certified"
+                    android:src="@drawable/ic_rt_certified"
                     tools:ignore="ContentDescription" />
 
                 <com.ashish.movies.ui.widget.FontTextView
-                    android:id="@+id/rotten_certified_score_text"
+                    android:id="@+id/tomato_rating_text"
                     style="@style/RatingText"
                     tools:text="95%" />
 
@@ -62,8 +61,9 @@
                 tools:visibility="visible">
 
                 <ImageView
+                    android:id="@+id/flixter_score_image"
                     style="@style/RatingImage"
-                    android:src="@drawable/ic_flixter"
+                    android:src="@drawable/ic_flixter_good"
                     tools:ignore="ContentDescription" />
 
                 <com.ashish.movies.ui.widget.FontTextView
