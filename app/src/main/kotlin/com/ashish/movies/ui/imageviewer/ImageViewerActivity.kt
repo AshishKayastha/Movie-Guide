@@ -36,7 +36,6 @@ class ImageViewerActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        toolbar?.changeViewGroupTextFont()
 
         if (savedInstanceState == null) {
             val extras = intent.extras
@@ -48,6 +47,8 @@ class ImageViewerActivity : BaseActivity() {
             title = this@ImageViewerActivity.title
             setDisplayHomeAsUpEnabled(true)
         }
+
+        toolbar?.changeViewGroupTextFont()
 
         viewPager.apply {
             adapter = ImageViewerAdapter(supportFragmentManager, imageUrlList)
