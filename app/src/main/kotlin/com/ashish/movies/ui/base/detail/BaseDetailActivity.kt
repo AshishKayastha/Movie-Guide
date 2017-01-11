@@ -12,14 +12,10 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
-import android.view.Gravity
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewAnimationUtils
-import android.view.ViewStub
+import android.view.*
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.ProgressBar
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
@@ -40,24 +36,7 @@ import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.GravitySnapHelper
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.animateBackgroundColorChange
-import com.ashish.movies.utils.extensions.animateColorChange
-import com.ashish.movies.utils.extensions.animateTextColorChange
-import com.ashish.movies.utils.extensions.changeMenuFont
-import com.ashish.movies.utils.extensions.dpToPx
-import com.ashish.movies.utils.extensions.getActivityOptionsCompat
-import com.ashish.movies.utils.extensions.getColorCompat
-import com.ashish.movies.utils.extensions.getPosterImagePair
-import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
-import com.ashish.movies.utils.extensions.hide
-import com.ashish.movies.utils.extensions.isDark
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.loadPaletteBitmap
-import com.ashish.movies.utils.extensions.scrimify
-import com.ashish.movies.utils.extensions.setLightStatusBar
-import com.ashish.movies.utils.extensions.setPaletteColor
-import com.ashish.movies.utils.extensions.show
-import me.zhanghai.android.materialprogressbar.MaterialProgressBar
+import com.ashish.movies.utils.extensions.*
 import java.util.*
 
 /**
@@ -72,9 +51,9 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
     protected val posterImage: ImageView by bindView(R.id.detail_poster_image)
 
     private val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
+    private val progressBar: ProgressBar by bindView(R.id.progress_bar)
     private val detailContainer: View by bindView(R.id.detail_container)
     private val backdropImage: ImageView by bindView(R.id.backdrop_image)
-    private val progressBar: MaterialProgressBar by bindView(R.id.material_progress_bar)
     private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
 
     private val castViewStub: ViewStub by bindView(R.id.cast_view_stub)
@@ -83,7 +62,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
     private var menu: Menu? = null
     private var statusBarColor: Int = 0
     private var loadContent: Boolean = true
-    private lateinit var sharedElementEnterTransition: Transition
+    private var sharedElementEnterTransition: Transition? = null
 
     protected var imdbId: String? = null
     protected var imageUrlList: ArrayList<String> = ArrayList()
@@ -132,7 +111,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
         }
 
         sharedElementEnterTransition = window.sharedElementEnterTransition
-        sharedElementEnterTransition.addListener(transitionListener)
+        sharedElementEnterTransition?.addListener(transitionListener)
 
         val regularFont = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
         collapsingToolbar.setExpandedTitleTypeface(regularFont)
@@ -167,11 +146,11 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
             override fun onAnimationStart(animation: Animator?) {}
 
             override fun onAnimationEnd(animation: Animator?) {
-                sharedElementEnterTransition.removeListener(transitionListener)
+                removeSharedElementTransitionListener()
             }
 
             override fun onAnimationCancel(animation: Animator?) {
-                sharedElementEnterTransition.removeListener(transitionListener)
+                removeSharedElementTransitionListener()
             }
 
             override fun onAnimationRepeat(animation: Animator?) {}
@@ -179,6 +158,10 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
 
         backdropImage.show()
         animator.start()
+    }
+
+    private fun removeSharedElementTransitionListener() {
+        sharedElementEnterTransition?.removeListener(transitionListener)
     }
 
     abstract fun getBackdropPath(): String
@@ -345,7 +328,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
     protected open fun performCleanup() {
         castAdapter?.removeListener()
         crewAdapter?.removeListener()
+        removeSharedElementTransitionListener()
         appBarLayout.removeOnOffsetChangedListener(this)
-        sharedElementEnterTransition.removeListener(transitionListener)
     }
 }

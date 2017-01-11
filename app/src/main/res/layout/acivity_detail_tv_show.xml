@@ -13,12 +13,7 @@
 
         <FrameLayout style="@style/Match.Width">
 
-            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-                android:id="@+id/material_progress_bar"
-                style="@style/MaterialProgressBar"
-                android:layout_gravity="top|center_horizontal"
-                android:layout_marginTop="@dimen/spacing_large"
-                tools:visibility="visible" />
+            <include layout="@layout/layout_detail_progress_bar" />
 
             <LinearLayout
                 android:id="@+id/detail_container"

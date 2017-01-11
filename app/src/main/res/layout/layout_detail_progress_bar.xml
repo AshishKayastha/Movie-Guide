@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/progress_bar"
+    style="@style/ProgressBar"
+    android:layout_gravity="top|center_horizontal"
+    android:layout_marginTop="@dimen/spacing_large"
+    tools:showIn="@layout/activity_detail_person"
+    tools:visibility="visible" />

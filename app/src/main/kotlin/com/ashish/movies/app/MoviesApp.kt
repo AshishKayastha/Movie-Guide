@@ -2,7 +2,6 @@ package com.ashish.movies.app
 
 import android.app.Application
 import android.content.Context
-import android.support.v7.app.AppCompatDelegate
 import com.ashish.movies.BuildConfig
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.di.components.DaggerAppComponent
@@ -19,6 +18,7 @@ class MoviesApp : Application() {
 
     private lateinit var refWatcher: RefWatcher
 
+    @Suppress("DEPRECATION")
     private val appComponent: AppComponent by lazy(LazyThreadSafetyMode.NONE) {
         DaggerAppComponent.builder()
                 .appModule(AppModule(this))
@@ -26,9 +26,6 @@ class MoviesApp : Application() {
     }
 
     companion object {
-        init {
-            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-        }
 
         @JvmStatic lateinit var context: Context
 

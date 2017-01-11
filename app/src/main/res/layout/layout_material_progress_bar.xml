@@ -1,5 +1,0 @@
-<me.zhanghai.android.materialprogressbar.MaterialProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/material_progress_bar"
-    style="@style/MaterialProgressBar"
-    tools:visibility="visible" />

@@ -13,7 +13,7 @@
             android:clipToPadding="false"
             android:padding="@dimen/spacing_micro" />
 
-        <include layout="@layout/layout_material_progress_bar" />
+        <include layout="@layout/layout_progress_bar" />
 
     </FrameLayout>
 

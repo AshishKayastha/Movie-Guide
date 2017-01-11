@@ -5,20 +5,15 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.widget.TouchImageView
-import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
-import com.ashish.movies.utils.extensions.hide
-import com.ashish.movies.utils.extensions.inflate
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.show
-import com.ashish.movies.utils.extensions.transcodePaletteBitmap
+import com.ashish.movies.utils.extensions.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
-import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 
 /**
  * Created by Ashish on Jan 08.
@@ -26,7 +21,7 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 class ImageViewerFragment : Fragment() {
 
     private val imageView: TouchImageView by bindView(R.id.image_view)
-    private val progressBar: MaterialProgressBar by bindView(R.id.material_progress_bar)
+    private val progressBar: ProgressBar by bindView(R.id.progress_bar)
 
     private var imageUrl: String? = null
 

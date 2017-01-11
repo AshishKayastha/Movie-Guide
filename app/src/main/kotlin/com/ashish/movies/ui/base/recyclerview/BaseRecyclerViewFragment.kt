@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.mvp.MvpFragment
@@ -19,12 +20,7 @@ import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.getActivityOptionsCompat
-import com.ashish.movies.utils.extensions.getPosterImagePair
-import com.ashish.movies.utils.extensions.hide
-import com.ashish.movies.utils.extensions.setVisibility
-import com.ashish.movies.utils.extensions.show
-import me.zhanghai.android.materialprogressbar.MaterialProgressBar
+import com.ashish.movies.utils.extensions.*
 
 /**
  * Created by Ashish on Dec 30.
@@ -34,10 +30,10 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
     protected val emptyContentView: View by bindView(R.id.empty_view)
+    protected val progressBar: ProgressBar by bindView(R.id.progress_bar)
     protected val emptyTextView: FontTextView by bindView(R.id.empty_text)
     protected val emptyImageView: ImageView by bindView(R.id.empty_image_view)
     protected val recyclerView: EmptyRecyclerView by bindView(R.id.recycler_view)
-    protected val progressBar: MaterialProgressBar by bindView(R.id.material_progress_bar)
     protected val swipeRefreshLayout: MultiSwipeRefreshLayout by bindView(R.id.swipe_refresh)
 
     protected lateinit var recyclerViewAdapter: RecyclerViewAdapter<I>

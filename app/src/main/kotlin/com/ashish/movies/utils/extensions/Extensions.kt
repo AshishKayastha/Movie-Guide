@@ -29,10 +29,6 @@ fun RequestManager.transcodePaletteBitmap(context: Context): BitmapRequestBuilde
 
 fun isApiOrAbove(version: Int) = Build.VERSION.SDK_INT >= version
 
-inline fun isLollipopOrAbove(func: () -> Unit) {
-    if (isApiOrAbove(21)) func()
-}
-
 inline fun isMarshmallowOrAbove(func: () -> Unit) {
     if (isApiOrAbove(23)) func()
 }

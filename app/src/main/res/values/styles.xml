@@ -74,14 +74,13 @@
         <item name="android:textColorSecondary">@android:color/white</item>
     </style>
 
-    <style name="MaterialProgressBar" parent="@style/Widget.MaterialProgressBar.ProgressBar">
+    <style name="ProgressBar">
         <item name="android:layout_width">@dimen/progress_bar_size</item>
         <item name="android:layout_height">@dimen/progress_bar_size</item>
         <item name="android:indeterminate">true</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:visibility">gone</item>
-        <item name="mpb_indeterminateTint">?colorAccent</item>
     </style>
 
     <style name="DetailNestedScrollView" parent="Match">

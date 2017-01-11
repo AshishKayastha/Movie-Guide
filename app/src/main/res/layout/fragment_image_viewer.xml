@@ -7,6 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <include layout="@layout/layout_material_progress_bar" />
+    <include layout="@layout/layout_progress_bar" />
 
 </FrameLayout>
