@@ -16,11 +16,11 @@ import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.base.detail.BaseDetailMvpView
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_PEOPLE
 import com.ashish.movies.ui.movie.detail.MovieDetailActivity
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_PERSON
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.setTransitionName
 
@@ -93,7 +93,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
         super.showDetailContent(detailContent)
     }
 
-    override fun getDetailContentType() = ADAPTER_TYPE_PEOPLE
+    override fun getDetailContentType() = ADAPTER_TYPE_PERSON
 
     override fun showOMDbDetail(omDbDetail: OMDbDetail) {}
 

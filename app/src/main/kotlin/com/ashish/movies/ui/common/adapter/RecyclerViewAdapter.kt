@@ -23,16 +23,6 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
                                            onItemClickListener: OnItemClickListener?)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
 
-    companion object {
-        const val ADAPTER_TYPE_MOVIE = 0
-        const val ADAPTER_TYPE_TV_SHOW = 1
-        const val ADAPTER_TYPE_PEOPLE = 2
-        const val ADAPTER_TYPE_CREDIT = 3
-        const val ADAPTER_TYPE_SEASON = 4
-        const val ADAPTER_TYPE_EPISODE = 5
-        const val ADAPTER_TYPE_MULTI_SEARCH = 6
-    }
-
     private val loadingItem = object : ViewType {
         override fun getViewType() = LOADING_VIEW
     }

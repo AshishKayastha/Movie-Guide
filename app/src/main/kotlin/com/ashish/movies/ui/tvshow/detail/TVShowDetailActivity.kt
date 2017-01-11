@@ -14,10 +14,10 @@ import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_SEASON
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.ui.tvshow.season.SeasonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_SEASON
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty

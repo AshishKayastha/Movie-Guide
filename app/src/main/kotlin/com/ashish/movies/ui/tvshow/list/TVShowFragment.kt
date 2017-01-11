@@ -8,8 +8,8 @@ import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_TV_SHOW
 
 /**
  * Created by Ashish on Dec 29.

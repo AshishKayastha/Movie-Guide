@@ -11,13 +11,13 @@ import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MULTI_SEARCH
 import com.ashish.movies.ui.movie.detail.MovieDetailActivity
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_PERSON
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MULTI_SEARCH
 
 /**
  * Created by Ashish on Jan 05.

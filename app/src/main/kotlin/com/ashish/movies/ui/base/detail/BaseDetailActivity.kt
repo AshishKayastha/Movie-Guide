@@ -28,17 +28,17 @@ import com.ashish.movies.ui.base.mvp.MvpActivity
 import com.ashish.movies.ui.common.adapter.DetailContentAdapter
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_CREDIT
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_EPISODE
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MOVIE
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_PEOPLE
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_SEASON
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_CREDIT
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_PERSON
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_SEASON
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.utils.Constants.IMDB_BASE_URL
 import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
@@ -248,7 +248,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
             ADAPTER_TYPE_TV_SHOW -> setDetailContentAdapter(R.array.tv_detail_content_title, contentList)
             ADAPTER_TYPE_SEASON -> setDetailContentAdapter(R.array.season_detail_content_title, contentList)
             ADAPTER_TYPE_EPISODE -> setDetailContentAdapter(R.array.episode_detail_content_title, contentList)
-            ADAPTER_TYPE_PEOPLE -> setDetailContentAdapter(R.array.person_detail_content_title, contentList)
+            ADAPTER_TYPE_PERSON -> setDetailContentAdapter(R.array.person_detail_content_title, contentList)
         }
     }
 

@@ -9,7 +9,7 @@ import com.ashish.movies.data.models.EpisodeDetail
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailMvpView
 import com.ashish.movies.ui.base.detail.FullDetailContentActivity
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_EPISODE
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.setTitleAndYear
 import com.ashish.movies.utils.extensions.setTransitionName

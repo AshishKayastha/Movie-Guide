@@ -8,8 +8,8 @@ import com.ashish.movies.data.models.Movie
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MOVIE
 import com.ashish.movies.ui.movie.detail.MovieDetailActivity
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
 
 /**
  * Created by Ashish on Dec 26.

@@ -8,8 +8,8 @@ import com.ashish.movies.data.models.Person
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_PEOPLE
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
+import com.ashish.movies.utils.Constants.ADAPTER_TYPE_PERSON
 
 /**
  * Created by Ashish on Dec 31.
@@ -31,7 +31,7 @@ class PeopleFragment : BaseRecyclerViewFragment<Person, BaseRecyclerViewMvpView<
         emptyImageView.setImageResource(R.drawable.ic_people_white_100dp)
     }
 
-    override fun getAdapterType() = ADAPTER_TYPE_PEOPLE
+    override fun getAdapterType() = ADAPTER_TYPE_PERSON
 
     override fun getTransitionNameId(position: Int) = R.string.transition_person_profile
 
