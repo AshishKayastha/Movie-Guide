@@ -5,6 +5,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowEnterTransition">@transition/enter_transition</item>
+
         <!-- Action Mode styles -->
         <item name="actionModeStyle">@style/Custom.Widget.ActionMode</item>
         <item name="actionModeCloseButtonStyle">@style/Custom.Widget.ActionButton.CloseMode</item>
@@ -17,9 +20,11 @@
         <item name="bottomSheetDialogTheme">@style/Theme.Design.BottomSheetDialog</item>
     </style>
 
-    <style name="AppTheme.ApiSpec" />
-
-    <style name="AppTheme.ApiSpec.TransparentStatusBar" />
+    <!-- Theme for activity with navigation view(this shows navigation view under status bar) -->
+    <style name="AppTheme.TransparentStatusBar">
+        <!-- Shared element transition doesn't work with full transparent color -->
+        <item name="android:statusBarColor">#01000000</item>
+    </style>
 
     <style name="Match">
         <item name="android:layout_width">match_parent</item>

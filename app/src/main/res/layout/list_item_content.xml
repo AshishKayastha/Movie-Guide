@@ -5,8 +5,7 @@
     style="@style/Match.Width"
     android:foreground="?selectableItemBackground"
     android:stateListAnimator="@animator/raise"
-    app:cardCornerRadius="@dimen/padding_2dp"
-    tools:targetApi="lollipop">
+    app:cardCornerRadius="@dimen/padding_2dp">
 
     <RelativeLayout
         android:id="@+id/item_content_view"
@@ -17,8 +16,7 @@
             style="@style/Match.Width"
             android:scaleType="centerCrop"
             app:heightRatio="1.5"
-            tools:ignore="ContentDescription"
-            tools:targetApi="lollipop" />
+            tools:ignore="ContentDescription" />
 
         <com.ashish.movies.ui.widget.LabelLayout
             android:id="@+id/avg_vote_text"

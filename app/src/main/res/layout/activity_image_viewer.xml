@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/Toolbar"
-        android:elevation="@dimen/toolbar_elevation"
-        tools:ignore="UnusedAttribute" />
+        android:elevation="@dimen/toolbar_elevation" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"

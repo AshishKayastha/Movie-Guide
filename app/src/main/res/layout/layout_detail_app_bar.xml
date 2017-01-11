@@ -7,7 +7,6 @@
     android:layout_height="@dimen/detail_backdrop_height"
     android:elevation="0dp"
     android:fitsSystemWindows="true"
-    tools:ignore="UnusedAttribute"
     tools:showIn="@layout/activity_detail_movie">
 
     <android.support.design.widget.CollapsingToolbarLayout
@@ -37,8 +36,7 @@
                 android:layout_height="@dimen/detail_poster_image_height"
                 android:layout_marginStart="@dimen/first_keyline"
                 android:scaleType="centerCrop"
-                tools:ignore="ContentDescription"
-                tools:targetApi="lollipop" />
+                tools:ignore="ContentDescription" />
 
             <com.ashish.movies.ui.widget.FontTextView
                 android:id="@+id/content_title_text"
