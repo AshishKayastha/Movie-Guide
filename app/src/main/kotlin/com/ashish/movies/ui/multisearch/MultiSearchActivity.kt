@@ -54,6 +54,7 @@ class MultiSearchActivity : BaseActivity() {
     private fun setupSearchView() {
         val searchText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as TextView
         searchText.setTextColor(Color.WHITE)
+        searchText.setHintTextColor(Color.parseColor("#D9E1E1E1"))
         searchText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
         FontUtils.setFontStyle(searchText, FontUtils.MONTSERRAT_REGULAR)
 

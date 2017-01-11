@@ -18,22 +18,17 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.ui.tvshow.season.SeasonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
-import com.ashish.movies.utils.Constants.NOT_AVAILABLE
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.getBackdropUrl
+import com.ashish.movies.utils.extensions.getPosterUrl
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Jan 03.
  */
 class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetailMvpView, TVShowDetailPresenter>(),
         TVShowDetailMvpView {
-
-    private val statusText: FontTextView by bindView(R.id.status_text)
-    private val genresText: FontTextView by bindView(R.id.genres_text)
-    private val seasonsText: FontTextView by bindView(R.id.season_text)
-    private val networkText: FontTextView by bindView(R.id.network_text)
-    private val episodesText: FontTextView by bindView(R.id.episodes_text)
-    private val lastAirDateText: FontTextView by bindView(R.id.last_air_date_text)
-    private val firstAirDateText: FontTextView by bindView(R.id.first_air_date_text)
 
     private val seasonsViewStub: ViewStub by bindView(R.id.seasons_view_stub)
     private val similarTVShowsViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
@@ -93,17 +88,11 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
             setTMDbRating(detailContent.voteAverage)
             imdbId = detailContent.externalIds?.imdbId
             titleText.setTitleAndYear(name, firstAirDate)
-            overviewText.text = overview ?: NOT_AVAILABLE
-            statusText.text = status ?: NOT_AVAILABLE
-            seasonsText.text = numberOfSeasons.toString()
-            episodesText.text = numberOfEpisodes.toString()
-            genresText.text = genres.convertListToCommaSeparatedText { it.name.toString() }
-            networkText.text = networks.convertListToCommaSeparatedText { it.name.toString() }
-            lastAirDateText.text = lastAirDate.getFormattedReleaseDate(this@TVShowDetailActivity)
-            firstAirDateText.text = firstAirDate.getFormattedReleaseDate(this@TVShowDetailActivity)
         }
         super.showDetailContent(detailContent)
     }
+
+    override fun getDetailContentType() = ADAPTER_TYPE_TV_SHOW
 
     override fun getItemTitle(): String = tvShow?.name ?: ""
 

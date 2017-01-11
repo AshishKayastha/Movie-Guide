@@ -5,6 +5,7 @@ import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
+import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import javax.inject.Inject
 
 /**
@@ -27,6 +28,21 @@ class SeasonDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInte
             hideProgress()
             val seasonDetail = fullDetailContent.detailContent
             showItemList(seasonDetail?.episodes) { showEpisodeList(it) }
+        }
+    }
+
+    override fun addContents(fullDetailContent: FullDetailContent<SeasonDetail>) {
+        fullDetailContent.detailContent?.apply {
+            val omdbDetail = fullDetailContent.omdbDetail
+            contentList.add(overview ?: "")
+            contentList.add(omdbDetail?.Rated ?: "")
+            contentList.add(omdbDetail?.Awards ?: "")
+            contentList.add(seasonNumber.toString())
+            contentList.add(episodes?.size.toString())
+            contentList.add(airDate.getFormattedMediumDate())
+            contentList.add(omdbDetail?.Production ?: "")
+            contentList.add(omdbDetail?.Country ?: "")
+            contentList.add(omdbDetail?.Language ?: "")
         }
     }
 

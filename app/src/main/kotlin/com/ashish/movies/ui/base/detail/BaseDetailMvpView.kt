@@ -11,6 +11,8 @@ interface BaseDetailMvpView<in I> : LceView {
 
     fun showDetailContent(detailContent: I)
 
+    fun showDetailContentList(contentList: List<String>)
+
     fun showOMDbDetail(omDbDetail: OMDbDetail)
 
     fun showCastList(castList: List<Credit>)

@@ -24,60 +24,7 @@
 
                 <include layout="@layout/layout_detail_ratings" />
 
-                <LinearLayout
-                    style="@style/Match.Width"
-                    android:layout_marginBottom="@dimen/spacing_medium"
-                    android:paddingEnd="@dimen/first_keyline"
-                    android:paddingStart="@dimen/first_keyline"
-                    android:paddingTop="@dimen/spacing_large">
-
-                    <include layout="@layout/layout_detail_overview" />
-
-                    <include layout="@layout/layout_detail_genres" />
-
-                    <include layout="@layout/layout_detail_status" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        style="@style/PrimaryText.Title"
-                        android:text="@string/first_air_date_title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/first_air_date_text"
-                        style="@style/SecondaryText.Title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        style="@style/PrimaryText.Title"
-                        android:text="@string/last_air_date_title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/last_air_date_text"
-                        style="@style/SecondaryText.Title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        style="@style/PrimaryText.Title"
-                        android:text="@string/seasons_count_title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/season_text"
-                        style="@style/SecondaryText.Title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        style="@style/PrimaryText.Title"
-                        android:text="@string/episodes_title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/episodes_text"
-                        style="@style/SecondaryText.Title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        style="@style/PrimaryText.Title"
-                        android:text="@string/network_title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/network_text"
-                        style="@style/SecondaryText.Title" />
-
-                </LinearLayout>
+                <include layout="@layout/layout_detail_content_recycler_view" />
 
                 <ViewStub
                     android:id="@+id/seasons_view_stub"

@@ -14,9 +14,11 @@ import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MOVIE
-import com.ashish.movies.ui.widget.FontTextView
-import com.ashish.movies.utils.Constants.NOT_AVAILABLE
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.getBackdropUrl
+import com.ashish.movies.utils.extensions.getPosterUrl
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Dec 31.
@@ -24,13 +26,6 @@ import com.ashish.movies.utils.extensions.*
 class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailMvpView, MovieDetailPresenter>(),
         MovieDetailMvpView {
 
-    private val statusText: FontTextView by bindView(R.id.status_text)
-    private val budgetText: FontTextView by bindView(R.id.budget_text)
-    private val genresText: FontTextView by bindView(R.id.genres_text)
-    private val runtimeText: FontTextView by bindView(R.id.runtime_text)
-    private val revenueText: FontTextView by bindView(R.id.revenue_text)
-    private val taglineText: FontTextView by bindView(R.id.tagline_text)
-    private val releaseDateText: FontTextView by bindView(R.id.release_date_text)
     private val similarMoviesViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
     private var movie: Movie? = null
@@ -81,17 +76,11 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailMv
             setTMDbRating(detailContent.voteAverage)
             this@MovieDetailActivity.imdbId = imdbId
             titleText.setTitleAndYear(title, releaseDate)
-            overviewText.text = overview ?: NOT_AVAILABLE
-            taglineText.text = tagline ?: NOT_AVAILABLE
-            statusText.text = status ?: NOT_AVAILABLE
-            budgetText.text = budget.getFormattedNumber()
-            revenueText.text = revenue.getFormattedNumber()
-            runtimeText.text = runtime.getFormattedRuntime()
-            genresText.text = genres.convertListToCommaSeparatedText { it.name.toString() }
-            releaseDateText.text = releaseDate.getFormattedReleaseDate(this@MovieDetailActivity)
         }
         super.showDetailContent(detailContent)
     }
+
+    override fun getDetailContentType() = ADAPTER_TYPE_MOVIE
 
     override fun showSimilarMoviesList(similarMoviesList: List<Movie>) {
         similarMoviesAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_MOVIE,

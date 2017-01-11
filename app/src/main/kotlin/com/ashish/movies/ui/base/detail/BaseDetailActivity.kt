@@ -12,7 +12,12 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
-import android.view.*
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.ViewStub
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -20,9 +25,15 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.ui.base.mvp.MvpActivity
+import com.ashish.movies.ui.common.adapter.DetailContentAdapter
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_CREDIT
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_EPISODE
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MOVIE
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_PEOPLE
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_SEASON
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity
@@ -33,7 +44,23 @@ import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.GravitySnapHelper
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.animateBackgroundColorChange
+import com.ashish.movies.utils.extensions.animateColorChange
+import com.ashish.movies.utils.extensions.animateTextColorChange
+import com.ashish.movies.utils.extensions.changeMenuFont
+import com.ashish.movies.utils.extensions.dpToPx
+import com.ashish.movies.utils.extensions.getActivityOptionsCompat
+import com.ashish.movies.utils.extensions.getColorCompat
+import com.ashish.movies.utils.extensions.getPosterImagePair
+import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
+import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.isDark
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.loadPaletteBitmap
+import com.ashish.movies.utils.extensions.scrimify
+import com.ashish.movies.utils.extensions.setLightStatusBar
+import com.ashish.movies.utils.extensions.setPaletteColor
+import com.ashish.movies.utils.extensions.show
 import java.util.*
 
 /**
@@ -42,8 +69,6 @@ import java.util.*
 abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
     : MvpActivity<V, P>(), BaseDetailMvpView<I>, AppBarLayout.OnOffsetChangedListener {
 
-    protected val overviewText: FontTextView by bindView(R.id.overview_text)
-    protected val overviewTitle: FontTextView by bindView(R.id.overview_title)
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
     protected val posterImage: ImageView by bindView(R.id.detail_poster_image)
 
@@ -55,6 +80,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
 
     private val castViewStub: ViewStub by bindView(R.id.cast_view_stub)
     private val crewViewStub: ViewStub by bindView(R.id.crew_view_stub)
+    private val detailContentRecyclerView: RecyclerView by bindView(R.id.detail_content_recycler_view)
 
     private var menu: Menu? = null
     private var statusBarColor: Int = 0
@@ -214,6 +240,27 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
         detailContainer.show()
         showOrHideIMDbMenu()
         changeMenuItemFont()
+    }
+
+    override fun showDetailContentList(contentList: List<String>) {
+        when (getDetailContentType()) {
+            ADAPTER_TYPE_MOVIE -> setDetailContentAdapter(R.array.movie_detail_content_title, contentList)
+            ADAPTER_TYPE_TV_SHOW -> setDetailContentAdapter(R.array.tv_detail_content_title, contentList)
+            ADAPTER_TYPE_SEASON -> setDetailContentAdapter(R.array.season_detail_content_title, contentList)
+            ADAPTER_TYPE_EPISODE -> setDetailContentAdapter(R.array.episode_detail_content_title, contentList)
+            ADAPTER_TYPE_PEOPLE -> setDetailContentAdapter(R.array.person_detail_content_title, contentList)
+        }
+    }
+
+    abstract fun getDetailContentType(): Int
+
+    private fun setDetailContentAdapter(contentTitleId: Int, contentList: List<String>) {
+        detailContentRecyclerView.apply {
+            setHasFixedSize(true)
+            isNestedScrollingEnabled = false
+            layoutManager = LinearLayoutManager(this@BaseDetailActivity)
+            adapter = DetailContentAdapter(resources.getStringArray(contentTitleId), contentList)
+        }
     }
 
     override fun showProgress() = progressBar.show()

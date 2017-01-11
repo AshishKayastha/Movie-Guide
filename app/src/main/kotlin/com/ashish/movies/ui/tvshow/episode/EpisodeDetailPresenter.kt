@@ -3,8 +3,10 @@ package com.ashish.movies.ui.tvshow.episode
 import com.ashish.movies.R
 import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.EpisodeDetail
+import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.ui.base.detail.BaseDetailMvpView
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
+import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import javax.inject.Inject
 
 /**
@@ -22,6 +24,21 @@ class EpisodeDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInt
     }
 
     override fun getDetailContent(id: Long) = tvShowInteractor.getFullEpisodeDetail(id, seasonNumber, episodeNumber)
+
+    override fun addContents(fullDetailContent: FullDetailContent<EpisodeDetail>) {
+        fullDetailContent.detailContent?.apply {
+            val omdbDetail = fullDetailContent.omdbDetail
+            contentList.add(overview ?: "")
+            contentList.add(omdbDetail?.Rated ?: "")
+            contentList.add(omdbDetail?.Awards ?: "")
+            contentList.add(seasonNumber.toString())
+            contentList.add(episodeNumber.toString())
+            contentList.add(airDate.getFormattedMediumDate())
+            contentList.add(omdbDetail?.Production ?: "")
+            contentList.add(omdbDetail?.Country ?: "")
+            contentList.add(omdbDetail?.Language ?: "")
+        }
+    }
 
     override fun getCredits(detailContent: EpisodeDetail?) = detailContent?.credits
 

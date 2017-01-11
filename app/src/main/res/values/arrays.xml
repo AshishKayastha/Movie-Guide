@@ -25,4 +25,69 @@
         <item>@string/title_movies</item>
         <item>@string/title_tv_shows</item>
     </string-array>
+
+    <string-array name="movie_detail_content_title">
+        <item>@string/overview_title</item>
+        <item>@string/tagline_title</item>
+        <item>@string/genre_title</item>
+        <item>@string/rated_title</item>
+        <item>@string/status_title</item>
+        <item>@string/awards_title</item>
+        <item>@string/production_title</item>
+        <item>@string/country_title</item>
+        <item>@string/language_title</item>
+        <item>@string/release_date_title</item>
+        <item>@string/runtime_title</item>
+        <item>@string/budget_title</item>
+        <item>@string/revenue_title</item>
+    </string-array>
+
+    <string-array name="tv_detail_content_title">
+        <item>@string/overview_title</item>
+        <item>@string/genre_title</item>
+        <item>@string/rated_title</item>
+        <item>@string/status_title</item>
+        <item>@string/awards_title</item>
+        <item>@string/production_title</item>
+        <item>@string/country_title</item>
+        <item>@string/language_title</item>
+        <item>@string/first_air_date_title</item>
+        <item>@string/last_air_date_title</item>
+        <item>@string/seasons_title</item>
+        <item>@string/episodes_title</item>
+        <item>@string/network_title</item>
+    </string-array>
+
+    <string-array name="season_detail_content_title">
+        <item>@string/overview_title</item>
+        <item>@string/rated_title</item>
+        <item>@string/awards_title</item>
+        <item>@string/season_title</item>
+        <item>@string/episodes_title</item>
+        <item>@string/air_date_title</item>
+        <item>@string/production_title</item>
+        <item>@string/country_title</item>
+        <item>@string/language_title</item>
+    </string-array>
+
+    <string-array name="episode_detail_content_title">
+        <item>@string/overview_title</item>
+        <item>@string/rated_title</item>
+        <item>@string/awards_title</item>
+        <item>@string/season_title</item>
+        <item>@string/episode_title</item>
+        <item>@string/air_date_title</item>
+        <item>@string/production_title</item>
+        <item>@string/country_title</item>
+        <item>@string/language_title</item>
+    </string-array>
+
+    <string-array name="person_detail_content_title">
+        <item>@string/biography_title</item>
+        <item>@string/birthday_title</item>
+        <item>@string/place_of_birth_title</item>
+        <item>@string/deathday_title</item>
+        <item>@string/awards_title</item>
+        <item>@string/also_known_as_title</item>
+    </string-array>
 </resources>

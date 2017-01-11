@@ -29,8 +29,8 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
         const val ADAPTER_TYPE_PEOPLE = 2
         const val ADAPTER_TYPE_CREDIT = 3
         const val ADAPTER_TYPE_SEASON = 4
-        const val ADAPTER_TYPE_MULTI_SEARCH = 5
-        const val ADAPTER_TYPE_EPISODE = 6
+        const val ADAPTER_TYPE_EPISODE = 5
+        const val ADAPTER_TYPE_MULTI_SEARCH = 6
     }
 
     private val loadingItem = object : ViewType {
@@ -43,8 +43,8 @@ class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_ite
             PeopleDelegateAdapter(layoutId, onItemClickListener),
             CreditDelegateAdapter(layoutId, onItemClickListener),
             SeasonDelegateAdapter(layoutId, onItemClickListener),
-            MultiSearchDelegateAdapter(layoutId, onItemClickListener),
-            EpisodeDelegateAdapter(layoutId, onItemClickListener)
+            EpisodeDelegateAdapter(layoutId, onItemClickListener),
+            MultiSearchDelegateAdapter(layoutId, onItemClickListener)
     )
 
     private var itemList: ArrayList<ViewType> = ArrayList()

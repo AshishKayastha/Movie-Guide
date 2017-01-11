@@ -15,9 +15,12 @@ import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_EPISODE
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_SEASON
 import com.ashish.movies.ui.tvshow.episode.EpisodeDetailActivity
-import com.ashish.movies.ui.widget.FontTextView
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.getOriginalImageUrl
+import com.ashish.movies.utils.extensions.getPosterUrl
+import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Jan 07.
@@ -25,8 +28,6 @@ import com.ashish.movies.utils.extensions.*
 class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetailMvpView, SeasonDetailPresenter>(),
         SeasonDetailMvpView {
 
-    private val seasonText: FontTextView by bindView(R.id.season_text)
-    private val airDateText: FontTextView by bindView(R.id.air_date_text)
     private val episodesViewStub: ViewStub by bindView(R.id.episodes_view_stub)
 
     private var tvShowId: Long? = null
@@ -75,11 +76,8 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
 
     override fun showDetailContent(detailContent: SeasonDetail) {
         detailContent.apply {
-            overviewText.applyText(overview)
             titleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
-            seasonText.text = seasonNumber.toString()
-            airDateText.text = airDate.getFormattedReleaseDate(this@SeasonDetailActivity)
         }
         super.showDetailContent(detailContent)
     }
@@ -87,6 +85,8 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
     override fun getItemTitle(): String {
         return String.format(getString(R.string.season_number_format), tvShowSeason?.seasonNumber)
     }
+
+    override fun getDetailContentType() = ADAPTER_TYPE_SEASON
 
     override fun showEpisodeList(episodeList: List<Episode>) {
         episodesAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_EPISODE,

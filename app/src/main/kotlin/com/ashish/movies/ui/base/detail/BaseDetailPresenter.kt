@@ -8,11 +8,14 @@ import com.ashish.movies.utils.Utils
 import io.reactivex.Observable
 import timber.log.Timber
 import java.io.IOException
+import java.util.*
 
 /**
  * Created by Ashish on Jan 03.
  */
 abstract class BaseDetailPresenter<I, V : BaseDetailMvpView<I>> : RxPresenter<V>() {
+
+    protected var contentList: ArrayList<String> = ArrayList()
 
     open fun loadDetailContent(id: Long?) {
         if (Utils.isOnline()) {
@@ -34,6 +37,9 @@ abstract class BaseDetailPresenter<I, V : BaseDetailMvpView<I>> : RxPresenter<V>
     protected open fun showDetailContent(fullDetailContent: FullDetailContent<I>) {
         getView()?.apply {
             hideProgress()
+            addContents(fullDetailContent)
+            showDetailContentList(contentList)
+
             val detailContent = fullDetailContent.detailContent
             if (detailContent != null) showDetailContent(detailContent)
             showCredits(getCredits(detailContent))
@@ -42,6 +48,8 @@ abstract class BaseDetailPresenter<I, V : BaseDetailMvpView<I>> : RxPresenter<V>
             if (omdbDetail != null) showOMDbDetail(omdbDetail)
         }
     }
+
+    abstract fun addContents(fullDetailContent: FullDetailContent<I>)
 
     abstract fun getCredits(detailContent: I?): CreditResults?
 

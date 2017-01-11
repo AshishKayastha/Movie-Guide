@@ -3,24 +3,21 @@ package com.ashish.movies.ui.tvshow.episode
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Episode
 import com.ashish.movies.data.models.EpisodeDetail
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailMvpView
 import com.ashish.movies.ui.base.detail.FullDetailContentActivity
-import com.ashish.movies.ui.widget.FontTextView
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_EPISODE
+import com.ashish.movies.utils.extensions.getOriginalImageUrl
+import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Jan 08.
  */
 class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetailMvpView<EpisodeDetail>, EpisodeDetailPresenter>() {
-
-    private val airDateText: FontTextView by bindView(R.id.air_date_text)
-    private val seasonNumberText: FontTextView by bindView(R.id.season_num_text)
-    private val episodeNumberText: FontTextView by bindView(R.id.episode_num_text)
 
     private var tvShowId: Long? = null
     private var episode: Episode? = null
@@ -59,16 +56,14 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetai
 
     override fun showDetailContent(detailContent: EpisodeDetail) {
         detailContent.apply {
-            overviewText.applyText(overview)
             setTMDbRating(detailContent.voteAverage)
             titleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
-            seasonNumberText.text = seasonNumber.toString()
-            episodeNumberText.text = episodeNumber.toString()
-            airDateText.text = airDate.getFormattedReleaseDate(this@EpisodeDetailActivity)
         }
         super.showDetailContent(detailContent)
     }
+
+    override fun getDetailContentType() = ADAPTER_TYPE_EPISODE
 
     override fun getItemTitle() = episode?.name ?: ""
 }

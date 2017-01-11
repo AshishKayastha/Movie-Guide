@@ -4,21 +4,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import butterknife.bindView
 import com.ashish.movies.R
-import com.ashish.movies.data.models.*
+import com.ashish.movies.data.models.Credit
+import com.ashish.movies.data.models.Movie
+import com.ashish.movies.data.models.OMDbDetail
+import com.ashish.movies.data.models.Person
+import com.ashish.movies.data.models.PersonDetail
+import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.base.detail.BaseDetailMvpView
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_PEOPLE
 import com.ashish.movies.ui.movie.detail.MovieDetailActivity
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
-import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
-import com.ashish.movies.utils.extensions.applyText
-import com.ashish.movies.utils.extensions.getFormattedReleaseDate
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.setTransitionName
 
@@ -26,9 +28,6 @@ import com.ashish.movies.utils.extensions.setTransitionName
  * Created by Ashish on Jan 04.
  */
 class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<PersonDetail>, PersonDetailPresenter>() {
-
-    private val birthdayText: FontTextView by bindView(R.id.birthday_text)
-    private val placeOfBirthText: FontTextView by bindView(R.id.place_of_birth_text)
 
     private var person: Person? = null
 
@@ -89,17 +88,14 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
     override fun showDetailContent(detailContent: PersonDetail) {
         detailContent.apply {
             titleText.text = name
-            overviewText.text = biography
-            overviewTitle.setText(R.string.biography_title)
-            placeOfBirthText.applyText(placeOfBirth)
             this@PersonDetailActivity.imdbId = imdbId
-            birthdayText.applyText(birthday.getFormattedReleaseDate(this@PersonDetailActivity))
         }
         super.showDetailContent(detailContent)
     }
 
-    override fun showOMDbDetail(omDbDetail: OMDbDetail) {
-    }
+    override fun getDetailContentType() = ADAPTER_TYPE_PEOPLE
+
+    override fun showOMDbDetail(omDbDetail: OMDbDetail) {}
 
     override fun getItemTitle() = person?.name ?: ""
 

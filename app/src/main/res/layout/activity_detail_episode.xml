@@ -23,40 +23,7 @@
 
                 <include layout="@layout/layout_detail_ratings" />
 
-                <LinearLayout
-                    style="@style/Match.Width"
-                    android:layout_marginBottom="@dimen/spacing_medium"
-                    android:paddingEnd="@dimen/first_keyline"
-                    android:paddingStart="@dimen/first_keyline"
-                    android:paddingTop="@dimen/spacing_large">
-
-                    <include layout="@layout/layout_detail_overview" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        style="@style/PrimaryText.Title"
-                        android:text="@string/season_title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/season_num_text"
-                        style="@style/SecondaryText.Title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        style="@style/PrimaryText.Title"
-                        android:text="@string/episode_title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/episode_num_text"
-                        style="@style/SecondaryText.Title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        style="@style/PrimaryText.Title"
-                        android:text="@string/air_date_title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/air_date_text"
-                        style="@style/SecondaryText.Title" />
-
-                </LinearLayout>
+                <include layout="@layout/layout_detail_content_recycler_view" />
 
                 <include layout="@layout/layout_detail_cast_credits_view_stub" />
 

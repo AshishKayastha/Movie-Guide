@@ -1,13 +1,11 @@
 package com.ashish.movies.utils.extensions
 
-import android.content.Context
-import android.text.format.DateFormat
 import com.ashish.movies.utils.ApiConstants.BACKDROP_W1280_URL_PREFIX
 import com.ashish.movies.utils.ApiConstants.ORIGINAL_IMAGE_URL_PREFIX
 import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
 import com.ashish.movies.utils.Constants.DEFAULT_DATE_PATTERN
-import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import timber.log.Timber
+import java.text.DateFormat
 import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -16,7 +14,7 @@ import java.util.*
 /**
  * Created by Ashish on Jan 03.
  */
-fun String?.isNotNullOrEmpty() = !this.isNullOrEmpty()
+fun String?.isNotNullOrEmpty() = !this.isNullOrEmpty() && this != "null"
 
 fun String?.getYearOnly(): String {
     return if (isNotNullOrEmpty()) this!!.slice(0..3) else ""
@@ -39,7 +37,7 @@ fun Int?.getFormattedNumber(): String {
         return String.format("$%s", NumberFormat.getNumberInstance(Locale.US).format(this))
     }
 
-    return NOT_AVAILABLE
+    return ""
 }
 
 fun Int?.getFormattedRuntime(): String {
@@ -58,15 +56,15 @@ fun Int?.getFormattedRuntime(): String {
         }
     }
 
-    return NOT_AVAILABLE
+    return ""
 }
 
-fun String?.getFormattedReleaseDate(context: Context): String {
-    var formattedReleaseDate = NOT_AVAILABLE
-    if (this.isNotNullOrEmpty()) {
+fun String?.getFormattedMediumDate(): String {
+    var formattedReleaseDate = ""
+    if (isNotNullOrEmpty()) {
         val parsedDate = this!!.getParsedDate()
         if (parsedDate != null) {
-            formattedReleaseDate = DateFormat.getMediumDateFormat(context).format(parsedDate)
+            formattedReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(parsedDate)
         }
     }
 
@@ -74,7 +72,7 @@ fun String?.getFormattedReleaseDate(context: Context): String {
 }
 
 inline fun <reified T> List<T>?.convertListToCommaSeparatedText(crossinline func: (T) -> String): String {
-    var formattedGenre = NOT_AVAILABLE
+    var formattedGenre = ""
     if (this != null && isNotEmpty()) {
         formattedGenre = joinToString { func(it) }
     }

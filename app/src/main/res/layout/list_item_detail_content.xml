@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Match.Width">
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/content_title"
+        style="@style/PrimaryText.Title"
+        tools:text="@string/runtime_title" />
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/content_text"
+        style="@style/SecondaryText.Title"
+        tools:text="2h 30min" />
+
+</LinearLayout>

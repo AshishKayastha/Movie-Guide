@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_content_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/spacing_medium"
+    android:clipToPadding="false"
+    android:paddingEnd="@dimen/first_keyline"
+    android:paddingStart="@dimen/first_keyline"
+    tools:showIn="@layout/activity_detail_movie" />

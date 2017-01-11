@@ -5,6 +5,8 @@ import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
+import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
+import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import javax.inject.Inject
 
 /**
@@ -22,6 +24,25 @@ class TVShowDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInte
             val tvShowDetail = fullDetailContent.detailContent
             showItemList(tvShowDetail?.seasons) { showSeasonsList(it) }
             showItemList(tvShowDetail?.similarTVShowResults?.results) { showSimilarTVShowList(it) }
+        }
+    }
+
+    override fun addContents(fullDetailContent: FullDetailContent<TVShowDetail>) {
+        fullDetailContent.detailContent?.apply {
+            val omdbDetail = fullDetailContent.omdbDetail
+            contentList.add(overview ?: "")
+            contentList.add(genres.convertListToCommaSeparatedText { it.name.toString() })
+            contentList.add(omdbDetail?.Rated ?: "")
+            contentList.add(status ?: "")
+            contentList.add(omdbDetail?.Awards ?: "")
+            contentList.add(omdbDetail?.Production ?: "")
+            contentList.add(omdbDetail?.Country ?: "")
+            contentList.add(omdbDetail?.Language ?: "")
+            contentList.add(firstAirDate.getFormattedMediumDate())
+            contentList.add(lastAirDate.getFormattedMediumDate())
+            contentList.add(numberOfSeasons.toString())
+            contentList.add(numberOfEpisodes.toString())
+            contentList.add(networks.convertListToCommaSeparatedText { it.name.toString() })
         }
     }
 

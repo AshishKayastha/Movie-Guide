@@ -22,32 +22,7 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <LinearLayout
-                    style="@style/Match.Width"
-                    android:layout_marginBottom="@dimen/spacing_medium"
-                    android:paddingEnd="@dimen/first_keyline"
-                    android:paddingStart="@dimen/first_keyline"
-                    android:paddingTop="@dimen/spacing_large">
-
-                    <include layout="@layout/layout_detail_overview" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        style="@style/PrimaryText.Title"
-                        android:text="@string/birthday_title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/birthday_text"
-                        style="@style/SecondaryText.Title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        style="@style/PrimaryText.Title"
-                        android:text="@string/place_of_birth_title" />
-
-                    <com.ashish.movies.ui.widget.FontTextView
-                        android:id="@+id/place_of_birth_text"
-                        style="@style/SecondaryText.Title" />
-
-                </LinearLayout>
+                <include layout="@layout/layout_detail_content_recycler_view" />
 
                 <include layout="@layout/layout_detail_cast_credits_view_stub" />
 

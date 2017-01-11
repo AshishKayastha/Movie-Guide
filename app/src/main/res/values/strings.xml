@@ -34,6 +34,11 @@
 
     <!-- Detail -->
     <string name="overview_title">Overview:</string>
+    <string name="awards_title">Awards:</string>
+    <string name="rated_title">Rated:</string>
+    <string name="production_title">Production:</string>
+    <string name="country_title">Country:</string>
+    <string name="language_title">Language:</string>
     <string name="view_in_imdb">View in IMDb</string>
 
     <!-- Movie Detail -->
@@ -76,6 +81,8 @@
     <string name="biography_title">Biography:</string>
     <string name="birthday_title">Birthday:</string>
     <string name="place_of_birth_title">Place Of Birth:</string>
+    <string name="deathday_title">Died On:</string>
+    <string name="also_known_as_title">Also known as:</string>
     <string name="error_load_person_detail">An error occurred while trying to load person detail</string>
 
     <!-- Search -->
