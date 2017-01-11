@@ -5,15 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewStub
-import android.widget.ImageView
 import butterknife.bindView
 import com.ashish.movies.R
-import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.data.models.TVShowSeason
 import com.ashish.movies.di.components.AppComponent
-import com.ashish.movies.ui.base.detail.BaseDetailActivity
+import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_SEASON
@@ -21,23 +19,12 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER
 import com.ashish.movies.ui.tvshow.season.SeasonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
-import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
-import com.ashish.movies.utils.extensions.getBackdropUrl
-import com.ashish.movies.utils.extensions.getFormattedReleaseDate
-import com.ashish.movies.utils.extensions.getPosterUrl
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.setFlixterScore
-import com.ashish.movies.utils.extensions.setIMDbRating
-import com.ashish.movies.utils.extensions.setMetaScore
-import com.ashish.movies.utils.extensions.setTMDbRating
-import com.ashish.movies.utils.extensions.setTitleAndYear
-import com.ashish.movies.utils.extensions.setTomatoRating
-import com.ashish.movies.utils.extensions.setTransitionName
+import com.ashish.movies.utils.extensions.*
 
 /**
  * Created by Ashish on Jan 03.
  */
-class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpView, TVShowDetailPresenter>(),
+class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetailMvpView, TVShowDetailPresenter>(),
         TVShowDetailMvpView {
 
     private val statusText: FontTextView by bindView(R.id.status_text)
@@ -48,39 +35,12 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
     private val lastAirDateText: FontTextView by bindView(R.id.last_air_date_text)
     private val firstAirDateText: FontTextView by bindView(R.id.first_air_date_text)
 
-    private val metascoreView: View by bindView(R.id.metascore_view)
-    private val imdbRatingView: View by bindView(R.id.imdb_rating_view)
-    private val tmdbRatingView: View by bindView(R.id.tmdb_rating_view)
-    private val flixterScoreView: View by bindView(R.id.flixter_score_view)
-    private val tomatoRatingView: View by bindView(R.id.tomato_rating_view)
-
-    private val flixterScoreImage: ImageView by bindView(R.id.flixter_score_image)
-    private val tomatoRatingImage: ImageView by bindView(R.id.tomato_rating_image)
-
-    private val metascoreText: FontTextView by bindView(R.id.metascore_text)
-    private val imdbRatingText: FontTextView by bindView(R.id.imdb_rating_text)
-    private val tmdbRatingText: FontTextView by bindView(R.id.tmdb_rating_text)
-    private val flixterScoreText: FontTextView by bindView(R.id.flixter_score_text)
-    private val tomatoRatingText: FontTextView by bindView(R.id.tomato_rating_text)
-
     private val seasonsViewStub: ViewStub by bindView(R.id.seasons_view_stub)
     private val similarTVShowsViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
     private var tvShow: TVShow? = null
     private var seasonsAdapter: RecyclerViewAdapter<TVShowSeason>? = null
     private var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>? = null
-
-    private val onCastItemClickListener = object : OnItemClickListener {
-        override fun onItemClick(position: Int, view: View) {
-            startPersonDetailActivity(castAdapter, position, view)
-        }
-    }
-
-    private val onCrewItemClickListener = object : OnItemClickListener {
-        override fun onItemClick(position: Int, view: View) {
-            startPersonDetailActivity(crewAdapter, position, view)
-        }
-    }
 
     private val onSeasonItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -130,28 +90,19 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
                 showBackdropImage(backdropPath.getBackdropUrl())
             }
 
+            setTMDbRating(detailContent.voteAverage)
             imdbId = detailContent.externalIds?.imdbId
             titleText.setTitleAndYear(name, firstAirDate)
             overviewText.text = overview ?: NOT_AVAILABLE
             statusText.text = status ?: NOT_AVAILABLE
             seasonsText.text = numberOfSeasons.toString()
             episodesText.text = numberOfEpisodes.toString()
-            tmdbRatingText.setTMDbRating(detailContent.voteAverage, tmdbRatingView)
             genresText.text = genres.convertListToCommaSeparatedText { it.name.toString() }
             networkText.text = networks.convertListToCommaSeparatedText { it.name.toString() }
             lastAirDateText.text = lastAirDate.getFormattedReleaseDate(this@TVShowDetailActivity)
             firstAirDateText.text = firstAirDate.getFormattedReleaseDate(this@TVShowDetailActivity)
         }
         super.showDetailContent(detailContent)
-    }
-
-    override fun showOMDbDetail(omDbDetail: OMDbDetail) {
-        with(omDbDetail) {
-            omDbDetail.setMetaScore(metascoreView, metascoreText)
-            omDbDetail.setIMDbRating(imdbRatingView, imdbRatingText)
-            omDbDetail.setTomatoRating(tomatoRatingView, tomatoRatingText, tomatoRatingImage)
-            omDbDetail.setFlixterScore(flixterScoreView, flixterScoreText, flixterScoreImage)
-        }
     }
 
     override fun getItemTitle(): String = tvShow?.name ?: ""
@@ -162,10 +113,6 @@ class TVShowDetailActivity : BaseDetailActivity<TVShowDetail, TVShowDetailMvpVie
 
         inflateViewStubRecyclerView(seasonsViewStub, R.id.seasons_recycler_view, seasonsAdapter!!, seasonsList)
     }
-
-    override fun getCastItemClickListener() = onCastItemClickListener
-
-    override fun getCrewItemClickListener() = onCrewItemClickListener
 
     override fun showSimilarTVShowList(similarTVShowList: List<TVShow>) {
         similarTVShowsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_TV_SHOW,

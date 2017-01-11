@@ -19,8 +19,6 @@ import android.widget.ProgressBar
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
-import com.ashish.movies.data.models.OMDbDetail
-import com.ashish.movies.data.models.Person
 import com.ashish.movies.ui.base.mvp.MvpActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
@@ -28,7 +26,6 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity
-import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.utils.Constants.IMDB_BASE_URL
@@ -219,10 +216,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
         changeMenuItemFont()
     }
 
-    override fun showOMDbDetail(omDbDetail: OMDbDetail) {
-
-    }
-
     override fun showProgress() = progressBar.show()
 
     override fun hideProgress() = progressBar.hide()
@@ -271,13 +264,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPre
     }
 
     abstract fun getItemTitle(): String
-
-    protected fun startPersonDetailActivity(adapter: RecyclerViewAdapter<Credit>?, position: Int, view: View) {
-        val credit = adapter?.getItem<Credit>(position)
-        val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
-        val intent = PersonDetailActivity.createIntent(this, person)
-        startActivityWithTransition(view, R.string.transition_person_profile, intent)
-    }
 
     protected fun startActivityWithTransition(view: View, transitionNameId: Int, intent: Intent) {
         if (Utils.isOnline()) {

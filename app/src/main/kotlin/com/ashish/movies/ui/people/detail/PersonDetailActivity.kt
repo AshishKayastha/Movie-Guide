@@ -6,11 +6,7 @@ import android.os.Bundle
 import android.view.View
 import butterknife.bindView
 import com.ashish.movies.R
-import com.ashish.movies.data.models.Credit
-import com.ashish.movies.data.models.Movie
-import com.ashish.movies.data.models.Person
-import com.ashish.movies.data.models.PersonDetail
-import com.ashish.movies.data.models.TVShow
+import com.ashish.movies.data.models.*
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.base.detail.BaseDetailMvpView
@@ -100,6 +96,9 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<
             birthdayText.applyText(birthday.getFormattedReleaseDate(this@PersonDetailActivity))
         }
         super.showDetailContent(detailContent)
+    }
+
+    override fun showOMDbDetail(omDbDetail: OMDbDetail) {
     }
 
     override fun getItemTitle() = person?.name ?: ""

@@ -5,38 +5,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewStub
-import android.widget.ImageView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
-import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.di.components.AppComponent
-import com.ashish.movies.ui.base.detail.BaseDetailActivity
+import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter.Companion.ADAPTER_TYPE_MOVIE
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants.NOT_AVAILABLE
-import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
-import com.ashish.movies.utils.extensions.getBackdropUrl
-import com.ashish.movies.utils.extensions.getFormattedNumber
-import com.ashish.movies.utils.extensions.getFormattedReleaseDate
-import com.ashish.movies.utils.extensions.getFormattedRuntime
-import com.ashish.movies.utils.extensions.getPosterUrl
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.setFlixterScore
-import com.ashish.movies.utils.extensions.setIMDbRating
-import com.ashish.movies.utils.extensions.setMetaScore
-import com.ashish.movies.utils.extensions.setTMDbRating
-import com.ashish.movies.utils.extensions.setTitleAndYear
-import com.ashish.movies.utils.extensions.setTomatoRating
-import com.ashish.movies.utils.extensions.setTransitionName
+import com.ashish.movies.utils.extensions.*
 
 /**
  * Created by Ashish on Dec 31.
  */
-class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, MovieDetailPresenter>(),
+class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailMvpView, MovieDetailPresenter>(),
         MovieDetailMvpView {
 
     private val statusText: FontTextView by bindView(R.id.status_text)
@@ -48,21 +33,6 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
     private val releaseDateText: FontTextView by bindView(R.id.release_date_text)
     private val similarMoviesViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
-    private val metascoreView: View by bindView(R.id.metascore_view)
-    private val imdbRatingView: View by bindView(R.id.imdb_rating_view)
-    private val tmdbRatingView: View by bindView(R.id.tmdb_rating_view)
-    private val flixterScoreView: View by bindView(R.id.flixter_score_view)
-    private val tomatoRatingView: View by bindView(R.id.tomato_rating_view)
-
-    private val flixterScoreImage: ImageView by bindView(R.id.flixter_score_image)
-    private val tomatoRatingImage: ImageView by bindView(R.id.tomato_rating_image)
-
-    private val metascoreText: FontTextView by bindView(R.id.metascore_text)
-    private val imdbRatingText: FontTextView by bindView(R.id.imdb_rating_text)
-    private val tmdbRatingText: FontTextView by bindView(R.id.tmdb_rating_text)
-    private val flixterScoreText: FontTextView by bindView(R.id.flixter_score_text)
-    private val tomatoRatingText: FontTextView by bindView(R.id.tomato_rating_text)
-
     private var movie: Movie? = null
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
 
@@ -72,18 +42,6 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
         fun createIntent(context: Context, movie: Movie?): Intent {
             return Intent(context, MovieDetailActivity::class.java)
                     .putExtra(EXTRA_MOVIE, movie)
-        }
-    }
-
-    private val onCastItemClickListener = object : OnItemClickListener {
-        override fun onItemClick(position: Int, view: View) {
-            startPersonDetailActivity(castAdapter, position, view)
-        }
-    }
-
-    private val onCrewItemClickListener = object : OnItemClickListener {
-        override fun onItemClick(position: Int, view: View) {
-            startPersonDetailActivity(crewAdapter, position, view)
         }
     }
 
@@ -120,6 +78,7 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
                 showBackdropImage(backdropPath.getBackdropUrl())
             }
 
+            setTMDbRating(detailContent.voteAverage)
             this@MovieDetailActivity.imdbId = imdbId
             titleText.setTitleAndYear(title, releaseDate)
             overviewText.text = overview ?: NOT_AVAILABLE
@@ -128,28 +87,16 @@ class MovieDetailActivity : BaseDetailActivity<MovieDetail, MovieDetailMvpView, 
             budgetText.text = budget.getFormattedNumber()
             revenueText.text = revenue.getFormattedNumber()
             runtimeText.text = runtime.getFormattedRuntime()
-            tmdbRatingText.setTMDbRating(detailContent.voteAverage, tmdbRatingView)
             genresText.text = genres.convertListToCommaSeparatedText { it.name.toString() }
             releaseDateText.text = releaseDate.getFormattedReleaseDate(this@MovieDetailActivity)
         }
         super.showDetailContent(detailContent)
     }
 
-    override fun showOMDbDetail(omDbDetail: OMDbDetail) {
-        with(omDbDetail) {
-            omDbDetail.setMetaScore(metascoreView, metascoreText)
-            omDbDetail.setIMDbRating(imdbRatingView, imdbRatingText)
-            omDbDetail.setTomatoRating(tomatoRatingView, tomatoRatingText, tomatoRatingImage)
-            omDbDetail.setFlixterScore(flixterScoreView, flixterScoreText, flixterScoreImage)
-        }
-    }
-
-    override fun getCastItemClickListener() = onCastItemClickListener
-
-    override fun getCrewItemClickListener() = onCrewItemClickListener
-
     override fun showSimilarMoviesList(similarMoviesList: List<Movie>) {
-        similarMoviesAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_MOVIE, onSimilarMovieItemClickLitener)
+        similarMoviesAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_MOVIE,
+                onSimilarMovieItemClickLitener)
+
         inflateViewStubRecyclerView(similarMoviesViewStub, R.id.similar_content_recycler_view,
                 similarMoviesAdapter!!, similarMoviesList)
     }
