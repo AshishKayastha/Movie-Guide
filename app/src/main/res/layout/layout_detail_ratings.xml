@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rating_card_view"
     style="@style/Match.Width"
+    android:visibility="gone"
     app:cardCornerRadius="0dp"
-    app:cardElevation="@dimen/padding_2dp">
+    app:cardElevation="@dimen/padding_2dp"
+    tools:visibility="visible">
 
     <HorizontalScrollView
         style="@style/Match.Width"
@@ -51,7 +53,7 @@
                 <com.ashish.movies.ui.widget.FontTextView
                     android:id="@+id/tomato_rating_text"
                     style="@style/RatingText"
-                    tools:text="95%" />
+                    tools:text="8.3" />
 
             </LinearLayout>
 
@@ -69,7 +71,7 @@
                 <com.ashish.movies.ui.widget.FontTextView
                     android:id="@+id/flixter_score_text"
                     style="@style/RatingText"
-                    tools:text="90%" />
+                    tools:text="4.2" />
 
             </LinearLayout>
 

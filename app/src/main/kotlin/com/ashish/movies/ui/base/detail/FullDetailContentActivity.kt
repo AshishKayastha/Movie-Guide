@@ -1,6 +1,7 @@
 package com.ashish.movies.ui.base.detail
 
 import android.graphics.Color
+import android.support.v7.widget.CardView
 import android.view.View
 import android.widget.ImageView
 import butterknife.bindOptionalView
@@ -23,6 +24,7 @@ import com.ashish.movies.utils.extensions.show
 abstract class FullDetailContentActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
     : BaseDetailActivity<I, V, P>() {
 
+    private val ratingCardView: CardView by bindView(R.id.rating_card_view)
     private val tmdbRatingView: View? by bindOptionalView(R.id.tmdb_rating_view)
     private val tmdbRatingText: FontTextView? by bindOptionalView(R.id.tmdb_rating_text)
 
@@ -61,30 +63,36 @@ abstract class FullDetailContentActivity<I, V : BaseDetailMvpView<I>, P : BaseDe
 
     override fun showOMDbDetail(omDbDetail: OMDbDetail) {
         with(omDbDetail) {
-            setMetaScore(omDbDetail.Metascore)
-            setIMDbRating(omDbDetail.imdbRating)
-            setFlixterScore(omDbDetail.tomatoUserRating)
-            setTomatoRating(omDbDetail.tomatoRating, omDbDetail.tomatoImage)
+            if (isValidRating(Metascore) || isValidRating(imdbRating) || isValidRating(tomatoRating)
+                    || isValidRating(tomatoUserRating)) {
+                ratingCardView.show()
+            }
+
+            setMetaScore(Metascore)
+            setIMDbRating(imdbRating)
+            setFlixterScore(tomatoUserRating)
+            setTomatoRating(tomatoRating, tomatoImage)
         }
     }
 
     protected fun setTMDbRating(voteAverage: Double?) {
         val tmdbRating = voteAverage.toString()
-        if (tmdbRating.isNotNullOrEmpty() && tmdbRating != "0") {
+        if (isValidRating(tmdbRating)) {
+            ratingCardView.show()
             tmdbRatingView?.show()
             tmdbRatingText?.text = tmdbRating
         }
     }
 
     private fun setIMDbRating(imdbRating: String?) {
-        if (imdbRating.isNotNullOrEmpty() && imdbRating != NOT_AVAILABLE) {
+        if (isValidRating(imdbRating)) {
             imdbRatingView.show()
             imdbRatingText.text = imdbRating
         }
     }
 
     private fun setTomatoRating(tomatoRating: String?, tomatoImage: String?) {
-        if (tomatoRating.isNotNullOrEmpty() && tomatoRating != NOT_AVAILABLE) {
+        if (isValidRating(tomatoRating)) {
             tomatoRatingView.show()
             tomatoRatingText.text = tomatoRating
 
@@ -99,7 +107,7 @@ abstract class FullDetailContentActivity<I, V : BaseDetailMvpView<I>, P : BaseDe
     }
 
     private fun setFlixterScore(tomatoUserRating: String?) {
-        if (tomatoUserRating.isNotNullOrEmpty() && tomatoUserRating != NOT_AVAILABLE) {
+        if (isValidRating(tomatoUserRating)) {
             flixterScoreView.show()
             flixterScoreText.text = tomatoUserRating
 
@@ -113,7 +121,7 @@ abstract class FullDetailContentActivity<I, V : BaseDetailMvpView<I>, P : BaseDe
     }
 
     private fun setMetaScore(metaScore: String?) {
-        if (metaScore.isNotNullOrEmpty() && metaScore != NOT_AVAILABLE) {
+        if (isValidRating(metaScore)) {
             metascoreView.show()
             metascoreText.text = metaScore
 
@@ -126,6 +134,10 @@ abstract class FullDetailContentActivity<I, V : BaseDetailMvpView<I>, P : BaseDe
                 metascoreText.setBackgroundColor(Color.parseColor("#FF0000"))
             }
         }
+    }
+
+    private fun isValidRating(rating: String?): Boolean {
+        return rating.isNotNullOrEmpty() && rating != NOT_AVAILABLE && rating != "0"
     }
 
     override fun getCastItemClickListener() = onCastItemClickListener
