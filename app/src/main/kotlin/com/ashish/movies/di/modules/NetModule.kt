@@ -1,8 +1,8 @@
 package com.ashish.movies.di.modules
 
 import com.ashish.movies.BuildConfig
-import com.ashish.movies.utils.ApiConstants.BASE_API_URL
 import com.ashish.movies.utils.ApiConstants.OMDB_BASE_API_URL
+import com.ashish.movies.utils.ApiConstants.TMDB_BASE_API_URL
 import com.ashish.movies.utils.ApiKeyInterceptor
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
@@ -49,11 +49,18 @@ class NetModule {
 
     @Provides
     @Singleton
-    fun provideClient(builder: OkHttpClient.Builder, apiKeyInterceptor: Interceptor,
-                      loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideTMDbClient(builder: OkHttpClient.Builder, apiKeyInterceptor: Interceptor,
+                          loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return builder.addNetworkInterceptor(apiKeyInterceptor)
                 .addInterceptor(loggingInterceptor)
                 .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("omdb")
+    fun provideOMDbClient(builder: OkHttpClient.Builder, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        return builder.addInterceptor(loggingInterceptor).build()
     }
 
     @Provides
@@ -62,7 +69,7 @@ class NetModule {
 
     @Provides
     @Singleton
-    fun provideCallAdapterFactory(): CallAdapter.Factory
+    fun provideRxJavaCallAdapterFactory(): CallAdapter.Factory
             = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
 
     @Provides
@@ -70,7 +77,7 @@ class NetModule {
     fun provideRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
                         callAdapterFactory: CallAdapter.Factory): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(BASE_API_URL)
+                .baseUrl(TMDB_BASE_API_URL)
                 .client(client)
                 .addConverterFactory(moshiConverterFactory)
                 .addCallAdapterFactory(callAdapterFactory)
@@ -80,7 +87,7 @@ class NetModule {
     @Provides
     @Singleton
     @Named("omdb")
-    fun provideOMDbRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
+    fun provideOMDbRetrofit(@Named("omdb") client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
                             callAdapterFactory: CallAdapter.Factory): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(OMDB_BASE_API_URL)
