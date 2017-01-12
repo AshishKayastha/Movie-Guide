@@ -21,7 +21,7 @@ import com.ashish.movies.utils.extensions.show
 /**
  * Created by Ashish on Jan 11.
  */
-abstract class FullDetailContentActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
+abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetailPresenter<I, V>>
     : BaseDetailActivity<I, V, P>() {
 
     private val ratingCardView: CardView by bindView(R.id.rating_card_view)
@@ -63,8 +63,8 @@ abstract class FullDetailContentActivity<I, V : BaseDetailMvpView<I>, P : BaseDe
 
     override fun showOMDbDetail(omDbDetail: OMDbDetail) {
         with(omDbDetail) {
-            if (isValidRating(Metascore) || isValidRating(imdbRating) || isValidRating(tomatoRating)
-                    || isValidRating(tomatoUserRating)) {
+            if (isValidRating(imdbRating) || isValidRating(tomatoRating) || isValidRating(tomatoUserRating)
+                    || isValidRating(Metascore)) {
                 ratingCardView.show()
             }
 

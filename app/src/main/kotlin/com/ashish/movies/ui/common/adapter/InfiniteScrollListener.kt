@@ -10,7 +10,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 abstract class InfiniteScrollListener : RecyclerView.OnScrollListener() {
 
     companion object {
-        const val VISIBLE_THRESHOLD = 2
+        private const val VISIBLE_THRESHOLD = 2
     }
 
     private var currentPage = 1

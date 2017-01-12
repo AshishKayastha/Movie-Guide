@@ -12,7 +12,7 @@ import javax.inject.Inject
  * Created by Ashish on Jan 07.
  */
 class SeasonDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor)
-    : BaseDetailPresenter<SeasonDetail, SeasonDetailMvpView>() {
+    : BaseDetailPresenter<SeasonDetail, SeasonDetailView>() {
 
     private var seasonNumber: Int = 1
 

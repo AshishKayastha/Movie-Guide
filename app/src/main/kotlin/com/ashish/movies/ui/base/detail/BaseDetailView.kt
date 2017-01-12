@@ -7,7 +7,7 @@ import com.ashish.movies.ui.base.mvp.LceView
 /**
  * Created by Ashish on Jan 03.
  */
-interface BaseDetailMvpView<in I> : LceView {
+interface BaseDetailView<in I> : LceView {
 
     fun showDetailContent(detailContent: I)
 

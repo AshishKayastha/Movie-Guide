@@ -12,12 +12,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
-import android.view.Gravity
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewAnimationUtils
-import android.view.ViewStub
+import android.view.*
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -44,30 +39,14 @@ import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.GravitySnapHelper
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.animateBackgroundColorChange
-import com.ashish.movies.utils.extensions.animateColorChange
-import com.ashish.movies.utils.extensions.animateTextColorChange
-import com.ashish.movies.utils.extensions.changeMenuFont
-import com.ashish.movies.utils.extensions.dpToPx
-import com.ashish.movies.utils.extensions.getActivityOptionsCompat
-import com.ashish.movies.utils.extensions.getColorCompat
-import com.ashish.movies.utils.extensions.getPosterImagePair
-import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
-import com.ashish.movies.utils.extensions.hide
-import com.ashish.movies.utils.extensions.isDark
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.loadPaletteBitmap
-import com.ashish.movies.utils.extensions.scrimify
-import com.ashish.movies.utils.extensions.setLightStatusBar
-import com.ashish.movies.utils.extensions.setPaletteColor
-import com.ashish.movies.utils.extensions.show
+import com.ashish.movies.utils.extensions.*
 import java.util.*
 
 /**
  * Created by Ashish on Jan 03.
  */
-abstract class BaseDetailActivity<I, V : BaseDetailMvpView<I>, P : BaseDetailPresenter<I, V>>
-    : MvpActivity<V, P>(), BaseDetailMvpView<I>, AppBarLayout.OnOffsetChangedListener {
+abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresenter<I, V>>
+    : MvpActivity<V, P>(), BaseDetailView<I>, AppBarLayout.OnOffsetChangedListener {
 
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
     protected val posterImage: ImageView by bindView(R.id.detail_poster_image)

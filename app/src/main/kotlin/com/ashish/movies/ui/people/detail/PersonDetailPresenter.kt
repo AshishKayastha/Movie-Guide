@@ -4,8 +4,8 @@ import com.ashish.movies.R
 import com.ashish.movies.data.interactors.PeopleInteractor
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.PersonDetail
-import com.ashish.movies.ui.base.detail.BaseDetailMvpView
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
+import com.ashish.movies.ui.base.detail.BaseDetailView
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
  * Created by Ashish on Jan 04.
  */
 class PersonDetailPresenter @Inject constructor(val peopleInteractor: PeopleInteractor)
-    : BaseDetailPresenter<PersonDetail, BaseDetailMvpView<PersonDetail>>() {
+    : BaseDetailPresenter<PersonDetail, BaseDetailView<PersonDetail>>() {
 
     override fun getDetailContent(id: Long) = peopleInteractor.getFullPeopleDetail(id)
 

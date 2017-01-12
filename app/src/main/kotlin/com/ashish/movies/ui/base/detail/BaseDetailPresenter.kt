@@ -13,7 +13,7 @@ import java.util.*
 /**
  * Created by Ashish on Jan 03.
  */
-abstract class BaseDetailPresenter<I, V : BaseDetailMvpView<I>> : RxPresenter<V>() {
+abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() {
 
     protected var contentList: ArrayList<String> = ArrayList()
 

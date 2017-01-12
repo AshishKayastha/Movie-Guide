@@ -7,7 +7,7 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Episode
 import com.ashish.movies.data.models.EpisodeDetail
 import com.ashish.movies.di.components.AppComponent
-import com.ashish.movies.ui.base.detail.BaseDetailMvpView
+import com.ashish.movies.ui.base.detail.BaseDetailView
 import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
@@ -17,7 +17,7 @@ import com.ashish.movies.utils.extensions.setTransitionName
 /**
  * Created by Ashish on Jan 08.
  */
-class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetailMvpView<EpisodeDetail>, EpisodeDetailPresenter>() {
+class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetailView<EpisodeDetail>, EpisodeDetailPresenter>() {
 
     private var tvShowId: Long? = null
     private var episode: Episode? = null

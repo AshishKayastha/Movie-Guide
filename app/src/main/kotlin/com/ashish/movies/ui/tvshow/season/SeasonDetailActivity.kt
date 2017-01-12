@@ -25,8 +25,8 @@ import com.ashish.movies.utils.extensions.setTransitionName
 /**
  * Created by Ashish on Jan 07.
  */
-class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetailMvpView, SeasonDetailPresenter>(),
-        SeasonDetailMvpView {
+class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetailView, SeasonDetailPresenter>(),
+        SeasonDetailView {
 
     private val episodesViewStub: ViewStub by bindView(R.id.episodes_view_stub)
 
@@ -43,8 +43,8 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
     }
 
     companion object {
-        const val EXTRA_TV_SHOW_ID = "tv_show_id"
-        const val EXTRA_TV_SHOW_SEASON = "tv_show_season"
+        private const val EXTRA_TV_SHOW_ID = "tv_show_id"
+        private const val EXTRA_TV_SHOW_SEASON = "tv_show_season"
 
         fun createIntent(context: Context, tvShowId: Long?, tvShowSeason: TVShowSeason?): Intent {
             return Intent(context, SeasonDetailActivity::class.java)

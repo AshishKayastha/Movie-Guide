@@ -5,15 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movies.R
-import com.ashish.movies.data.models.Credit
-import com.ashish.movies.data.models.Movie
-import com.ashish.movies.data.models.OMDbDetail
-import com.ashish.movies.data.models.Person
-import com.ashish.movies.data.models.PersonDetail
-import com.ashish.movies.data.models.TVShow
+import com.ashish.movies.data.models.*
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
-import com.ashish.movies.ui.base.detail.BaseDetailMvpView
+import com.ashish.movies.ui.base.detail.BaseDetailView
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.movie.detail.MovieDetailActivity
@@ -27,7 +22,7 @@ import com.ashish.movies.utils.extensions.setTransitionName
 /**
  * Created by Ashish on Jan 04.
  */
-class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailMvpView<PersonDetail>, PersonDetailPresenter>() {
+class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<PersonDetail>, PersonDetailPresenter>() {
 
     private var person: Person? = null
 

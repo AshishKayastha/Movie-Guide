@@ -14,17 +14,13 @@ import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
-import com.ashish.movies.utils.extensions.getBackdropUrl
-import com.ashish.movies.utils.extensions.getPosterUrl
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.setTitleAndYear
-import com.ashish.movies.utils.extensions.setTransitionName
+import com.ashish.movies.utils.extensions.*
 
 /**
  * Created by Ashish on Dec 31.
  */
-class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailMvpView, MovieDetailPresenter>(),
-        MovieDetailMvpView {
+class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailView, MovieDetailPresenter>(),
+        MovieDetailView {
 
     private val similarMoviesViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 

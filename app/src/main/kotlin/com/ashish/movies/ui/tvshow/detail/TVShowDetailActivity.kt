@@ -18,17 +18,13 @@ import com.ashish.movies.ui.tvshow.season.SeasonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_TV_SHOW
-import com.ashish.movies.utils.extensions.getBackdropUrl
-import com.ashish.movies.utils.extensions.getPosterUrl
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.setTitleAndYear
-import com.ashish.movies.utils.extensions.setTransitionName
+import com.ashish.movies.utils.extensions.*
 
 /**
  * Created by Ashish on Jan 03.
  */
-class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetailMvpView, TVShowDetailPresenter>(),
-        TVShowDetailMvpView {
+class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetailView, TVShowDetailPresenter>(),
+        TVShowDetailView {
 
     private val seasonsViewStub: ViewStub by bindView(R.id.seasons_view_stub)
     private val similarTVShowsViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
