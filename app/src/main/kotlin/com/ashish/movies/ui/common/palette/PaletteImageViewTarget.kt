@@ -13,7 +13,8 @@ import com.bumptech.glide.request.target.ImageViewTarget
 /**
  * Created by Ashish on Dec 31.
  */
-class PaletteImageViewTarget(val holder: BaseContentHolder<*>) : ImageViewTarget<PaletteBitmap>(holder.posterImage) {
+class PaletteImageViewTarget(private val holder: BaseContentHolder<*>)
+    : ImageViewTarget<PaletteBitmap>(holder.posterImage) {
 
     private val primaryTextColor = holder.itemView.context.getColorCompat(R.color.primary_text_light)
     private val secondaryTextColor = holder.itemView.context.getColorCompat(R.color.secondary_text_light)

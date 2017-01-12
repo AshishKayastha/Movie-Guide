@@ -11,8 +11,8 @@ import com.ashish.movies.ui.tvshow.list.TVShowFragment
 /**
  * Created by Ashish on Dec 27.
  */
-class TabPagerAdapter constructor(val contentType: Int, fragmentManager: FragmentManager, val tabTitles: Array<String>)
-    : FragmentStatePagerAdapter(fragmentManager) {
+class TabPagerAdapter constructor(private val contentType: Int, fragmentManager: FragmentManager,
+                                  private val tabTitles: Array<String>) : FragmentStatePagerAdapter(fragmentManager) {
 
     companion object {
         const val CONTENT_TYPE_MOVIE = 0

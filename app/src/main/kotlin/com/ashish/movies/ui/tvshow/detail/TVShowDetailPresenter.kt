@@ -12,7 +12,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 03.
  */
-class TVShowDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor)
+class TVShowDetailPresenter @Inject constructor(private val tvShowInteractor: TVShowInteractor)
     : BaseDetailPresenter<TVShowDetail, TVShowDetailView>() {
 
     override fun getDetailContent(id: Long) = tvShowInteractor.getFullTVShowDetail(id)

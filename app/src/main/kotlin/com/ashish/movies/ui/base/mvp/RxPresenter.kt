@@ -2,30 +2,30 @@ package com.ashish.movies.ui.base.mvp
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import java.lang.ref.WeakReference
 
 /**
  * Created by Ashish on Dec 28.
  */
 abstract class RxPresenter<V : MvpView> {
 
-    private var viewWeakRef: WeakReference<V>? = null
-    private lateinit var compositeDisposable: CompositeDisposable
+    private var view: V? = null
+    private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     open fun attachView(view: V) {
-        viewWeakRef = WeakReference(view)
-        compositeDisposable = CompositeDisposable()
+        this.view = view
     }
 
-    protected fun getView() = viewWeakRef?.get()
+    protected fun getView() = view
 
     protected fun addDisposable(disposable: Disposable) {
         compositeDisposable.add(disposable)
     }
 
     open fun detachView() {
+        view = null
+    }
+
+    open fun onDestroy() {
         compositeDisposable.clear()
-        viewWeakRef?.clear()
-        viewWeakRef = null
     }
 }

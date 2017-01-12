@@ -32,5 +32,7 @@ inline fun isMarshmallowOrAbove(func: () -> Unit) {
 }
 
 fun <T> Observable<T>.observeOnMainThread(): Observable<T> {
-    return this.observeOn(AndroidSchedulers.mainThread())
+    return observeOn(AndroidSchedulers.mainThread())
 }
+
+fun <T> Collection<T>?.isNotNullOrEmpty() = this != null && size != 0

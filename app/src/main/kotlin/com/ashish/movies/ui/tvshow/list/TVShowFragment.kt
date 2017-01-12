@@ -29,7 +29,7 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow, BaseRecyclerViewMvpView<
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(TVShowModule()).inject(this)
+        appComponent.plus(TVShowModule(activity)).inject(this)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

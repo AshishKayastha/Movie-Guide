@@ -13,7 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 30.
  */
-class TVShowPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor)
+class TVShowPresenter @Inject constructor(private val tvShowInteractor: TVShowInteractor)
     : BaseRecyclerViewPresenter<TVShow, BaseRecyclerViewMvpView<TVShow>>() {
 
     companion object {

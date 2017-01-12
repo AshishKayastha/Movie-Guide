@@ -40,14 +40,12 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch, BaseRecyclerVi
         emptyImageView.setImageResource(R.drawable.ic_search_white_100dp)
     }
 
-    override fun loadData() {
-        //no-op
-    }
+    override fun loadData() {}
 
     fun searchQuery(query: String) {
         recyclerViewAdapter.clearAll()
-        presenter.setSearchQuery(query)
-        presenter.loadData(null)
+        presenter?.setSearchQuery(query)
+        presenter?.loadData(null)
     }
 
     override fun getAdapterType() = ADAPTER_TYPE_MULTI_SEARCH

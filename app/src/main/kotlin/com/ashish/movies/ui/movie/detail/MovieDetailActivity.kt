@@ -14,7 +14,11 @@ import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.getBackdropUrl
+import com.ashish.movies.utils.extensions.getPosterUrl
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Dec 31.
@@ -45,7 +49,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(MovieDetailModule()).inject(this)
+        appComponent.plus(MovieDetailModule(this)).inject(this)
     }
 
     override fun getLayoutId() = R.layout.activity_detail_movie
@@ -55,7 +59,9 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
         posterImage.setTransitionName(R.string.transition_movie_poster)
     }
 
-    override fun loadDetailContent() = presenter.loadDetailContent(movie?.id)
+    override fun loadDetailContent() {
+        presenter?.loadDetailContent(movie?.id)
+    }
 
     override fun getBackdropPath() = movie?.backdropPath.getBackdropUrl()
 

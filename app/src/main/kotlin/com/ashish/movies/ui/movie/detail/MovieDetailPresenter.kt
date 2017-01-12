@@ -14,7 +14,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 31.
  */
-class MovieDetailPresenter @Inject constructor(val movieInteractor: MovieInteractor)
+class MovieDetailPresenter @Inject constructor(private val movieInteractor: MovieInteractor)
     : BaseDetailPresenter<MovieDetail, MovieDetailView>() {
 
     override fun getDetailContent(id: Long) = movieInteractor.getFullMovieDetail(id)

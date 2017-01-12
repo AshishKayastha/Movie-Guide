@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 06.
  */
-class DiscoverMoviePresenter @Inject constructor(val movieInteractor: MovieInteractor)
+class DiscoverMoviePresenter @Inject constructor(private val movieInteractor: MovieInteractor)
     : BaseRecyclerViewPresenter<Movie, BaseRecyclerViewMvpView<Movie>>() {
 
     private var year: Int = 2016

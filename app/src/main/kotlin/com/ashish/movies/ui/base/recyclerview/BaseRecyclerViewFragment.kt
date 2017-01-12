@@ -20,7 +20,11 @@ import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.getActivityOptionsCompat
+import com.ashish.movies.utils.extensions.getPosterImagePair
+import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.setVisibility
+import com.ashish.movies.utils.extensions.show
 
 /**
  * Created by Ashish on Dec 30.
@@ -39,27 +43,37 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     protected lateinit var recyclerViewAdapter: RecyclerViewAdapter<I>
 
     protected var type: Int? = null
+    protected var currentPage: Int = 1
+    protected var savedInstanceState: Bundle? = null
 
     protected val scrollListener: InfiniteScrollListener = object : InfiniteScrollListener() {
         override fun onLoadMore(currentPage: Int) {
             if (currentPage > 1) {
-                recyclerView.post { presenter.loadMoreData(type, currentPage) }
+                this@BaseRecyclerViewFragment.currentPage = currentPage
+                recyclerView.post { presenter?.loadMoreData(type, currentPage) }
             }
         }
+    }
+
+    companion object {
+        private const val KEY_CURRENT_PAGE = "current_page"
     }
 
     override fun getLayoutId() = R.layout.fragment_recycler_view
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        this.savedInstanceState = savedInstanceState
+        currentPage = savedInstanceState?.getInt(KEY_CURRENT_PAGE) ?: 1
         getFragmentArguments()
         initViews()
-        loadData()
     }
 
     protected open fun getFragmentArguments() {}
 
     protected open fun initViews() {
+        scrollListener.setCurrentPage(currentPage)
         recyclerViewAdapter = RecyclerViewAdapter(adapterType = getAdapterType(), onItemClickListener = this)
 
         recyclerView.apply {
@@ -78,13 +92,21 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         }
     }
 
-    protected open fun loadData() = presenter.loadData(type)
+    override fun onStart() {
+        super.onStart()
+        if (isFirstStart) {
+            loadData()
+            isFirstStart = false
+        }
+    }
+
+    protected open fun loadData() = presenter?.loadData(type, savedInstanceState == null)
 
     abstract fun getAdapterType(): Int
 
     override fun onRefresh() {
         scrollListener.resetPageCount()
-        presenter.loadData(type, showProgress = recyclerViewAdapter.itemCount == 0)
+        presenter?.loadData(type, recyclerViewAdapter.itemCount == 0)
     }
 
     override fun showProgress() {

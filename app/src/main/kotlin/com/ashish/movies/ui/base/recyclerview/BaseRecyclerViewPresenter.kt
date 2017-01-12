@@ -5,9 +5,11 @@ import com.ashish.movies.data.models.Results
 import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.utils.Utils
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import io.reactivex.Observable
 import timber.log.Timber
 import java.io.IOException
+import java.util.*
 
 /**
  * Created by Ashish on Dec 31.
@@ -15,11 +17,20 @@ import java.io.IOException
 abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpView<I>> : RxPresenter<V>() {
 
     private var totalPages = 1
+    private var itemList: ArrayList<I>? = null
 
-    fun loadData(type: Int?, page: Int = 1, showProgress: Boolean = true) {
+    fun loadData(type: Int?, showProgress: Boolean = true, forceLoad: Boolean = true) {
+        if (!forceLoad && itemList.isNotNullOrEmpty()) {
+            getView()?.showItemList(itemList)
+        } else {
+            loadFreshData(showProgress, type)
+        }
+    }
+
+    private fun loadFreshData(showProgress: Boolean, type: Int?) {
         if (Utils.isOnline()) {
             if (showProgress) getView()?.showProgress()
-            addDisposable(getResultsObservable(getType(type), page)
+            addDisposable(getResultsObservable(getType(type), 1)
                     .doOnNext { totalPages = it.totalPages }
                     .subscribe({ showItemList(it) }, { handleError(it) }))
         } else {
@@ -33,7 +44,8 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     protected fun showItemList(data: Results<I>?) {
         getView()?.apply {
-            showItemList(data?.results)
+            itemList = ArrayList(data?.results)
+            showItemList(itemList)
             hideProgress()
         }
     }
@@ -64,7 +76,9 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     protected fun addNewItemList(data: Results<I>?) {
         getView()?.apply {
             if (data != null) {
-                addNewItemList(data.results)
+                val newItemList = data.results
+                newItemList?.let { itemList?.addAll(it) }
+                addNewItemList(newItemList)
             } else {
                 removeLoadingItem()
             }

@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 06.
  */
-class DiscoverTVShowPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor)
+class DiscoverTVShowPresenter @Inject constructor(private val tvShowInteractor: TVShowInteractor)
     : BaseRecyclerViewPresenter<TVShow, BaseRecyclerViewMvpView<TVShow>>() {
 
     private var genres: String? = null

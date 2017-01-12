@@ -19,7 +19,7 @@ import javax.inject.Singleton
  * Created by Ashish on Dec 29.
  */
 @Singleton
-class TVShowInteractor @Inject constructor(val tvShowApi: TVShowApi, val omDbApi: OMDbApi) {
+class TVShowInteractor @Inject constructor(private val tvShowApi: TVShowApi, private val omDbApi: OMDbApi) {
 
     fun getTVShowsByType(tvShowType: String?, page: Int = 1): Observable<Results<TVShow>> {
         return tvShowApi.getTVShows(tvShowType, page).observeOnMainThread()

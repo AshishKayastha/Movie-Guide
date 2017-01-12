@@ -21,7 +21,7 @@ class PeopleFragment : BaseRecyclerViewFragment<Person, BaseRecyclerViewMvpView<
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(PeopleModule()).inject(this)
+        appComponent.plus(PeopleModule(activity)).inject(this)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

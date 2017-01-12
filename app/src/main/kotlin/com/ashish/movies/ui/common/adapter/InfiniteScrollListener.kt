@@ -53,6 +53,10 @@ abstract class InfiniteScrollListener : RecyclerView.OnScrollListener() {
         isLoading = false
     }
 
+    fun setCurrentPage(page: Int) {
+        currentPage = page
+    }
+
     fun resetPageCount(page: Int = 1) {
         previousTotal = 0
         isLoading = true

@@ -16,7 +16,7 @@ import javax.inject.Singleton
  * Created by Ashish on Dec 31.
  */
 @Singleton
-class PeopleInteractor @Inject constructor(val peopleApi: PeopleApi, val omDbApi: OMDbApi) {
+class PeopleInteractor @Inject constructor(private val peopleApi: PeopleApi, private val omDbApi: OMDbApi) {
 
     fun getPopularPeople(page: Int = 1): Observable<Results<Person>> {
         return peopleApi.getPopularPeople(page).observeOnMainThread()

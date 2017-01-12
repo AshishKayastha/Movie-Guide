@@ -13,7 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 27.
  */
-class MoviePresenter @Inject constructor(val movieInteractor: MovieInteractor)
+class MoviePresenter @Inject constructor(private val movieInteractor: MovieInteractor)
     : BaseRecyclerViewPresenter<Movie, BaseRecyclerViewMvpView<Movie>>() {
 
     companion object {

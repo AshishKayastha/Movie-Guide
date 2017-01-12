@@ -29,7 +29,7 @@ class MovieFragment : BaseRecyclerViewFragment<Movie, BaseRecyclerViewMvpView<Mo
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(MovieModule()).inject(this)
+        appComponent.plus(MovieModule(activity)).inject(this)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

@@ -1,15 +1,11 @@
 package com.ashish.movies.ui.people.detail
 
-import com.ashish.movies.data.interactors.PeopleInteractor
+import android.app.Activity
+import com.ashish.movies.di.modules.BaseModule
 import dagger.Module
-import dagger.Provides
 
 /**
  * Created by Ashish on Jan 04.
  */
 @Module
-class PersonDetailModule {
-
-    @Provides
-    fun providePersonDetailPresenter(peopleInteractor: PeopleInteractor) = PersonDetailPresenter(peopleInteractor)
-}
+class PersonDetailModule(activity: Activity) : BaseModule(activity)

@@ -17,7 +17,7 @@ import javax.inject.Singleton
  * Created by Ashish on Dec 28.
  */
 @Singleton
-class MovieInteractor @Inject constructor(val movieApi: MovieApi, val omDbApi: OMDbApi) {
+class MovieInteractor @Inject constructor(private val movieApi: MovieApi, private val omDbApi: OMDbApi) {
 
     fun getMoviesByType(movieType: String?, page: Int = 1): Observable<Results<Movie>> {
         return movieApi.getMovies(movieType, page).observeOnMainThread()

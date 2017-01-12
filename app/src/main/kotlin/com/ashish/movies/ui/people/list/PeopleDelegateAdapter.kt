@@ -15,8 +15,8 @@ import com.ashish.movies.utils.extensions.hide
 /**
  * Created by Ashish on Dec 31.
  */
-class PeopleDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
-                            var onItemClickListener: OnItemClickListener?)
+class PeopleDelegateAdapter(private val layoutId: Int = R.layout.list_item_content,
+                            private var onItemClickListener: OnItemClickListener?)
     : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = PeopleHolder(parent)

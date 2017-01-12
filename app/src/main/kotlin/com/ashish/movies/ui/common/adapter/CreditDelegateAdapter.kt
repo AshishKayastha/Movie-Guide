@@ -13,8 +13,8 @@ import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 /**
  * Created by Ashish on Jan 03.
  */
-class CreditDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
-                            var onItemClickListener: OnItemClickListener?)
+class CreditDelegateAdapter(private val layoutId: Int = R.layout.list_item_content_alt,
+                            private var onItemClickListener: OnItemClickListener?)
     : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = CreditHolder(parent)

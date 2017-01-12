@@ -12,7 +12,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 05.
  */
-class MultiSearchPresenter @Inject constructor(val searchApi: SearchApi)
+class MultiSearchPresenter @Inject constructor(private val searchApi: SearchApi)
     : BaseRecyclerViewPresenter<MultiSearch, BaseRecyclerViewMvpView<MultiSearch>>() {
 
     private var searchQuery = ""

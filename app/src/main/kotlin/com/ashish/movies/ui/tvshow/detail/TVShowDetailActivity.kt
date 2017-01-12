@@ -18,7 +18,11 @@ import com.ashish.movies.ui.tvshow.season.SeasonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_TV_SHOW
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.getBackdropUrl
+import com.ashish.movies.utils.extensions.getPosterUrl
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.setTitleAndYear
+import com.ashish.movies.utils.extensions.setTransitionName
 
 /**
  * Created by Ashish on Jan 03.
@@ -59,7 +63,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(TVShowDetailModule()).inject(this)
+        appComponent.plus(TVShowDetailModule(this)).inject(this)
     }
 
     override fun getLayoutId() = R.layout.acivity_detail_tv_show
@@ -69,7 +73,9 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
         posterImage.setTransitionName(R.string.transition_tv_poster)
     }
 
-    override fun loadDetailContent() = presenter.loadDetailContent(tvShow?.id)
+    override fun loadDetailContent() {
+        presenter?.loadDetailContent(tvShow?.id)
+    }
 
     override fun getBackdropPath() = tvShow?.backdropPath.getBackdropUrl()
 

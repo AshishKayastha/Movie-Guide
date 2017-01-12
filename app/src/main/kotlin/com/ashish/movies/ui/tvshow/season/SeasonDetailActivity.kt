@@ -54,7 +54,7 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(SeasonDetailModule()).inject(this)
+        appComponent.plus(SeasonDetailModule(this)).inject(this)
     }
 
     override fun getLayoutId() = R.layout.activity_detail_season
@@ -66,8 +66,8 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
     }
 
     override fun loadDetailContent() {
-        presenter.setSeasonNumber(tvShowSeason?.seasonNumber!!)
-        presenter.loadDetailContent(tvShowId)
+        presenter?.setSeasonNumber(tvShowSeason?.seasonNumber!!)
+        presenter?.loadDetailContent(tvShowId)
     }
 
     override fun getBackdropPath() = tvShowSeason?.posterPath.getOriginalImageUrl()

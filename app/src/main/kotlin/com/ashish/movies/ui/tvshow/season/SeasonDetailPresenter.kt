@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 07.
  */
-class SeasonDetailPresenter @Inject constructor(val tvShowInteractor: TVShowInteractor)
+class SeasonDetailPresenter @Inject constructor(private val tvShowInteractor: TVShowInteractor)
     : BaseDetailPresenter<SeasonDetail, SeasonDetailView>() {
 
     private var seasonNumber: Int = 1

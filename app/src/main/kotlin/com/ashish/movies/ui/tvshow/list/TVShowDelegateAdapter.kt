@@ -16,8 +16,8 @@ import com.ashish.movies.utils.extensions.getYearOnly
 /**
  * Created by Ashish on Dec 30.
  */
-class TVShowDelegateAdapter(val layoutId: Int = R.layout.list_item_content,
-                            var onItemClickListener: OnItemClickListener?)
+class TVShowDelegateAdapter(private val layoutId: Int = R.layout.list_item_content,
+                            private var onItemClickListener: OnItemClickListener?)
     : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = TVShowHolder(parent)

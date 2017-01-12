@@ -1,15 +1,11 @@
 package com.ashish.movies.ui.movie.list
 
-import com.ashish.movies.data.interactors.MovieInteractor
+import android.app.Activity
+import com.ashish.movies.di.modules.BaseModule
 import dagger.Module
-import dagger.Provides
 
 /**
  * Created by Ashish on Dec 27.
  */
 @Module
-class MovieModule {
-
-    @Provides
-    fun provideMoviePresenter(movieInteractor: MovieInteractor) = MoviePresenter(movieInteractor)
-}
+class MovieModule(activity: Activity) : BaseModule(activity)

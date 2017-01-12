@@ -16,8 +16,17 @@ import java.util.*
 abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() {
 
     protected var contentList: ArrayList<String> = ArrayList()
+    protected var fullDetailContent: FullDetailContent<I>? = null
 
     open fun loadDetailContent(id: Long?) {
+        if (fullDetailContent != null) {
+            showDetailContent(fullDetailContent!!)
+        } else {
+            loadFreshData(id)
+        }
+    }
+
+    private fun loadFreshData(id: Long?) {
         if (Utils.isOnline()) {
             if (id != null) {
                 getView()?.showProgress()
@@ -37,6 +46,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() 
     protected open fun showDetailContent(fullDetailContent: FullDetailContent<I>) {
         getView()?.apply {
             hideProgress()
+            this@BaseDetailPresenter.fullDetailContent = fullDetailContent
             addContents(fullDetailContent)
             showDetailContentList(contentList)
 

@@ -19,7 +19,8 @@ import java.util.*
 /**
  * Created by Ashish on Dec 30.
  */
-class RecyclerViewAdapter<in I : ViewType>(val layoutId: Int = R.layout.list_item_content, val adapterType: Int,
+class RecyclerViewAdapter<in I : ViewType>(layoutId: Int = R.layout.list_item_content,
+                                           private val adapterType: Int,
                                            onItemClickListener: OnItemClickListener?)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
 

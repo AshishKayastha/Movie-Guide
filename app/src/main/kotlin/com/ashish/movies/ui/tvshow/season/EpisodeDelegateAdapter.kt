@@ -15,8 +15,8 @@ import com.ashish.movies.utils.extensions.getOriginalImageUrl
 /**
  * Created by Ashish on Jan 08.
  */
-class EpisodeDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
-                             var onItemClickListener: OnItemClickListener?)
+class EpisodeDelegateAdapter(private val layoutId: Int = R.layout.list_item_content_alt,
+                             private var onItemClickListener: OnItemClickListener?)
     : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = EpisodeHolder(parent)

@@ -13,7 +13,7 @@ import com.ashish.movies.utils.extensions.setVisibility
 /**
  * Created by Ashish on Jan 11.
  */
-class DetailContentAdapter(val detailContentTitles: Array<String>, var detailContentList: List<String>)
+class DetailContentAdapter(private val detailContentTitles: Array<String>, private var detailContentList: List<String>)
     : RecyclerView.Adapter<DetailContentAdapter.DetailContentHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): DetailContentHolder {

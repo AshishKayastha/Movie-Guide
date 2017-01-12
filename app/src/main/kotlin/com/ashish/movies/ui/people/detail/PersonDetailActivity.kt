@@ -5,7 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movies.R
-import com.ashish.movies.data.models.*
+import com.ashish.movies.data.models.Credit
+import com.ashish.movies.data.models.Movie
+import com.ashish.movies.data.models.OMDbDetail
+import com.ashish.movies.data.models.Person
+import com.ashish.movies.data.models.PersonDetail
+import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.base.detail.BaseDetailView
@@ -64,7 +69,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(PersonDetailModule()).inject(this)
+        appComponent.plus(PersonDetailModule(this)).inject(this)
     }
 
     override fun getLayoutId() = R.layout.activity_detail_person
@@ -74,7 +79,9 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
         posterImage.setTransitionName(R.string.transition_person_profile)
     }
 
-    override fun loadDetailContent() = presenter.loadDetailContent(person?.id)
+    override fun loadDetailContent() {
+        presenter?.loadDetailContent(person?.id)
+    }
 
     override fun getBackdropPath() = person?.profilePath.getOriginalImageUrl()
 

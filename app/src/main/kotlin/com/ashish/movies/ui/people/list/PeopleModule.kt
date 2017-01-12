@@ -1,15 +1,11 @@
 package com.ashish.movies.ui.people.list
 
-import com.ashish.movies.data.interactors.PeopleInteractor
+import android.app.Activity
+import com.ashish.movies.di.modules.BaseModule
 import dagger.Module
-import dagger.Provides
 
 /**
  * Created by Ashish on Dec 31.
  */
 @Module
-class PeopleModule {
-
-    @Provides
-    fun providePeoplePresenter(peopleInteractor: PeopleInteractor) = PeoplePresenter(peopleInteractor)
-}
+class PeopleModule(activity: Activity) : BaseModule(activity)

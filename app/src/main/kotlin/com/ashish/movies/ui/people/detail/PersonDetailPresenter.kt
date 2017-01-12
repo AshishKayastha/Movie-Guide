@@ -13,7 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 04.
  */
-class PersonDetailPresenter @Inject constructor(val peopleInteractor: PeopleInteractor)
+class PersonDetailPresenter @Inject constructor(private val peopleInteractor: PeopleInteractor)
     : BaseDetailPresenter<PersonDetail, BaseDetailView<PersonDetail>>() {
 
     override fun getDetailContent(id: Long) = peopleInteractor.getFullPeopleDetail(id)

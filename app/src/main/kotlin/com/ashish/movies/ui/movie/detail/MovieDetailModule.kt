@@ -1,15 +1,11 @@
 package com.ashish.movies.ui.movie.detail
 
-import com.ashish.movies.data.interactors.MovieInteractor
+import android.support.v7.app.AppCompatActivity
+import com.ashish.movies.di.modules.BaseModule
 import dagger.Module
-import dagger.Provides
 
 /**
  * Created by Ashish on Dec 31.
  */
 @Module
-class MovieDetailModule {
-
-    @Provides
-    fun provideMovieDetailPresenter(movieInteractor: MovieInteractor) = MovieDetailPresenter(movieInteractor)
-}
+class MovieDetailModule(activity: AppCompatActivity) : BaseModule(activity)

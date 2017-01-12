@@ -1,15 +1,11 @@
 package com.ashish.movies.ui.tvshow.episode
 
-import com.ashish.movies.data.interactors.TVShowInteractor
+import android.app.Activity
+import com.ashish.movies.di.modules.BaseModule
 import dagger.Module
-import dagger.Provides
 
 /**
  * Created by Ashish on Jan 07.
  */
 @Module
-class EpisodeDetailModule {
-
-    @Provides
-    fun provideEpisodeDetailPresenter(tvShowInteractor: TVShowInteractor) = EpisodeDetailPresenter(tvShowInteractor)
-}
+class EpisodeDetailModule(activity: Activity) : BaseModule(activity)
