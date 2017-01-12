@@ -92,15 +92,15 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         if (isFirstStart) {
             loadData()
             isFirstStart = false
         }
     }
 
-    protected open fun loadData() = presenter?.loadData(type, savedInstanceState == null)
+    protected open fun loadData() = presenter?.loadData(type, forceLoad = savedInstanceState == null)
 
     abstract fun getAdapterType(): Int
 

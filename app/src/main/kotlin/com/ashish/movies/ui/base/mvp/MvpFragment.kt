@@ -1,7 +1,6 @@
 package com.ashish.movies.ui.base.mvp
 
 import android.os.Bundle
-import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
@@ -62,32 +61,22 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpVie
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<P> = presenterLoaderProvider.get()
 
     override fun onLoadFinished(loader: Loader<P>?, presenter: P) {
-        onPresenterProvided(presenter)
-    }
-
-    @CallSuper
-    protected open fun onPresenterProvided(presenter: P) {
         this.presenter = presenter
     }
 
     override fun onLoaderReset(loader: Loader<P>?) {
-        onPresenterDestroyed()
-    }
-
-    @CallSuper
-    protected open fun onPresenterDestroyed() {
         presenter = null
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         presenter?.attachView(this as V)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
         presenter?.detachView()
+        super.onPause()
     }
 
     override fun showToastMessage(messageId: Int) {

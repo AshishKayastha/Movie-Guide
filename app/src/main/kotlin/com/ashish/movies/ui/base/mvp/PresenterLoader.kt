@@ -31,9 +31,6 @@ class PresenterLoader<P : RxPresenter<*>> @Inject constructor(context: Context,
 
     override fun onReset() {
         super.onReset()
-        if (presenter != null) {
-            presenter!!.onDestroy()
-            presenter = null
-        }
+        presenter?.onDestroy()
     }
 }

@@ -1,7 +1,6 @@
 package com.ashish.movies.ui.base.mvp
 
 import android.os.Bundle
-import android.support.annotation.CallSuper
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
 import android.view.View
@@ -43,20 +42,10 @@ abstract class MvpActivity<V : MvpView, P : RxPresenter<V>> : BaseActivity(), Mv
     }
 
     override fun onLoadFinished(loader: Loader<P>?, presenter: P) {
-        onPresenterProvided(presenter)
-    }
-
-    @CallSuper
-    protected open fun onPresenterProvided(presenter: P) {
         this.presenter = presenter
     }
 
     override fun onLoaderReset(loader: Loader<P>?) {
-        onPresenterDestroyed()
-    }
-
-    @CallSuper
-    protected open fun onPresenterDestroyed() {
         presenter = null
     }
 
@@ -67,8 +56,8 @@ abstract class MvpActivity<V : MvpView, P : RxPresenter<V>> : BaseActivity(), Mv
     }
 
     override fun onStop() {
-        super.onStop()
         presenter?.detachView()
+        super.onStop()
     }
 
     override fun showToastMessage(messageId: Int) {
