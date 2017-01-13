@@ -8,6 +8,8 @@ import com.ashish.movies.ui.common.adapter.ViewType
  */
 interface BaseRecyclerViewMvpView<in I : ViewType> : LceView {
 
+    fun setCurrentPage(currentPage: Int)
+
     fun showItemList(itemList: List<I>?)
 
     fun showLoadingItem()

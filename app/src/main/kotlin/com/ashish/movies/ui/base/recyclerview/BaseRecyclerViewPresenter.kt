@@ -17,22 +17,23 @@ import java.util.*
 abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpView<I>> : RxPresenter<V>() {
 
     private var totalPages = 1
+    private var currentPage: Int = 1
     private var itemList: ArrayList<I>? = null
 
-    fun loadData(type: Int?, showProgress: Boolean = true, forceLoad: Boolean = true) {
-        if (!forceLoad && itemList.isNotNullOrEmpty()) {
-            getView()?.showItemList(itemList)
+    fun loadData(type: Int?, showProgress: Boolean = true) {
+        if (itemList.isNotNullOrEmpty()) {
+            showItemList()
         } else {
-            loadFreshData(showProgress, type)
+            loadFreshData(type, showProgress)
         }
     }
 
-    private fun loadFreshData(showProgress: Boolean, type: Int?) {
+    fun loadFreshData(type: Int?, showProgress: Boolean) {
         if (Utils.isOnline()) {
             if (showProgress) getView()?.showProgress()
             addDisposable(getResultsObservable(getType(type), 1)
                     .doOnNext { totalPages = it.totalPages }
-                    .subscribe({ showItemList(it) }, { handleError(it) }))
+                    .subscribe({ showResults(it) }, { handleError(it) }))
         } else {
             getView()?.showMessage(R.string.error_no_internet)
         }
@@ -42,11 +43,17 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     protected abstract fun getResultsObservable(type: String?, page: Int): Observable<Results<I>>
 
-    protected fun showItemList(data: Results<I>?) {
+    protected fun showResults(data: Results<I>) {
+        currentPage = data.page
+        itemList = ArrayList(data.results)
+        showItemList()
+        getView()?.hideProgress()
+    }
+
+    private fun showItemList() {
         getView()?.apply {
-            itemList = ArrayList(data?.results)
             showItemList(itemList)
-            hideProgress()
+            setCurrentPage(currentPage)
         }
     }
 
@@ -76,6 +83,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     protected fun addNewItemList(data: Results<I>?) {
         getView()?.apply {
             if (data != null) {
+                currentPage = data.page
                 val newItemList = data.results
                 newItemList?.let { itemList?.addAll(it) }
                 addNewItemList(newItemList)
