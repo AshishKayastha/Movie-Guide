@@ -47,7 +47,11 @@ class MovieDetailPresenter @Inject constructor(private val movieInteractor: Movi
         }
     }
 
-    override fun getCredits(detailContent: MovieDetail?) = detailContent?.creditsResults
+    override fun getBackdropImages(detailContent: MovieDetail) = detailContent.images?.backdrops
+
+    override fun getPosterImages(detailContent: MovieDetail) = detailContent.images?.posters
+
+    override fun getCredits(detailContent: MovieDetail) = detailContent.creditsResults
 
     override fun getErrorMessageId() = R.string.error_load_movie_detail
 }

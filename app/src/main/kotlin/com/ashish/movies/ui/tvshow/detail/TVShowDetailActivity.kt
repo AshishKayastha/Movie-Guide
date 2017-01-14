@@ -87,9 +87,9 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
                 showBackdropImage(backdropPath.getBackdropUrl())
             }
 
-            setTMDbRating(detailContent.voteAverage)
             imdbId = detailContent.externalIds?.imdbId
             titleText.setTitleAndYear(name, firstAirDate)
+            setTMDbRating(detailContent.voteAverage, detailContent.voteCount)
         }
         super.showDetailContent(detailContent)
     }

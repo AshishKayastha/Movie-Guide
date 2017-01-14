@@ -23,7 +23,7 @@ class PeopleInteractor @Inject constructor(private val peopleApi: PeopleApi, pri
     }
 
     fun getFullPeopleDetail(tvId: Long): Observable<FullDetailContent<PersonDetail>> {
-        return peopleApi.getPeopleDetail(tvId, "combined_credits")
+        return peopleApi.getPeopleDetail(tvId, "combined_credits,images")
                 .flatMap { omDbApi.convertToFullDetailContent(it.imdbId, it) }
                 .observeOnMainThread()
     }

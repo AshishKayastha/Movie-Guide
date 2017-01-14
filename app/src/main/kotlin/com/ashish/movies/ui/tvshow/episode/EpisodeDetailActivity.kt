@@ -56,9 +56,9 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetai
 
     override fun showDetailContent(detailContent: EpisodeDetail) {
         detailContent.apply {
-            setTMDbRating(detailContent.voteAverage)
             titleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
+            setTMDbRating(detailContent.voteAverage, detailContent.voteCount)
         }
         super.showDetailContent(detailContent)
     }

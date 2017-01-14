@@ -25,4 +25,5 @@ object ApiConstants {
     const val MEDIA_TYPE_MOVIE = "movie"
     const val MEDIA_TYPE_PERSON = "person"
     const val CREDITS_AND_SIMILAR = "credits,similar"
+    const val INCLUDE_IMAGE_LANGUAGE = "?include_image_language=en,null"
 }

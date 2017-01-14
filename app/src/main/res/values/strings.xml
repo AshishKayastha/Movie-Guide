@@ -39,6 +39,7 @@
     <string name="production_title">Production:</string>
     <string name="country_title">Country:</string>
     <string name="language_title">Language:</string>
+    <string name="images_title">Images</string>
     <string name="view_in_imdb">View in IMDb</string>
 
     <!-- Movie Detail -->
@@ -112,5 +113,8 @@
     <string name="genre_war">War</string>
     <string name="genre_western">Western</string>
 
+    <!-- Rating -->
+    <string name="flixter">Flixter</string>
+    <string name="tomatometer">Tomatometer</string>
     <string name="metascore_txt">Metascore</string>
 </resources>

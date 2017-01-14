@@ -46,7 +46,11 @@ class SeasonDetailPresenter @Inject constructor(private val tvShowInteractor: TV
         }
     }
 
-    override fun getCredits(detailContent: SeasonDetail?) = detailContent?.credits
+    override fun getBackdropImages(detailContent: SeasonDetail) = detailContent.images?.backdrops
+
+    override fun getPosterImages(detailContent: SeasonDetail) = detailContent.images?.posters
+
+    override fun getCredits(detailContent: SeasonDetail) = detailContent.credits
 
     override fun getErrorMessageId() = R.string.error_load_season_detail
 }

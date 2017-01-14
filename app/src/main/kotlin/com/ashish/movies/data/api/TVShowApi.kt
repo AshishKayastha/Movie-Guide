@@ -5,6 +5,7 @@ import com.ashish.movies.data.models.Results
 import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
+import com.ashish.movies.utils.ApiConstants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -25,16 +26,16 @@ interface TVShowApi {
     @GET("tv/{tvShowType}")
     fun getTVShows(@Path("tvShowType") tvShowType: String?, @Query("page") page: Int = 1): Observable<Results<TVShow>>
 
-    @GET("tv/{tvId}")
+    @GET("tv/{tvId}" + INCLUDE_IMAGE_LANGUAGE)
     fun getTVShowDetail(@Path("tvId") tvId: Long,
                         @Query("append_to_response") appendedResponse: String): Observable<TVShowDetail>
 
-    @GET("tv/{tvId}/season/{seasonNumber}")
+    @GET("tv/{tvId}/season/{seasonNumber}" + INCLUDE_IMAGE_LANGUAGE)
     fun getSeasonDetail(@Path("tvId") tvId: Long,
                         @Path("seasonNumber") seasonNumber: Int,
                         @Query("append_to_response") appendedResponse: String): Observable<SeasonDetail>
 
-    @GET("tv/{tvId}/season/{seasonNumber}/episode/{episodeNumber}")
+    @GET("tv/{tvId}/season/{seasonNumber}/episode/{episodeNumber}" + INCLUDE_IMAGE_LANGUAGE)
     fun getEpisodeDetail(@Path("tvId") tvId: Long,
                          @Path("seasonNumber") seasonNumber: Int,
                          @Path("episodeNumber") episodeNumber: Int,

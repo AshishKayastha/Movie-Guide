@@ -29,7 +29,11 @@ class PersonDetailPresenter @Inject constructor(private val peopleInteractor: Pe
         }
     }
 
-    override fun getCredits(detailContent: PersonDetail?) = detailContent?.combinedCredits
+    override fun getBackdropImages(detailContent: PersonDetail) = detailContent.images?.backdrops
+
+    override fun getPosterImages(detailContent: PersonDetail) = detailContent.images?.posters
+
+    override fun getCredits(detailContent: PersonDetail) = detailContent.combinedCredits
 
     override fun getErrorMessageId() = R.string.error_load_person_detail
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ashish.movies.ui.widget.AspectRatioImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_content_image"
+    android:layout_width="180dp"
+    android:layout_height="wrap_content"
+    android:scaleType="center"
+    android:stateListAnimator="@animator/raise"
+    tools:ignore="ContentDescription"
+    tools:src="@drawable/drawer_header" />

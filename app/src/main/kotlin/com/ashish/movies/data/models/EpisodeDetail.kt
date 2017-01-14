@@ -5,6 +5,7 @@ import com.squareup.moshi.Json
 data class EpisodeDetail(
         val id: Int? = null,
         val name: String? = null,
+        val images: Images? = null,
         val overview: String? = null,
         val credits: CreditResults? = null,
         @Json(name = "air_date") val airDate: String? = null,

@@ -3,6 +3,7 @@ package com.ashish.movies.data.api
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
 import com.ashish.movies.data.models.Results
+import com.ashish.movies.utils.ApiConstants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,7 +24,7 @@ interface MovieApi {
     @GET("movie/{movieType}")
     fun getMovies(@Path("movieType") movieType: String?, @Query("page") page: Int = 1): Observable<Results<Movie>>
 
-    @GET("movie/{movieId}")
+    @GET("movie/{movieId}" + INCLUDE_IMAGE_LANGUAGE)
     fun getMovieDetail(@Path("movieId") movieId: Long,
                        @Query("append_to_response") appendedResponse: String): Observable<MovieDetail>
 

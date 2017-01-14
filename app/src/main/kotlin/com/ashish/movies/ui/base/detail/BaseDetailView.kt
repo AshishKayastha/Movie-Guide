@@ -13,6 +13,8 @@ interface BaseDetailView<in I> : LceView {
 
     fun showDetailContentList(contentList: List<String>)
 
+    fun showImageList(imageUrlList: List<String>)
+
     fun showOMDbDetail(omDbDetail: OMDbDetail)
 
     fun showCastList(castList: List<Credit>)

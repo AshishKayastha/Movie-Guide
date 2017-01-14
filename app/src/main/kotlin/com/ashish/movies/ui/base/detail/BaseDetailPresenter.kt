@@ -3,8 +3,12 @@ package com.ashish.movies.ui.base.detail
 import com.ashish.movies.R
 import com.ashish.movies.data.models.CreditResults
 import com.ashish.movies.data.models.FullDetailContent
+import com.ashish.movies.data.models.ImageItem
 import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.utils.Utils
+import com.ashish.movies.utils.extensions.getBackdropUrl
+import com.ashish.movies.utils.extensions.getPosterUrl
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import io.reactivex.Observable
 import timber.log.Timber
 import java.io.IOException
@@ -51,8 +55,30 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() 
             showDetailContentList(contentList)
 
             val detailContent = fullDetailContent.detailContent
-            if (detailContent != null) showDetailContent(detailContent)
-            showCredits(getCredits(detailContent))
+            if (detailContent != null) {
+                showDetailContent(detailContent)
+
+                val imageUrlList = ArrayList<String>()
+
+                val backdropImages = getBackdropImages(detailContent)
+                if (backdropImages.isNotNullOrEmpty()) {
+                    val backdropImageUrlList = backdropImages!!
+                            .map { it.filePath.getBackdropUrl() }
+                            .toList()
+                    imageUrlList.addAll(backdropImageUrlList)
+                }
+
+                val posterImages = getPosterImages(detailContent)
+                if (posterImages.isNotNullOrEmpty()) {
+                    val posterImageUrlList = posterImages!!
+                            .map { it.filePath.getPosterUrl() }
+                            .toList()
+                    imageUrlList.addAll(posterImageUrlList)
+                }
+
+                showCredits(getCredits(detailContent))
+                if (imageUrlList.isNotEmpty()) showImageList(imageUrlList)
+            }
 
             val omdbDetail = fullDetailContent.omdbDetail
             if (omdbDetail != null) showOMDbDetail(omdbDetail)
@@ -61,7 +87,11 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() 
 
     abstract fun addContents(fullDetailContent: FullDetailContent<I>)
 
-    abstract fun getCredits(detailContent: I?): CreditResults?
+    abstract fun getBackdropImages(detailContent: I): List<ImageItem>?
+
+    abstract fun getPosterImages(detailContent: I): List<ImageItem>?
+
+    abstract fun getCredits(detailContent: I): CreditResults?
 
     protected fun showCredits(creditResults: CreditResults?) {
         getView()?.apply {

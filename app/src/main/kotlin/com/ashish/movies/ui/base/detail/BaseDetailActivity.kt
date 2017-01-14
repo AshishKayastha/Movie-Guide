@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -26,6 +27,7 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.ui.base.mvp.MvpActivity
 import com.ashish.movies.ui.common.adapter.DetailContentAdapter
+import com.ashish.movies.ui.common.adapter.ImageAdapter
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.ViewType
@@ -72,6 +74,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
     protected val posterImage: ImageView by bindView(R.id.detail_poster_image)
 
+    private val tabLayout: TabLayout by bindView(R.id.tab_layout)
     private val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
     private val progressBar: ProgressBar by bindView(R.id.progress_bar)
     private val detailContainer: View by bindView(R.id.detail_container)
@@ -80,6 +83,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     private val castViewStub: ViewStub by bindView(R.id.cast_view_stub)
     private val crewViewStub: ViewStub by bindView(R.id.crew_view_stub)
+    private val imagesViewStub: ViewStub by bindView(R.id.images_view_stub)
     private val detailContentRecyclerView: RecyclerView by bindView(R.id.detail_content_recycler_view)
 
     private var menu: Menu? = null
@@ -88,6 +92,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     private var sharedElementEnterTransition: Transition? = null
 
     protected var imdbId: String? = null
+    protected var imageAdapter: ImageAdapter? = null
     protected var imageUrlList: ArrayList<String> = ArrayList()
     protected var castAdapter: RecyclerViewAdapter<Credit>? = null
     protected var crewAdapter: RecyclerViewAdapter<Credit>? = null
@@ -112,6 +117,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     companion object {
         @JvmStatic val ITEM_SPACING = 8f.dpToPx().toInt()
+        @JvmStatic val ITEM_SPACING_SMALL = 4f.dpToPx().toInt()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -267,6 +273,12 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun hideProgress() = progressBar.hide()
 
+    override fun showImageList(imageUrlList: List<String>) {
+        imageAdapter = ImageAdapter(imageUrlList)
+        inflateViewStubRecyclerView(imagesViewStub, R.id.detail_images_recycler_view, imageAdapter!!,
+                ITEM_SPACING_SMALL)
+    }
+
     override fun showCastList(castList: List<Credit>) {
         castAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT,
                 getCastItemClickListener())
@@ -285,20 +297,25 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     abstract fun getCrewItemClickListener(): OnItemClickListener?
 
-    protected fun <I : ViewType> inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
-                                                             adapter: RecyclerViewAdapter<I>, itemList: List<I>) {
+    protected fun inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int, adapter: RecyclerView.Adapter<*>,
+                                              spacing: Int = ITEM_SPACING) {
         val inflatedView = viewStub.inflate()
         val recyclerView = inflatedView.findViewById(viewId) as RecyclerView
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         recyclerView.apply {
             recyclerView.layoutManager = layoutManager
-            addItemDecoration(ItemOffsetDecoration(ITEM_SPACING))
+            addItemDecoration(ItemOffsetDecoration(spacing))
             recyclerView.adapter = adapter
             val snapHelper = GravitySnapHelper(Gravity.START)
             snapHelper.attachToRecyclerView(this)
         }
+    }
 
+    protected fun <I : ViewType> inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
+                                                             adapter: RecyclerViewAdapter<I>,
+                                                             itemList: List<I>, spacing: Int = ITEM_SPACING) {
+        inflateViewStubRecyclerView(viewStub, viewId, adapter, spacing)
         adapter.showItemList(itemList)
     }
 

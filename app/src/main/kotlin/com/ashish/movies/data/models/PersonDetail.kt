@@ -14,6 +14,7 @@ data class PersonDetail(
         val popularity: Double? = null,
         val homepage: String? = null,
         val deathday: String? = null,
+        val images: Images? = null,
         @Json(name = "profile_path") val profilePath: String? = null,
         @Json(name = "place_of_birth") val placeOfBirth: String? = null,
         @Json(name = "also_known_as") val alsoKnownAs: List<String>? = null,

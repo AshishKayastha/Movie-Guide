@@ -40,7 +40,11 @@ class EpisodeDetailPresenter @Inject constructor(private val tvShowInteractor: T
         }
     }
 
-    override fun getCredits(detailContent: EpisodeDetail?) = detailContent?.credits
+    override fun getBackdropImages(detailContent: EpisodeDetail) = detailContent.images?.backdrops
+
+    override fun getPosterImages(detailContent: EpisodeDetail) = detailContent.images?.posters
+
+    override fun getCredits(detailContent: EpisodeDetail) = detailContent.credits
 
     override fun getErrorMessageId() = R.string.error_load_episode_detail
 }

@@ -143,4 +143,8 @@
         <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="fontName">@string/font_montserrat_regular</item>
     </style>
+
+    <style name="RatingText.SmallMargin">
+        <item name="android:layout_marginTop">@dimen/spacing_micro</item>
+    </style>
 </resources>

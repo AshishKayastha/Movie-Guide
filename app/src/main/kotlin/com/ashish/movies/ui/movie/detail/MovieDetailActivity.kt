@@ -75,9 +75,9 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
                 showBackdropImage(backdropPath.getBackdropUrl())
             }
 
-            setTMDbRating(detailContent.voteAverage)
             this@MovieDetailActivity.imdbId = imdbId
             titleText.setTitleAndYear(title, releaseDate)
+            setTMDbRating(detailContent.voteAverage, detailContent.voteCount)
         }
         super.showDetailContent(detailContent)
     }

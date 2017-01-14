@@ -26,20 +26,20 @@ class TVShowInteractor @Inject constructor(private val tvShowApi: TVShowApi, pri
     }
 
     fun getFullTVShowDetail(tvId: Long): Observable<FullDetailContent<TVShowDetail>> {
-        return tvShowApi.getTVShowDetail(tvId, CREDITS_AND_SIMILAR + ",external_ids")
+        return tvShowApi.getTVShowDetail(tvId, CREDITS_AND_SIMILAR + ",external_ids,images,trailers")
                 .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
                 .observeOnMainThread()
     }
 
     fun getFullSeasonDetail(tvId: Long, seasonNumber: Int): Observable<FullDetailContent<SeasonDetail>> {
-        return tvShowApi.getSeasonDetail(tvId, seasonNumber, "credits,external_ids")
+        return tvShowApi.getSeasonDetail(tvId, seasonNumber, "credits,external_ids,images")
                 .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
                 .observeOnMainThread()
     }
 
     fun getFullEpisodeDetail(tvId: Long, seasonNumber: Int,
                              episodeNumber: Int): Observable<FullDetailContent<EpisodeDetail>> {
-        return tvShowApi.getEpisodeDetail(tvId, seasonNumber, episodeNumber, "credits,external_ids")
+        return tvShowApi.getEpisodeDetail(tvId, seasonNumber, episodeNumber, "credits,external_ids,images")
                 .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
                 .observeOnMainThread()
     }
