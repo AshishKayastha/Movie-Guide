@@ -113,10 +113,20 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         }
 
         override fun onTransitionCancel(transition: Transition) {}
-
         override fun onTransitionPause(transition: Transition) {}
-
         override fun onTransitionResume(transition: Transition) {}
+    }
+
+    private val onImageItemClickListener = object : OnItemClickListener {
+        override fun onItemClick(position: Int, view: View) {
+            startImageViewerActivity(imageAdapter?.imageUrlList, "", position)
+        }
+    }
+
+    private fun startImageViewerActivity(imageUrlList: ArrayList<String>?, title: String, position: Int) {
+        if (imageUrlList.isNotNullOrEmpty()) {
+            startActivity(ImageViewerActivity.createIntent(this, title, position, imageUrlList!!))
+        }
     }
 
     companion object {
@@ -136,12 +146,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
         showPosterImage(getPosterPath())
         appBarLayout.addOnOffsetChangedListener(this)
-
-        backdropImage.setOnClickListener {
-            if (imageUrlList.isNotEmpty()) {
-                startActivity(ImageViewerActivity.createIntent(this@BaseDetailActivity, getItemTitle(), imageUrlList))
-            }
-        }
+        backdropImage.setOnClickListener { startImageViewerActivity(imageUrlList, getItemTitle(), 0) }
 
         sharedElementEnterTransition = window.sharedElementEnterTransition
         sharedElementEnterTransition?.addListener(transitionListener)
@@ -277,8 +282,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun hideProgress() = progressBar.hide()
 
-    override fun showImageList(imageUrlList: List<String>) {
-        imageAdapter = ImageAdapter(imageUrlList)
+    override fun showImageList(imageUrlList: ArrayList<String>) {
+        imageAdapter = ImageAdapter(imageUrlList, onImageItemClickListener)
         inflateViewStubRecyclerView(imagesViewStub, R.id.detail_images_recycler_view, imageAdapter!!,
                 ITEM_SPACING_SMALL)
     }
@@ -389,6 +394,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     protected open fun performCleanup() {
         castAdapter?.removeListener()
         crewAdapter?.removeListener()
+        imageAdapter?.removeListener()
         removeSharedElementTransitionListener()
         appBarLayout.removeOnOffsetChangedListener(this)
     }

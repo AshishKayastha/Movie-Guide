@@ -3,6 +3,7 @@ package com.ashish.movies.ui.base.detail
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.ui.base.mvp.LceView
+import java.util.*
 
 /**
  * Created by Ashish on Jan 03.
@@ -13,7 +14,7 @@ interface BaseDetailView<in I> : LceView {
 
     fun showDetailContentList(contentList: List<String>)
 
-    fun showImageList(imageUrlList: List<String>)
+    fun showImageList(imageUrlList: ArrayList<String>)
 
     fun showTrailerFAB(trailerUrl: String)
 

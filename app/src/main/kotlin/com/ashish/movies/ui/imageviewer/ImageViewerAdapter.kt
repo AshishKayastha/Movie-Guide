@@ -8,11 +8,11 @@ import java.util.*
 /**
  * Created by Ashish on Jan 08.
  */
-class ImageViewerAdapter(fm: FragmentManager, val imageUrlList: ArrayList<String>?) : FragmentStatePagerAdapter(fm) {
+class ImageViewerAdapter(fm: FragmentManager, val imageUrlList: ArrayList<String>) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return ImageViewerFragment.newInstance(imageUrlList?.get(position))
+        return ImageViewerFragment.newInstance(imageUrlList[position])
     }
 
-    override fun getCount() = imageUrlList?.size ?: 0
+    override fun getCount() = imageUrlList.size
 }

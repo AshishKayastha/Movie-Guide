@@ -1,5 +1,6 @@
 package com.ashish.movies.ui.imageviewer
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -8,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import butterknife.bindView
 import com.ashish.movies.R
-import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.widget.TouchImageView
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.inflate
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.show
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
@@ -43,7 +46,6 @@ class ImageViewerFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         if (savedInstanceState == null) {
             imageUrl = arguments?.getString(ARG_IMAGE_URL)
         }
@@ -51,24 +53,14 @@ class ImageViewerFragment : Fragment() {
         if (imageUrl.isNotNullOrEmpty()) {
             progressBar.show()
             Glide.with(activity)
-                    .transcodePaletteBitmap(activity)
                     .load(imageUrl)
-                    .into(object : SimpleTarget<PaletteBitmap>() {
-                        override fun onResourceReady(paletteBitmap: PaletteBitmap?,
-                                                     animation: GlideAnimation<in PaletteBitmap>?) {
-                            imageView.setImageBitmap(paletteBitmap?.bitmap)
+                    .asBitmap()
+                    .into(object : SimpleTarget<Bitmap>() {
+                        override fun onResourceReady(bitmap: Bitmap?, animation: GlideAnimation<in Bitmap>?) {
                             progressBar.hide()
-
-                            paletteBitmap?.palette.getSwatchWithMostPixels()?.apply {
-                                (activity as ImageViewerActivity).animateViewPagerColorChange(rgb)
-                            }
+                            if (bitmap != null) imageView.setImageBitmap(bitmap)
                         }
                     })
         }
-    }
-
-    override fun onDestroyView() {
-        Glide.clear(imageView)
-        super.onDestroyView()
     }
 }
