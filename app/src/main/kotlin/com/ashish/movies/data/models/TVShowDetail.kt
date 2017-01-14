@@ -14,7 +14,7 @@ data class TVShowDetail(
         val overview: String? = null,
         val homepage: String? = null,
         val popularity: Double? = null,
-        val trailers: Trailers? = null,
+        val videos: Videos? = null,
         val genres: List<Genre>? = null,
         val networks: List<Network>? = null,
         val seasons: List<TVShowSeason>? = null,

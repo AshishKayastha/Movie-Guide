@@ -24,7 +24,7 @@ class MovieInteractor @Inject constructor(private val movieApi: MovieApi, privat
     }
 
     fun getFullMovieDetail(movieId: Long): Observable<FullDetailContent<MovieDetail>> {
-        return movieApi.getMovieDetail(movieId, CREDITS_AND_SIMILAR + ",images,trailers")
+        return movieApi.getMovieDetail(movieId, CREDITS_AND_SIMILAR + ",images,videos")
                 .flatMap { omDbApi.convertToFullDetailContent(it.imdbId, it) }
                 .observeOnMainThread()
     }

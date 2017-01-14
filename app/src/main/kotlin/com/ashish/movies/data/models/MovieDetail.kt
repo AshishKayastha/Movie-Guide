@@ -15,7 +15,7 @@ data class MovieDetail(
         val status: String? = null,
         val tagline: String? = null,
         val images: Images? = null,
-        val trailers: Trailers? = null,
+        val videos: Videos? = null,
         val popularity: Double? = null,
         val genres: List<Genre>? = null,
         @Json(name = "imdb_id") val imdbId: String? = null,

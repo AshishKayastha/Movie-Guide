@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import android.view.ViewStub
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
+import butterknife.bindOptionalView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
@@ -35,6 +37,7 @@ import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
+import com.ashish.movies.utils.Constants
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_CREDIT
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
@@ -73,6 +76,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
     protected val posterImage: ImageView by bindView(R.id.detail_poster_image)
+    private val playTrailerFAB: FloatingActionButton? by bindOptionalView(R.id.play_trailer_fab)
 
     private val tabLayout: TabLayout by bindView(R.id.tab_layout)
     private val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
@@ -277,6 +281,13 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         imageAdapter = ImageAdapter(imageUrlList)
         inflateViewStubRecyclerView(imagesViewStub, R.id.detail_images_recycler_view, imageAdapter!!,
                 ITEM_SPACING_SMALL)
+    }
+
+    override fun showTrailerFAB(trailerUrl: String) {
+        playTrailerFAB?.show()
+        playTrailerFAB?.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Constants.YOUTUBE_BASE_URL + trailerUrl)))
+        }
     }
 
     override fun showCastList(castList: List<Credit>) {

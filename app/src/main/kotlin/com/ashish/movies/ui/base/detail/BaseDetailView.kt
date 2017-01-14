@@ -15,6 +15,8 @@ interface BaseDetailView<in I> : LceView {
 
     fun showImageList(imageUrlList: List<String>)
 
+    fun showTrailerFAB(trailerUrl: String)
+
     fun showOMDbDetail(omDbDetail: OMDbDetail)
 
     fun showCastList(castList: List<Credit>)

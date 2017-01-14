@@ -6,6 +6,8 @@
 
     <include layout="@layout/layout_detail_app_bar" />
 
+    <include layout="@layout/layout_detail_trailer_fab" />
+
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         style="@style/DetailNestedScrollView">

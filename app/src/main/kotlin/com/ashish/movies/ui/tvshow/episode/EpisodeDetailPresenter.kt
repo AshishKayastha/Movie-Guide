@@ -7,6 +7,7 @@ import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
 import com.ashish.movies.ui.base.detail.BaseDetailView
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -25,7 +26,8 @@ class EpisodeDetailPresenter @Inject constructor(private val tvShowInteractor: T
 
     override fun getDetailContent(id: Long) = tvShowInteractor.getFullEpisodeDetail(id, seasonNumber, episodeNumber)
 
-    override fun addContents(fullDetailContent: FullDetailContent<EpisodeDetail>) {
+    override fun getContentList(fullDetailContent: FullDetailContent<EpisodeDetail>): List<String> {
+        val contentList = ArrayList<String>()
         fullDetailContent.detailContent?.apply {
             val omdbDetail = fullDetailContent.omdbDetail
             contentList.add(overview ?: "")
@@ -38,11 +40,15 @@ class EpisodeDetailPresenter @Inject constructor(private val tvShowInteractor: T
             contentList.add(omdbDetail?.Country ?: "")
             contentList.add(omdbDetail?.Language ?: "")
         }
+
+        return contentList
     }
 
     override fun getBackdropImages(detailContent: EpisodeDetail) = detailContent.images?.backdrops
 
     override fun getPosterImages(detailContent: EpisodeDetail) = detailContent.images?.posters
+
+    override fun getVideos(detailContent: EpisodeDetail) = detailContent.videos
 
     override fun getCredits(detailContent: EpisodeDetail) = detailContent.credits
 

@@ -7,6 +7,7 @@ data class EpisodeDetail(
         val name: String? = null,
         val images: Images? = null,
         val overview: String? = null,
+        val videos: Videos? = null,
         val credits: CreditResults? = null,
         @Json(name = "air_date") val airDate: String? = null,
         @Json(name = "vote_count") val voteCount: Int? = null,

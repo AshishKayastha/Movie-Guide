@@ -6,6 +6,7 @@ import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -31,7 +32,8 @@ class SeasonDetailPresenter @Inject constructor(private val tvShowInteractor: TV
         }
     }
 
-    override fun addContents(fullDetailContent: FullDetailContent<SeasonDetail>) {
+    override fun getContentList(fullDetailContent: FullDetailContent<SeasonDetail>): List<String> {
+        val contentList = ArrayList<String>()
         fullDetailContent.detailContent?.apply {
             val omdbDetail = fullDetailContent.omdbDetail
             contentList.add(overview ?: "")
@@ -44,11 +46,15 @@ class SeasonDetailPresenter @Inject constructor(private val tvShowInteractor: TV
             contentList.add(omdbDetail?.Country ?: "")
             contentList.add(omdbDetail?.Language ?: "")
         }
+
+        return contentList
     }
 
     override fun getBackdropImages(detailContent: SeasonDetail) = detailContent.images?.backdrops
 
     override fun getPosterImages(detailContent: SeasonDetail) = detailContent.images?.posters
+
+    override fun getVideos(detailContent: SeasonDetail) = detailContent.videos
 
     override fun getCredits(detailContent: SeasonDetail) = detailContent.credits
 

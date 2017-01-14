@@ -8,6 +8,7 @@ import com.ashish.movies.ui.base.detail.BaseDetailPresenter
 import com.ashish.movies.ui.base.detail.BaseDetailView
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -18,7 +19,8 @@ class PersonDetailPresenter @Inject constructor(private val peopleInteractor: Pe
 
     override fun getDetailContent(id: Long) = peopleInteractor.getFullPeopleDetail(id)
 
-    override fun addContents(fullDetailContent: FullDetailContent<PersonDetail>) {
+    override fun getContentList(fullDetailContent: FullDetailContent<PersonDetail>): List<String> {
+        val contentList = ArrayList<String>()
         fullDetailContent.detailContent?.apply {
             contentList.add(biography ?: "")
             contentList.add(birthday.getFormattedMediumDate())
@@ -27,11 +29,15 @@ class PersonDetailPresenter @Inject constructor(private val peopleInteractor: Pe
             contentList.add(fullDetailContent.omdbDetail?.Awards ?: "")
             contentList.add(alsoKnownAs.convertListToCommaSeparatedText { it })
         }
+
+        return contentList
     }
 
     override fun getBackdropImages(detailContent: PersonDetail) = detailContent.images?.backdrops
 
     override fun getPosterImages(detailContent: PersonDetail) = detailContent.images?.posters
+
+    override fun getVideos(detailContent: PersonDetail) = null
 
     override fun getCredits(detailContent: PersonDetail) = detailContent.combinedCredits
 

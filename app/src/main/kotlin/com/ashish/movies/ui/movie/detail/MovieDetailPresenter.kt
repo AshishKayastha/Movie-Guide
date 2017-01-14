@@ -9,6 +9,7 @@ import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import com.ashish.movies.utils.extensions.getFormattedNumber
 import com.ashish.movies.utils.extensions.getFormattedRuntime
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -28,7 +29,8 @@ class MovieDetailPresenter @Inject constructor(private val movieInteractor: Movi
         }
     }
 
-    override fun addContents(fullDetailContent: FullDetailContent<MovieDetail>) {
+    override fun getContentList(fullDetailContent: FullDetailContent<MovieDetail>): List<String> {
+        val contentList = ArrayList<String>()
         fullDetailContent.detailContent?.apply {
             val omdbDetail = fullDetailContent.omdbDetail
             contentList.add(overview ?: "")
@@ -45,11 +47,15 @@ class MovieDetailPresenter @Inject constructor(private val movieInteractor: Movi
             contentList.add(budget.getFormattedNumber())
             contentList.add(revenue.getFormattedNumber())
         }
+
+        return contentList
     }
 
     override fun getBackdropImages(detailContent: MovieDetail) = detailContent.images?.backdrops
 
     override fun getPosterImages(detailContent: MovieDetail) = detailContent.images?.posters
+
+    override fun getVideos(detailContent: MovieDetail) = detailContent.videos
 
     override fun getCredits(detailContent: MovieDetail) = detailContent.creditsResults
 
