@@ -11,6 +11,8 @@ import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.SharedElementCallback
+import android.support.v4.util.Pair
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
@@ -20,6 +22,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewStub
+import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -35,6 +38,8 @@ import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity
+import com.ashish.movies.ui.imageviewer.ImageViewerActivity.Companion.EXTRA_CURRENT_POSITION
+import com.ashish.movies.ui.imageviewer.ImageViewerActivity.Companion.EXTRA_STARTING_POSITION
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.utils.Constants
@@ -56,6 +61,7 @@ import com.ashish.movies.utils.extensions.changeMenuFont
 import com.ashish.movies.utils.extensions.dpToPx
 import com.ashish.movies.utils.extensions.getActivityOptionsCompat
 import com.ashish.movies.utils.extensions.getColorCompat
+import com.ashish.movies.utils.extensions.getOverflowMenuButton
 import com.ashish.movies.utils.extensions.getPosterImagePair
 import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
 import com.ashish.movies.utils.extensions.hide
@@ -65,6 +71,7 @@ import com.ashish.movies.utils.extensions.loadPaletteBitmap
 import com.ashish.movies.utils.extensions.scrimify
 import com.ashish.movies.utils.extensions.setLightStatusBar
 import com.ashish.movies.utils.extensions.setPaletteColor
+import com.ashish.movies.utils.extensions.setTransitionName
 import com.ashish.movies.utils.extensions.show
 import java.util.*
 
@@ -93,39 +100,81 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     private var menu: Menu? = null
     private var statusBarColor: Int = 0
     private var loadContent: Boolean = true
+    private var imagesRecyclerView: RecyclerView? = null
     private var sharedElementEnterTransition: Transition? = null
 
     protected var imdbId: String? = null
     protected var imageAdapter: ImageAdapter? = null
-    protected var imageUrlList: ArrayList<String> = ArrayList()
     protected var castAdapter: RecyclerViewAdapter<Credit>? = null
     protected var crewAdapter: RecyclerViewAdapter<Credit>? = null
+
+    private var reenterState: Bundle? = null
+
+    private val callback = object : SharedElementCallback() {
+        override fun onMapSharedElements(names: MutableList<String>?, sharedElements: MutableMap<String, View>?) {
+            super.onMapSharedElements(names, sharedElements)
+            if (reenterState != null) {
+                val currentPosition = reenterState!!.getInt(EXTRA_CURRENT_POSITION)
+                val startingPosition = reenterState!!.getInt(EXTRA_STARTING_POSITION)
+
+                if (startingPosition != currentPosition) {
+                    val newSharedElement = imagesRecyclerView?.layoutManager?.findViewByPosition(currentPosition)
+                    if (newSharedElement != null) {
+                        val newTransitionName = "image_$currentPosition"
+                        names?.clear()
+                        names?.add(newTransitionName)
+                        sharedElements?.clear()
+                        sharedElements?.put(newTransitionName, newSharedElement)
+                    }
+                }
+
+                reenterState = null
+            } else {
+                val statusBar = findViewById(android.R.id.statusBarBackground)
+                if (statusBar != null) {
+                    names?.add(statusBar.transitionName)
+                    sharedElements?.put(statusBar.transitionName, statusBar)
+                }
+
+                val navigationBar = findViewById(android.R.id.navigationBarBackground)
+                if (navigationBar != null) {
+                    names?.add(navigationBar.transitionName)
+                    sharedElements?.put(navigationBar.transitionName, navigationBar)
+                }
+            }
+        }
+    }
 
     protected val transitionListener = object : Transition.TransitionListener {
         override fun onTransitionStart(transition: Transition) {}
 
         override fun onTransitionEnd(transition: Transition) {
-            if (loadContent) {
-                loadDetailContent()
-                showBackdropImage(getBackdropPath())
-                loadContent = false
-            }
+            startLoadingDetailContent()
         }
 
-        override fun onTransitionCancel(transition: Transition) {}
+        override fun onTransitionCancel(transition: Transition) {
+            startLoadingDetailContent()
+        }
+
         override fun onTransitionPause(transition: Transition) {}
         override fun onTransitionResume(transition: Transition) {}
     }
 
     private val onImageItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
-            startImageViewerActivity(imageAdapter?.imageUrlList, "", position)
+            val imageView = view.findViewById(R.id.detail_content_image)
+            startImageViewerActivity(imageAdapter?.imageUrlList, "", position, imageView)
         }
     }
 
-    private fun startImageViewerActivity(imageUrlList: ArrayList<String>?, title: String, position: Int) {
+    private fun startImageViewerActivity(imageUrlList: ArrayList<String>?, title: String, position: Int, view: View?) {
         if (imageUrlList.isNotNullOrEmpty()) {
-            startActivity(ImageViewerActivity.createIntent(this, title, position, imageUrlList!!))
+            val imagePair = if (view != null) Pair.create(view, "image_$position") else null
+            val options = getActivityOptionsCompat(imagePair)
+
+            window.exitTransition = null
+            val intent = ImageViewerActivity.createIntent(this, title, position, imageUrlList!!)
+            ActivityCompat.startActivity(this, intent, options?.toBundle())
         }
     }
 
@@ -136,13 +185,14 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        postponeEnterTransition()
+        setExitSharedElementCallback(callback)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        supportPostponeEnterTransition()
-
+        posterImage.setTransitionName(getTransitionNameId())
         showPosterImage(getPosterPath())
         appBarLayout.addOnOffsetChangedListener(this)
-        backdropImage.setOnClickListener { startImageViewerActivity(imageUrlList, getItemTitle(), 0) }
 
         sharedElementEnterTransition = window.sharedElementEnterTransition
         sharedElementEnterTransition?.addListener(transitionListener)
@@ -152,14 +202,20 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         collapsingToolbar.setCollapsedTitleTypeface(regularFont)
     }
 
+    abstract fun getTransitionNameId(): Int
+
+    private fun startLoadingDetailContent() {
+        if (loadContent) {
+            loadDetailContent()
+            showBackdropImage(getBackdropPath())
+            loadContent = false
+        }
+    }
+
     abstract fun loadDetailContent(): Unit
 
     fun showBackdropImage(backdropPath: String) {
         if (backdropPath.isNotEmpty()) {
-            if (!imageUrlList.contains(backdropPath)) {
-                imageUrlList.add(backdropPath)
-            }
-
             backdropImage.loadPaletteBitmap(backdropPath) {
                 revealBackdropImage()
                 setTopBarColorAndAnimate(it)
@@ -205,11 +261,13 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
             if (!isDark) {
                 window.decorView.setLightStatusBar()
-                val backButton = toolbar?.getChildAt(0) as ImageButton
-
                 val transBlack = getColorCompat(R.color.black_80_transparent)
-                backButton.setColorFilter(transBlack)
+
+                val backButton = toolbar?.getChildAt(0) as ImageButton?
+                backButton?.setColorFilter(transBlack)
+
                 collapsingToolbar.setCollapsedTitleTextColor(transBlack)
+                toolbar?.getOverflowMenuButton()?.setColorFilter(transBlack)
             }
 
             /**
@@ -245,6 +303,10 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     abstract fun getPosterPath(): String
 
+    override fun showProgress() = progressBar.show()
+
+    override fun hideProgress() = progressBar.hide()
+
     override fun showDetailContent(detailContent: I) {
         detailContainer.show()
         showOrHideIMDbMenu()
@@ -272,13 +334,9 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         }
     }
 
-    override fun showProgress() = progressBar.show()
-
-    override fun hideProgress() = progressBar.hide()
-
     override fun showImageList(imageUrlList: ArrayList<String>) {
         imageAdapter = ImageAdapter(imageUrlList, onImageItemClickListener)
-        inflateViewStubRecyclerView(imagesViewStub, R.id.detail_images_recycler_view, imageAdapter!!,
+        imagesRecyclerView = inflateViewStubRecyclerView(imagesViewStub, R.id.detail_images_recycler_view, imageAdapter!!,
                 ITEM_SPACING_SMALL)
     }
 
@@ -308,7 +366,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     abstract fun getCrewItemClickListener(): OnItemClickListener?
 
     protected fun inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int, adapter: RecyclerView.Adapter<*>,
-                                              spacing: Int = ITEM_SPACING) {
+                                              spacing: Int = ITEM_SPACING): RecyclerView {
         val inflatedView = viewStub.inflate()
         val recyclerView = inflatedView.findViewById(viewId) as RecyclerView
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -320,13 +378,16 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
             val snapHelper = GravitySnapHelper(Gravity.START)
             snapHelper.attachToRecyclerView(this)
         }
+
+        return recyclerView
     }
 
     protected fun <I : ViewType> inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
-                                                             adapter: RecyclerViewAdapter<I>,
-                                                             itemList: List<I>, spacing: Int = ITEM_SPACING) {
-        inflateViewStubRecyclerView(viewStub, viewId, adapter, spacing)
+                                                             adapter: RecyclerViewAdapter<I>, itemList: List<I>,
+                                                             spacing: Int = ITEM_SPACING): RecyclerView {
+        val recyclerView = inflateViewStubRecyclerView(viewStub, viewId, adapter, spacing)
         adapter.showItemList(itemList)
+        return recyclerView
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
@@ -352,6 +413,26 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     override fun finishActivity() = supportFinishAfterTransition()
+
+    override fun onActivityReenter(resultCode: Int, data: Intent?) {
+        super.onActivityReenter(resultCode, data)
+
+        reenterState = Bundle(data?.extras)
+        val currentPosition = reenterState?.getInt(EXTRA_CURRENT_POSITION)
+        val startingPosition = reenterState?.getInt(EXTRA_STARTING_POSITION)
+        if (startingPosition != currentPosition) {
+            imagesRecyclerView?.smoothScrollToPosition(currentPosition!!)
+        }
+
+        postponeEnterTransition()
+        imagesRecyclerView?.viewTreeObserver?.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                imagesRecyclerView?.viewTreeObserver?.removeOnPreDrawListener(this)
+                startPostponedEnterTransition()
+                return true
+            }
+        })
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_detail, menu)

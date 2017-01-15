@@ -22,8 +22,8 @@ class PeopleInteractor @Inject constructor(private val peopleApi: PeopleApi, pri
         return peopleApi.getPopularPeople(page).observeOnMainThread()
     }
 
-    fun getFullPeopleDetail(tvId: Long): Observable<FullDetailContent<PersonDetail>> {
-        return peopleApi.getPeopleDetail(tvId, "combined_credits,images")
+    fun getFullPeopleDetail(personId: Long): Observable<FullDetailContent<PersonDetail>> {
+        return peopleApi.getPeopleDetail(personId, "combined_credits,images")
                 .flatMap { omDbApi.convertToFullDetailContent(it.imdbId, it) }
                 .observeOnMainThread()
     }

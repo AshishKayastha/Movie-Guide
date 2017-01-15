@@ -1,8 +1,12 @@
 package com.ashish.movies.ui.imageviewer
 
 import android.graphics.Bitmap
+import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import android.view.ViewTreeObserver
+import android.widget.ImageView
 import android.widget.ProgressBar
 import butterknife.bindView
 import com.ashish.movies.R
@@ -21,17 +25,23 @@ import icepick.State
  */
 class ImageViewerFragment : BaseFragment() {
 
+    @JvmField @State var position: Int = 0
     @JvmField @State var imageUrl: String? = null
+    @JvmField @State var startingPosition: Int = 0
 
     private val imageView: TouchImageView by bindView(R.id.image_view)
     private val progressBar: ProgressBar by bindView(R.id.progress_bar)
 
     companion object {
+        private const val ARG_POSITION = "position"
         private const val ARG_IMAGE_URL = "image_url"
+        private const val ARG_STARTING_POSITION = "starting_position"
 
-        fun newInstance(imageUrl: String?): ImageViewerFragment {
+        fun newInstance(position: Int, startingPosition: Int, imageUrl: String?): ImageViewerFragment {
             val args = Bundle()
+            args.putInt(ARG_POSITION, position)
             args.putString(ARG_IMAGE_URL, imageUrl)
+            args.putInt(ARG_STARTING_POSITION, startingPosition)
             val fragment = ImageViewerFragment()
             fragment.arguments = args
             return fragment
@@ -42,6 +52,7 @@ class ImageViewerFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        imageView.transitionName = "image_$position"
 
         if (imageUrl.isNotNullOrEmpty()) {
             progressBar.show()
@@ -52,6 +63,11 @@ class ImageViewerFragment : BaseFragment() {
                         override fun onResourceReady(bitmap: Bitmap?, animation: GlideAnimation<in Bitmap>?) {
                             progressBar.hide()
                             if (bitmap != null) imageView.setImageBitmap(bitmap)
+                            startEnterTransition()
+                        }
+
+                        override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
+                            startEnterTransition()
                         }
                     })
         }
@@ -59,5 +75,36 @@ class ImageViewerFragment : BaseFragment() {
 
     override fun getFragmentArguments(arguments: Bundle?) {
         imageUrl = arguments?.getString(ARG_IMAGE_URL)
+        position = arguments?.getInt(ARG_POSITION) ?: 0
+    }
+
+    private fun startEnterTransition() {
+        if (position == startingPosition) {
+            imageView.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    imageView.viewTreeObserver.removeOnPreDrawListener(this)
+                    activity?.startPostponedEnterTransition()
+                    return true
+                }
+            })
+        }
+    }
+
+    fun getImageView(): ImageView? {
+        if (isViewInBounds(activity.window.decorView, imageView)) {
+            return imageView
+        }
+        return null
+    }
+
+    private fun isViewInBounds(container: View, view: View): Boolean {
+        val containerBounds = Rect()
+        container.getHitRect(containerBounds)
+        return view.getLocalVisibleRect(containerBounds)
+    }
+
+    override fun onDestroyView() {
+        Glide.clear(imageView)
+        super.onDestroyView()
     }
 }

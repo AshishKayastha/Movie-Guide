@@ -14,7 +14,6 @@ import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
-import com.ashish.movies.utils.Constants.NOT_AVAILABLE
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.show
 
@@ -143,7 +142,7 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
     }
 
     private fun isValidRating(rating: String?): Boolean {
-        return rating.isNotNullOrEmpty() && rating != NOT_AVAILABLE && rating != "0"
+        return rating.isNotNullOrEmpty() && rating != "N/A" && rating != "0"
     }
 
     override fun getCastItemClickListener() = onCastItemClickListener

@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewStub
 import butterknife.bindView
 import com.ashish.movies.R
+import com.ashish.movies.data.models.Season
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
-import com.ashish.movies.data.models.TVShowSeason
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
@@ -22,7 +22,6 @@ import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTitleAndYear
-import com.ashish.movies.utils.extensions.setTransitionName
 import icepick.State
 
 /**
@@ -36,12 +35,12 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
     private val seasonsViewStub: ViewStub by bindView(R.id.seasons_view_stub)
     private val similarTVShowsViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
-    private var seasonsAdapter: RecyclerViewAdapter<TVShowSeason>? = null
+    private var seasonsAdapter: RecyclerViewAdapter<Season>? = null
     private var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>? = null
 
     private val onSeasonItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
-            val season = seasonsAdapter?.getItem<TVShowSeason>(position)
+            val season = seasonsAdapter?.getItem<Season>(position)
             val intent = SeasonDetailActivity.createIntent(this@TVShowDetailActivity, tvShow?.id, season)
             startActivityWithTransition(view, R.string.transition_season_poster, intent)
         }
@@ -64,11 +63,6 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        posterImage.setTransitionName(R.string.transition_tv_poster)
-    }
-
     override fun injectDependencies(appComponent: AppComponent) {
         appComponent.plus(TVShowDetailModule(this)).inject(this)
     }
@@ -77,8 +71,9 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
 
     override fun getIntentExtras(extras: Bundle?) {
         tvShow = extras?.getParcelable(EXTRA_TV_SHOW)
-        posterImage.setTransitionName(R.string.transition_tv_poster)
     }
+
+    override fun getTransitionNameId() = R.string.transition_tv_poster
 
     override fun loadDetailContent() {
         presenter?.loadDetailContent(tvShow?.id)
@@ -105,7 +100,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
 
     override fun getItemTitle(): String = tvShow?.name ?: ""
 
-    override fun showSeasonsList(seasonsList: List<TVShowSeason>) {
+    override fun showSeasonsList(seasonsList: List<Season>) {
         seasonsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_SEASON,
                 onSeasonItemClickLitener)
 

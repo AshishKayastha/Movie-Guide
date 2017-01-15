@@ -8,7 +8,6 @@ import com.ashish.movies.data.models.Results
 import com.ashish.movies.data.models.SeasonDetail
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
-import com.ashish.movies.utils.ApiConstants.CREDITS_AND_SIMILAR
 import com.ashish.movies.utils.extensions.convertToFullDetailContent
 import com.ashish.movies.utils.extensions.observeOnMainThread
 import io.reactivex.Observable
@@ -26,7 +25,7 @@ class TVShowInteractor @Inject constructor(private val tvShowApi: TVShowApi, pri
     }
 
     fun getFullTVShowDetail(tvId: Long): Observable<FullDetailContent<TVShowDetail>> {
-        return tvShowApi.getTVShowDetail(tvId, CREDITS_AND_SIMILAR + ",external_ids,images,videos")
+        return tvShowApi.getTVShowDetail(tvId, "credits,similar,external_ids,images,videos")
                 .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
                 .observeOnMainThread()
     }

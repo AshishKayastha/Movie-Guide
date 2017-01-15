@@ -6,7 +6,6 @@ import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
 import com.ashish.movies.data.models.Results
-import com.ashish.movies.utils.ApiConstants.CREDITS_AND_SIMILAR
 import com.ashish.movies.utils.extensions.convertToFullDetailContent
 import com.ashish.movies.utils.extensions.observeOnMainThread
 import io.reactivex.Observable
@@ -24,7 +23,7 @@ class MovieInteractor @Inject constructor(private val movieApi: MovieApi, privat
     }
 
     fun getFullMovieDetail(movieId: Long): Observable<FullDetailContent<MovieDetail>> {
-        return movieApi.getMovieDetail(movieId, CREDITS_AND_SIMILAR + ",images,videos")
+        return movieApi.getMovieDetail(movieId, "credits,similar,images,videos")
                 .flatMap { omDbApi.convertToFullDetailContent(it.imdbId, it) }
                 .observeOnMainThread()
     }

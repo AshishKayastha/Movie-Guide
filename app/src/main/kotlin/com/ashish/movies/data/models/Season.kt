@@ -8,7 +8,7 @@ import com.squareup.moshi.Json
 import paperparcel.PaperParcel
 
 @PaperParcel
-data class TVShowSeason(
+data class Season(
         val id: Long? = null,
         @Json(name = "air_date") val airDate: String? = null,
         @Json(name = "poster_path") val posterPath: String? = null,
@@ -20,12 +20,12 @@ data class TVShowSeason(
 
     companion object {
         @JvmField @Suppress("unused")
-        val CREATOR = PaperParcelTVShowSeason.CREATOR
+        val CREATOR = PaperParcelSeason.CREATOR
     }
 
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        PaperParcelTVShowSeason.writeToParcel(this, dest, flags)
+        PaperParcelSeason.writeToParcel(this, dest, flags)
     }
 }

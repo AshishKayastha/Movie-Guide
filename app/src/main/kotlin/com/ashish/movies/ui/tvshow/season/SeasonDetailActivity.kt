@@ -8,8 +8,8 @@ import android.view.ViewStub
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Episode
+import com.ashish.movies.data.models.Season
 import com.ashish.movies.data.models.SeasonDetail
-import com.ashish.movies.data.models.TVShowSeason
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
@@ -20,7 +20,6 @@ import com.ashish.movies.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.setTitleAndYear
-import com.ashish.movies.utils.extensions.setTransitionName
 import icepick.State
 
 /**
@@ -30,7 +29,7 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
         SeasonDetailView {
 
     @JvmField @State var tvShowId: Long? = null
-    @JvmField @State var tvShowSeason: TVShowSeason? = null
+    @JvmField @State var season: Season? = null
 
     private val episodesViewStub: ViewStub by bindView(R.id.episodes_view_stub)
 
@@ -45,19 +44,14 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
     }
 
     companion object {
+        private const val EXTRA_SEASON = "season"
         private const val EXTRA_TV_SHOW_ID = "tv_show_id"
-        private const val EXTRA_TV_SHOW_SEASON = "tv_show_season"
 
-        fun createIntent(context: Context, tvShowId: Long?, tvShowSeason: TVShowSeason?): Intent {
+        fun createIntent(context: Context, tvShowId: Long?, season: Season?): Intent {
             return Intent(context, SeasonDetailActivity::class.java)
                     .putExtra(EXTRA_TV_SHOW_ID, tvShowId)
-                    .putExtra(EXTRA_TV_SHOW_SEASON, tvShowSeason)
+                    .putExtra(EXTRA_SEASON, season)
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        posterImage.setTransitionName(R.string.transition_season_poster)
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
@@ -68,17 +62,19 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
 
     override fun getIntentExtras(extras: Bundle?) {
         tvShowId = extras?.getLong(EXTRA_TV_SHOW_ID)
-        tvShowSeason = extras?.getParcelable(EXTRA_TV_SHOW_SEASON)
+        season = extras?.getParcelable(EXTRA_SEASON)
     }
 
+    override fun getTransitionNameId() = R.string.transition_season_poster
+
     override fun loadDetailContent() {
-        presenter?.setSeasonNumber(tvShowSeason?.seasonNumber!!)
+        presenter?.setSeasonNumber(season?.seasonNumber!!)
         presenter?.loadDetailContent(tvShowId)
     }
 
-    override fun getBackdropPath() = tvShowSeason?.posterPath.getOriginalImageUrl()
+    override fun getBackdropPath() = season?.posterPath.getOriginalImageUrl()
 
-    override fun getPosterPath() = tvShowSeason?.posterPath.getPosterUrl()
+    override fun getPosterPath() = season?.posterPath.getPosterUrl()
 
     override fun showDetailContent(detailContent: SeasonDetail) {
         detailContent.apply {
@@ -89,7 +85,7 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
     }
 
     override fun getItemTitle(): String {
-        return String.format(getString(R.string.season_number_format), tvShowSeason?.seasonNumber)
+        return String.format(getString(R.string.season_number_format), season?.seasonNumber)
     }
 
     override fun getDetailContentType() = ADAPTER_TYPE_SEASON

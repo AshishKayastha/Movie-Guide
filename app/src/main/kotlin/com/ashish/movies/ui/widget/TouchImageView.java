@@ -140,9 +140,9 @@ public class TouchImageView extends AppCompatImageView {
         if (type == ScaleType.FIT_START || type == ScaleType.FIT_END) {
             throw new UnsupportedOperationException("TouchImageView does not support FIT_START or FIT_END");
         }
+
         if (type == ScaleType.MATRIX) {
             super.setScaleType(ScaleType.MATRIX);
-
         } else {
             mScaleType = type;
             if (mOnDrawReady) {
@@ -281,7 +281,9 @@ public class TouchImageView extends AppCompatImageView {
      */
     public void setZoom(TouchImageView img) {
         PointF center = img.getScrollPosition();
-        setZoom(img.getCurrentZoom(), center.x, center.y, img.getScaleType());
+        if (center != null) {
+            setZoom(img.getCurrentZoom(), center.x, center.y, img.getScaleType());
+        }
     }
 
     /**
@@ -655,8 +657,7 @@ public class TouchImageView extends AppCompatImageView {
             overScroller = new OverScroller(context);
         }
 
-        void fling(int startX, int startY, int velocityX, int velocityY, int minX, int maxX,
-                   int minY, int maxY) {
+        void fling(int startX, int startY, int velocityX, int velocityY, int minX, int maxX, int minY, int maxY) {
             overScroller.fling(startX, startY, velocityX, velocityY, minX, maxX, minY, maxY);
         }
 
@@ -701,8 +702,6 @@ public class TouchImageView extends AppCompatImageView {
      * to the view's listener.
      */
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        GestureListener() {}
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -760,8 +759,6 @@ public class TouchImageView extends AppCompatImageView {
         // Remember last point position for dragging
         private final PointF last = new PointF();
 
-        PrivateOnTouchListener() {}
-
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             mScaleDetector.onTouchEvent(event);
@@ -818,8 +815,6 @@ public class TouchImageView extends AppCompatImageView {
      * ScaleListener detects user two finger scaling and scales image.
      */
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        ScaleListener() {}
-
         @Override
         public boolean onScaleBegin(ScaleGestureDetector detector) {
             setState(State.ZOOM);

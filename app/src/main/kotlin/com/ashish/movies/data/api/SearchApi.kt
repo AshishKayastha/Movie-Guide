@@ -12,6 +12,6 @@ import retrofit2.http.Query
 interface SearchApi {
 
     @GET("search/multi")
-    fun getMultiSearchResults(@Query("query") query: String, @Query("page") page: Int = 1):
-            Observable<Results<MultiSearch>>
+    fun getMultiSearchResults(@Query("query") query: String,
+                              @Query("page") page: Int = 1): Observable<Results<MultiSearch>>
 }

@@ -12,7 +12,6 @@ import com.ashish.movies.ui.base.detail.FullDetailContentActivity
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.setTitleAndYear
-import com.ashish.movies.utils.extensions.setTransitionName
 import icepick.State
 
 /**
@@ -34,11 +33,6 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetai
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        posterImage.setTransitionName(R.string.transition_episode_image)
-    }
-
     override fun injectDependencies(appComponent: AppComponent) {
         appComponent.plus(EpisodeDetailModule(this)).inject(this)
     }
@@ -49,6 +43,8 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetai
         tvShowId = extras?.getLong(EXTRA_TV_SHOW_ID)
         episode = extras?.getParcelable(EXTRA_EPISODE)
     }
+
+    override fun getTransitionNameId() = R.string.transition_episode_image
 
     override fun loadDetailContent() {
         presenter?.setSeasonAndEpisodeNumber(episode?.seasonNumber!!, episode?.episodeNumber!!)

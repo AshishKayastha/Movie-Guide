@@ -18,7 +18,6 @@ import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTitleAndYear
-import com.ashish.movies.utils.extensions.setTransitionName
 import icepick.State
 
 /**
@@ -50,11 +49,6 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        posterImage.setTransitionName(R.string.transition_movie_poster)
-    }
-
     override fun injectDependencies(appComponent: AppComponent) {
         appComponent.plus(MovieDetailModule(this)).inject(this)
     }
@@ -64,6 +58,8 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
     override fun getIntentExtras(extras: Bundle?) {
         movie = extras?.getParcelable(EXTRA_MOVIE)
     }
+
+    override fun getTransitionNameId() = R.string.transition_movie_poster
 
     override fun loadDetailContent() {
         presenter?.loadDetailContent(movie?.id)

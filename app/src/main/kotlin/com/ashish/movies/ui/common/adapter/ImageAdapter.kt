@@ -22,7 +22,7 @@ class ImageAdapter(val imageUrlList: ArrayList<String>, var onItemClickListener:
     }
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
-        holder.bindData(imageUrlList[position])
+        holder.bindData(imageUrlList[position], position)
     }
 
     override fun getItemCount() = imageUrlList.size
@@ -40,14 +40,15 @@ class ImageAdapter(val imageUrlList: ArrayList<String>, var onItemClickListener:
 
         val imageView: ImageView by bindView(R.id.detail_content_image)
 
-        fun bindData(imageUrl: String) {
+        fun bindData(imageUrl: String, position: Int) {
             Glide.with(imageView.context)
                     .load(imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .dontAnimate()
                     .into(imageView)
 
-            itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
+            imageView.transitionName = "image_$position"
+            itemView.setOnClickListener { onItemClickListener?.onItemClick(position, it) }
         }
     }
 }
