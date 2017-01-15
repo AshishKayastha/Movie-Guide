@@ -23,6 +23,7 @@ import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTitleAndYear
 import com.ashish.movies.utils.extensions.setTransitionName
+import icepick.State
 
 /**
  * Created by Ashish on Jan 03.
@@ -30,10 +31,11 @@ import com.ashish.movies.utils.extensions.setTransitionName
 class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetailView, TVShowDetailPresenter>(),
         TVShowDetailView {
 
+    @JvmField @State var tvShow: TVShow? = null
+
     private val seasonsViewStub: ViewStub by bindView(R.id.seasons_view_stub)
     private val similarTVShowsViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
-    private var tvShow: TVShow? = null
     private var seasonsAdapter: RecyclerViewAdapter<TVShowSeason>? = null
     private var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>? = null
 
@@ -60,6 +62,11 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
             return Intent(context, TVShowDetailActivity::class.java)
                     .putExtra(EXTRA_TV_SHOW, tvShow)
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        posterImage.setTransitionName(R.string.transition_tv_poster)
     }
 
     override fun injectDependencies(appComponent: AppComponent) {

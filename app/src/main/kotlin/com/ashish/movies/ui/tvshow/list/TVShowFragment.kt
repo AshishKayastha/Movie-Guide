@@ -39,8 +39,8 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow, BaseRecyclerViewMvpView<
         emptyImageView.setImageResource(R.drawable.ic_tv_white_100dp)
     }
 
-    override fun getFragmentArguments() {
-        type = arguments.getInt(ARG_TV_SHOW_TYPE)
+    override fun getFragmentArguments(arguments: Bundle?) {
+        type = arguments?.getInt(ARG_TV_SHOW_TYPE)
     }
 
     override fun getAdapterType() = ADAPTER_TYPE_TV_SHOW

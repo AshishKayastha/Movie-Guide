@@ -13,14 +13,15 @@ import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.setTitleAndYear
 import com.ashish.movies.utils.extensions.setTransitionName
+import icepick.State
 
 /**
  * Created by Ashish on Jan 08.
  */
 class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetailView<EpisodeDetail>, EpisodeDetailPresenter>() {
 
-    private var tvShowId: Long? = null
-    private var episode: Episode? = null
+    @JvmField @State var tvShowId: Long? = null
+    @JvmField @State var episode: Episode? = null
 
     companion object {
         private const val EXTRA_EPISODE = "episode"
@@ -33,6 +34,11 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetai
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        posterImage.setTransitionName(R.string.transition_episode_image)
+    }
+
     override fun injectDependencies(appComponent: AppComponent) {
         appComponent.plus(EpisodeDetailModule(this)).inject(this)
     }
@@ -42,7 +48,6 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetai
     override fun getIntentExtras(extras: Bundle?) {
         tvShowId = extras?.getLong(EXTRA_TV_SHOW_ID)
         episode = extras?.getParcelable(EXTRA_EPISODE)
-        posterImage.setTransitionName(R.string.transition_episode_image)
     }
 
     override fun loadDetailContent() {

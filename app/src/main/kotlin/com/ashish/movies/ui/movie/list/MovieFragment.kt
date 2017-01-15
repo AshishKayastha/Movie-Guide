@@ -39,8 +39,8 @@ class MovieFragment : BaseRecyclerViewFragment<Movie, BaseRecyclerViewMvpView<Mo
         emptyImageView.setImageResource(R.drawable.ic_movie_white_100dp)
     }
 
-    override fun getFragmentArguments() {
-        type = arguments.getInt(ARG_MOVIE_TYPE)
+    override fun getFragmentArguments(arguments: Bundle?) {
+        type = arguments?.getInt(ARG_MOVIE_TYPE)
     }
 
     override fun getAdapterType() = ADAPTER_TYPE_MOVIE

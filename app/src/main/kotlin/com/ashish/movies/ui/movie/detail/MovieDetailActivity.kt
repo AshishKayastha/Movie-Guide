@@ -19,6 +19,7 @@ import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.setTitleAndYear
 import com.ashish.movies.utils.extensions.setTransitionName
+import icepick.State
 
 /**
  * Created by Ashish on Dec 31.
@@ -26,9 +27,10 @@ import com.ashish.movies.utils.extensions.setTransitionName
 class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailView, MovieDetailPresenter>(),
         MovieDetailView {
 
+    @JvmField @State var movie: Movie? = null
+
     private val similarMoviesViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
-    private var movie: Movie? = null
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
 
     companion object {
@@ -48,6 +50,11 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        posterImage.setTransitionName(R.string.transition_movie_poster)
+    }
+
     override fun injectDependencies(appComponent: AppComponent) {
         appComponent.plus(MovieDetailModule(this)).inject(this)
     }
@@ -56,7 +63,6 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
 
     override fun getIntentExtras(extras: Bundle?) {
         movie = extras?.getParcelable(EXTRA_MOVIE)
-        posterImage.setTransitionName(R.string.transition_movie_poster)
     }
 
     override fun loadDetailContent() {

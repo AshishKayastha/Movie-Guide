@@ -23,13 +23,14 @@ import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_PERSON
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.setTransitionName
+import icepick.State
 
 /**
  * Created by Ashish on Jan 04.
  */
 class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<PersonDetail>, PersonDetailPresenter>() {
 
-    private var person: Person? = null
+    @JvmField @State var person: Person? = null
 
     private val onCastItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -68,6 +69,11 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        posterImage.setTransitionName(R.string.transition_person_profile)
+    }
+
     override fun injectDependencies(appComponent: AppComponent) {
         appComponent.plus(PersonDetailModule(this)).inject(this)
     }
@@ -76,7 +82,6 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
 
     override fun getIntentExtras(extras: Bundle?) {
         person = extras?.getParcelable(EXTRA_PERSON)
-        posterImage.setTransitionName(R.string.transition_person_profile)
     }
 
     override fun loadDetailContent() {

@@ -45,6 +45,7 @@ kapt {
 }
 
 repositories {
+    maven { url "https://clojars.org/repo/" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
@@ -76,6 +77,10 @@ dependencies {
     // Dagger 2
     compile "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    // IcePick
+    compile "frankiesardo:icepick:${icepickVersion}"
+    kapt "frankiesardo:icepick-processor:${icepickVersion}"
 
     // Paper Parcel
     compile "nz.bradcampbell:paperparcel:$paperParcelVersion"

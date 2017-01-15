@@ -9,6 +9,7 @@ import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseActivity
 import com.ashish.movies.ui.widget.DepthPageTransformer
 import com.ashish.movies.utils.extensions.changeViewGroupTextFont
+import icepick.State
 import java.util.*
 
 /**
@@ -18,9 +19,9 @@ class ImageViewerActivity : BaseActivity() {
 
     private val viewPager: ViewPager by bindView(R.id.view_pager)
 
-    private var title: String = ""
-    private var currentPosition: Int = 0
-    private var imageUrlList: ArrayList<String>? = null
+    @JvmField @State var title: String = ""
+    @JvmField @State var currentPosition: Int = 0
+    @JvmField @State var imageUrlList: ArrayList<String>? = null
 
     companion object {
         private const val EXTRA_TITLE = "title"
@@ -38,13 +39,6 @@ class ImageViewerActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (savedInstanceState == null) {
-            val extras = intent.extras
-            title = extras?.getString(EXTRA_TITLE) ?: ""
-            currentPosition = extras?.getInt(EXTRA_CURRENT_POSITION) ?: 0
-            imageUrlList = extras?.getStringArrayList(EXTRA_IMAGE_URL_LIST)
-        }
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -72,6 +66,12 @@ class ImageViewerActivity : BaseActivity() {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
         })
+    }
+
+    override fun getIntentExtras(extras: Bundle?) {
+        title = extras?.getString(EXTRA_TITLE) ?: ""
+        currentPosition = extras?.getInt(EXTRA_CURRENT_POSITION) ?: 0
+        imageUrlList = extras?.getStringArrayList(EXTRA_IMAGE_URL_LIST)
     }
 
     private fun setImageCountTitle() {

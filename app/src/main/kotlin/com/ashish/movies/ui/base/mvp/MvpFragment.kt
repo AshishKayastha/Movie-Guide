@@ -1,7 +1,6 @@
 package com.ashish.movies.ui.base.mvp
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
 import android.view.LayoutInflater
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import com.ashish.movies.R
 import com.ashish.movies.app.MoviesApp
 import com.ashish.movies.di.components.AppComponent
+import com.ashish.movies.ui.base.common.BaseFragment
 import com.ashish.movies.utils.extensions.inflate
 import com.ashish.movies.utils.extensions.showSnackBar
 import com.ashish.movies.utils.extensions.showToast
@@ -19,7 +19,7 @@ import javax.inject.Provider
 /**
  * Created by Ashish on Dec 26.
  */
-abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpView, LoaderManager.LoaderCallbacks<P> {
+abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : BaseFragment(), MvpView, LoaderManager.LoaderCallbacks<P> {
 
     companion object {
         private const val LOADER_ID = 1002
@@ -43,8 +43,6 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : Fragment(), MvpVie
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(getLayoutId())
     }
-
-    abstract fun getLayoutId(): Int
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

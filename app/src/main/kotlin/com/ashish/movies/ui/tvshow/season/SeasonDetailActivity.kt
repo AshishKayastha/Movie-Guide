@@ -21,6 +21,7 @@ import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.setTitleAndYear
 import com.ashish.movies.utils.extensions.setTransitionName
+import icepick.State
 
 /**
  * Created by Ashish on Jan 07.
@@ -28,10 +29,11 @@ import com.ashish.movies.utils.extensions.setTransitionName
 class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetailView, SeasonDetailPresenter>(),
         SeasonDetailView {
 
+    @JvmField @State var tvShowId: Long? = null
+    @JvmField @State var tvShowSeason: TVShowSeason? = null
+
     private val episodesViewStub: ViewStub by bindView(R.id.episodes_view_stub)
 
-    private var tvShowId: Long? = null
-    private var tvShowSeason: TVShowSeason? = null
     private var episodesAdapter: RecyclerViewAdapter<Episode>? = null
 
     private val onEpisodeItemClickLitener = object : OnItemClickListener {
@@ -53,6 +55,11 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        posterImage.setTransitionName(R.string.transition_season_poster)
+    }
+
     override fun injectDependencies(appComponent: AppComponent) {
         appComponent.plus(SeasonDetailModule(this)).inject(this)
     }
@@ -62,7 +69,6 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
     override fun getIntentExtras(extras: Bundle?) {
         tvShowId = extras?.getLong(EXTRA_TV_SHOW_ID)
         tvShowSeason = extras?.getParcelable(EXTRA_TV_SHOW_SEASON)
-        posterImage.setTransitionName(R.string.transition_season_poster)
     }
 
     override fun loadDetailContent() {

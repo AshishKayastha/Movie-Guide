@@ -20,7 +20,12 @@ import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.getActivityOptionsCompat
+import com.ashish.movies.utils.extensions.getPosterImagePair
+import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.setVisibility
+import com.ashish.movies.utils.extensions.show
+import icepick.State
 
 /**
  * Created by Ashish on Dec 30.
@@ -28,6 +33,8 @@ import com.ashish.movies.utils.extensions.*
 abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpView<I>,
         P : BaseRecyclerViewPresenter<I, V>> : MvpFragment<V, P>(), BaseRecyclerViewMvpView<I>,
         SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
+
+    @JvmField @State var type: Int? = null
 
     protected val emptyContentView: View by bindView(R.id.empty_view)
     protected val progressBar: ProgressBar by bindView(R.id.progress_bar)
@@ -37,8 +44,6 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     protected val swipeRefreshLayout: MultiSwipeRefreshLayout by bindView(R.id.swipe_refresh)
 
     protected lateinit var recyclerViewAdapter: RecyclerViewAdapter<I>
-
-    protected var type: Int? = null
 
     protected val scrollListener: InfiniteScrollListener = object : InfiniteScrollListener() {
         override fun onLoadMore(currentPage: Int) {
@@ -52,11 +57,8 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getFragmentArguments()
         initViews()
     }
-
-    protected open fun getFragmentArguments() {}
 
     protected open fun initViews() {
         recyclerViewAdapter = RecyclerViewAdapter(adapterType = getAdapterType(), onItemClickListener = this)

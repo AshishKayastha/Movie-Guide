@@ -2,9 +2,10 @@ buildscript {
     ext {
         daggerVersion = '2.8'
         kotlinVersion = '1.0.6'
+        icepickVersion = '3.2.0'
         leakCanaryVersion = '1.5'
         retrofitVersion = '2.1.0'
-        supportLibVersion = '25.0.1'
+        supportLibVersion = '25.1.0'
         paperParcelVersion = '2.0.0-beta2'
     }
 

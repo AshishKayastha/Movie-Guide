@@ -138,10 +138,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if (savedInstanceState == null) {
-            getIntentExtras(intent.extras)
-        }
-
         supportPostponeEnterTransition()
 
         showPosterImage(getPosterPath())
@@ -155,8 +151,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         collapsingToolbar.setExpandedTitleTypeface(regularFont)
         collapsingToolbar.setCollapsedTitleTypeface(regularFont)
     }
-
-    abstract fun getIntentExtras(extras: Bundle?)
 
     abstract fun loadDetailContent(): Unit
 
