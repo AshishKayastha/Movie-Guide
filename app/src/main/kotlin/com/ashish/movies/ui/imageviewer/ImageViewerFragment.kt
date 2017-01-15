@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.ImageView
@@ -15,6 +17,7 @@ import com.ashish.movies.ui.widget.TouchImageView
 import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.show
+import com.ashish.movies.utils.systemuihelper.SystemUiHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
@@ -53,7 +56,16 @@ class ImageViewerFragment : BaseFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         imageView.transitionName = "image_$position"
+        loadImage()
+        handleTouchEvent()
+    }
 
+    override fun getFragmentArguments(arguments: Bundle?) {
+        imageUrl = arguments?.getString(ARG_IMAGE_URL)
+        position = arguments?.getInt(ARG_POSITION) ?: 0
+    }
+
+    private fun loadImage() {
         if (imageUrl.isNotNullOrEmpty()) {
             progressBar.show()
             Glide.with(activity)
@@ -71,11 +83,6 @@ class ImageViewerFragment : BaseFragment() {
                         }
                     })
         }
-    }
-
-    override fun getFragmentArguments(arguments: Bundle?) {
-        imageUrl = arguments?.getString(ARG_IMAGE_URL)
-        position = arguments?.getInt(ARG_POSITION) ?: 0
     }
 
     private fun startEnterTransition() {
@@ -101,6 +108,37 @@ class ImageViewerFragment : BaseFragment() {
         val containerBounds = Rect()
         container.getHitRect(containerBounds)
         return view.getLocalVisibleRect(containerBounds)
+    }
+
+    private fun handleTouchEvent() {
+        if (activity != null) {
+            val detector = GestureDetector(activity, object : GestureDetector.SimpleOnGestureListener() {
+                override fun onDown(event: MotionEvent) = true
+
+                override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
+                    toggleSystemUiVisibility()
+                    return true
+                }
+            })
+
+            imageView.setOnTouchListener { view, event -> detector.onTouchEvent(event) }
+        }
+    }
+
+    private fun toggleSystemUiVisibility() {
+        val systemUiHelper = getSystemUiHelper()
+        if (systemUiHelper != null) {
+            if (systemUiHelper.isShowing) {
+                systemUiHelper.hide()
+            } else {
+                systemUiHelper.show()
+                systemUiHelper.delayHide(ImageViewerActivity.SHOW_UI_MILLIS)
+            }
+        }
+    }
+
+    private fun getSystemUiHelper(): SystemUiHelper? {
+        return if (activity != null) (activity as ImageViewerActivity).systemUiHelper else null
     }
 
     override fun onDestroyView() {

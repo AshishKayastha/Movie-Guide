@@ -26,6 +26,15 @@
         <item name="android:statusBarColor">#01000000</item>
     </style>
 
+    <style name="ImageViewerTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">#55202020</item>
+        <item name="android:navigationBarColor">#55202020</item>
+        <item name="android:windowBackground">@color/image_view_bg_color</item>
+    </style>
+
     <style name="Match">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

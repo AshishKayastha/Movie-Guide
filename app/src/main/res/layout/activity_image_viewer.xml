@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/Toolbar"
-        android:elevation="@dimen/toolbar_elevation" />
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize" />
+        style="@style/Match" />
+
+    <LinearLayout
+        android:id="@+id/appbar_wrapper"
+        style="@style/Match.Width">
+
+        <com.ashish.movies.ui.widget.IgnoreBottomInsetFrameLayout
+            android:id="@+id/app_bar"
+            style="@style/Match.Width"
+            android:background="#36202020"
+            android:elevation="@dimen/toolbar_elevation"
+            android:fitsSystemWindows="true"
+            app:contentInsetStart="@dimen/second_keyline">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Toolbar"
+                android:background="@null" />
+
+        </com.ashish.movies.ui.widget.IgnoreBottomInsetFrameLayout>
+
+    </LinearLayout>
 
 </merge>
