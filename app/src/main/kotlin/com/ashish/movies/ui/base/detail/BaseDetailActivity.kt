@@ -13,6 +13,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.SharedElementCallback
 import android.support.v4.util.Pair
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
@@ -184,9 +185,9 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        playTrailerFAB?.hide()
         posterImage.setTransitionName(getTransitionNameId())
         showPosterImage(getPosterPath())
-        appBarLayout.addOnOffsetChangedListener(this)
 
         sharedElementEnterTransition = window.sharedElementEnterTransition
         sharedElementEnterTransition?.addListener(transitionListener)
@@ -305,6 +306,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         detailContainer.show()
         showOrHideIMDbMenu()
         changeMenuItemFont()
+        appBarLayout.addOnOffsetChangedListener(this)
     }
 
     override fun showDetailContentList(contentList: List<String>) {
@@ -384,6 +386,12 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+        playTrailerFAB?.apply {
+            val isCollapsing = collapsingToolbar.height + verticalOffset <
+                    2.4 * ViewCompat.getMinimumHeight(collapsingToolbar)
+            if (isCollapsing) hide() else show()
+        }
+
         if (appBarLayout.totalScrollRange + verticalOffset == 0) {
             collapsingToolbar.title = getItemTitle()
         } else {
