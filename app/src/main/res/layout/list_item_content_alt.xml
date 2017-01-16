@@ -13,10 +13,10 @@
 
         <com.ashish.movies.ui.widget.AspectRatioImageView
             android:id="@+id/poster_image"
-            android:layout_width="220dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            app:heightRatio="1.5"
+            app:heightRatio="1.2"
             tools:ignore="ContentDescription" />
 
         <LinearLayout

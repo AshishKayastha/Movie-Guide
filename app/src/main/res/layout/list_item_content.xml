@@ -15,7 +15,7 @@
             android:id="@+id/poster_image"
             style="@style/Match.Width"
             android:scaleType="centerCrop"
-            app:heightRatio="1.5"
+            app:heightRatio="1.3"
             tools:ignore="ContentDescription" />
 
         <com.ashish.movies.ui.widget.LabelLayout

@@ -58,7 +58,6 @@ import com.ashish.movies.utils.extensions.animateBackgroundColorChange
 import com.ashish.movies.utils.extensions.animateColorChange
 import com.ashish.movies.utils.extensions.animateTextColorChange
 import com.ashish.movies.utils.extensions.changeMenuFont
-import com.ashish.movies.utils.extensions.dpToPx
 import com.ashish.movies.utils.extensions.getActivityOptionsCompat
 import com.ashish.movies.utils.extensions.getColorCompat
 import com.ashish.movies.utils.extensions.getOverflowMenuButton
@@ -176,11 +175,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
             val intent = ImageViewerActivity.createIntent(this, title, position, imageUrlList!!)
             ActivityCompat.startActivity(this, intent, options?.toBundle())
         }
-    }
-
-    companion object {
-        @JvmStatic val ITEM_SPACING = 8f.dpToPx().toInt()
-        @JvmStatic val ITEM_SPACING_SMALL = 4f.dpToPx().toInt()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -336,8 +330,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun showImageList(imageUrlList: ArrayList<String>) {
         imageAdapter = ImageAdapter(imageUrlList, onImageItemClickListener)
-        imagesRecyclerView = inflateViewStubRecyclerView(imagesViewStub, R.id.detail_images_recycler_view, imageAdapter!!,
-                ITEM_SPACING_SMALL)
+        imagesRecyclerView = inflateViewStubRecyclerView(imagesViewStub, R.id.detail_images_recycler_view, imageAdapter!!)
     }
 
     override fun showTrailerFAB(trailerUrl: String) {
@@ -365,15 +358,15 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     abstract fun getCrewItemClickListener(): OnItemClickListener?
 
-    protected fun inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int, adapter: RecyclerView.Adapter<*>,
-                                              spacing: Int = ITEM_SPACING): RecyclerView {
+    protected fun inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
+                                              adapter: RecyclerView.Adapter<*>): RecyclerView {
         val inflatedView = viewStub.inflate()
         val recyclerView = inflatedView.findViewById(viewId) as RecyclerView
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         recyclerView.apply {
             recyclerView.layoutManager = layoutManager
-            addItemDecoration(ItemOffsetDecoration(spacing))
+            addItemDecoration(ItemOffsetDecoration())
             recyclerView.adapter = adapter
             val snapHelper = GravitySnapHelper(Gravity.START)
             snapHelper.attachToRecyclerView(this)
@@ -383,9 +376,9 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     protected fun <I : ViewType> inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
-                                                             adapter: RecyclerViewAdapter<I>, itemList: List<I>,
-                                                             spacing: Int = ITEM_SPACING): RecyclerView {
-        val recyclerView = inflateViewStubRecyclerView(viewStub, viewId, adapter, spacing)
+                                                             adapter: RecyclerViewAdapter<I>,
+                                                             itemList: List<I>): RecyclerView {
+        val recyclerView = inflateViewStubRecyclerView(viewStub, viewId, adapter)
         adapter.showItemList(itemList)
         return recyclerView
     }
