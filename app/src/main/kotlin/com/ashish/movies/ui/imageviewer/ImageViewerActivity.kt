@@ -39,6 +39,12 @@ class ImageViewerActivity : BaseActivity() {
     private lateinit var imageViewerAdapter: ImageViewerAdapter
 
     private val callback = object : SharedElementCallback() {
+        override fun onSharedElementStart(sharedElementNames: MutableList<String>?, sharedElements: MutableList<View>?,
+                                          sharedElementSnapshots: MutableList<View>?) {
+            super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)
+            imageViewerAdapter.getRegisteredFragment(currentPosition)?.loadThumbnail()
+        }
+
         override fun onMapSharedElements(names: MutableList<String>, sharedElements: MutableMap<String, View>) {
             if (isReturning) {
                 val sharedElement = imageViewerAdapter.getRegisteredFragment(currentPosition)?.getImageView()
@@ -99,7 +105,7 @@ class ImageViewerActivity : BaseActivity() {
 
         toolbar?.changeViewGroupTextFont()
 
-        imageViewerAdapter = ImageViewerAdapter(supportFragmentManager, imageUrlList!!, startingPosition)
+        imageViewerAdapter = ImageViewerAdapter(supportFragmentManager, imageUrlList!!)
         viewPager.apply {
             adapter = imageViewerAdapter
             currentItem = currentPosition

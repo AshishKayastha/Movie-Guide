@@ -131,10 +131,9 @@
     </style>
 
     <style name="RatingView" parent="Wrap">
-        <item name="android:minWidth">50dp</item>
+        <item name="android:minWidth">44dp</item>
         <item name="android:layout_marginStart">@dimen/spacing_medium</item>
         <item name="android:layout_marginEnd">@dimen/spacing_medium</item>
-        <item name="android:foreground">?android:selectableItemBackground</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:visibility">gone</item>
     </style>
@@ -153,7 +152,8 @@
         <item name="fontName">@string/font_montserrat_regular</item>
     </style>
 
-    <style name="RatingText.SmallMargin">
+    <style name="RatingText.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:layout_marginTop">@dimen/spacing_micro</item>
     </style>
 </resources>

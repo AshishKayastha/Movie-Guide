@@ -8,7 +8,6 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.utils.extensions.inflate
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import java.util.*
 
 /**
@@ -43,8 +42,8 @@ class ImageAdapter(val imageUrlList: ArrayList<String>, var onItemClickListener:
         fun bindData(imageUrl: String, position: Int) {
             Glide.with(imageView.context)
                     .load(imageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontAnimate()
+                    .asBitmap()
+                    .override(473, 473)
                     .into(imageView)
 
             imageView.transitionName = "image_$position"

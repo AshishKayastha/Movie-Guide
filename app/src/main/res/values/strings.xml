@@ -114,6 +114,7 @@
     <string name="genre_western">Western</string>
 
     <!-- Rating -->
+    <string name="votes_count_format">%s votes</string>
     <string name="flixter">Flixter</string>
     <string name="tomatometer">Tomatometer</string>
     <string name="metascore_txt">Metascore</string>

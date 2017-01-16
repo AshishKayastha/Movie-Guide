@@ -54,6 +54,7 @@ import com.ashish.movies.utils.Constants.IMDB_BASE_URL
 import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.GravitySnapHelper
+import com.ashish.movies.utils.TransitionListenerAdapter
 import com.ashish.movies.utils.Utils
 import com.ashish.movies.utils.extensions.animateBackgroundColorChange
 import com.ashish.movies.utils.extensions.animateColorChange
@@ -145,19 +146,10 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         }
     }
 
-    protected val transitionListener = object : Transition.TransitionListener {
-        override fun onTransitionStart(transition: Transition) {}
+    private val transitionListener = object : TransitionListenerAdapter() {
+        override fun onTransitionEnd(transition: Transition) = startLoadingDetailContent()
 
-        override fun onTransitionEnd(transition: Transition) {
-            startLoadingDetailContent()
-        }
-
-        override fun onTransitionCancel(transition: Transition) {
-            startLoadingDetailContent()
-        }
-
-        override fun onTransitionPause(transition: Transition) {}
-        override fun onTransitionResume(transition: Transition) {}
+        override fun onTransitionCancel(transition: Transition) = startLoadingDetailContent()
     }
 
     private val onImageItemClickListener = object : OnItemClickListener {
@@ -286,7 +278,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     fun showPosterImage(posterImagePath: String) {
         if (posterImagePath.isNotEmpty()) {
             posterImage.loadPaletteBitmap(posterImagePath) {
-                supportStartPostponedEnterTransition()
+                startPostponedEnterTransition()
 
                 it.setPaletteColor { swatch ->
                     titleText.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
@@ -472,6 +464,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         crewAdapter?.removeListener()
         imageAdapter?.removeListener()
         removeSharedElementTransitionListener()
+        imagesRecyclerView?.adapter = null
         appBarLayout.removeOnOffsetChangedListener(this)
     }
 }

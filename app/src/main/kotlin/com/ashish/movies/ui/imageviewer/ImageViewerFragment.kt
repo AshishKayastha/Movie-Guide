@@ -1,26 +1,26 @@
 package com.ashish.movies.ui.imageviewer
 
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.transition.Transition
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.ImageView
-import android.widget.ProgressBar
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseFragment
 import com.ashish.movies.ui.widget.TouchImageView
-import com.ashish.movies.utils.extensions.hide
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.show
+import com.ashish.movies.utils.TransitionListenerAdapter
 import com.ashish.movies.utils.systemuihelper.SystemUiHelper
+import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.Target
 import icepick.State
 
 /**
@@ -30,21 +30,22 @@ class ImageViewerFragment : BaseFragment() {
 
     @JvmField @State var position: Int = 0
     @JvmField @State var imageUrl: String? = null
-    @JvmField @State var startingPosition: Int = 0
 
     private val imageView: TouchImageView by bindView(R.id.image_view)
-    private val progressBar: ProgressBar by bindView(R.id.progress_bar)
+
+    private var fullBitmap: BitmapRequestBuilder<String, Bitmap>? = null
+    private var thumbBitmap: BitmapRequestBuilder<String, Bitmap>? = null
 
     companion object {
+        private val THUMBNAIL_SIZE = 473
+
         private const val ARG_POSITION = "position"
         private const val ARG_IMAGE_URL = "image_url"
-        private const val ARG_STARTING_POSITION = "starting_position"
 
-        fun newInstance(position: Int, startingPosition: Int, imageUrl: String?): ImageViewerFragment {
+        fun newInstance(position: Int, imageUrl: String?): ImageViewerFragment {
             val args = Bundle()
             args.putInt(ARG_POSITION, position)
             args.putString(ARG_IMAGE_URL, imageUrl)
-            args.putInt(ARG_STARTING_POSITION, startingPosition)
             val fragment = ImageViewerFragment()
             fragment.arguments = args
             return fragment
@@ -55,8 +56,8 @@ class ImageViewerFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        imageView.transitionName = "image_$position"
-        loadImage()
+        setupGlide()
+        setupImage()
         handleTouchEvent()
     }
 
@@ -65,43 +66,52 @@ class ImageViewerFragment : BaseFragment() {
         position = arguments?.getInt(ARG_POSITION) ?: 0
     }
 
-    private fun loadImage() {
-        if (imageUrl.isNotNullOrEmpty()) {
-            progressBar.show()
-            Glide.with(activity)
-                    .load(imageUrl)
-                    .asBitmap()
-                    .into(object : SimpleTarget<Bitmap>() {
-                        override fun onResourceReady(bitmap: Bitmap?, animation: GlideAnimation<in Bitmap>?) {
-                            progressBar.hide()
-                            if (bitmap != null) imageView.setImageBitmap(bitmap)
-                            startEnterTransition()
-                        }
+    private fun setupGlide() {
+        thumbBitmap = Glide.with(this)
+                .load(imageUrl)
+                .asBitmap()
+                .override(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
 
-                        override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
-                            startEnterTransition()
-                        }
-                    })
-        }
+        fullBitmap = Glide.with(this)
+                .load(imageUrl)
+                .asBitmap()
+                .override(Resources.getSystem().displayMetrics.widthPixels, Target.SIZE_ORIGINAL)
     }
 
-    private fun startEnterTransition() {
-        if (position == startingPosition) {
-            imageView.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    imageView.viewTreeObserver.removeOnPreDrawListener(this)
-                    activity?.startPostponedEnterTransition()
-                    return true
-                }
-            })
-        }
+    fun loadThumbnail() {
+        thumbBitmap?.into(object : SimpleTarget<Bitmap>() {
+            override fun onResourceReady(bitmap: Bitmap?, animation: GlideAnimation<in Bitmap>?) {
+                if (bitmap != null) imageView.setImageBitmap(bitmap)
+                activity?.startPostponedEnterTransition()
+            }
+
+            override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
+                activity?.startPostponedEnterTransition()
+            }
+        })
+    }
+
+    private fun loadFullImage() {
+        fullBitmap?.thumbnail(thumbBitmap)?.into(imageView)
+    }
+
+    private fun setupImage() {
+        imageView.transitionName = "image_$position"
+
+        val activity = activity as? ImageViewerActivity
+        activity?.window?.sharedElementEnterTransition?.addListener(object : TransitionListenerAdapter() {
+            override fun onTransitionEnd(transition: Transition) {
+                activity.window.sharedElementEnterTransition.removeListener(this)
+                loadFullImage()
+            }
+        })
+
+        loadThumbnail()
+        fullBitmap?.preload()
     }
 
     fun getImageView(): ImageView? {
-        if (isViewInBounds(activity.window.decorView, imageView)) {
-            return imageView
-        }
-        return null
+        return if (isViewInBounds(activity.window.decorView, imageView)) imageView else null
     }
 
     private fun isViewInBounds(container: View, view: View): Boolean {

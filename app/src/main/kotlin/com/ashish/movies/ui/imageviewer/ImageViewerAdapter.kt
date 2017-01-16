@@ -10,13 +10,12 @@ import java.util.*
 /**
  * Created by Ashish on Jan 08.
  */
-class ImageViewerAdapter(fm: FragmentManager, val imageUrlList: ArrayList<String>, val startingPosition: Int)
-    : FragmentStatePagerAdapter(fm) {
+class ImageViewerAdapter(fm: FragmentManager, val imageUrlList: ArrayList<String>) : FragmentStatePagerAdapter(fm) {
 
     private var registeredFragments = SparseArray<ImageViewerFragment>()
 
     override fun getItem(position: Int): Fragment {
-        return ImageViewerFragment.newInstance(position, startingPosition, imageUrlList[position])
+        return ImageViewerFragment.newInstance(position, imageUrlList[position])
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {

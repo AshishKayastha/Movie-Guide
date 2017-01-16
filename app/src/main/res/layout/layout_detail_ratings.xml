@@ -39,8 +39,8 @@
 
                 <com.ashish.movies.ui.widget.FontTextView
                     android:id="@+id/imdb_votes_text"
-                    style="@style/RatingText.SmallMargin"
-                    tools:text="195,145" />
+                    style="@style/RatingText.Small"
+                    tools:text="195,145 votes" />
 
             </LinearLayout>
 
@@ -61,7 +61,7 @@
                     tools:text="8.3" />
 
                 <com.ashish.movies.ui.widget.FontTextView
-                    style="@style/RatingText.SmallMargin"
+                    style="@style/RatingText.Small"
                     android:text="@string/tomatometer" />
 
             </LinearLayout>
@@ -83,7 +83,7 @@
                     tools:text="4.2" />
 
                 <com.ashish.movies.ui.widget.FontTextView
-                    style="@style/RatingText.SmallMargin"
+                    style="@style/RatingText.Small"
                     android:text="@string/flixter" />
 
             </LinearLayout>
@@ -109,7 +109,7 @@
                     tools:text="80" />
 
                 <com.ashish.movies.ui.widget.FontTextView
-                    style="@style/RatingText.SmallMargin"
+                    style="@style/RatingText.Small"
                     android:text="@string/metascore_txt" />
 
             </LinearLayout>
@@ -131,8 +131,8 @@
 
                 <com.ashish.movies.ui.widget.FontTextView
                     android:id="@+id/tmdb_votes_text"
-                    style="@style/RatingText.SmallMargin"
-                    tools:text="195,145" />
+                    style="@style/RatingText.Small"
+                    tools:text="195,145 votes" />
 
             </LinearLayout>
 

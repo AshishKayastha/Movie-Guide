@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.support.v7.widget.CardView
 import android.view.View
 import android.widget.ImageView
-import butterknife.bindOptionalView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
@@ -24,9 +23,9 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
     : BaseDetailActivity<I, V, P>() {
 
     private val ratingCardView: CardView by bindView(R.id.rating_card_view)
-    private val tmdbRatingView: View? by bindOptionalView(R.id.tmdb_rating_view)
-    private val tmdbVotesText: FontTextView? by bindOptionalView(R.id.tmdb_votes_text)
-    private val tmdbRatingText: FontTextView? by bindOptionalView(R.id.tmdb_rating_text)
+    private val tmdbRatingView: View by bindView(R.id.tmdb_rating_view)
+    private val tmdbVotesText: FontTextView by bindView(R.id.tmdb_votes_text)
+    private val tmdbRatingText: FontTextView by bindView(R.id.tmdb_rating_text)
 
     private val imdbRatingView: View by bindView(R.id.imdb_rating_view)
     private val imdbVotesText: FontTextView by bindView(R.id.imdb_votes_text)
@@ -81,17 +80,17 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
         val tmdbVotes = voteCount.toString()
         if (isValidRating(tmdbRating)) {
             ratingCardView.show()
-            tmdbRatingView?.show()
-            tmdbVotesText?.text = tmdbVotes
-            tmdbRatingText?.text = tmdbRating
+            tmdbRatingView.show()
+            tmdbRatingText.text = tmdbRating
+            tmdbVotesText.text = String.format(getString(R.string.votes_count_format), tmdbVotes)
         }
     }
 
     private fun setIMDbRating(imdbRating: String?, imdbVotes: String?) {
         if (isValidRating(imdbRating)) {
             imdbRatingView.show()
-            imdbVotesText.text = imdbVotes
             imdbRatingText.text = imdbRating
+            imdbVotesText.text = String.format(getString(R.string.votes_count_format), imdbVotes)
         }
     }
 
