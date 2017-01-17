@@ -175,7 +175,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        playTrailerFAB?.hide()
         posterImage.setTransitionName(getTransitionNameId())
         showPosterImage(getPosterPath())
 
@@ -322,8 +321,10 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     override fun showTrailerFAB(trailerUrl: String) {
-        playTrailerFAB?.postDelayed({ playTrailerFAB?.show() }, 80L)
-        playTrailerFAB?.setOnClickListener { openLinkExternally(YOUTUBE_BASE_URL + trailerUrl) }
+        playTrailerFAB?.apply {
+            postDelayed({ animate().alpha(1f).scaleX(1f).scaleY(1f).start() }, 80L)
+            setOnClickListener { openLinkExternally(YOUTUBE_BASE_URL + trailerUrl) }
+        }
     }
 
     @CallSuper

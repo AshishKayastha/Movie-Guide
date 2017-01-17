@@ -9,12 +9,13 @@ import com.ashish.movies.R
 import com.ashish.movies.utils.Constants.THUMBNAIL_SIZE
 import com.ashish.movies.utils.extensions.inflate
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import java.util.*
 
 /**
  * Created by Ashish on Jan 14.
  */
-class ImageAdapter(val imageUrlList: ArrayList<String>, var onItemClickListener: OnItemClickListener?)
+class ImageAdapter(val imageUrlList: ArrayList<String>, private var onItemClickListener: OnItemClickListener?)
     : RecyclerView.Adapter<ImageAdapter.ImageHolder>(), RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ImageHolder {
@@ -44,6 +45,8 @@ class ImageAdapter(val imageUrlList: ArrayList<String>, var onItemClickListener:
             Glide.with(imageView.context)
                     .load(imageUrl)
                     .asBitmap()
+                    .dontAnimate()
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .override(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
                     .into(imageView)
 

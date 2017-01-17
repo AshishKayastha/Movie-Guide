@@ -115,7 +115,8 @@
 
     <!-- Rating -->
     <string name="votes_count_format">%s votes</string>
-    <string name="flixter">Flixter</string>
+    <string name="meter_count_format" formatted="false">%s %%</string>
+    <string name="audience_score">Audience Score</string>
     <string name="tomatometer">Tomatometer</string>
     <string name="metascore_txt">Metascore</string>
     <string name="view_in_rotten_tomatoes">View in Rotten Tomatoes</string>

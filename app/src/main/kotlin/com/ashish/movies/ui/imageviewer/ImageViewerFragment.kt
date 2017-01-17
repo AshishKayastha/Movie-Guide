@@ -19,6 +19,8 @@ import com.ashish.movies.utils.SystemUiHelper
 import com.ashish.movies.utils.TransitionListenerAdapter
 import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
@@ -69,6 +71,9 @@ class ImageViewerFragment : BaseFragment() {
         thumbBitmap = Glide.with(this)
                 .load(imageUrl)
                 .asBitmap()
+                .dontAnimate()
+                .priority(Priority.IMMEDIATE)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .override(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
 
         fullBitmap = Glide.with(this)
@@ -151,6 +156,7 @@ class ImageViewerFragment : BaseFragment() {
 
     override fun onDestroyView() {
         Glide.clear(imageView)
+        imageView.setOnTouchListener(null)
         super.onDestroyView()
     }
 }

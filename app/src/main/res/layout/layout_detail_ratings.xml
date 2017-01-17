@@ -58,7 +58,7 @@
                 <com.ashish.movies.ui.widget.FontTextView
                     android:id="@+id/tomato_rating_text"
                     style="@style/RatingText"
-                    tools:text="8.3" />
+                    tools:text="95%" />
 
                 <com.ashish.movies.ui.widget.FontTextView
                     style="@style/RatingText.Small"
@@ -67,24 +67,24 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/flixter_score_view"
+                android:id="@+id/audience_score_view"
                 style="@style/RatingView"
                 tools:visibility="visible">
 
                 <ImageView
-                    android:id="@+id/flixter_score_image"
+                    android:id="@+id/audience_score_image"
                     style="@style/RatingImage"
-                    android:src="@drawable/ic_flixter_good"
+                    android:src="@drawable/ic_audience_score_good"
                     tools:ignore="ContentDescription" />
 
                 <com.ashish.movies.ui.widget.FontTextView
-                    android:id="@+id/flixter_score_text"
+                    android:id="@+id/audience_score_text"
                     style="@style/RatingText"
                     tools:text="4.2" />
 
                 <com.ashish.movies.ui.widget.FontTextView
                     style="@style/RatingText.Small"
-                    android:text="@string/flixter" />
+                    android:text="@string/audience_score" />
 
             </LinearLayout>
 

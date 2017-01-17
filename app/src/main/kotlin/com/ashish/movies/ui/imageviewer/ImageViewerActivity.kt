@@ -42,7 +42,9 @@ class ImageViewerActivity : BaseActivity() {
         override fun onSharedElementStart(sharedElementNames: MutableList<String>?, sharedElements: MutableList<View>?,
                                           sharedElementSnapshots: MutableList<View>?) {
             super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)
-            imageViewerAdapter.getRegisteredFragment(currentPosition)?.loadThumbnail(false)
+            if (isReturning) {
+                imageViewerAdapter.getRegisteredFragment(currentPosition)?.loadThumbnail(false)
+            }
         }
 
         override fun onMapSharedElements(names: MutableList<String>, sharedElements: MutableMap<String, View>) {

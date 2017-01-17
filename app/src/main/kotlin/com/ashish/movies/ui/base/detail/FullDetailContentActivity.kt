@@ -35,9 +35,9 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
     private val tomatoRatingImage: ImageView by bindView(R.id.tomato_rating_image)
     private val tomatoRatingText: FontTextView by bindView(R.id.tomato_rating_text)
 
-    private val flixterScoreView: View by bindView(R.id.flixter_score_view)
-    private val flixterScoreImage: ImageView by bindView(R.id.flixter_score_image)
-    private val flixterScoreText: FontTextView by bindView(R.id.flixter_score_text)
+    private val audienceScoreView: View by bindView(R.id.audience_score_view)
+    private val audienceScoreImage: ImageView by bindView(R.id.audience_score_image)
+    private val audienceScoreText: FontTextView by bindView(R.id.audience_score_text)
 
     private val metascoreView: View by bindView(R.id.metascore_view)
     private val metascoreText: FontTextView by bindView(R.id.metascore_text)
@@ -70,8 +70,8 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
                 ratingCardView.show()
                 setMetaScore(Metascore)
                 setIMDbRating(imdbRating, imdbVotes)
-                setFlixterScore(tomatoUserRating)
-                setTomatoRating(tomatoRating, tomatoImage)
+                setAudienceScore(tomatoUserRating)
+                setTomatoRating(tomatoMeter, tomatoImage)
             }
         }
     }
@@ -98,7 +98,7 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
     private fun setTomatoRating(tomatoRating: String?, tomatoImage: String?) {
         if (isValidRating(tomatoRating)) {
             tomatoRatingView.show()
-            tomatoRatingText.text = tomatoRating
+            tomatoRatingText.text = String.format(getString(R.string.meter_count_format), tomatoRating)
 
             if (tomatoImage == "certified") {
                 tomatoRatingImage.setImageResource(R.drawable.ic_rt_certified)
@@ -110,16 +110,16 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
         }
     }
 
-    private fun setFlixterScore(tomatoUserRating: String?) {
+    private fun setAudienceScore(tomatoUserRating: String?) {
         if (isValidRating(tomatoUserRating)) {
-            flixterScoreView.show()
-            flixterScoreText.text = tomatoUserRating
+            audienceScoreView.show()
+            audienceScoreText.text = tomatoUserRating
 
-            val flixterScore = tomatoUserRating?.toFloat() ?: 0f
-            if (flixterScore > 3.4) {
-                flixterScoreImage.setImageResource(R.drawable.ic_flixter_good)
+            val flixterScore = tomatoUserRating!!.toFloat()
+            if (flixterScore >= 3.5) {
+                audienceScoreImage.setImageResource(R.drawable.ic_audience_score_good)
             } else {
-                flixterScoreImage.setImageResource(R.drawable.ic_flixter_bad)
+                audienceScoreImage.setImageResource(R.drawable.ic_audience_score_bad)
             }
         }
     }
@@ -130,7 +130,7 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
             metascoreText.text = metaScore
             metascoreTextTwo.text = metaScore
 
-            val metaScoreInt = metaScore?.toInt() ?: 0
+            val metaScoreInt = metaScore!!.toInt()
             if (metaScoreInt > 60) {
                 metascoreText.setBackgroundColor(Color.parseColor("#66CC33"))
             } else if (metaScoreInt > 40 && metaScoreInt < 61) {

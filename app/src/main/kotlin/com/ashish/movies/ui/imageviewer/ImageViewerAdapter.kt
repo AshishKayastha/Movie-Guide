@@ -10,7 +10,8 @@ import java.util.*
 /**
  * Created by Ashish on Jan 08.
  */
-class ImageViewerAdapter(fm: FragmentManager, val imageUrlList: ArrayList<String>) : FragmentStatePagerAdapter(fm) {
+class ImageViewerAdapter(fm: FragmentManager, private val imageUrlList: ArrayList<String>)
+    : FragmentStatePagerAdapter(fm) {
 
     private var registeredFragments = SparseArray<ImageViewerFragment>()
 
