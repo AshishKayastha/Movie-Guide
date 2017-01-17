@@ -1,6 +1,8 @@
 package com.ashish.movies.utils.extensions
 
 import android.app.Activity
+import android.content.Intent
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.util.Pair
 import android.view.View
@@ -47,4 +49,10 @@ fun Activity?.hideKeyboard() {
         val imm = this.getImm()
         imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
     }
+}
+
+fun Activity.startActivityWithTransition(viewPair: Pair<View, String>?, intent: Intent) {
+    val options = getActivityOptionsCompat(viewPair)
+    window.exitTransition = null
+    ActivityCompat.startActivity(this, intent, options?.toBundle())
 }

@@ -42,7 +42,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
         override fun onItemClick(position: Int, view: View) {
             val season = seasonsAdapter?.getItem<Season>(position)
             val intent = SeasonDetailActivity.createIntent(this@TVShowDetailActivity, tvShow?.id, season)
-            startActivityWithTransition(view, R.string.transition_season_poster, intent)
+            startNewActivityWithTransition(view, R.string.transition_season_poster, intent)
         }
     }
 
@@ -50,7 +50,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
         override fun onItemClick(position: Int, view: View) {
             val tvShow = similarTVShowsAdapter?.getItem<TVShow>(position)
             val intent = TVShowDetailActivity.createIntent(this@TVShowDetailActivity, tvShow)
-            startActivityWithTransition(view, R.string.transition_tv_poster, intent)
+            startNewActivityWithTransition(view, R.string.transition_tv_poster, intent)
         }
     }
 

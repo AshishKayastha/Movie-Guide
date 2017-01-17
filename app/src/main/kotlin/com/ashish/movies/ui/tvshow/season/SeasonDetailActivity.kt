@@ -39,7 +39,7 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
         override fun onItemClick(position: Int, view: View) {
             val episode = episodesAdapter?.getItem<Episode>(position)
             val intent = EpisodeDetailActivity.createIntent(this@SeasonDetailActivity, tvShowId, episode)
-            startActivityWithTransition(view, R.string.transition_episode_image, intent)
+            startNewActivityWithTransition(view, R.string.transition_episode_image, intent)
         }
     }
 

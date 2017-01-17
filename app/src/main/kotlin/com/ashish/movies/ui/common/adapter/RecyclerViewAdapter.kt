@@ -3,7 +3,6 @@ package com.ashish.movies.ui.common.adapter
 import android.support.v7.widget.RecyclerView
 import android.util.SparseArray
 import android.view.ViewGroup
-import com.ashish.movies.R
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.LOADING_VIEW
@@ -19,8 +18,7 @@ import java.util.*
 /**
  * Created by Ashish on Dec 30.
  */
-class RecyclerViewAdapter<in I : ViewType>(layoutId: Int = R.layout.list_item_content,
-                                           private val adapterType: Int,
+class RecyclerViewAdapter<in I : ViewType>(layoutId: Int, private val adapterType: Int,
                                            onItemClickListener: OnItemClickListener?)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
 

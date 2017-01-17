@@ -2,7 +2,6 @@ package com.ashish.movies.ui.base.recyclerview
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
@@ -20,11 +19,11 @@ import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.getActivityOptionsCompat
 import com.ashish.movies.utils.extensions.getPosterImagePair
 import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.setVisibility
 import com.ashish.movies.utils.extensions.show
+import com.ashish.movies.utils.extensions.startActivityWithTransition
 import icepick.State
 
 /**
@@ -61,7 +60,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     }
 
     protected open fun initViews() {
-        recyclerViewAdapter = RecyclerViewAdapter(adapterType = getAdapterType(), onItemClickListener = this)
+        recyclerViewAdapter = RecyclerViewAdapter(R.layout.list_item_content, getAdapterType(), this)
 
         recyclerView.apply {
             setHasFixedSize(true)
@@ -128,10 +127,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
             val intent = getDetailIntent(position)
             if (intent != null) {
                 val posterImagePair = view.getPosterImagePair(getTransitionNameId(position))
-                val options = activity.getActivityOptionsCompat(posterImagePair)
-
-                activity.window.exitTransition = null
-                ActivityCompat.startActivity(activity, intent, options?.toBundle())
+                activity?.startActivityWithTransition(posterImagePair, intent)
             }
         } else {
             showMessage(R.string.error_no_internet)

@@ -2,7 +2,6 @@ package com.ashish.movies.ui.movie.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
@@ -16,8 +15,7 @@ import com.ashish.movies.utils.extensions.getYearOnly
 /**
  * Created by Ashish on Dec 30.
  */
-class MovieDelegateAdapter(private val layoutId: Int = R.layout.list_item_content,
-                           private var onItemClickListener: OnItemClickListener?)
+class MovieDelegateAdapter(private val layoutId: Int, private var onItemClickListener: OnItemClickListener?)
     : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = MovieHolder(parent)

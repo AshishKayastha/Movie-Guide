@@ -59,7 +59,7 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
         val credit = adapter?.getItem<Credit>(position)
         val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
         val intent = PersonDetailActivity.createIntent(this, person)
-        startActivityWithTransition(view, R.string.transition_person_profile, intent)
+        startNewActivityWithTransition(view, R.string.transition_person_profile, intent)
     }
 
     override fun showOMDbDetail(omDbDetail: OMDbDetail) {

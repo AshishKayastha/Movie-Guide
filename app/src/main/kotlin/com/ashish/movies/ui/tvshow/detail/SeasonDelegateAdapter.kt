@@ -15,8 +15,7 @@ import com.ashish.movies.utils.extensions.getPosterUrl
 /**
  * Created by Ashish on Jan 04.
  */
-class SeasonDelegateAdapter(val layoutId: Int = R.layout.list_item_content_alt,
-                            var onItemClickListener: OnItemClickListener?)
+class SeasonDelegateAdapter(private val layoutId: Int, private var onItemClickListener: OnItemClickListener?)
     : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = SeasonHolder(parent)

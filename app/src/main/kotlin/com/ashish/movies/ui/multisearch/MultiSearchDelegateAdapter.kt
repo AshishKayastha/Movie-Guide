@@ -2,7 +2,6 @@ package com.ashish.movies.ui.multisearch
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.ashish.movies.R
 import com.ashish.movies.data.models.MultiSearch
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
@@ -19,8 +18,7 @@ import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 /**
  * Created by Ashish on Jan 05.
  */
-class MultiSearchDelegateAdapter(private val layoutId: Int = R.layout.list_item_content,
-                                 private var onItemClickListener: OnItemClickListener?)
+class MultiSearchDelegateAdapter(private val layoutId: Int, private var onItemClickListener: OnItemClickListener?)
     : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = MultiSearchHolder(parent)

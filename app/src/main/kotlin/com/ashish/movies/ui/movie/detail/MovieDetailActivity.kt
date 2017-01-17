@@ -45,7 +45,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
         override fun onItemClick(position: Int, view: View) {
             val movie = similarMoviesAdapter?.getItem<Movie>(position)
             val intent = createIntent(this@MovieDetailActivity, movie)
-            startActivityWithTransition(view, R.string.transition_movie_poster, intent)
+            startNewActivityWithTransition(view, R.string.transition_movie_poster, intent)
         }
     }
 

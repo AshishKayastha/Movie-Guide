@@ -11,14 +11,19 @@ import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.TabLayout
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.SharedElementCallback
 import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
-import android.view.*
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.ViewStub
+import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -28,14 +33,17 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.ui.base.mvp.MvpActivity
-import com.ashish.movies.ui.common.adapter.*
+import com.ashish.movies.ui.common.adapter.DetailContentAdapter
+import com.ashish.movies.ui.common.adapter.ImageAdapter
+import com.ashish.movies.ui.common.adapter.OnItemClickListener
+import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
+import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity.Companion.EXTRA_CURRENT_POSITION
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity.Companion.EXTRA_STARTING_POSITION
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
-import com.ashish.movies.utils.*
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_CREDIT
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
@@ -43,7 +51,30 @@ import com.ashish.movies.utils.Constants.ADAPTER_TYPE_PERSON
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.utils.Constants.IMDB_BASE_URL
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.Constants.YOUTUBE_BASE_URL
+import com.ashish.movies.utils.CustomTypefaceSpan
+import com.ashish.movies.utils.FontUtils
+import com.ashish.movies.utils.GravitySnapHelper
+import com.ashish.movies.utils.TransitionListenerAdapter
+import com.ashish.movies.utils.Utils
+import com.ashish.movies.utils.extensions.animateBackgroundColorChange
+import com.ashish.movies.utils.extensions.animateColorChange
+import com.ashish.movies.utils.extensions.animateTextColorChange
+import com.ashish.movies.utils.extensions.changeMenuFont
+import com.ashish.movies.utils.extensions.getColorCompat
+import com.ashish.movies.utils.extensions.getOverflowMenuButton
+import com.ashish.movies.utils.extensions.getPosterImagePair
+import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
+import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.isDark
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.loadPaletteBitmap
+import com.ashish.movies.utils.extensions.scrimify
+import com.ashish.movies.utils.extensions.setLightStatusBar
+import com.ashish.movies.utils.extensions.setPaletteColor
+import com.ashish.movies.utils.extensions.setTransitionName
+import com.ashish.movies.utils.extensions.show
+import com.ashish.movies.utils.extensions.startActivityWithTransition
 import java.util.*
 
 /**
@@ -132,11 +163,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     private fun startImageViewerActivity(imageUrlList: ArrayList<String>?, title: String, position: Int, view: View?) {
         if (imageUrlList.isNotNullOrEmpty()) {
             val imagePair = if (view != null) Pair.create(view, "image_$position") else null
-            val options = getActivityOptionsCompat(imagePair)
-
-            window.exitTransition = null
             val intent = ImageViewerActivity.createIntent(this, title, position, imageUrlList!!)
-            ActivityCompat.startActivity(this, intent, options?.toBundle())
+            startActivityWithTransition(imagePair, intent)
         }
     }
 
@@ -171,7 +199,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     abstract fun loadDetailContent(): Unit
 
-    fun showBackdropImage(backdropPath: String) {
+    protected fun showBackdropImage(backdropPath: String) {
         if (backdropPath.isNotEmpty()) {
             backdropImage.loadPaletteBitmap(backdropPath) {
                 revealBackdropImage()
@@ -227,10 +255,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
                 toolbar?.getOverflowMenuButton()?.setColorFilter(transBlack)
             }
 
-            /**
-             * Color the status bar. Set a complementary dark color on L,
-             * light or dark color on M (with matching status bar icons)
-             */
             statusBarColor = window.statusBarColor
             val rgbColor = palette.getSwatchWithMostPixels()?.rgb
 
@@ -245,7 +269,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         }
     }
 
-    fun showPosterImage(posterImagePath: String) {
+    private fun showPosterImage(posterImagePath: String) {
         if (posterImagePath.isNotEmpty()) {
             posterImage.loadPaletteBitmap(posterImagePath) {
                 startPostponedEnterTransition()
@@ -267,8 +291,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     @CallSuper
     override fun showDetailContent(detailContent: I) {
         detailContainer.show()
-        showOrHideIMDbMenu()
-        changeMenuItemFont()
+        showOrHideMenu(R.id.action_imdb, imdbId)
         appBarLayout.addOnOffsetChangedListener(this)
     }
 
@@ -299,16 +322,20 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     override fun showTrailerFAB(trailerUrl: String) {
-        playTrailerFAB?.postDelayed({ playTrailerFAB?.show() }, 100L)
-        playTrailerFAB?.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Constants.YOUTUBE_BASE_URL + trailerUrl)))
-        }
+        playTrailerFAB?.postDelayed({ playTrailerFAB?.show() }, 80L)
+        playTrailerFAB?.setOnClickListener { openLinkExternally(YOUTUBE_BASE_URL + trailerUrl) }
     }
 
     @CallSuper
     override fun showOMDbDetail(omDbDetail: OMDbDetail) {
         rottenTomatoesUrl = omDbDetail.tomatoURL
-        showOrHideRottenTomatoesMenu()
+        showOrHideMenu(R.id.action_rotten_tomatoes, rottenTomatoesUrl)
+        changeMenuItemFont()
+    }
+
+    private fun showOrHideMenu(menuItemId: Int, text: String?) {
+        val menuItem = menu?.findItem(menuItemId)
+        menuItem?.isVisible = text.isNotNullOrEmpty()
     }
 
     override fun showCastList(castList: List<Credit>) {
@@ -370,13 +397,10 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     abstract fun getItemTitle(): String
 
-    protected fun startActivityWithTransition(view: View, transitionNameId: Int, intent: Intent) {
+    protected fun startNewActivityWithTransition(view: View, transitionNameId: Int, intent: Intent) {
         if (Utils.isOnline()) {
             val imagePair = view.getPosterImagePair(transitionNameId)
-            val options = getActivityOptionsCompat(imagePair)
-
-            window.exitTransition = null
-            ActivityCompat.startActivity(this, intent, options?.toBundle())
+            startActivityWithTransition(imagePair, intent)
         } else {
             showMessage(R.string.error_no_internet)
         }
@@ -432,16 +456,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(siteUrl)))
     }
 
-    private fun showOrHideIMDbMenu() {
-        val imdbMenu = menu?.findItem(R.id.action_imdb)
-        imdbMenu?.isVisible = imdbId.isNotNullOrEmpty()
-    }
-
-    private fun showOrHideRottenTomatoesMenu() {
-        val rottenTomatoesMenu = menu?.findItem(R.id.action_rotten_tomatoes)
-        rottenTomatoesMenu?.isVisible = rottenTomatoesUrl.isNotNullOrEmpty()
-    }
-
     private fun changeMenuItemFont() {
         val typeface = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
         val customTypefaceSpan = CustomTypefaceSpan(typeface)
@@ -457,8 +471,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         castAdapter?.removeListener()
         crewAdapter?.removeListener()
         imageAdapter?.removeListener()
-        removeSharedElementTransitionListener()
         imagesRecyclerView?.adapter = null
+        removeSharedElementTransitionListener()
         appBarLayout.removeOnOffsetChangedListener(this)
     }
 }
