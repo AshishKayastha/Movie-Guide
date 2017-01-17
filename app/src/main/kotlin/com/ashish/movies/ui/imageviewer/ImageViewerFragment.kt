@@ -14,8 +14,9 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseFragment
 import com.ashish.movies.ui.widget.TouchImageView
+import com.ashish.movies.utils.Constants.THUMBNAIL_SIZE
+import com.ashish.movies.utils.SystemUiHelper
 import com.ashish.movies.utils.TransitionListenerAdapter
-import com.ashish.movies.utils.systemuihelper.SystemUiHelper
 import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
@@ -37,8 +38,6 @@ class ImageViewerFragment : BaseFragment() {
     private var thumbBitmap: BitmapRequestBuilder<String, Bitmap>? = null
 
     companion object {
-        private val THUMBNAIL_SIZE = 473
-
         private const val ARG_POSITION = "position"
         private const val ARG_IMAGE_URL = "image_url"
 
@@ -78,15 +77,15 @@ class ImageViewerFragment : BaseFragment() {
                 .override(Resources.getSystem().displayMetrics.widthPixels, Target.SIZE_ORIGINAL)
     }
 
-    fun loadThumbnail() {
+    fun loadThumbnail(startTransition: Boolean) {
         thumbBitmap?.into(object : SimpleTarget<Bitmap>() {
             override fun onResourceReady(bitmap: Bitmap?, animation: GlideAnimation<in Bitmap>?) {
                 if (bitmap != null) imageView.setImageBitmap(bitmap)
-                activity?.startPostponedEnterTransition()
+                if (startTransition) activity?.startPostponedEnterTransition()
             }
 
             override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
-                activity?.startPostponedEnterTransition()
+                if (startTransition) activity?.startPostponedEnterTransition()
             }
         })
     }
@@ -98,15 +97,14 @@ class ImageViewerFragment : BaseFragment() {
     private fun setupImage() {
         imageView.transitionName = "image_$position"
 
-        val activity = activity as? ImageViewerActivity
         activity?.window?.sharedElementEnterTransition?.addListener(object : TransitionListenerAdapter() {
             override fun onTransitionEnd(transition: Transition) {
-                activity.window.sharedElementEnterTransition.removeListener(this)
+                activity?.window?.sharedElementEnterTransition?.removeListener(this)
                 loadFullImage()
             }
         })
 
-        loadThumbnail()
+        loadThumbnail(true)
         fullBitmap?.preload()
     }
 

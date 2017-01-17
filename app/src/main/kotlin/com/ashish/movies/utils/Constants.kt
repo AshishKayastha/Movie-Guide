@@ -1,5 +1,7 @@
 package com.ashish.movies.utils
 
+import com.ashish.movies.utils.extensions.dpToPx
+
 /**
  * Created by Ashish on Dec 27.
  */
@@ -15,4 +17,6 @@ object Constants {
     const val ADAPTER_TYPE_SEASON = 4
     const val ADAPTER_TYPE_EPISODE = 5
     const val ADAPTER_TYPE_MULTI_SEARCH = 6
+
+    @JvmStatic val THUMBNAIL_SIZE = 180f.dpToPx().toInt()
 }

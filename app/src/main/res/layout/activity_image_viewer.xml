@@ -8,13 +8,13 @@
 
     <LinearLayout
         android:id="@+id/appbar_wrapper"
-        style="@style/Match.Width">
+        style="@style/Match.Width"
+        android:elevation="@dimen/toolbar_elevation">
 
         <com.ashish.movies.ui.widget.IgnoreBottomInsetFrameLayout
             android:id="@+id/app_bar"
             style="@style/Match.Width"
-            android:background="#36202020"
-            android:elevation="@dimen/toolbar_elevation"
+            android:background="@color/image_view_bg_color"
             android:fitsSystemWindows="true"
             app:contentInsetStart="@dimen/second_keyline">
 

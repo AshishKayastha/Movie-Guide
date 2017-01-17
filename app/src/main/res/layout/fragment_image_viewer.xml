@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ashish.movies.ui.widget.TouchImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/image_view"
-    style="@style/Match" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Match">
+
+    <com.ashish.movies.ui.widget.TouchImageView
+        android:id="@+id/image_view"
+        style="@style/Match" />
+
+</FrameLayout>

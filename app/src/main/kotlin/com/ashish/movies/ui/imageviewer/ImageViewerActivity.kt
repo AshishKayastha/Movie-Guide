@@ -14,8 +14,8 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.ui.base.common.BaseActivity
 import com.ashish.movies.ui.widget.DepthPageTransformer
+import com.ashish.movies.utils.SystemUiHelper
 import com.ashish.movies.utils.extensions.changeViewGroupTextFont
-import com.ashish.movies.utils.systemuihelper.SystemUiHelper
 import icepick.State
 import java.util.*
 
@@ -42,7 +42,7 @@ class ImageViewerActivity : BaseActivity() {
         override fun onSharedElementStart(sharedElementNames: MutableList<String>?, sharedElements: MutableList<View>?,
                                           sharedElementSnapshots: MutableList<View>?) {
             super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)
-            imageViewerAdapter.getRegisteredFragment(currentPosition)?.loadThumbnail()
+            imageViewerAdapter.getRegisteredFragment(currentPosition)?.loadThumbnail(false)
         }
 
         override fun onMapSharedElements(names: MutableList<String>, sharedElements: MutableMap<String, View>) {
@@ -67,7 +67,7 @@ class ImageViewerActivity : BaseActivity() {
                     .alpha(if (visible) 1f else 0f)
                     .translationY(if (visible) 0f else -appbarLayout.bottom.toFloat())
                     .setDuration(400L)
-                    .setInterpolator(FastOutSlowInInterpolator())
+                    .setInterpolator(INTERPOLATOR)
                     .start()
         }
     }
@@ -79,6 +79,8 @@ class ImageViewerActivity : BaseActivity() {
 
         private const val EXTRA_TITLE = "title"
         private const val EXTRA_IMAGE_URL_LIST = "image_url_list"
+
+        @JvmStatic private val INTERPOLATOR = FastOutSlowInInterpolator()
 
         fun createIntent(context: Context, title: String, startingPosition: Int,
                          imageUrlList: ArrayList<String>): Intent {
@@ -125,6 +127,8 @@ class ImageViewerActivity : BaseActivity() {
         systemUiHelper = SystemUiHelper(this, listener = visibilityChangeListener)
     }
 
+    override fun getLayoutId() = R.layout.activity_image_viewer
+
     override fun getIntentExtras(extras: Bundle?) {
         title = extras?.getString(EXTRA_TITLE) ?: ""
         startingPosition = extras?.getInt(EXTRA_STARTING_POSITION) ?: 0
@@ -137,8 +141,6 @@ class ImageViewerActivity : BaseActivity() {
             supportActionBar?.title = "${currentPosition + 1} of ${imageUrlList!!.size}"
         }
     }
-
-    override fun getLayoutId() = R.layout.activity_image_viewer
 
     override fun onStart() {
         super.onStart()

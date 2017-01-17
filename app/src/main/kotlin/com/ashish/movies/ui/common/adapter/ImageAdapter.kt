@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import butterknife.bindView
 import com.ashish.movies.R
+import com.ashish.movies.utils.Constants.THUMBNAIL_SIZE
 import com.ashish.movies.utils.extensions.inflate
 import com.bumptech.glide.Glide
 import java.util.*
@@ -43,7 +44,7 @@ class ImageAdapter(val imageUrlList: ArrayList<String>, var onItemClickListener:
             Glide.with(imageView.context)
                     .load(imageUrl)
                     .asBitmap()
-                    .override(473, 473)
+                    .override(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
                     .into(imageView)
 
             imageView.transitionName = "image_$position"
