@@ -63,6 +63,7 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
     }
 
     override fun showOMDbDetail(omDbDetail: OMDbDetail) {
+        super.showOMDbDetail(omDbDetail)
         with(omDbDetail) {
             if (isValidRating(imdbRating) || isValidRating(tomatoRating) || isValidRating(tomatoUserRating)
                     || isValidRating(Metascore)) {

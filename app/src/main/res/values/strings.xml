@@ -118,4 +118,5 @@
     <string name="flixter">Flixter</string>
     <string name="tomatometer">Tomatometer</string>
     <string name="metascore_txt">Metascore</string>
+    <string name="view_in_rotten_tomatoes">View in Rotten Tomatoes</string>
 </resources>

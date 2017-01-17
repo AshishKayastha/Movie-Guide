@@ -1,6 +1,5 @@
 package com.ashish.movies.utils.extensions
 
-import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.support.annotation.StringRes
@@ -66,11 +65,11 @@ fun TextView.animateTextColorChange(startColor: Int, endColor: Int) {
 
 inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 800L,
                               crossinline onAnimationUpdate: (color: Int) -> Unit) {
-    val colorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), startColor, endColor)
+    val colorAnimator = ValueAnimator.ofArgb(startColor, endColor)
     colorAnimator.apply {
-        addUpdateListener { animation -> onAnimationUpdate(animation.animatedValue as Int) }
         this.duration = duration
         interpolator = FastOutSlowInInterpolator()
+        addUpdateListener { animation -> onAnimationUpdate(animation.animatedValue as Int) }
         start()
     }
 }
@@ -158,7 +157,8 @@ fun ViewGroup.getOverflowMenuButton(): ImageView? {
     var overflowMenu: ImageView? = null
     for (i in 0..count - 1) {
         val view = getChildAt(i)
-        if (view is ImageView && (view.javaClass.simpleName == "OverflowMenuButton" || view is ActionMenuView.ActionMenuChildView)) {
+        if (view is ImageView && (view.javaClass.simpleName == "OverflowMenuButton"
+                || view is ActionMenuView.ActionMenuChildView)) {
             overflowMenu = view
         } else if (view is ViewGroup) {
             overflowMenu = view.getOverflowMenuButton()

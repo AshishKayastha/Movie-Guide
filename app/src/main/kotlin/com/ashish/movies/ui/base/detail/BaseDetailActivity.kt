@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.support.annotation.CallSuper
 import android.support.annotation.IdRes
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
@@ -25,6 +26,7 @@ import butterknife.bindOptionalView
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
+import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.ui.base.mvp.MvpActivity
 import com.ashish.movies.ui.common.adapter.*
 import com.ashish.movies.ui.common.palette.PaletteBitmap
@@ -50,16 +52,20 @@ import java.util.*
 abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresenter<I, V>>
     : MvpActivity<V, P>(), BaseDetailView<I>, AppBarLayout.OnOffsetChangedListener {
 
+    protected var imdbId: String? = null
+    protected var castAdapter: RecyclerViewAdapter<Credit>? = null
+    protected var crewAdapter: RecyclerViewAdapter<Credit>? = null
+
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
-    protected val posterImage: ImageView by bindView(R.id.detail_poster_image)
-    private val playTrailerFAB: FloatingActionButton? by bindOptionalView(R.id.play_trailer_fab)
 
     private val tabLayout: TabLayout by bindView(R.id.tab_layout)
     private val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
     private val progressBar: ProgressBar by bindView(R.id.progress_bar)
     private val detailContainer: View by bindView(R.id.detail_container)
     private val backdropImage: ImageView by bindView(R.id.backdrop_image)
+    private val posterImage: ImageView by bindView(R.id.detail_poster_image)
     private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
+    private val playTrailerFAB: FloatingActionButton? by bindOptionalView(R.id.play_trailer_fab)
 
     private val castViewStub: ViewStub by bindView(R.id.cast_view_stub)
     private val crewViewStub: ViewStub by bindView(R.id.crew_view_stub)
@@ -69,15 +75,12 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     private var menu: Menu? = null
     private var statusBarColor: Int = 0
     private var loadContent: Boolean = true
-    private var imagesRecyclerView: RecyclerView? = null
-    private var sharedElementEnterTransition: Transition? = null
-
-    protected var imdbId: String? = null
-    protected var imageAdapter: ImageAdapter? = null
-    protected var castAdapter: RecyclerViewAdapter<Credit>? = null
-    protected var crewAdapter: RecyclerViewAdapter<Credit>? = null
+    private var rottenTomatoesUrl: String? = null
 
     private var reenterState: Bundle? = null
+    private var imageAdapter: ImageAdapter? = null
+    private var imagesRecyclerView: RecyclerView? = null
+    private var sharedElementEnterTransition: Transition? = null
 
     private val callback = object : SharedElementCallback() {
         override fun onMapSharedElements(names: MutableList<String>?, sharedElements: MutableMap<String, View>?) {
@@ -99,18 +102,17 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
                 reenterState = null
             } else {
-                val statusBar = findViewById(android.R.id.statusBarBackground)
-                if (statusBar != null) {
-                    names?.add(statusBar.transitionName)
-                    sharedElements?.put(statusBar.transitionName, statusBar)
-                }
-
-                val navigationBar = findViewById(android.R.id.navigationBarBackground)
-                if (navigationBar != null) {
-                    names?.add(navigationBar.transitionName)
-                    sharedElements?.put(navigationBar.transitionName, navigationBar)
-                }
+                addSharedElement(android.R.id.statusBarBackground, names, sharedElements)
+                addSharedElement(android.R.id.navigationBarBackground, names, sharedElements)
             }
+        }
+    }
+
+    private fun addSharedElement(viewId: Int, names: MutableList<String>?, sharedElements: MutableMap<String, View>?) {
+        val view = findViewById(viewId)
+        if (view != null) {
+            names?.add(view.transitionName)
+            sharedElements?.put(view.transitionName, view)
         }
     }
 
@@ -262,6 +264,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun hideProgress() = progressBar.hide()
 
+    @CallSuper
     override fun showDetailContent(detailContent: I) {
         detailContainer.show()
         showOrHideIMDbMenu()
@@ -296,10 +299,16 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     override fun showTrailerFAB(trailerUrl: String) {
-        playTrailerFAB?.show()
+        playTrailerFAB?.postDelayed({ playTrailerFAB?.show() }, 100L)
         playTrailerFAB?.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Constants.YOUTUBE_BASE_URL + trailerUrl)))
         }
+    }
+
+    @CallSuper
+    override fun showOMDbDetail(omDbDetail: OMDbDetail) {
+        rottenTomatoesUrl = omDbDetail.tomatoURL
+        showOrHideRottenTomatoesMenu()
     }
 
     override fun showCastList(castList: List<Credit>) {
@@ -405,16 +414,32 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_imdb) {
             if (imdbId.isNotNullOrEmpty()) {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_BASE_URL + imdbId)))
+                openLinkExternally(IMDB_BASE_URL + imdbId)
+            }
+            return true
+
+        } else if (item.itemId == R.id.action_rotten_tomatoes) {
+            if (rottenTomatoesUrl.isNotNullOrEmpty()) {
+                openLinkExternally(rottenTomatoesUrl!!)
             }
             return true
         }
+
         return super.onOptionsItemSelected(item)
     }
 
+    private fun openLinkExternally(siteUrl: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(siteUrl)))
+    }
+
     private fun showOrHideIMDbMenu() {
-        val imdb = menu?.findItem(R.id.action_imdb)
-        imdb?.isVisible = imdbId.isNotNullOrEmpty()
+        val imdbMenu = menu?.findItem(R.id.action_imdb)
+        imdbMenu?.isVisible = imdbId.isNotNullOrEmpty()
+    }
+
+    private fun showOrHideRottenTomatoesMenu() {
+        val rottenTomatoesMenu = menu?.findItem(R.id.action_rotten_tomatoes)
+        rottenTomatoesMenu?.isVisible = rottenTomatoesUrl.isNotNullOrEmpty()
     }
 
     private fun changeMenuItemFont() {

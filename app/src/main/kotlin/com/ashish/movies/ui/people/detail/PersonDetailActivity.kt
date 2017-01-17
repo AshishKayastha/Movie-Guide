@@ -5,12 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movies.R
-import com.ashish.movies.data.models.Credit
-import com.ashish.movies.data.models.Movie
-import com.ashish.movies.data.models.OMDbDetail
-import com.ashish.movies.data.models.Person
-import com.ashish.movies.data.models.PersonDetail
-import com.ashish.movies.data.models.TVShow
+import com.ashish.movies.data.models.*
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.base.detail.BaseDetailView
@@ -97,8 +92,6 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
     }
 
     override fun getDetailContentType() = ADAPTER_TYPE_PERSON
-
-    override fun showOMDbDetail(omDbDetail: OMDbDetail) {}
 
     override fun getItemTitle() = person?.name ?: ""
 
