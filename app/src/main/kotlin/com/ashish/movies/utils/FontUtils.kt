@@ -16,7 +16,6 @@ object FontUtils {
 
     const val MONTSERRAT_REGULAR = "Montserrat-Regular"
     const val MONTSERRAT_MEDIUM = "Montserrat-Medium"
-    const val MONTSERRAT_LIGHT = "Montserrat-Light"
 
     private val TYPEFACE_CACHE = SimpleArrayMap<String, Typeface>()
 

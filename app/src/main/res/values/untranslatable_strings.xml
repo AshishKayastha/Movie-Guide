@@ -3,7 +3,5 @@
     <string name="app_name" translatable="false">Movies</string>
 
     <string name="font_montserrat_regular" translatable="false">Montserrat-Regular</string>
-    <string name="font_montserrat_light" translatable="false">Montserrat-Light</string>
     <string name="font_montserrat_medium" translatable="false">Montserrat-Medium</string>
-    <string name="font_montserrat_bold" translatable="false">Montserrat-Bold</string>
 </resources>
