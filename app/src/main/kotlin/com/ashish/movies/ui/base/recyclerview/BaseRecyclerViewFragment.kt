@@ -14,10 +14,10 @@ import com.ashish.movies.ui.common.adapter.InfiniteScrollListener
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.common.adapter.ViewType
-import com.ashish.movies.ui.widget.EmptyRecyclerView
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
+import com.ashish.movies.ui.widget.StaggeredGridRecyclerView
 import com.ashish.movies.utils.Utils
 import com.ashish.movies.utils.extensions.*
 import icepick.State
@@ -35,7 +35,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     protected val progressBar: ProgressBar by bindView(R.id.progress_bar)
     protected val emptyTextView: FontTextView by bindView(R.id.empty_text)
     protected val emptyImageView: ImageView by bindView(R.id.empty_image_view)
-    protected val recyclerView: EmptyRecyclerView by bindView(R.id.recycler_view)
+    protected val recyclerView: StaggeredGridRecyclerView by bindView(R.id.recycler_view)
     protected val swipeRefreshLayout: MultiSwipeRefreshLayout by bindView(R.id.swipe_refresh)
 
     protected lateinit var recyclerViewAdapter: RecyclerViewAdapter<I>

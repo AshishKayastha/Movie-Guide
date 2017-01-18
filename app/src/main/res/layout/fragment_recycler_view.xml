@@ -7,7 +7,7 @@
 
         <include layout="@layout/layout_empty_view" />
 
-        <com.ashish.movies.ui.widget.EmptyRecyclerView
+        <com.ashish.movies.ui.widget.StaggeredGridRecyclerView
             android:id="@+id/recycler_view"
             style="@style/Match"
             android:clipToPadding="false"

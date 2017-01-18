@@ -9,8 +9,8 @@ import com.ashish.movies.utils.extensions.setVisibility
 /**
  * Created by Ashish on Dec 27.
  */
-class EmptyRecyclerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-    : RecyclerView(context, attrs, defStyleAttr) {
+open class EmptyRecyclerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)
+    : RecyclerView(context, attrs, defStyle) {
 
     var emptyView: View? = null
 
