@@ -35,7 +35,10 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
                     .doOnNext { totalPages = it.totalPages }
                     .subscribe({ showResults(it) }, { handleError(it) }))
         } else {
-            getView()?.showMessage(R.string.error_no_internet)
+            getView()?.apply {
+                hideProgress()
+                showMessage(R.string.error_no_internet)
+            }
         }
     }
 

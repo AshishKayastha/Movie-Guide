@@ -39,8 +39,14 @@
     <string name="production_title">Production:</string>
     <string name="country_title">Country:</string>
     <string name="language_title">Language:</string>
+
     <string name="images_title">Images</string>
+    <string name="cast_credits_title">Cast Credits</string>
+    <string name="crew_credits_title">Crew Credits</string>
+
+    <!-- Detail Menu -->
     <string name="view_in_imdb">View in IMDb</string>
+    <string name="view_in_rotten_tomatoes">View in Rotten Tomatoes</string>
 
     <!-- Movie Detail -->
     <string name="genre_title">Genres:</string>
@@ -51,8 +57,6 @@
     <string name="tagline_title">Tagline:</string>
     <string name="release_date_title">Release Date:</string>
 
-    <string name="cast_credits_title">Cast Credits</string>
-    <string name="crew_credits_title">Crew Credits</string>
     <string name="similar_movies_title">Similar Movies</string>
     <string name="error_load_movie_detail">An error occurred while trying to load movie detail</string>
 
@@ -114,10 +118,6 @@
     <string name="genre_western">Western</string>
 
     <!-- Rating -->
-    <string name="votes_count_format">%s votes</string>
-    <string name="meter_count_format" formatted="false">%s %%</string>
-    <string name="audience_score">Audience Score</string>
-    <string name="tomatometer">Tomatometer</string>
     <string name="metascore_txt">Metascore</string>
-    <string name="view_in_rotten_tomatoes">View in Rotten Tomatoes</string>
+    <string name="meter_count_format" formatted="false">%s %%</string>
 </resources>

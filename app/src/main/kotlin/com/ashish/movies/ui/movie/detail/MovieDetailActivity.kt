@@ -79,7 +79,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
 
             this@MovieDetailActivity.imdbId = imdbId
             titleText.setTitleAndYear(title, releaseDate)
-            setTMDbRating(detailContent.voteAverage, detailContent.voteCount)
+            setTMDbRating(detailContent.voteAverage)
         }
         super.showDetailContent(detailContent)
     }

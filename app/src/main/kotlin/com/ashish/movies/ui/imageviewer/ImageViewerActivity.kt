@@ -150,17 +150,13 @@ class ImageViewerActivity : BaseActivity() {
         systemUiHelper?.delayHide(SHOW_UI_MILLIS)
     }
 
-    override fun onBackPressed() {
-        supportFinishAfterTransition()
-    }
-
-    override fun supportFinishAfterTransition() {
+    override fun finishAfterTransition() {
         isReturning = true
         val data = Intent()
         data.putExtra(EXTRA_CURRENT_POSITION, currentPosition)
         data.putExtra(EXTRA_STARTING_POSITION, startingPosition)
         setResult(Activity.RESULT_OK, data)
-        super.supportFinishAfterTransition()
+        super.finishAfterTransition()
     }
 
     override fun onDestroy() {

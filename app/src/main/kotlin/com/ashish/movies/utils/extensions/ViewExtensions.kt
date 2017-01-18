@@ -46,9 +46,17 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View? {
 }
 
 fun View.showSnackBar(messageId: Int, duration: Int = Snackbar.LENGTH_LONG) {
-    Snackbar.make(this, messageId, duration)
+    val snackbar = Snackbar.make(this, messageId, duration)
             .setAction(android.R.string.ok, { })
-            .show()
+
+    snackbar.changeSnackBarFont(android.support.design.R.id.snackbar_text)
+    snackbar.changeSnackBarFont(android.support.design.R.id.snackbar_action)
+
+    snackbar.show()
+}
+
+fun Snackbar.changeSnackBarFont(viewId: Int) {
+    (view.findViewById(viewId) as TextView).changeTypeface()
 }
 
 fun TextView.changeTypeface() {

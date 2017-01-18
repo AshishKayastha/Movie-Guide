@@ -91,7 +91,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
 
             imdbId = detailContent.externalIds?.imdbId
             titleText.setTitleAndYear(name, firstAirDate)
-            setTMDbRating(detailContent.voteAverage, detailContent.voteCount)
+            setTMDbRating(detailContent.voteAverage)
         }
         super.showDetailContent(detailContent)
     }

@@ -24,11 +24,9 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
 
     private val ratingCardView: CardView by bindView(R.id.rating_card_view)
     private val tmdbRatingView: View by bindView(R.id.tmdb_rating_view)
-    private val tmdbVotesText: FontTextView by bindView(R.id.tmdb_votes_text)
     private val tmdbRatingText: FontTextView by bindView(R.id.tmdb_rating_text)
 
     private val imdbRatingView: View by bindView(R.id.imdb_rating_view)
-    private val imdbVotesText: FontTextView by bindView(R.id.imdb_votes_text)
     private val imdbRatingText: FontTextView by bindView(R.id.imdb_rating_text)
 
     private val tomatoRatingView: View by bindView(R.id.tomato_rating_view)
@@ -41,7 +39,6 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
 
     private val metascoreView: View by bindView(R.id.metascore_view)
     private val metascoreText: FontTextView by bindView(R.id.metascore_text)
-    private val metascoreTextTwo: FontTextView by bindView(R.id.metascore_text_2)
 
     private val onCastItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -69,29 +66,26 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
                     || isValidRating(Metascore)) {
                 ratingCardView.show()
                 setMetaScore(Metascore)
-                setIMDbRating(imdbRating, imdbVotes)
+                setIMDbRating(imdbRating)
                 setTomatoRating(tomatoMeter, tomatoImage)
                 setAudienceScore(tomatoUserRating, tomatoUserMeter)
             }
         }
     }
 
-    protected fun setTMDbRating(voteAverage: Double?, voteCount: Int?) {
+    protected fun setTMDbRating(voteAverage: Double?) {
         val tmdbRating = voteAverage.toString()
-        val tmdbVotes = voteCount.toString()
         if (isValidRating(tmdbRating)) {
             ratingCardView.show()
             tmdbRatingView.show()
             tmdbRatingText.text = tmdbRating
-            tmdbVotesText.text = String.format(getString(R.string.votes_count_format), tmdbVotes)
         }
     }
 
-    private fun setIMDbRating(imdbRating: String?, imdbVotes: String?) {
+    private fun setIMDbRating(imdbRating: String?) {
         if (isValidRating(imdbRating)) {
             imdbRatingView.show()
             imdbRatingText.text = imdbRating
-            imdbVotesText.text = String.format(getString(R.string.votes_count_format), imdbVotes)
         }
     }
 
@@ -128,7 +122,6 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
         if (isValidRating(metaScore)) {
             metascoreView.show()
             metascoreText.text = metaScore
-            metascoreTextTwo.text = metaScore
 
             val metaScoreInt = metaScore!!.toInt()
             if (metaScoreInt > 60) {

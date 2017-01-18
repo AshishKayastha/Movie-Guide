@@ -37,11 +37,6 @@
                     style="@style/RatingText"
                     tools:text="8.6" />
 
-                <com.ashish.movies.ui.widget.FontTextView
-                    android:id="@+id/imdb_votes_text"
-                    style="@style/RatingText.Small"
-                    tools:text="195,145 votes" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -59,10 +54,6 @@
                     android:id="@+id/tomato_rating_text"
                     style="@style/RatingText"
                     tools:text="95%" />
-
-                <com.ashish.movies.ui.widget.FontTextView
-                    style="@style/RatingText.Small"
-                    android:text="@string/tomatometer" />
 
             </LinearLayout>
 
@@ -82,10 +73,6 @@
                     style="@style/RatingText"
                     tools:text="90%" />
 
-                <com.ashish.movies.ui.widget.FontTextView
-                    style="@style/RatingText.Small"
-                    android:text="@string/audience_score" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -104,12 +91,7 @@
                     tools:text="80" />
 
                 <com.ashish.movies.ui.widget.FontTextView
-                    android:id="@+id/metascore_text_2"
                     style="@style/RatingText"
-                    tools:text="80" />
-
-                <com.ashish.movies.ui.widget.FontTextView
-                    style="@style/RatingText.Small"
                     android:text="@string/metascore_txt" />
 
             </LinearLayout>
@@ -128,11 +110,6 @@
                     android:id="@+id/tmdb_rating_text"
                     style="@style/RatingText"
                     tools:text="7.1" />
-
-                <com.ashish.movies.ui.widget.FontTextView
-                    android:id="@+id/tmdb_votes_text"
-                    style="@style/RatingText.Small"
-                    tools:text="195,145 votes" />
 
             </LinearLayout>
 
