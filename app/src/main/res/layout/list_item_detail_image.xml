@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Wrap"
     android:foreground="?selectableItemBackground"
-    android:stateListAnimator="@animator/raise">
+    android:stateListAnimator="@animator/elevation_animator">
 
     <com.ashish.movies.ui.widget.AspectRatioImageView
         android:id="@+id/detail_content_image"

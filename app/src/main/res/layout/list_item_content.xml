@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Match.Width"
     android:foreground="?selectableItemBackground"
-    android:stateListAnimator="@animator/raise"
+    android:stateListAnimator="@animator/elevation_animator"
     app:cardCornerRadius="@dimen/padding_2dp">
 
     <RelativeLayout

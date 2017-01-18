@@ -70,8 +70,8 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
                 ratingCardView.show()
                 setMetaScore(Metascore)
                 setIMDbRating(imdbRating, imdbVotes)
-                setAudienceScore(tomatoUserRating)
                 setTomatoRating(tomatoMeter, tomatoImage)
+                setAudienceScore(tomatoUserRating, tomatoUserMeter)
             }
         }
     }
@@ -110,10 +110,10 @@ abstract class FullDetailContentActivity<I, V : BaseDetailView<I>, P : BaseDetai
         }
     }
 
-    private fun setAudienceScore(tomatoUserRating: String?) {
+    private fun setAudienceScore(tomatoUserRating: String?, tomatoUserMeter: String?) {
         if (isValidRating(tomatoUserRating)) {
             audienceScoreView.show()
-            audienceScoreText.text = tomatoUserRating
+            audienceScoreText.text = String.format(getString(R.string.meter_count_format), tomatoUserMeter)
 
             val flixterScore = tomatoUserRating!!.toFloat()
             if (flixterScore >= 3.5) {

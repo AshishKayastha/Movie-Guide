@@ -5,7 +5,6 @@
 
     <dimen name="toolbar_padding">4dp</dimen>
     <dimen name="toolbar_elevation">6dp</dimen>
-    <dimen name="shadow_height">6dp</dimen>
 
     <!-- Spacing -->
     <dimen name="padding_2dp">2dp</dimen>
@@ -25,6 +24,7 @@
     <dimen name="progress_bar_size">50dp</dimen>
     <dimen name="progress_bar_size_small">44dp</dimen>
 
+    <!-- Detail Page -->
     <dimen name="detail_backdrop_height">320dp</dimen>
     <dimen name="detail_poster_image_height">156dp</dimen>
 

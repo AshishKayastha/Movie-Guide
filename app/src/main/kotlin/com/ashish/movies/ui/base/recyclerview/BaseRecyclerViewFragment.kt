@@ -19,11 +19,7 @@ import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.getPosterImagePair
-import com.ashish.movies.utils.extensions.hide
-import com.ashish.movies.utils.extensions.setVisibility
-import com.ashish.movies.utils.extensions.show
-import com.ashish.movies.utils.extensions.startActivityWithTransition
+import com.ashish.movies.utils.extensions.*
 import icepick.State
 
 /**
@@ -66,7 +62,8 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
             setHasFixedSize(true)
             emptyView = emptyContentView
             addItemDecoration(ItemOffsetDecoration())
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            val columnCount = resources.getInteger(R.integer.content_column_count)
+            layoutManager = StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL)
             addOnScrollListener(scrollListener)
             adapter = recyclerViewAdapter
         }

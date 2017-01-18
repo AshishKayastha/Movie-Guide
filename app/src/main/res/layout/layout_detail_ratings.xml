@@ -80,7 +80,7 @@
                 <com.ashish.movies.ui.widget.FontTextView
                     android:id="@+id/audience_score_text"
                     style="@style/RatingText"
-                    tools:text="4.2" />
+                    tools:text="90%" />
 
                 <com.ashish.movies.ui.widget.FontTextView
                     style="@style/RatingText.Small"

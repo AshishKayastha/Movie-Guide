@@ -15,7 +15,6 @@ abstract class InfiniteScrollListener : RecyclerView.OnScrollListener() {
 
     private var currentPage = 1
     private var previousTotal = 0
-    private var lastVisibleItems = IntArray(2)
 
     private var isLoading = true
     private var layoutManager: RecyclerView.LayoutManager? = null
@@ -29,7 +28,7 @@ abstract class InfiniteScrollListener : RecyclerView.OnScrollListener() {
         var lastVisibleItemPosition = 0
         if (layoutManager is StaggeredGridLayoutManager) {
             lastVisibleItemPosition = (layoutManager as StaggeredGridLayoutManager)
-                    .findLastVisibleItemPositions(lastVisibleItems)[0]
+                    .findLastVisibleItemPositions(null)[0]
 
         } else if (layoutManager is LinearLayoutManager) {
             lastVisibleItemPosition = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
