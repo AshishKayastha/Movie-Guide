@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:scaleType="center"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/drawer_header" />
+        tools:src="@drawable/bg_drawer_header" />
 
 </FrameLayout>

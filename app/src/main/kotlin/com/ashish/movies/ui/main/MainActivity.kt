@@ -40,6 +40,7 @@ class MainActivity : BaseActivity() {
     private lateinit var tabPagerAdapter: TabPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_TransparentStatusBar)
         super.onCreate(savedInstanceState)
 
         supportActionBar?.apply {
