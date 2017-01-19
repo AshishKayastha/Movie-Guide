@@ -12,7 +12,7 @@ object ApiConstants {
     const val TMDB_BASE_IMAGE_URL = "https://image.tmdb.org/t/p/"
 
     const val POSTER_W500_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w500"
-    const val BACKDROP_W780_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w780"
+    const val PROFILE_W185_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w185"
     const val BACKDROP_W1280_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w1280"
     const val ORIGINAL_IMAGE_URL_PREFIX = TMDB_BASE_IMAGE_URL + "original"
 

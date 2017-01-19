@@ -33,9 +33,9 @@ class PersonDetailPresenter @Inject constructor(private val peopleInteractor: Pe
         return contentList
     }
 
-    override fun getBackdropImages(detailContent: PersonDetail) = detailContent.images?.backdrops
+    override fun getBackdropImages(detailContent: PersonDetail) = detailContent.images?.profiles
 
-    override fun getPosterImages(detailContent: PersonDetail) = detailContent.images?.posters
+    override fun getPosterImages(detailContent: PersonDetail) = null
 
     override fun getVideos(detailContent: PersonDetail) = null
 

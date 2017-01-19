@@ -21,6 +21,7 @@ import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_PERSON
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import icepick.State
 
 /**
@@ -83,14 +84,24 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
         presenter?.loadDetailContent(person?.id)
     }
 
-    override fun getBackdropPath() = person?.profilePath.getOriginalImageUrl()
+    override fun getBackdropPath() = ""
 
-    override fun getPosterPath() = getBackdropPath()
+    override fun getPosterPath() = person?.profilePath.getOriginalImageUrl()
 
     override fun showDetailContent(detailContent: PersonDetail) {
         detailContent.apply {
             titleText.text = name
             this@PersonDetailActivity.imdbId = imdbId
+
+            val profileImages = detailContent.images?.profiles
+            if (profileImages.isNotNullOrEmpty()) {
+                val backdropPath = profileImages!![profileImages.size - 1].filePath
+                if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
+                    showBackdropImage(backdropPath.getOriginalImageUrl())
+                }
+            } else {
+                showBackdropImage(getPosterPath())
+            }
         }
         super.showDetailContent(detailContent)
     }
