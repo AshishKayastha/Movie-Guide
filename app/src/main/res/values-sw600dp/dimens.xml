@@ -4,5 +4,8 @@
     <dimen name="second_keyline">80dp</dimen>
     <dimen name="toolbar_padding">12dp</dimen>
 
+    <dimen name="progress_bar_size">60dp</dimen>
+    <dimen name="progress_bar_size_small">55dp</dimen>
+
     <dimen name="detail_backdrop_height">360dp</dimen>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import butterknife.bindView
 import com.ashish.movies.R
+import com.ashish.movies.ui.animation.SlideInUpAnimator
 import com.ashish.movies.ui.base.mvp.MvpFragment
 import com.ashish.movies.ui.common.adapter.InfiniteScrollListener
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
@@ -61,9 +62,17 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         recyclerView.apply {
             setHasFixedSize(true)
             emptyView = emptyContentView
+            itemAnimator = SlideInUpAnimator()
             addItemDecoration(ItemOffsetDecoration())
             val columnCount = resources.getInteger(R.integer.content_column_count)
             layoutManager = StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL)
+
+            /*
+              Temporary fix for "Pixel distance must be non-negative" issue
+              @see https://code.google.com/p/android/issues/detail?id=230295
+             */
+            layoutManager.isItemPrefetchEnabled = false
+
             addOnScrollListener(scrollListener)
             adapter = recyclerViewAdapter
         }
@@ -88,6 +97,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     abstract fun getAdapterType(): Int
 
     override fun onRefresh() {
+        recyclerViewAdapter.clearAll()
         scrollListener.resetPageCount()
         presenter?.loadFreshData(type, recyclerViewAdapter.itemCount == 0)
     }

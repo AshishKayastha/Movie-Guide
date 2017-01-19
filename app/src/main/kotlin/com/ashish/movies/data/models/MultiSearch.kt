@@ -18,4 +18,6 @@ data class MultiSearch(
 ) : ViewType {
 
     override fun getViewType() = CONTENT_VIEW
+
+    override fun getContentId() = id
 }

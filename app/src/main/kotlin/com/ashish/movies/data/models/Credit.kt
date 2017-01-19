@@ -20,4 +20,6 @@ data class Credit(
 ) : ViewType {
 
     override fun getViewType() = CONTENT_VIEW
+
+    override fun getContentId() = id
 }

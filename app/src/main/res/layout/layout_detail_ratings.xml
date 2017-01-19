@@ -19,7 +19,7 @@
             style="@style/Wrap"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="@dimen/first_keyline">
+            android:padding="@dimen/spacing_large">
 
             <LinearLayout
                 android:id="@+id/imdb_rating_view"
