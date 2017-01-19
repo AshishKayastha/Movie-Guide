@@ -45,5 +45,9 @@ open class EmptyRecyclerView @JvmOverloads constructor(context: Context, attrs: 
         emptyView?.setVisibility(!hasItems)
     }
 
-    fun removeDataObserver() = adapter?.unregisterAdapterDataObserver(dataObserver)
+    fun performCleanup() {
+        adapter?.unregisterAdapterDataObserver(dataObserver)
+        clearOnScrollListeners()
+        adapter = null
+    }
 }

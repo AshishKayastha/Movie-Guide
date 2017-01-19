@@ -139,7 +139,9 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
         preAnimateRemoveImpl(holder)
     }
 
-    protected fun preAnimateRemoveImpl(holder: ViewHolder) {}
+    @Suppress("UNUSED_PARAMETER")
+    protected fun preAnimateRemoveImpl(holder: ViewHolder) {
+    }
 
     private fun animateRemoveImpl(holder: ViewHolder) {
         removeAnimation(holder)
@@ -526,7 +528,8 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
         }
     }
 
-    private class MoveInfo constructor(var holder: ViewHolder, var fromX: Int, var fromY: Int, var toX: Int, var toY: Int)
+    private class MoveInfo constructor(var holder: ViewHolder, var fromX: Int, var fromY: Int, var toX: Int,
+                                       var toY: Int)
 
     private class ChangeInfo constructor(var oldHolder: ViewHolder?, var newHolder: ViewHolder?, val fromX: Int,
                                          val fromY: Int, val toX: Int, val toY: Int) {

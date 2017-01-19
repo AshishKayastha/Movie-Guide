@@ -11,6 +11,4 @@ interface ViewType {
     }
 
     fun getViewType(): Int
-
-    fun getContentId(): Long? = -1
 }

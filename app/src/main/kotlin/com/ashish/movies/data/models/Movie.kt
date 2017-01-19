@@ -24,8 +24,6 @@ data class Movie(
 
     override fun getViewType() = CONTENT_VIEW
 
-    override fun getContentId() = id
-
     companion object {
         @JvmField @Suppress("unused")
         val CREATOR = PaperParcelMovie.CREATOR

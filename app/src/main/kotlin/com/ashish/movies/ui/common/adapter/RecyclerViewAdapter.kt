@@ -14,14 +14,13 @@ import com.ashish.movies.ui.tvshow.list.TVShowDelegateAdapter
 import com.ashish.movies.ui.tvshow.season.EpisodeDelegateAdapter
 import com.bumptech.glide.Glide
 import java.util.*
-import kotlin.properties.Delegates
 
 /**
  * Created by Ashish on Dec 30.
  */
 class RecyclerViewAdapter<in I : ViewType>(layoutId: Int, private val adapterType: Int,
                                            onItemClickListener: OnItemClickListener?)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener, AutoUpdatableAdapter {
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
 
     private val loadingItem = object : ViewType {
         override fun getViewType() = LOADING_VIEW
@@ -37,10 +36,7 @@ class RecyclerViewAdapter<in I : ViewType>(layoutId: Int, private val adapterTyp
             MultiSearchDelegateAdapter(layoutId, onItemClickListener)
     )
 
-    private var itemList: ArrayList<ViewType> by Delegates.observable(ArrayList()) {
-        prop, oldList, newList ->
-        autoNotify(oldList, newList) { o, n -> o.getContentId() == n.getContentId() }
-    }
+    private var itemList: ArrayList<ViewType> = ArrayList()
 
     private var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()
 
@@ -70,39 +66,37 @@ class RecyclerViewAdapter<in I : ViewType>(layoutId: Int, private val adapterTyp
 
     fun showItemList(newItemList: List<I>?) {
         newItemList?.let {
-            //            val oldPosition = itemCount
+            val oldPosition = itemCount
             itemList = ArrayList(it)
-//            val size = it.size
-//            notifyItemRangeInserted(oldPosition, size)
-//            notifyItemRangeChanged(oldPosition, size)
+            notifyItemRangeInserted(oldPosition, it.size)
         }
     }
 
     fun addLoadingItem() {
         itemList.add(loadingItem)
-//        notifyItemInserted(itemCount - 1)
+        notifyItemInserted(itemCount - 1)
     }
 
     fun addNewItemList(newItemList: List<I>?) {
         val loadingItemPosition = removeLoadingItem()
         newItemList?.let {
             itemList.addAll(it)
-//            notifyItemRangeChanged(loadingItemPosition, itemCount)
+            notifyItemRangeChanged(loadingItemPosition, itemCount)
         }
     }
 
     fun removeLoadingItem(): Int {
         val loadingItemPosition = itemCount - 1
         itemList.removeAt(loadingItemPosition)
-//        notifyItemRemoved(loadingItemPosition)
-//        notifyItemRangeChanged(loadingItemPosition, itemCount)
+        notifyItemRemoved(loadingItemPosition)
+        notifyItemRangeChanged(loadingItemPosition, itemCount)
         return loadingItemPosition
     }
 
     fun clearAll() {
-//        val oldSize = itemCount
+        val oldSize = itemCount
         itemList.clear()
-//        notifyItemRangeRemoved(0, oldSize)
+        notifyItemRangeRemoved(0, oldSize)
     }
 
     override fun removeListener() {

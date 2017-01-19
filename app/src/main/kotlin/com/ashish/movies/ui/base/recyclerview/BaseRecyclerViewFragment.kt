@@ -20,7 +20,11 @@ import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movies.ui.widget.StaggeredGridRecyclerView
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.getPosterImagePair
+import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.setVisibility
+import com.ashish.movies.utils.extensions.show
+import com.ashish.movies.utils.extensions.startActivityWithTransition
 import icepick.State
 
 /**
@@ -151,10 +155,8 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     }
 
     protected open fun performCleanup() {
-        recyclerView.removeDataObserver()
+        recyclerView.performCleanup()
         recyclerViewAdapter.removeListener()
-        recyclerView.clearOnScrollListeners()
-        recyclerView.adapter = null
         swipeRefreshLayout.clearAnimation()
         swipeRefreshLayout.setOnRefreshListener(null)
     }
