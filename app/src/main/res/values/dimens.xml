@@ -6,6 +6,9 @@
     <dimen name="toolbar_padding">4dp</dimen>
     <dimen name="toolbar_elevation">6dp</dimen>
 
+    <!-- 56 + 48 -->
+    <dimen name="toolbar_placeholder_height">104dp</dimen>
+
     <!-- Spacing -->
     <dimen name="padding_2dp">2dp</dimen>
     <dimen name="spacing_micro">4dp</dimen>

@@ -4,6 +4,9 @@
     <dimen name="second_keyline">80dp</dimen>
     <dimen name="toolbar_padding">12dp</dimen>
 
+    <!-- 64 + 48 -->
+    <dimen name="toolbar_placeholder_height">112dp</dimen>
+
     <dimen name="progress_bar_size">60dp</dimen>
     <dimen name="progress_bar_size_small">55dp</dimen>
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Placeholder">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowTitleSize">@dimen/toolbar_placeholder_height</item>
+        <item name="android:windowTitleStyle">@style/PlaceholderWindowTitle</item>
+        <item name="android:windowTitleBackgroundStyle">@style/PlaceholderWindowTitleBackground</item>
+    </style>
+
+    <!-- Changes the background color of the title bar -->
+    <style name="PlaceholderWindowTitleBackground">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <!-- Set the theme for the window title -->
+    <style name="PlaceholderWindowTitle">
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+</resources>
