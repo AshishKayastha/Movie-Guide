@@ -12,7 +12,6 @@ data class TVShow(
         val id: Long? = null,
         val name: String? = null,
         val overview: String? = null,
-        val popularity: Double? = null,
         @Json(name = "vote_count") val voteCount: Int? = null,
         @Json(name = "poster_path") val posterPath: String? = null,
         @Json(name = "vote_average") val voteAverage: Double? = null,

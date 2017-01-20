@@ -70,24 +70,20 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() 
 
     private fun showAllImages(detailContent: I) {
         val imageUrlList = ArrayList<String>()
-
-        val backdropImages = getBackdropImages(detailContent)
-        if (backdropImages.isNotNullOrEmpty()) {
-            val backdropImageUrlList = backdropImages!!
-                    .map { it.filePath.getBackdropUrl() }
-                    .toList()
-            imageUrlList.addAll(backdropImageUrlList)
-        }
-
-        val posterImages = getPosterImages(detailContent)
-        if (posterImages.isNotNullOrEmpty()) {
-            val posterImageUrlList = posterImages!!
-                    .map { it.filePath.getPosterUrl() }
-                    .toList()
-            imageUrlList.addAll(posterImageUrlList)
-        }
+        addImages(imageUrlList, getPosterImages(detailContent), String?::getPosterUrl)
+        addImages(imageUrlList, getBackdropImages(detailContent), String?::getBackdropUrl)
 
         if (imageUrlList.isNotEmpty()) getView()?.showImageList(imageUrlList)
+    }
+
+    private fun addImages(urlList: ArrayList<String>, imageItemList: List<ImageItem>?, getImage: (String?) -> String?) {
+        if (imageItemList.isNotNullOrEmpty()) {
+            val posterImageUrlList = imageItemList!!
+                    .map { getImage(it.filePath) }
+                    .filterNotNull()
+                    .toList()
+            urlList.addAll(posterImageUrlList)
+        }
     }
 
     private fun showYouTubeTrailer(detailContent: I) {

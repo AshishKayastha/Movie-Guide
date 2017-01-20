@@ -352,12 +352,11 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
                                               adapter: RecyclerView.Adapter<*>): RecyclerView {
         val inflatedView = viewStub.inflate()
         val recyclerView = inflatedView.findViewById(viewId) as RecyclerView
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         recyclerView.apply {
             setHasFixedSize(true)
-            recyclerView.layoutManager = layoutManager
             addItemDecoration(ItemOffsetDecoration())
+            layoutManager = LinearLayoutManager(this@BaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = adapter
             val snapHelper = GravitySnapHelper(Gravity.START)
             snapHelper.attachToRecyclerView(this)

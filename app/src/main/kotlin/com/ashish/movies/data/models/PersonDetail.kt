@@ -11,7 +11,6 @@ data class PersonDetail(
         val imdbId: String? = null,
         val birthday: String? = null,
         val biography: String? = null,
-        val popularity: Double? = null,
         val homepage: String? = null,
         val deathday: String? = null,
         val images: ProfileImages? = null,

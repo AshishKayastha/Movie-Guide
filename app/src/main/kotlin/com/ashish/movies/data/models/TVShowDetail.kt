@@ -13,7 +13,6 @@ data class TVShowDetail(
         val images: Images? = null,
         val overview: String? = null,
         val homepage: String? = null,
-        val popularity: Double? = null,
         val videos: Videos? = null,
         val genres: List<Genre>? = null,
         val seasons: List<Season>? = null,

@@ -11,7 +11,6 @@ import paperparcel.PaperParcel
 data class Person(
         val id: Long? = null,
         val name: String? = null,
-        val popularity: Double? = null,
         @Json(name = "profile_path") val profilePath: String? = null
 ) : ViewType, Parcelable {
 

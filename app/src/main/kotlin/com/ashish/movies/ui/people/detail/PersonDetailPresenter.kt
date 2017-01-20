@@ -17,7 +17,7 @@ import javax.inject.Inject
 class PersonDetailPresenter @Inject constructor(private val peopleInteractor: PeopleInteractor)
     : BaseDetailPresenter<PersonDetail, BaseDetailView<PersonDetail>>() {
 
-    override fun getDetailContent(id: Long) = peopleInteractor.getFullPeopleDetail(id)
+    override fun getDetailContent(id: Long) = peopleInteractor.getFullPersonDetail(id)
 
     override fun getContentList(fullDetailContent: FullDetailContent<PersonDetail>): List<String> {
         val contentList = ArrayList<String>()

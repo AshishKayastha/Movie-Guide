@@ -8,6 +8,5 @@ import com.squareup.moshi.Json
 data class Results<out I>(
         val page: Int = 1,
         val results: List<I>? = null,
-        @Json(name = "total_pages") val totalPages: Int = 0,
-        @Json(name = "total_results") val totalResults: Int = 0
+        @Json(name = "total_pages") val totalPages: Int = 0
 )

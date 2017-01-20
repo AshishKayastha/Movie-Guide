@@ -15,7 +15,7 @@ interface FullDetailContentView<in I> : BaseDetailView<I> {
 
     fun showAudienceScore(audienceScore: String, drawableResId: Int)
 
-    fun showTmdbRating(tmdbRating: String)
-
     fun showMetaScore(metaScore: String, color: Int)
+
+    fun showTmdbRating(tmdbRating: String)
 }
