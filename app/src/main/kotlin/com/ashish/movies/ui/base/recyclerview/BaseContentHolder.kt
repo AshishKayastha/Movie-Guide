@@ -42,7 +42,9 @@ abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup, layoutId: I
     private fun loadImage(item: I) {
         val imageUrl = getImageUrl(item)
         if (imageUrl.isNotNullOrEmpty()) {
-            requestBuilder.load(imageUrl).into(target)
+            requestBuilder.load(imageUrl)
+                    .animate(R.anim.fade_in)
+                    .into(target)
         } else {
             Glide.clear(posterImage)
         }

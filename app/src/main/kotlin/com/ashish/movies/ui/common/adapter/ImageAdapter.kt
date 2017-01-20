@@ -45,7 +45,7 @@ class ImageAdapter(val imageUrlList: ArrayList<String>, private var onItemClickL
             Glide.with(imageView.context)
                     .load(imageUrl)
                     .asBitmap()
-                    .dontAnimate()
+                    .animate(R.anim.fade_in)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .override(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
                     .into(imageView)
