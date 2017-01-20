@@ -4,7 +4,7 @@ import com.ashish.movies.R
 import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.MovieDetail
-import com.ashish.movies.ui.base.detail.BaseDetailPresenter
+import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import com.ashish.movies.utils.extensions.getFormattedNumber
@@ -16,7 +16,7 @@ import javax.inject.Inject
  * Created by Ashish on Dec 31.
  */
 class MovieDetailPresenter @Inject constructor(private val movieInteractor: MovieInteractor)
-    : BaseDetailPresenter<MovieDetail, MovieDetailView>() {
+    : FullDetailContentPresenter<MovieDetail, MovieDetailView>() {
 
     override fun getDetailContent(id: Long) = movieInteractor.getFullMovieDetail(id)
 
@@ -25,6 +25,7 @@ class MovieDetailPresenter @Inject constructor(private val movieInteractor: Movi
         getView()?.apply {
             hideProgress()
             val movieDetail = fullDetailContent.detailContent
+            setTMDbRating(movieDetail?.voteAverage)
             showItemList(movieDetail?.similarMovieResults?.results) { showSimilarMoviesList(it) }
         }
     }

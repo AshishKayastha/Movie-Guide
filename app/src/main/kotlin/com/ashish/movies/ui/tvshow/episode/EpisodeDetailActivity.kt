@@ -7,8 +7,8 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Episode
 import com.ashish.movies.data.models.EpisodeDetail
 import com.ashish.movies.di.components.AppComponent
-import com.ashish.movies.ui.base.detail.BaseDetailView
-import com.ashish.movies.ui.base.detail.FullDetailContentActivity
+import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentActivity
+import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentView
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.setTitleAndYear
@@ -17,7 +17,7 @@ import icepick.State
 /**
  * Created by Ashish on Jan 08.
  */
-class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetailView<EpisodeDetail>, EpisodeDetailPresenter>() {
+class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, FullDetailContentView<EpisodeDetail>, EpisodeDetailPresenter>() {
 
     @JvmField @State var tvShowId: Long? = null
     @JvmField @State var episode: Episode? = null
@@ -59,7 +59,6 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, BaseDetai
         detailContent.apply {
             titleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
-            setTMDbRating(detailContent.voteAverage)
         }
         super.showDetailContent(detailContent)
     }

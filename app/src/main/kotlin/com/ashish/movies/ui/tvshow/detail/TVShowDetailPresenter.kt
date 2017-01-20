@@ -4,7 +4,7 @@ import com.ashish.movies.R
 import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.TVShowDetail
-import com.ashish.movies.ui.base.detail.BaseDetailPresenter
+import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import java.util.*
@@ -14,7 +14,7 @@ import javax.inject.Inject
  * Created by Ashish on Jan 03.
  */
 class TVShowDetailPresenter @Inject constructor(private val tvShowInteractor: TVShowInteractor)
-    : BaseDetailPresenter<TVShowDetail, TVShowDetailView>() {
+    : FullDetailContentPresenter<TVShowDetail, TVShowDetailView>() {
 
     override fun getDetailContent(id: Long) = tvShowInteractor.getFullTVShowDetail(id)
 
@@ -23,6 +23,7 @@ class TVShowDetailPresenter @Inject constructor(private val tvShowInteractor: TV
         getView()?.apply {
             hideProgress()
             val tvShowDetail = fullDetailContent.detailContent
+            setTMDbRating(tvShowDetail?.voteAverage)
             showItemList(tvShowDetail?.seasons) { showSeasonsList(it) }
             showItemList(tvShowDetail?.similarTVShowResults?.results) { showSimilarTVShowList(it) }
         }

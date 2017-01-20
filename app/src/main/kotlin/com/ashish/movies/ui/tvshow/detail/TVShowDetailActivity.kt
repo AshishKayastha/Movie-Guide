@@ -11,7 +11,7 @@ import com.ashish.movies.data.models.Season
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
 import com.ashish.movies.di.components.AppComponent
-import com.ashish.movies.ui.base.detail.FullDetailContentActivity
+import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.tvshow.season.SeasonDetailActivity
@@ -91,7 +91,6 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
 
             imdbId = detailContent.externalIds?.imdbId
             titleText.setTitleAndYear(name, firstAirDate)
-            setTMDbRating(detailContent.voteAverage)
         }
         super.showDetailContent(detailContent)
     }

@@ -10,7 +10,7 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
 import com.ashish.movies.di.components.AppComponent
-import com.ashish.movies.ui.base.detail.FullDetailContentActivity
+import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
@@ -79,7 +79,6 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
 
             this@MovieDetailActivity.imdbId = imdbId
             titleText.setTitleAndYear(title, releaseDate)
-            setTMDbRating(detailContent.voteAverage)
         }
         super.showDetailContent(detailContent)
     }

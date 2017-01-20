@@ -2,12 +2,12 @@ package com.ashish.movies.ui.movie.detail
 
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
-import com.ashish.movies.ui.base.detail.BaseDetailView
+import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentView
 
 /**
  * Created by Ashish on Jan 03.
  */
-interface MovieDetailView : BaseDetailView<MovieDetail> {
+interface MovieDetailView : FullDetailContentView<MovieDetail> {
 
     fun showSimilarMoviesList(similarMoviesList: List<Movie>)
 }

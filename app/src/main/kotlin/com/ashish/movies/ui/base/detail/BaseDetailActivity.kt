@@ -3,6 +3,7 @@ package com.ashish.movies.ui.base.detail
 import android.animation.Animator
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.CallSuper
@@ -106,6 +107,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     private var menu: Menu? = null
     private var statusBarColor: Int = 0
     private var loadContent: Boolean = true
+    private lateinit var regularFont: Typeface
     private var rottenTomatoesUrl: String? = null
 
     private var reenterState: Bundle? = null
@@ -171,7 +173,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         sharedElementEnterTransition = window.sharedElementEnterTransition
         sharedElementEnterTransition?.addListener(transitionListener)
 
-        val regularFont = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
+        regularFont = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
         collapsingToolbar.setExpandedTitleTypeface(regularFont)
         collapsingToolbar.setCollapsedTitleTypeface(regularFont)
     }
@@ -277,7 +279,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun hideProgress() = progressBar.hide()
 
-    @CallSuper
     override fun showDetailContent(detailContent: I) {
         detailContainer.show()
         showOrHideMenu(R.id.action_imdb, imdbId)
@@ -321,7 +322,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     override fun showOMDbDetail(omDbDetail: OMDbDetail) {
         rottenTomatoesUrl = omDbDetail.tomatoURL
         showOrHideMenu(R.id.action_rotten_tomatoes, rottenTomatoesUrl)
-        changeMenuItemFont()
+        menu?.changeMenuFont(CustomTypefaceSpan(regularFont))
     }
 
     private fun showOrHideMenu(menuItemId: Int, text: String?) {
@@ -354,6 +355,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         recyclerView.apply {
+            setHasFixedSize(true)
             recyclerView.layoutManager = layoutManager
             addItemDecoration(ItemOffsetDecoration())
             recyclerView.adapter = adapter
@@ -447,12 +449,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     private fun openLinkExternally(siteUrl: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(siteUrl)))
-    }
-
-    private fun changeMenuItemFont() {
-        val typeface = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
-        val customTypefaceSpan = CustomTypefaceSpan(typeface)
-        menu?.changeMenuFont(customTypefaceSpan)
     }
 
     override fun finishAfterTransition() {

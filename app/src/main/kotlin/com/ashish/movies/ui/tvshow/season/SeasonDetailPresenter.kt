@@ -4,7 +4,7 @@ import com.ashish.movies.R
 import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.SeasonDetail
-import com.ashish.movies.ui.base.detail.BaseDetailPresenter
+import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import java.util.*
 import javax.inject.Inject
@@ -13,7 +13,7 @@ import javax.inject.Inject
  * Created by Ashish on Jan 07.
  */
 class SeasonDetailPresenter @Inject constructor(private val tvShowInteractor: TVShowInteractor)
-    : BaseDetailPresenter<SeasonDetail, SeasonDetailView>() {
+    : FullDetailContentPresenter<SeasonDetail, SeasonDetailView>() {
 
     private var seasonNumber: Int = 1
 

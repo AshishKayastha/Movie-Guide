@@ -4,8 +4,8 @@ import com.ashish.movies.R
 import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.EpisodeDetail
 import com.ashish.movies.data.models.FullDetailContent
-import com.ashish.movies.ui.base.detail.BaseDetailPresenter
-import com.ashish.movies.ui.base.detail.BaseDetailView
+import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentPresenter
+import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentView
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import java.util.*
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
  * Created by Ashish on Jan 08.
  */
 class EpisodeDetailPresenter @Inject constructor(private val tvShowInteractor: TVShowInteractor)
-    : BaseDetailPresenter<EpisodeDetail, BaseDetailView<EpisodeDetail>>() {
+    : FullDetailContentPresenter<EpisodeDetail, FullDetailContentView<EpisodeDetail>>() {
 
     private var seasonNumber: Int = 1
     private var episodeNumber: Int = 1
@@ -25,6 +25,11 @@ class EpisodeDetailPresenter @Inject constructor(private val tvShowInteractor: T
     }
 
     override fun getDetailContent(id: Long) = tvShowInteractor.getFullEpisodeDetail(id, seasonNumber, episodeNumber)
+
+    override fun showDetailContent(fullDetailContent: FullDetailContent<EpisodeDetail>) {
+        super.showDetailContent(fullDetailContent)
+        setTMDbRating(fullDetailContent.detailContent?.voteAverage)
+    }
 
     override fun getContentList(fullDetailContent: FullDetailContent<EpisodeDetail>): List<String> {
         val contentList = ArrayList<String>()
