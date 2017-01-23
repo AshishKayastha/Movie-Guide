@@ -90,4 +90,76 @@
         <item>@string/awards_title</item>
         <item>@string/also_known_as_title</item>
     </string-array>
+
+    <string-array name="movie_genre_list">
+        <item>@string/genre_action</item>
+        <item>@string/genre_adventure</item>
+        <item>@string/genre_animation</item>
+        <item>@string/genre_comedy</item>
+        <item>@string/genre_crime</item>
+        <item>@string/genre_documentary</item>
+        <item>@string/genre_drama</item>
+        <item>@string/genre_family</item>
+        <item>@string/genre_fantasy</item>
+        <item>@string/genre_history</item>
+        <item>@string/genre_horror</item>
+        <item>@string/genre_music</item>
+        <item>@string/genre_mystery</item>
+        <item>@string/genre_romance</item>
+        <item>@string/genre_sci_fi</item>
+        <item>@string/genre_thriller</item>
+        <item>@string/genre_war</item>
+        <item>@string/genre_western</item>
+    </string-array>
+
+    <string-array name="movie_genre_id_list">
+        <item>@string/genre_action_id</item>
+        <item>@string/genre_adventure_id</item>
+        <item>@string/genre_animation_id</item>
+        <item>@string/genre_comedy_id</item>
+        <item>@string/genre_crime_id</item>
+        <item>@string/genre_documentary_id</item>
+        <item>@string/genre_drama_id</item>
+        <item>@string/genre_family_id</item>
+        <item>@string/genre_fantasy_id</item>
+        <item>@string/genre_history_id</item>
+        <item>@string/genre_horror_id</item>
+        <item>@string/genre_music_id</item>
+        <item>@string/genre_mystery_id</item>
+        <item>@string/genre_romance_id</item>
+        <item>@string/genre_sci_fi_id</item>
+        <item>@string/genre_thriller_id</item>
+        <item>@string/genre_war_id</item>
+        <item>@string/genre_western_id</item>
+    </string-array>
+
+    <string-array name="tv_genre_list">
+        <item>@string/genre_action_adventure</item>
+        <item>@string/genre_animation</item>
+        <item>@string/genre_comedy</item>
+        <item>@string/genre_crime</item>
+        <item>@string/genre_documentary</item>
+        <item>@string/genre_drama</item>
+        <item>@string/genre_family</item>
+        <item>@string/genre_mystery</item>
+        <item>@string/genre_reality</item>
+        <item>@string/genre_scifi_fantasy</item>
+        <item>@string/genre_war_politics</item>
+        <item>@string/genre_western</item>
+    </string-array>
+
+    <string-array name="tv_genre_id_list">
+        <item>@string/genre_action_adventure_id</item>
+        <item>@string/genre_animation_id</item>
+        <item>@string/genre_comedy_id</item>
+        <item>@string/genre_crime_id</item>
+        <item>@string/genre_documentary_id</item>
+        <item>@string/genre_drama_id</item>
+        <item>@string/genre_family_id</item>
+        <item>@string/genre_mystery_id</item>
+        <item>@string/genre_reality_id</item>
+        <item>@string/genre_scifi_fantasy_id</item>
+        <item>@string/genre_war_politics_id</item>
+        <item>@string/genre_western_id</item>
+    </string-array>
 </resources>

@@ -17,13 +17,21 @@
         <item name="toolbarNavigationButtonStyle">@style/Custom.Toolbar.Button.Navigation</item>
         <item name="actionOverflowButtonStyle">@style/Custom.Widget.ActionButton.Overflow</item>
 
-        <item name="bottomSheetDialogTheme">@style/Theme.Design.BottomSheetDialog</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
     </style>
 
     <!-- Theme for activity with navigation view(this shows navigation view under status bar) -->
     <style name="AppTheme.TransparentStatusBar">
         <!-- Shared element transition doesn't work with full transparent color -->
         <item name="android:statusBarColor">#01000000</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetModal</item>
+    </style>
+
+    <style name="BottomSheetModal" parent="Widget.Design.BottomSheet.Modal">
+        <item name="behavior_peekHeight">350dp</item>
     </style>
 
     <style name="ImageViewerTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
@@ -114,20 +122,14 @@
         <item name="android:paddingStart">@dimen/spacing_medium</item>
     </style>
 
-    <style name="GenreCheckBox" parent="PrimaryText">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingStart">@dimen/spacing_normal</item>
-        <item name="android:layout_toEndOf">@id/centered_space</item>
-        <item name="android:layout_marginTop">@dimen/spacing_normal</item>
-    </style>
-
-    <style name="LeftGenreCheckBox" parent="PrimaryText">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingStart">@dimen/spacing_normal</item>
-        <item name="android:layout_marginTop">@dimen/spacing_normal</item>
-        <item name="android:layout_marginEnd">@dimen/spacing_normal</item>
-        <item name="android:layout_alignParentStart">true</item>
-        <item name="android:layout_toStartOf">@id/centered_space</item>
+    <style name="GenreTextView" parent="PrimaryText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">@dimen/spacing_medium</item>
+        <item name="android:paddingEnd">@dimen/spacing_medium</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/selector_genre</item>
     </style>
 
     <style name="RatingView" parent="Wrap">

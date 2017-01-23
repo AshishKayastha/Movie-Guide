@@ -1,7 +1,7 @@
 package com.ashish.movies.app
 
-import android.app.Application
 import android.content.Context
+import android.support.multidex.MultiDexApplication
 import com.ashish.movies.BuildConfig
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.di.components.DaggerAppComponent
@@ -14,7 +14,7 @@ import timber.log.Timber
 /**
  * Created by Ashish on Dec 28.
  */
-class MoviesApp : Application() {
+class MoviesApp : MultiDexApplication() {
 
     private lateinit var refWatcher: RefWatcher
 

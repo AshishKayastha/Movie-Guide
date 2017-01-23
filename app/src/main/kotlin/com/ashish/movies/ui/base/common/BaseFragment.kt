@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ashish.movies.app.MoviesApp
 import com.ashish.movies.utils.extensions.inflate
 import icepick.Icepick
 
@@ -33,5 +34,10 @@ abstract class BaseFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         Icepick.saveInstanceState(this, outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MoviesApp.getRefWatcher(activity).watch(this)
     }
 }

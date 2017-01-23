@@ -24,4 +24,9 @@
         <attr name="android:text" />
         <attr name="android:textSize" />
     </declare-styleable>
+
+    <declare-styleable name="GenreLayout">
+        <attr name="itemHeight" format="reference|dimension" />
+        <attr name="itemSpacing" format="reference|dimension" />
+    </declare-styleable>
 </resources>

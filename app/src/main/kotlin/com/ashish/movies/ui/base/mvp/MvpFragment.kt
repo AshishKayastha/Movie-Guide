@@ -84,9 +84,4 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : BaseFragment(), Mv
     override fun showMessage(messageId: Int) {
         rootView?.showSnackBar(messageId)
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        MoviesApp.getRefWatcher(activity).watch(this)
-    }
 }
