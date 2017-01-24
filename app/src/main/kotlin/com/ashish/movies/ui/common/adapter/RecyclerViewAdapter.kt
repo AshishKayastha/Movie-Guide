@@ -95,8 +95,10 @@ class RecyclerViewAdapter<in I : ViewType>(layoutId: Int, private val adapterTyp
 
     fun clearAll() {
         val oldSize = itemCount
-        itemList.clear()
-        notifyItemRangeRemoved(0, oldSize)
+        if (oldSize > 0) {
+            itemList.clear()
+            notifyItemRangeRemoved(0, oldSize)
+        }
     }
 
     override fun removeListener() {

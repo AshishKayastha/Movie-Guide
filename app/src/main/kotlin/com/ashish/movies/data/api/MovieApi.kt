@@ -30,7 +30,8 @@ interface MovieApi {
 
     @GET("discover/movie")
     fun discoverMovie(@Query("sort_by") sortBy: String = "popularity.desc",
-                      @Query("year") year: Int = 2016,
-                      @Query("with_genres") genres: String? = null,
+                      @Query("release_date.gte") minReleaseDate: String? = null,
+                      @Query("release_date.lte") maxReleaseDate: String? = null,
+                      @Query("with_genres") genreIds: String? = null,
                       @Query("page") page: Int = 1): Observable<Results<Movie>>
 }

@@ -5,7 +5,6 @@ import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.discover.common.filter.FilterQueryModel
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import timber.log.Timber
 
 /**
  * Created by Ashish on Jan 24.
@@ -13,22 +12,24 @@ import timber.log.Timber
 abstract class BaseDiscoverPresenter<I : ViewType> constructor(private val filterQueryModel: FilterQueryModel)
     : BaseRecyclerViewPresenter<I, DiscoverView<I>>() {
 
-    protected var year: Int = 2016
+    protected var minDate: String? = null
+    protected var maxDate: String? = null
     protected var genreIds: String? = null
     protected var sortBy: String = "popularity.desc"
 
     fun filterContents() {
         addDisposable(filterQueryModel.getFilterQuery()
-                .doOnNext { Timber.v("Genre Ids: " + it.genreIds) }
                 .filter { it.genreIds.isNotNullOrEmpty() }
                 .subscribe {
-                    this.year = it.year
+                    this.minDate = it.minDate
+                    this.maxDate = it.maxDate
                     this.genreIds = it.genreIds
+                    getView()?.clearFilteredData()
                     loadFreshData(null, true)
                 })
     }
 
     override fun getType(type: Int?) = null
 
-    fun onFilterMenuItemClick() = getView()?.showFilterBottomSheetDialog(FilterQuery(genreIds, year))
+    fun onFilterMenuItemClick() = getView()?.showFilterBottomSheetDialog(FilterQuery(genreIds, minDate, maxDate))
 }

@@ -28,7 +28,9 @@ class MovieInteractor @Inject constructor(private val movieApi: MovieApi, privat
                 .observeOnMainThread()
     }
 
-    fun discoverMovie(sortBy: String, year: Int, genres: String? = null, page: Int): Observable<Results<Movie>> {
-        return movieApi.discoverMovie(sortBy, year, genres, page).observeOnMainThread()
+    fun discoverMovie(sortBy: String, minReleaseDate: String?, maxReleaseDate: String?, genreIds: String?,
+                      page: Int): Observable<Results<Movie>> {
+        return movieApi.discoverMovie(sortBy, minReleaseDate, maxReleaseDate, genreIds, page)
+                .observeOnMainThread()
     }
 }

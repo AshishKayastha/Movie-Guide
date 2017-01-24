@@ -16,6 +16,6 @@ class DiscoverMoviePresenter @Inject constructor(private val movieInteractor: Mo
     : BaseDiscoverPresenter<Movie>(filterQueryModel) {
 
     override fun getResultsObservable(type: String?, page: Int): Observable<Results<Movie>> {
-        return movieInteractor.discoverMovie(sortBy, year, genreIds, page)
+        return movieInteractor.discoverMovie(sortBy, minDate, maxDate, genreIds, page)
     }
 }

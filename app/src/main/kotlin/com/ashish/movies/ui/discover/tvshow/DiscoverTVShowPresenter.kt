@@ -16,6 +16,6 @@ class DiscoverTVShowPresenter @Inject constructor(private val tvShowInteractor: 
     : BaseDiscoverPresenter<TVShow>(filterQueryModel) {
 
     override fun getResultsObservable(type: String?, page: Int): Observable<Results<TVShow>> {
-        return tvShowInteractor.discoverTVShow(sortBy, year, genreIds, page)
+        return tvShowInteractor.discoverTVShow(sortBy, minDate, maxDate, genreIds, page)
     }
 }

@@ -9,5 +9,7 @@ import com.ashish.movies.ui.common.adapter.ViewType
  */
 interface DiscoverView<in I : ViewType> : BaseRecyclerViewMvpView<I> {
 
+    fun clearFilteredData()
+
     fun showFilterBottomSheetDialog(filterQuery: FilterQuery)
 }

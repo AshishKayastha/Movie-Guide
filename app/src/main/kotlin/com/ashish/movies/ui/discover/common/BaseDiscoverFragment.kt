@@ -77,6 +77,8 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
 
     private fun isMovie() = getDiscoverMediaType() == DISCOVER_MOVIE
 
+    override fun clearFilteredData() = recyclerViewAdapter.clearAll()
+
     override fun showFilterBottomSheetDialog(filterQuery: FilterQuery) {
         val filterBottomSheetFragment = FilterBottomSheetDialogFragment.newInstance(isMovie(), filterQuery)
         filterBottomSheetFragment.setTargetFragment(this, 1001)

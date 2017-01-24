@@ -43,7 +43,8 @@ interface TVShowApi {
 
     @GET("discover/tv")
     fun discoverTVShow(@Query("sort_by") sortBy: String = "popularity.desc",
-                       @Query("first_air_date_year") year: Int = 2016,
-                       @Query("with_genres") genres: String? = null,
+                       @Query("air_date.gte") minAirDate: String? = null,
+                       @Query("air_date.lte") maxAirDate: String? = null,
+                       @Query("with_genres") genreIds: String? = null,
                        @Query("page") page: Int = 1): Observable<Results<TVShow>>
 }

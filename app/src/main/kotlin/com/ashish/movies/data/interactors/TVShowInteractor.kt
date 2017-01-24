@@ -43,7 +43,9 @@ class TVShowInteractor @Inject constructor(private val tvShowApi: TVShowApi, pri
                 .observeOnMainThread()
     }
 
-    fun discoverTVShow(sortBy: String, year: Int, genres: String? = null, page: Int): Observable<Results<TVShow>> {
-        return tvShowApi.discoverTVShow(sortBy, year, genres, page).observeOnMainThread()
+    fun discoverTVShow(sortBy: String, minAirDate: String?, maxAirDate: String?, genreIds: String?,
+                       page: Int): Observable<Results<TVShow>> {
+        return tvShowApi.discoverTVShow(sortBy, minAirDate, maxAirDate, genreIds, page)
+                .observeOnMainThread()
     }
 }
