@@ -16,7 +16,6 @@ import com.ashish.movies.ui.movie.detail.MovieDetailActivity
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_TV_SHOW
-import io.reactivex.Observable
 
 /**
  * Created by Ashish on Jan 07.
@@ -28,8 +27,6 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         const val DISCOVER_MOVIE = 0
         const val DISCOVER_TV_SHOW = 1
     }
-
-    private var filterBottomSheetFragment: FilterBottomSheetDialogFragment? = null
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,14 +74,9 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
 
     private fun isMovie() = getDiscoverMediaType() == DISCOVER_MOVIE
 
-    override fun getFilterQueryObservable(): Observable<FilterQuery>? {
-        val filterQueryObservable = filterBottomSheetFragment?.getFilterQueryObservable()
-        return filterQueryObservable ?: Observable.just(FilterQuery(null))
-    }
-
     override fun showFilterBottomSheetDialog(filterQuery: FilterQuery) {
-        filterBottomSheetFragment = FilterBottomSheetDialogFragment.newInstance(isMovie(), filterQuery)
-        filterBottomSheetFragment?.show(childFragmentManager, filterBottomSheetFragment?.tag)
+        val filterBottomSheetFragment = FilterBottomSheetDialogFragment.newInstance(isMovie(), filterQuery)
+        filterBottomSheetFragment.show(childFragmentManager, filterBottomSheetFragment.tag)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {

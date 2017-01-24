@@ -32,8 +32,8 @@ abstract class BaseFragment : Fragment() {
     protected open fun getFragmentArguments(arguments: Bundle?) {}
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
         Icepick.saveInstanceState(this, outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {

@@ -9,24 +9,22 @@ import timber.log.Timber
 /**
  * Created by Ashish on Jan 24.
  */
-abstract class BaseDiscoverPresenter<I : ViewType> : BaseRecyclerViewPresenter<I, DiscoverView<I>>() {
+abstract class BaseDiscoverPresenter<I : ViewType> constructor(private val filterQueryModel: FilterQueryModel)
+    : BaseRecyclerViewPresenter<I, DiscoverView<I>>() {
 
     protected var year: Int = 2016
     protected var genreIds: String? = null
     protected var sortBy: String = "popularity.desc"
 
     fun filterContents() {
-        val filterQueryObservable = getView()?.getFilterQueryObservable()
-        if (filterQueryObservable != null) {
-            addDisposable(filterQueryObservable
-                    .doOnNext { Timber.v("Genre Ids: " + it.genreIds) }
-                    .filter { it.genreIds.isNotNullOrEmpty() }
-                    .subscribe {
-                        this.year = it.year
-                        this.genreIds = it.genreIds
-                        loadFreshData(null, true)
-                    })
-        }
+        addDisposable(filterQueryModel.getFilterQuery()
+                .doOnNext { Timber.v("Genre Ids: " + it.genreIds) }
+                .filter { it.genreIds.isNotNullOrEmpty() }
+                .subscribe {
+                    this.year = it.year
+                    this.genreIds = it.genreIds
+                    loadFreshData(null, true)
+                })
     }
 
     override fun getType(type: Int?) = null

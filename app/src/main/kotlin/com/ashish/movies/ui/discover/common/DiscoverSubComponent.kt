@@ -13,4 +13,6 @@ interface DiscoverSubComponent {
     fun inject(discoverMovieFragment: DiscoverMovieFragment)
 
     fun inject(discoverTVShowFragment: DiscoverTVShowFragment)
+
+    fun inject(filterBottomSheetDialogFragment: FilterBottomSheetDialogFragment)
 }

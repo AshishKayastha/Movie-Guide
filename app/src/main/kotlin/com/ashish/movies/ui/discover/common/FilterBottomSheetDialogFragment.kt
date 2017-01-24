@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import butterknife.bindView
 import com.ashish.movies.R
+import com.ashish.movies.app.MoviesApp
 import com.ashish.movies.data.models.FilterQuery
 import com.ashish.movies.ui.widget.FontButton
 import com.ashish.movies.ui.widget.GenreLayout
 import icepick.Icepick
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 07.
@@ -33,13 +33,18 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private val filterQuerySubject = PublishSubject.create<FilterQuery>()
+    @Inject lateinit var filterQueryModel: FilterQueryModel
 
     private val applyFilterBtn: FontButton by bindView(R.id.apply_btn)
     private val genreLayout: GenreLayout by bindView(R.id.genre_layout)
 
     private var isMovie: Boolean = true
     private lateinit var filterQuery: FilterQuery
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MoviesApp.getAppComponent(activity).plus(DiscoverModule(activity)).inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.bottom_sheet_filter_movies, container, false)
@@ -62,7 +67,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         applyFilterBtn.setOnClickListener {
             filterQuery.genreIds = genreLayout.getSelectedGenreIds()
-            filterQuerySubject.onNext(filterQuery)
+            filterQueryModel.setFilterQuery(filterQuery)
             dismiss()
         }
     }
@@ -72,15 +77,13 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         filterQuery = arguments.getParcelable(ARG_FILTER_QUERY)
     }
 
-    fun getFilterQueryObservable(): Observable<FilterQuery> = filterQuerySubject
-
     override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
         Icepick.saveInstanceState(this, outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-//        MoviesApp.getRefWatcher(activity).watch(this)
+        MoviesApp.getRefWatcher(activity).watch(this)
     }
 }

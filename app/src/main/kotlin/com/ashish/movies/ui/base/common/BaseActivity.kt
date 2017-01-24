@@ -37,8 +37,8 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun getLayoutId(): Int
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
         Icepick.saveInstanceState(this, outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
