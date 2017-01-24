@@ -7,4 +7,4 @@ import javax.inject.Scope
  */
 @Scope
 @Retention
-annotation class PerFragment
+annotation class FragmentScope

@@ -6,4 +6,4 @@ import javax.inject.Qualifier
  * Created by Ashish on Jan 12.
  */
 @Qualifier
-annotation class PerApplication
+annotation class ForApplication

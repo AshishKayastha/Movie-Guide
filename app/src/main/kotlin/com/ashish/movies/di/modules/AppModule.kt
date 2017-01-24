@@ -2,7 +2,7 @@ package com.ashish.movies.di.modules
 
 import android.content.Context
 import com.ashish.movies.app.MoviesApp
-import com.ashish.movies.di.annotations.PerApplication
+import com.ashish.movies.di.annotations.ForApplication
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -15,6 +15,6 @@ class AppModule(val moviesApp: MoviesApp) {
 
     @Provides
     @Singleton
-    @PerApplication
+    @ForApplication
     fun provideAppContext(): Context = moviesApp
 }
