@@ -4,7 +4,7 @@ import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.Results
 import com.ashish.movies.ui.discover.common.BaseDiscoverPresenter
-import com.ashish.movies.ui.discover.common.FilterQueryModel
+import com.ashish.movies.ui.discover.common.filter.FilterQueryModel
 import io.reactivex.Observable
 import javax.inject.Inject
 

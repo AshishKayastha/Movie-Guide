@@ -3,6 +3,7 @@ package com.ashish.movies.ui.discover.common
 import com.ashish.movies.data.models.FilterQuery
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movies.ui.common.adapter.ViewType
+import com.ashish.movies.ui.discover.common.filter.FilterQueryModel
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import timber.log.Timber
 

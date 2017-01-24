@@ -1,4 +1,4 @@
-package com.ashish.movies.ui.discover.common
+package com.ashish.movies.ui.discover.common.filter
 
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
@@ -9,6 +9,7 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.app.MoviesApp
 import com.ashish.movies.data.models.FilterQuery
+import com.ashish.movies.ui.discover.common.BaseDiscoverFragment
 import com.ashish.movies.ui.widget.FontButton
 import com.ashish.movies.ui.widget.GenreLayout
 import icepick.Icepick
@@ -43,7 +44,9 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MoviesApp.getAppComponent(activity).plus(DiscoverModule(activity)).inject(this)
+        if (targetFragment is BaseDiscoverFragment<*, *>) {
+            (targetFragment as BaseDiscoverFragment<*, *>).discoverComponent.createFilterComponent().inject(this)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

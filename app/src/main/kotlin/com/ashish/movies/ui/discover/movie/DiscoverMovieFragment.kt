@@ -15,7 +15,8 @@ class DiscoverMovieFragment : BaseDiscoverFragment<Movie, DiscoverMoviePresenter
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(DiscoverModule(activity)).inject(this)
+        discoverComponent = appComponent.plus(DiscoverModule(activity))
+        discoverComponent.inject(this)
     }
 
     override fun getDiscoverMediaType() = DISCOVER_MOVIE

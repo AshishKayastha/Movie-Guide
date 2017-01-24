@@ -12,6 +12,7 @@ import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.common.adapter.ViewType
+import com.ashish.movies.ui.discover.common.filter.FilterBottomSheetDialogFragment
 import com.ashish.movies.ui.movie.detail.MovieDetailActivity
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
@@ -27,6 +28,8 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         const val DISCOVER_MOVIE = 0
         const val DISCOVER_TV_SHOW = 1
     }
+
+    lateinit var discoverComponent: DiscoverSubComponent
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,6 +79,7 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
 
     override fun showFilterBottomSheetDialog(filterQuery: FilterQuery) {
         val filterBottomSheetFragment = FilterBottomSheetDialogFragment.newInstance(isMovie(), filterQuery)
+        filterBottomSheetFragment.setTargetFragment(this, 1001)
         filterBottomSheetFragment.show(childFragmentManager, filterBottomSheetFragment.tag)
     }
 
