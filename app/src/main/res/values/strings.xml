@@ -151,4 +151,8 @@
     <!-- Rating -->
     <string name="metascore_txt">Metascore</string>
     <string name="meter_count_format" formatted="false">%s %%</string>
+
+    <!-- Filter -->
+    <string name="apply_filter_btn">Apply Filter</string>
+    <string name="title_filter">Filter</string>
 </resources>

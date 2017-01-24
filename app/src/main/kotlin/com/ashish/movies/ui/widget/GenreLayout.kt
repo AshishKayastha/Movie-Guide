@@ -34,6 +34,13 @@ class GenreLayout @JvmOverloads constructor(context: Context, attrs: AttributeSe
         ta.recycle()
     }
 
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        if (isInEditMode) {
+            setGenres(R.array.movie_genre_list, R.array.movie_genre_id_list)
+        }
+    }
+
     fun setGenres(@ArrayRes genreArrayId: Int, @ArrayRes genreIdArrayId: Int) {
         val resources = context.resources
         val genres = resources.getStringArray(genreArrayId)
