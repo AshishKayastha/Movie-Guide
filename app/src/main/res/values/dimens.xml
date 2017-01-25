@@ -32,4 +32,7 @@
     <dimen name="detail_poster_image_height">156dp</dimen>
 
     <dimen name="rating_image_size">38dp</dimen>
+
+    <dimen name="cb_inset_size">2dp</dimen>
+    <dimen name="corner_radius">2dp</dimen>
 </resources>

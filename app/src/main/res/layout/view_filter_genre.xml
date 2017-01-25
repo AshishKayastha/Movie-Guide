@@ -4,4 +4,4 @@
     android:id="@+id/genre_text"
     style="@style/GenreTextView"
     tools:selected="true"
-    tools:text="@string/genre_action" />
+    tools:text="Test" />

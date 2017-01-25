@@ -57,6 +57,7 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.4.0'
     compile 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
     compile 'com.github.bumptech.glide:glide:3.8.0-SNAPSHOT'
+    compile 'me.bendik.simplerangeview:simplerangeview:0.1.1'
 
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"

@@ -1,22 +1,26 @@
 package com.ashish.movies.ui.discover.common.filter
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
+import android.widget.DatePicker
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.FilterQuery
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.common.BaseActivity
-import com.ashish.movies.ui.widget.FontButton
+import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.GenreLayout
 import com.ashish.movies.utils.extensions.changeViewGroupTextFont
+import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 24.
  */
-class FilterActivity : BaseActivity() {
+class FilterActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
 
     companion object {
         private const val EXTRA_IS_MOVIE = "is_movie"
@@ -31,8 +35,10 @@ class FilterActivity : BaseActivity() {
 
     @Inject lateinit var filterQueryModel: FilterQueryModel
 
-    private val applyFilterBtn: FontButton by bindView(R.id.apply_btn)
+    private val minDateText: FontTextView by bindView(R.id.min_date)
+    private val maxDateText: FontTextView by bindView(R.id.max_date)
     private val genreLayout: GenreLayout by bindView(R.id.genre_layout)
+    private val applyFilterFAB: FloatingActionButton by bindView(R.id.apply_filter_fab)
 
     private var isMovie: Boolean = true
     private lateinit var filterQuery: FilterQuery
@@ -54,10 +60,25 @@ class FilterActivity : BaseActivity() {
             genreLayout.setGenres(R.array.tv_genre_list, R.array.tv_genre_id_list)
         }
 
-        applyFilterBtn.setOnClickListener {
+        applyFilterFAB.setOnClickListener {
             filterQuery.genreIds = genreLayout.getSelectedGenreIds()
             filterQueryModel.setFilterQuery(filterQuery)
             finishAfterTransition()
+        }
+
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        minDateText.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(this@FilterActivity, this@FilterActivity, year, month, day)
+            datePickerDialog.show()
+        }
+
+        maxDateText.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(this@FilterActivity, this@FilterActivity, year, month, day)
+            datePickerDialog.show()
         }
     }
 
@@ -72,5 +93,9 @@ class FilterActivity : BaseActivity() {
             isMovie = getBoolean(EXTRA_IS_MOVIE)
             filterQuery = getParcelable(EXTRA_FILTER_QUERY)
         }
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+
     }
 }

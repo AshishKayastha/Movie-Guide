@@ -1,7 +1,9 @@
 package com.ashish.movies.ui.discover.common.filter
 
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialogFragment
+import android.support.design.widget.FloatingActionButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +12,6 @@ import com.ashish.movies.R
 import com.ashish.movies.app.MoviesApp
 import com.ashish.movies.data.models.FilterQuery
 import com.ashish.movies.ui.discover.common.BaseDiscoverFragment
-import com.ashish.movies.ui.widget.FontButton
 import com.ashish.movies.ui.widget.GenreLayout
 import icepick.Icepick
 import javax.inject.Inject
@@ -36,11 +37,12 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     @Inject lateinit var filterQueryModel: FilterQueryModel
 
-    private val applyFilterBtn: FontButton by bindView(R.id.apply_btn)
     private val genreLayout: GenreLayout by bindView(R.id.genre_layout)
+    private val applyFilterFAB: FloatingActionButton by bindView(R.id.apply_filter_fab)
 
     private var isMovie: Boolean = true
     private lateinit var filterQuery: FilterQuery
+    private var behavior: BottomSheetBehavior<View>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +52,9 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.bottom_sheet_filter_movies, container, false)
+        val view = inflater.inflate(R.layout.bottom_sheet_filter_movies, container, false)
+        behavior = BottomSheetBehavior.from(view)
+        return view
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -68,7 +72,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             genreLayout.setGenres(R.array.tv_genre_list, R.array.tv_genre_id_list)
         }
 
-        applyFilterBtn.setOnClickListener {
+        applyFilterFAB.setOnClickListener {
             filterQuery.genreIds = genreLayout.getSelectedGenreIds()
             filterQueryModel.setFilterQuery(filterQuery)
             dismiss()
@@ -78,6 +82,11 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private fun getFragmentArguments() {
         isMovie = arguments.getBoolean(ARG_IS_MOVIE)
         filterQuery = arguments.getParcelable(ARG_FILTER_QUERY)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        behavior?.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

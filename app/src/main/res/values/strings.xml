@@ -155,4 +155,11 @@
     <!-- Filter -->
     <string name="apply_filter_btn">Apply Filter</string>
     <string name="title_filter">Filter</string>
+    <string name="date_txt">Date</string>
+
+    <string name="sort_by_popularity">Popularity</string>
+    <string name="sort_by_date">Date</string>
+    <string name="sort_by_title">Title</string>
+    <string name="sort_by_avg_vote">Avg. Votes</string>
+    <string name="sort_by_txt">Sort By</string>
 </resources>
