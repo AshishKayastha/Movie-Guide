@@ -10,7 +10,7 @@
 
     <color name="primary_text_dark">#212121</color>
 
-    <color name="light_ripple_color">#46FFFFFF</color>
+    <color name="light_ripple_color">#b6ffffff</color>
 
     <color name="black_80_transparent">#CC000000</color>
     <color name="image_view_bg_color">#e1313131</color>

@@ -45,7 +45,7 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch, BaseRecyclerVi
     fun searchQuery(query: String) {
         recyclerViewAdapter.clearAll()
         presenter?.setSearchQuery(query)
-        presenter?.loadData(null)
+        presenter?.loadFreshData(null)
     }
 
     override fun getAdapterType() = ADAPTER_TYPE_MULTI_SEARCH

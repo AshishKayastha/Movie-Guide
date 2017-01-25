@@ -31,5 +31,7 @@ abstract class BaseDiscoverPresenter<I : ViewType> constructor(private val filte
 
     override fun getType(type: Int?) = null
 
-    fun onFilterMenuItemClick() = getView()?.showFilterBottomSheetDialog(FilterQuery(genreIds, minDate, maxDate))
+    fun onFilterMenuItemClick() {
+        getView()?.showFilterBottomSheetDialog(FilterQuery(genreIds = genreIds, minDate = minDate, maxDate = maxDate))
+    }
 }

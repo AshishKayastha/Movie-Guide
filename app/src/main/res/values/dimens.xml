@@ -35,4 +35,5 @@
 
     <dimen name="cb_inset_size">2dp</dimen>
     <dimen name="corner_radius">2dp</dimen>
+    <dimen name="genre_corner_radius">40dp</dimen>
 </resources>

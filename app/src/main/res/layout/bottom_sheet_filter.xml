@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Match.Width">
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/sort_by_title"
+        style="@style/FilterTitleText"
+        android:text="@string/sort_by_txt" />
+
+    <RadioGroup
+        android:id="@+id/sort_radio_group"
+        style="@style/MaterialKeylineMargin"
+        android:layout_below="@id/sort_by_title"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <com.ashish.movies.ui.widget.FontRadioButton
+            android:id="@+id/sort_by_popularity_rb"
+            style="@style/SortRadioButton.First"
+            android:checked="true"
+            android:text="@string/sort_by_popularity" />
+
+        <com.ashish.movies.ui.widget.FontRadioButton
+            android:id="@+id/sort_by_date_rb"
+            style="@style/SortRadioButton"
+            android:text="@string/sort_by_date" />
+
+        <com.ashish.movies.ui.widget.FontRadioButton
+            android:id="@+id/sort_by_title_rb"
+            style="@style/SortRadioButton"
+            android:text="@string/sort_by_title" />
+
+        <com.ashish.movies.ui.widget.FontRadioButton
+            android:id="@+id/sort_by_avg_vote_rb"
+            style="@style/SortRadioButton.Last"
+            android:text="@string/sort_by_avg_vote" />
+
+    </RadioGroup>
+
+    <Space
+        android:id="@+id/centered_space"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true" />
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/start_date_title_text"
+        style="@style/FilterTitleText"
+        android:layout_below="@id/sort_radio_group"
+        android:layout_marginStart="@dimen/first_keyline"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_toStartOf="@id/centered_space"
+        android:text="@string/start_date_txt" />
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/start_date_text"
+        style="@style/FilterDateText"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/start_date_title_text"
+        android:layout_marginStart="@dimen/first_keyline"
+        tools:text="2017-01-24" />
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/end_date_title_text"
+        style="@style/FilterTitleText"
+        android:layout_below="@id/sort_radio_group"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_toEndOf="@id/centered_space"
+        android:text="@string/end_date_txt" />
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/end_date_text"
+        style="@style/FilterDateText"
+        android:layout_below="@id/end_date_title_text"
+        android:layout_marginEnd="@dimen/first_keyline"
+        android:layout_toEndOf="@id/centered_space"
+        tools:text="2017-01-25" />
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/genre_title_text"
+        style="@style/FilterTitleText"
+        android:layout_below="@id/start_date_text"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="@string/genre_txt" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/genre_recycler_view"
+        style="@style/Match.Width"
+        android:layout_below="@id/genre_title_text"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:paddingEnd="@dimen/spacing_normal"
+        android:paddingStart="@dimen/spacing_normal" />
+
+    <com.ashish.movies.ui.widget.FontButton
+        android:id="@+id/apply_filter_btn"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/genre_recycler_view"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:background="@drawable/selector_accent_btn"
+        android:text="@string/apply_filter_btn"
+        android:textColor="@color/primary_text_dark"
+        app:fontName="@string/font_montserrat_medium" />
+
+</RelativeLayout>

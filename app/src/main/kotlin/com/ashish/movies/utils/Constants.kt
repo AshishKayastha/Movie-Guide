@@ -18,5 +18,18 @@ object Constants {
     const val ADAPTER_TYPE_EPISODE = 5
     const val ADAPTER_TYPE_MULTI_SEARCH = 6
 
+    @JvmStatic val SORT_BY_MOVIE = arrayOf(
+            "popularity.desc",
+            "release_date.desc",
+            "original_title.desc",
+            "vote_average.desc"
+    )
+
+    @JvmStatic val SORT_BY_TV_SHOW = arrayOf(
+            "popularity.desc",
+            "first_air_date.desc",
+            "vote_average.desc"
+    )
+
     @JvmStatic val THUMBNAIL_SIZE = 180f.dpToPx().toInt()
 }

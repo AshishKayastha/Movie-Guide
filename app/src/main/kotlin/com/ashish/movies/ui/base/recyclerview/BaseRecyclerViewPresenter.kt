@@ -28,7 +28,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         }
     }
 
-    fun loadFreshData(type: Int?, showProgress: Boolean) {
+    fun loadFreshData(type: Int?, showProgress: Boolean = true) {
         if (Utils.isOnline()) {
             if (showProgress) getView()?.showProgress()
             addDisposable(getResultsObservable(getType(type), 1)
