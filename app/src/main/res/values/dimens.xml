@@ -15,7 +15,8 @@
     <dimen name="spacing_normal">8dp</dimen>
     <dimen name="spacing_medium">12dp</dimen>
     <dimen name="spacing_large">16dp</dimen>
-    <dimen name="spacing_xlarge">32dp</dimen>
+    <dimen name="spacing_xlarge">24dp</dimen>
+    <dimen name="spacing_xxlarge">32dp</dimen>
 
     <!-- Text Size -->
     <dimen name="line_spacing">6dp</dimen>

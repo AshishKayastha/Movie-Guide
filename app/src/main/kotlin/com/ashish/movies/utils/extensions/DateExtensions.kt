@@ -1,5 +1,6 @@
 package com.ashish.movies.utils.extensions
 
+import android.annotation.SuppressLint
 import com.ashish.movies.utils.Constants.DEFAULT_DATE_PATTERN
 import com.ashish.movies.utils.Constants.MONTH_DAY_YEAR_PATTERN
 import timber.log.Timber
@@ -10,6 +11,7 @@ import java.util.*
 /**
  * Created by Ashish Kayastha on Jan 26.
  */
+@SuppressLint("SimpleDateFormat")
 fun String?.convertToDate(datePattern: String = DEFAULT_DATE_PATTERN): Date? {
     if (isNotNullOrEmpty()) {
         try {
@@ -22,6 +24,7 @@ fun String?.convertToDate(datePattern: String = DEFAULT_DATE_PATTERN): Date? {
     return null
 }
 
+@SuppressLint("SimpleDateFormat")
 fun String?.getFormattedDate(inputDateFormat: String = DEFAULT_DATE_PATTERN,
                              outputDateFormat: String = MONTH_DAY_YEAR_PATTERN): String? {
     if (isNotNullOrEmpty()) {
@@ -35,4 +38,14 @@ fun String?.getFormattedDate(inputDateFormat: String = DEFAULT_DATE_PATTERN,
         }
     }
     return null
+}
+
+fun isValidDate(startDateString: String?, endDateString: String?): Boolean {
+    val startDate = startDateString.convertToDate()
+    val endDate = endDateString.convertToDate()
+    if (startDate != null && endDate != null) {
+        return startDate.before(endDate)
+    }
+
+    return true
 }

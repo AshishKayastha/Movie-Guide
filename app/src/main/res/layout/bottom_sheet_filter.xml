@@ -46,10 +46,17 @@
         android:layout_centerInParent="true" />
 
     <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/date_title_text"
+        style="@style/FilterTitleText"
+        android:layout_below="@id/sort_radio_group"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="@string/choose_date_txt" />
+
+    <com.ashish.movies.ui.widget.FontTextView
         android:id="@+id/start_date_text"
         style="@style/FilterDateText"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/sort_radio_group"
+        android:layout_below="@id/date_title_text"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_marginStart="@dimen/first_keyline"
         android:layout_toStartOf="@id/centered_space"
@@ -58,7 +65,7 @@
     <com.ashish.movies.ui.widget.FontTextView
         android:id="@+id/end_date_text"
         style="@style/FilterDateText"
-        android:layout_below="@id/sort_radio_group"
+        android:layout_below="@id/date_title_text"
         android:layout_marginEnd="@dimen/first_keyline"
         android:layout_marginStart="@dimen/spacing_normal"
         android:layout_toEndOf="@id/centered_space"
@@ -69,13 +76,14 @@
         style="@style/FilterTitleText"
         android:layout_below="@id/start_date_text"
         android:layout_marginTop="@dimen/spacing_large"
-        android:text="@string/genre_txt" />
+        android:text="@string/select_genre_txt" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/genre_recycler_view"
         style="@style/Match.Width"
         android:layout_below="@id/genre_title_text"
         android:layout_marginTop="@dimen/spacing_normal"
+        android:clipToPadding="false"
         android:paddingEnd="@dimen/spacing_normal"
         android:paddingStart="@dimen/spacing_normal" />
 
@@ -85,7 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/genre_recycler_view"
-        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginTop="@dimen/spacing_xlarge"
         android:background="@drawable/selector_accent_btn"
         android:text="@string/apply_filter_btn"
         android:textColor="@color/primary_text_dark"

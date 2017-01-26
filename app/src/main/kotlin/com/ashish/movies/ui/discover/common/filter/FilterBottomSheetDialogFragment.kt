@@ -26,6 +26,8 @@ import com.ashish.movies.utils.extensions.convertToDate
 import com.ashish.movies.utils.extensions.dpToPx
 import com.ashish.movies.utils.extensions.getFormattedDate
 import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.isValidDate
+import com.ashish.movies.utils.extensions.showToast
 import icepick.Icepick
 import icepick.State
 import java.util.*
@@ -102,7 +104,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         genreRecyclerView.apply {
             addItemDecoration(ItemOffsetDecoration(6f.dpToPx().toInt()))
-            layoutManager = StaggeredGridLayoutManager(3, GridLayoutManager.HORIZONTAL)
+            layoutManager = StaggeredGridLayoutManager(2, GridLayoutManager.HORIZONTAL)
             adapter = genreAdapter
         }
 
@@ -110,16 +112,21 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         if (isMovie) {
             sortByIndex = SORT_BY_MOVIE.indexOf(filterQuery?.sortBy ?: 0)
         } else {
-            sortByIndex = SORT_BY_TV_SHOW.indexOf(filterQuery?.sortBy ?: 0)
+            sortByRadioGroup.weightSum = 3f
             sortByRadioGroup.getChildAt(2)?.hide()
+            sortByIndex = SORT_BY_TV_SHOW.indexOf(filterQuery?.sortBy ?: 0)
         }
 
         (sortByRadioGroup.getChildAt(sortByIndex) as RadioButton?)?.isChecked = true
 
         applyFilterBtn.setOnClickListener {
-            updateFilterQuery()
-            filterQueryModel.setFilterQuery(filterQuery!!)
-            dismiss()
+            if (isValidDate(filterQuery?.minDate, filterQuery?.maxDate)) {
+                updateFilterQuery()
+                filterQueryModel.setFilterQuery(filterQuery!!)
+                dismiss()
+            } else {
+                activity.showToast(R.string.error_choose_valid_date)
+            }
         }
 
         val calendar = Calendar.getInstance()
