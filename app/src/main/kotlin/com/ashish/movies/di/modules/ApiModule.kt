@@ -19,21 +19,21 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideMovieApi(retrofit: Retrofit): MovieApi = retrofit.create<MovieApi>(MovieApi::class.java)
+    fun provideMovieApi(retrofit: Retrofit): MovieApi = retrofit.create(MovieApi::class.java)
 
     @Provides
     @Singleton
-    fun provideTVShowApi(retrofit: Retrofit): TVShowApi = retrofit.create<TVShowApi>(TVShowApi::class.java)
+    fun provideTVShowApi(retrofit: Retrofit): TVShowApi = retrofit.create(TVShowApi::class.java)
 
     @Provides
     @Singleton
-    fun providePeopleApi(retrofit: Retrofit): PeopleApi = retrofit.create<PeopleApi>(PeopleApi::class.java)
+    fun providePeopleApi(retrofit: Retrofit): PeopleApi = retrofit.create(PeopleApi::class.java)
 
     @Provides
     @Singleton
-    fun provideSearchApi(retrofit: Retrofit): SearchApi = retrofit.create<SearchApi>(SearchApi::class.java)
+    fun provideSearchApi(retrofit: Retrofit): SearchApi = retrofit.create(SearchApi::class.java)
 
     @Provides
     @Singleton
-    fun provideOMDbApi(@Named("omdb") retrofit: Retrofit): OMDbApi = retrofit.create<OMDbApi>(OMDbApi::class.java)
+    fun provideOMDbApi(@Named("omdb") retrofit: Retrofit): OMDbApi = retrofit.create(OMDbApi::class.java)
 }
