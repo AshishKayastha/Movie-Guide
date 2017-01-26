@@ -2,7 +2,6 @@ package com.ashish.movies.ui.discover.common.filter
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -20,9 +19,13 @@ import com.ashish.movies.ui.discover.common.BaseDiscoverFragment
 import com.ashish.movies.ui.widget.FontButton
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
+import com.ashish.movies.utils.Constants.DATE_PICKER_FORMAT
 import com.ashish.movies.utils.Constants.SORT_BY_MOVIE
+import com.ashish.movies.utils.extensions.convertToDate
 import com.ashish.movies.utils.extensions.dpToPx
+import com.ashish.movies.utils.extensions.getFormattedDate
 import icepick.Icepick
+import icepick.State
 import java.util.*
 import javax.inject.Inject
 
@@ -47,26 +50,25 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     @Inject lateinit var filterQueryModel: FilterQueryModel
 
+    @JvmField @State var isMovie: Boolean = true
+    @JvmField @State var filterQuery: FilterQuery? = null
+
     private val endDateText: FontTextView by bindView(R.id.end_date_text)
     private val applyFilterBtn: FontButton by bindView(R.id.apply_filter_btn)
     private val startDateText: FontTextView by bindView(R.id.start_date_text)
     private val sortByRadioGroup: RadioGroup by bindView(R.id.sort_radio_group)
     private val genreRecyclerView: RecyclerView by bindView(R.id.genre_recycler_view)
 
-    private var isMovie: Boolean = true
-    private lateinit var filterQuery: FilterQuery
-    private var behavior: BottomSheetBehavior<View>? = null
-
     private lateinit var genreAdapter: GenreAdapter
     private var endDatePickerDialog: DatePickerDialog? = null
     private var startDatePickerDialog: DatePickerDialog? = null
 
     private val startDateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-        startDateText.text = "$year-${month + 1}-$dayOfMonth"
+        setFormattedDate(year, month, dayOfMonth, true)
     }
 
     private val endDateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-        endDateText.text = "$year-${month + 1}-$dayOfMonth"
+        setFormattedDate(year, month, dayOfMonth, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,7 +80,6 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.bottom_sheet_filter, container, false)
-//        behavior = BottomSheetBehavior.from(view)
         return view
     }
 
@@ -92,10 +93,10 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         if (isMovie) {
             genreAdapter = GenreAdapter(activity, R.array.movie_genre_list, R.array.movie_genre_id_list,
-                    filterQuery.genreIds)
+                    filterQuery?.genreIds)
         } else {
             genreAdapter = GenreAdapter(activity, R.array.tv_genre_list, R.array.tv_genre_id_list,
-                    filterQuery.genreIds)
+                    filterQuery?.genreIds)
         }
 
         genreRecyclerView.apply {
@@ -104,31 +105,18 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             adapter = genreAdapter
         }
 
-        val sortByIndex = SORT_BY_MOVIE.indexOf(filterQuery.sortBy)
+        val sortByIndex = SORT_BY_MOVIE.indexOf(filterQuery?.sortBy ?: 0)
         (sortByRadioGroup.getChildAt(sortByIndex) as RadioButton?)?.isChecked = true
 
         applyFilterBtn.setOnClickListener {
-            val radioButton = sortByRadioGroup.findViewById(sortByRadioGroup.checkedRadioButtonId)
-            val index = sortByRadioGroup.indexOfChild(radioButton)
-
-            filterQuery.sortBy = SORT_BY_MOVIE[index]
-            filterQuery.minDate = startDateText.text.toString()
-            filterQuery.maxDate = endDateText.text.toString()
-            filterQuery.genreIds = genreAdapter.getSelectedGenreIds()
-            filterQueryModel.setFilterQuery(filterQuery)
+            updateFilterQuery()
+            filterQueryModel.setFilterQuery(filterQuery!!)
             dismiss()
         }
 
         val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-
-        startDateText.text = "$year-${month + 1}-$dayOfMonth"
-        endDateText.text = "$year-${month + 1}-$dayOfMonth"
-
-        startDatePickerDialog = DatePickerDialog(activity, startDateSetListener, year, month, dayOfMonth)
-        endDatePickerDialog = DatePickerDialog(activity, endDateSetListener, year, month, dayOfMonth)
+        setFormattedDate(calendar, filterQuery?.minDate.convertToDate(), true)
+        setFormattedDate(calendar, filterQuery?.maxDate.convertToDate(), false)
 
         startDateText.setOnClickListener { startDatePickerDialog?.show() }
 
@@ -142,12 +130,47 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+    private fun setFormattedDate(calendar: Calendar, date: Date?, isStartDate: Boolean) {
+        if (date != null) calendar.time = date
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+        if (isStartDate) {
+            startDatePickerDialog = DatePickerDialog(activity, startDateSetListener, year, month, dayOfMonth)
+        } else {
+            endDatePickerDialog = DatePickerDialog(activity, endDateSetListener, year, month, dayOfMonth)
+        }
+
+        setFormattedDate(year, month, dayOfMonth, isStartDate)
+    }
+
+    private fun setFormattedDate(year: Int, month: Int, dayOfMonth: Int, isStartDate: Boolean) {
+        val datePickerDate = getFormattedDatePickerDate(year, month, dayOfMonth)
+        if (isStartDate) {
+            filterQuery?.minDate = datePickerDate
+            startDateText.text = datePickerDate.getFormattedDate()
+        } else {
+            filterQuery?.maxDate = datePickerDate
+            endDateText.text = datePickerDate.getFormattedDate()
+        }
+    }
+
+    private fun getFormattedDatePickerDate(year: Int, month: Int, dayOfMonth: Int): String {
+        return String.format(Locale.getDefault(), DATE_PICKER_FORMAT, year, month + 1, dayOfMonth)
+    }
+
+    private fun updateFilterQuery() {
+        val radioButton = sortByRadioGroup.findViewById(sortByRadioGroup.checkedRadioButtonId)
+        val index = sortByRadioGroup.indexOfChild(radioButton)
+
+        filterQuery?.sortBy = SORT_BY_MOVIE[index]
+        filterQuery?.genreIds = genreAdapter.getSelectedGenreIds()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
+        updateFilterQuery()
         Icepick.saveInstanceState(this, outState)
         super.onSaveInstanceState(outState)
     }

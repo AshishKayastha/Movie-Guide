@@ -61,7 +61,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@id/start_date_title_text"
         android:layout_marginStart="@dimen/first_keyline"
-        tools:text="2017-01-24" />
+        tools:text="Jan 25, 2017" />
 
     <com.ashish.movies.ui.widget.FontTextView
         android:id="@+id/end_date_title_text"
@@ -78,7 +78,7 @@
         android:layout_below="@id/end_date_title_text"
         android:layout_marginEnd="@dimen/first_keyline"
         android:layout_toEndOf="@id/centered_space"
-        tools:text="2017-01-25" />
+        tools:text="Jan 26, 2017" />
 
     <com.ashish.movies.ui.widget.FontTextView
         android:id="@+id/genre_title_text"
