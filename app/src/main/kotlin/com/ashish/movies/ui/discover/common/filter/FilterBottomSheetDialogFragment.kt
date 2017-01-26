@@ -21,9 +21,11 @@ import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.utils.Constants.DATE_PICKER_FORMAT
 import com.ashish.movies.utils.Constants.SORT_BY_MOVIE
+import com.ashish.movies.utils.Constants.SORT_BY_TV_SHOW
 import com.ashish.movies.utils.extensions.convertToDate
 import com.ashish.movies.utils.extensions.dpToPx
 import com.ashish.movies.utils.extensions.getFormattedDate
+import com.ashish.movies.utils.extensions.hide
 import icepick.Icepick
 import icepick.State
 import java.util.*
@@ -79,8 +81,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.bottom_sheet_filter, container, false)
-        return view
+        return inflater.inflate(R.layout.bottom_sheet_filter, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -105,7 +106,14 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             adapter = genreAdapter
         }
 
-        val sortByIndex = SORT_BY_MOVIE.indexOf(filterQuery?.sortBy ?: 0)
+        val sortByIndex: Int
+        if (isMovie) {
+            sortByIndex = SORT_BY_MOVIE.indexOf(filterQuery?.sortBy ?: 0)
+        } else {
+            sortByIndex = SORT_BY_TV_SHOW.indexOf(filterQuery?.sortBy ?: 0)
+            sortByRadioGroup.getChildAt(2)?.hide()
+        }
+
         (sortByRadioGroup.getChildAt(sortByIndex) as RadioButton?)?.isChecked = true
 
         applyFilterBtn.setOnClickListener {
@@ -143,7 +151,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             endDatePickerDialog = DatePickerDialog(activity, endDateSetListener, year, month, dayOfMonth)
         }
 
-        setFormattedDate(year, month, dayOfMonth, isStartDate)
+        if (date != null) setFormattedDate(year, month, dayOfMonth, isStartDate)
     }
 
     private fun setFormattedDate(year: Int, month: Int, dayOfMonth: Int, isStartDate: Boolean) {
