@@ -22,12 +22,7 @@ import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.utils.Constants.DATE_PICKER_FORMAT
 import com.ashish.movies.utils.Constants.SORT_BY_MOVIE
 import com.ashish.movies.utils.Constants.SORT_BY_TV_SHOW
-import com.ashish.movies.utils.extensions.convertToDate
-import com.ashish.movies.utils.extensions.dpToPx
-import com.ashish.movies.utils.extensions.getFormattedDate
-import com.ashish.movies.utils.extensions.hide
-import com.ashish.movies.utils.extensions.isValidDate
-import com.ashish.movies.utils.extensions.showToast
+import com.ashish.movies.utils.extensions.*
 import icepick.Icepick
 import icepick.State
 import java.util.*
@@ -103,7 +98,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         }
 
         genreRecyclerView.apply {
-            addItemDecoration(ItemOffsetDecoration(6f.dpToPx().toInt()))
+            addItemDecoration(ItemOffsetDecoration(8f.dpToPx().toInt()))
             layoutManager = StaggeredGridLayoutManager(2, GridLayoutManager.HORIZONTAL)
             adapter = genreAdapter
         }

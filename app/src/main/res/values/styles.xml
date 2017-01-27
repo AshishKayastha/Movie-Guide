@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="android:windowBackground">@drawable/bg_gradient</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowEnterTransition">@transition/enter_transition</item>
 
@@ -140,8 +141,8 @@
         <item name="android:paddingTop">@dimen/spacing_medium</item>
         <item name="android:paddingBottom">@dimen/spacing_medium</item>
         <item name="android:clickable">true</item>
-        <item name="android:textColor">@color/selector_filter_text_color</item>
         <item name="android:background">@drawable/selector_genre</item>
+        <item name="android:textColor">@color/selector_filter_genre_text_color</item>
     </style>
 
     <style name="RatingView" parent="Wrap">
@@ -193,7 +194,7 @@
         <item name="android:paddingBottom">@dimen/spacing_medium</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="android:button">@android:color/transparent</item>
-        <item name="android:textColor">@color/selector_filter_text_color</item>
+        <item name="android:textColor">@color/selector_text_color</item>
         <item name="android:background">@drawable/selector_sort_rb</item>
         <item name="fontName">@string/font_montserrat_regular</item>
     </style>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Match.Width">
+    style="@style/Match.Width"
+    android:background="@drawable/bg_gradient">
 
     <com.ashish.movies.ui.widget.FontTextView
         android:id="@+id/sort_by_title"
@@ -30,6 +31,7 @@
         <com.ashish.movies.ui.widget.FontRadioButton
             android:id="@+id/sort_by_title_rb"
             style="@style/SortRadioButton"
+            android:checked="true"
             android:text="@string/sort_by_title" />
 
         <com.ashish.movies.ui.widget.FontRadioButton
