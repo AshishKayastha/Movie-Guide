@@ -5,13 +5,13 @@
     <color name="colorAccent">#64FFDA</color>
 
     <color name="greyish_white">#D9E1E1E1</color>
-    <color name="primary_text_light">#FFFFFFFF</color>
+    <color name="primary_text_light">#FFFFFF</color>
     <color name="secondary_text_light">#B3FFFFFF</color>
 
     <color name="primary_text_dark">#212121</color>
-
     <color name="light_ripple_color">#b6ffffff</color>
 
+    <color name="card_color">#333049</color>
     <color name="black_80_transparent">#CC000000</color>
     <color name="image_view_bg_color">#e1313131</color>
 </resources>

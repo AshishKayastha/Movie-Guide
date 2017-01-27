@@ -5,7 +5,7 @@
     android:id="@+id/rating_card_view"
     style="@style/Match.Width"
     android:visibility="gone"
-    app:cardBackgroundColor="#303449"
+    app:cardBackgroundColor="@color/card_color"
     app:cardCornerRadius="0dp"
     app:cardElevation="@dimen/padding_2dp"
     tools:visibility="visible">

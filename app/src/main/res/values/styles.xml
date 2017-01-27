@@ -32,7 +32,7 @@
     </style>
 
     <style name="BottomSheetModal" parent="Widget.Design.BottomSheet.Modal">
-        <item name="behavior_peekHeight">500dp</item>
+        <item name="behavior_peekHeight">@dimen/bottom_sheet_height</item>
     </style>
 
     <style name="ImageViewerTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
@@ -142,7 +142,7 @@
         <item name="android:paddingBottom">@dimen/spacing_medium</item>
         <item name="android:clickable">true</item>
         <item name="android:background">@drawable/selector_genre</item>
-        <item name="android:textColor">@color/selector_filter_genre_text_color</item>
+        <item name="android:textColor">@color/selector_text_color</item>
     </style>
 
     <style name="RatingView" parent="Wrap">
@@ -210,5 +210,12 @@
     <style name="FilterTitleText" parent="PrimaryText.Title">
         <item name="android:layout_marginStart">@dimen/first_keyline</item>
         <item name="android:layout_marginEnd">@dimen/first_keyline</item>
+    </style>
+
+    <style name="ListItemCard" parent="Match.Width">
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:stateListAnimator">@animator/elevation_animator</item>
+        <item name="cardCornerRadius">@dimen/corner_radius</item>
+        <item name="cardBackgroundColor">@color/card_color</item>
     </style>
 </resources>
