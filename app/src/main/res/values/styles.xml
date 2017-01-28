@@ -5,7 +5,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:windowBackground">@drawable/bg_gradient</item>
+        <item name="android:windowBackground">@drawable/bg_primary_gradient</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowEnterTransition">@transition/enter_transition</item>
 
@@ -39,8 +39,8 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">#55202020</item>
-        <item name="android:navigationBarColor">#55202020</item>
+        <item name="android:statusBarColor">@color/system_bar_color</item>
+        <item name="android:navigationBarColor">@color/system_bar_color</item>
         <item name="android:windowBackground">@color/image_view_bg_color</item>
     </style>
 
@@ -100,11 +100,16 @@
         <item name="android:background">?colorPrimary</item>
         <item name="android:theme">@style/ToolbarText</item>
         <item name="contentInsetStart">@dimen/second_keyline</item>
+        <item name="popupTheme">@style/ToolbarPopupTheme</item>
     </style>
 
-    <style name="ToolbarText" parent="@style/ThemeOverlay.AppCompat.Dark">
+    <style name="ToolbarText" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
+    </style>
+
+    <style name="ToolbarPopupTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:colorBackground">@color/primary_gradient_end_color</item>
     </style>
 
     <style name="ProgressBar">
@@ -133,7 +138,7 @@
         <item name="android:paddingStart">@dimen/spacing_medium</item>
     </style>
 
-    <style name="GenreTextView" parent="PrimaryText">
+    <style name="GenreText" parent="PrimaryText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingStart">20dp</item>
@@ -157,13 +162,11 @@
         <item name="android:layout_height">@dimen/rating_image_size</item>
     </style>
 
-    <style name="RatingText" parent="Wrap">
-        <item name="android:maxLines">1</item>
-        <item name="android:textColor">@android:color/white</item>
+    <style name="RatingText" parent="PrimaryText">
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">@dimen/spacing_normal</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
-        <item name="fontName">@string/font_montserrat_regular</item>
     </style>
 
     <style name="RatingText.Small">

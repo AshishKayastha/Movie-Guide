@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App's Branding Colors -->
     <color name="colorPrimary">#673AB7</color>
-    <color name="colorPrimaryDark">#512dA8</color>
-    <color name="colorAccent">#64FFDA</color>
+    <color name="colorPrimaryDark">#512DA8</color>
+    <color name="colorAccent">#5DFCAE</color>
 
-    <color name="greyish_white">#D9E1E1E1</color>
+    <!-- Gradient Colors -->
+    <color name="primary_gradient_start_color">#F032283D</color>
+    <color name="primary_gradient_end_color">#F01E1F2D</color>
+
+    <color name="accent_gradient_start_color">#5DFCAE</color>
+    <color name="accent_gradient_center_color">#35FC9C</color>
+    <color name="accent_gradient_end_color">#16FF8F</color>
+
+    <!-- Text Colors -->
     <color name="primary_text_light">#FFFFFF</color>
     <color name="secondary_text_light">#B3FFFFFF</color>
-
     <color name="primary_text_dark">#212121</color>
-    <color name="light_ripple_color">#b6ffffff</color>
 
-    <color name="card_color">#333049</color>
-    <color name="black_80_transparent">#CC000000</color>
-    <color name="image_view_bg_color">#e1313131</color>
+    <color name="greyish_white">#D9E1E1E1</color>
+
+    <color name="card_color">#F0333049</color>
+
+    <!-- Image Viewer -->
+    <color name="system_bar_color">#55202020</color>
+    <color name="image_view_bg_color">#E1313131</color>
 </resources>

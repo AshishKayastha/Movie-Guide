@@ -237,13 +237,13 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
             if (!isDark) {
                 window.decorView.setLightStatusBar()
-                val transBlack = getColorCompat(R.color.black_80_transparent)
+                val primaryBlack = getColorCompat(R.color.primary_text_dark)
 
                 val backButton = toolbar?.getChildAt(0) as ImageButton?
-                backButton?.setColorFilter(transBlack)
+                backButton?.setColorFilter(primaryBlack)
 
-                collapsingToolbar.setCollapsedTitleTextColor(transBlack)
-                toolbar?.getOverflowMenuButton()?.setColorFilter(transBlack)
+                collapsingToolbar.setCollapsedTitleTextColor(primaryBlack)
+                toolbar?.getOverflowMenuButton()?.setColorFilter(primaryBlack)
             }
 
             statusBarColor = window.statusBarColor

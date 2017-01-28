@@ -2,6 +2,6 @@
 <com.ashish.movies.ui.widget.FontTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/genre_text"
-    style="@style/GenreTextView"
+    style="@style/GenreText"
     tools:selected="true"
     tools:text="Test" />

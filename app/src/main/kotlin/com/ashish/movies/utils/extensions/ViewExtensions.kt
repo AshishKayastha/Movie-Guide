@@ -51,6 +51,7 @@ fun View.showSnackBar(messageId: Int, duration: Int = Snackbar.LENGTH_LONG) {
 
     snackbar.changeSnackBarFont(android.support.design.R.id.snackbar_text)
     snackbar.changeSnackBarFont(android.support.design.R.id.snackbar_action)
+    snackbar.view.setBackgroundColor(context.getColorCompat(R.color.primary_gradient_end_color))
 
     snackbar.show()
 }
