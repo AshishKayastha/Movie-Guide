@@ -84,6 +84,7 @@ import java.util.*
 abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresenter<I, V>>
     : MvpActivity<V, P>(), BaseDetailView<I>, AppBarLayout.OnOffsetChangedListener {
 
+    protected var menu: Menu? = null
     protected var imdbId: String? = null
     protected var castAdapter: RecyclerViewAdapter<Credit>? = null
     protected var crewAdapter: RecyclerViewAdapter<Credit>? = null
@@ -104,7 +105,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     private val imagesViewStub: ViewStub by bindView(R.id.images_view_stub)
     private val detailContentRecyclerView: RecyclerView by bindView(R.id.detail_content_recycler_view)
 
-    private var menu: Menu? = null
     private var statusBarColor: Int = 0
     private var loadContent: Boolean = true
     private lateinit var regularFont: Typeface
@@ -325,7 +325,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         menu?.changeMenuFont(CustomTypefaceSpan(regularFont))
     }
 
-    private fun showOrHideMenu(menuItemId: Int, text: String?) {
+    protected fun showOrHideMenu(menuItemId: Int, text: String?) {
         val menuItem = menu?.findItem(menuItemId)
         menuItem?.isVisible = text.isNotNullOrEmpty()
     }

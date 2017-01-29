@@ -1,10 +1,15 @@
 package com.ashish.movies.data.api
 
 import com.ashish.movies.data.models.Account
+import com.ashish.movies.data.models.Favorite
 import com.ashish.movies.data.models.RequestToken
 import com.ashish.movies.data.models.Session
+import io.reactivex.Completable
 import io.reactivex.Observable
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -20,4 +25,7 @@ interface AuthApi {
 
     @GET("account")
     fun getUserAccount(@Query("session_id") sessionId: String): Observable<Account>
+
+    @POST("account/{accountId}/favorite")
+    fun markAsFavorite(@Path("accountId") accountId: Long, @Body favorite: Favorite): Completable
 }

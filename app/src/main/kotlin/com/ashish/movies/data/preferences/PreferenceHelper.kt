@@ -14,6 +14,7 @@ import javax.inject.Singleton
 class PreferenceHelper @Inject constructor(@ForApplication context: Context) {
 
     companion object {
+        private const val PREF_ID = "id"
         private const val PREF_NAME = "name"
         private const val PREF_USER_NAME = "user_name"
         private const val PREF_SESSION_ID = "session_id"
@@ -22,23 +23,27 @@ class PreferenceHelper @Inject constructor(@ForApplication context: Context) {
 
     private val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
 
-    fun getName(): String = getString(PREF_NAME)
+    fun getId(): Long = sharedPrefs.getLong(PREF_ID, 0L)
+
+    fun setId(id: Long) = sharedPrefs.edit().putLong(PREF_ID, id).apply()
+
+    fun getName(): String? = getString(PREF_NAME)
 
     fun setName(name: String?) = putString(PREF_NAME, name)
 
-    fun getUserName(): String = getString(PREF_USER_NAME)
+    fun getUserName(): String? = getString(PREF_USER_NAME)
 
     fun setUserName(userName: String?) = putString(PREF_USER_NAME, userName)
 
-    fun getGravatarHash(): String = getString(PREF_GRAVATAR_HASH)
+    fun getGravatarHash(): String? = getString(PREF_GRAVATAR_HASH)
 
     fun setGravatarHash(hash: String?) = putString(PREF_GRAVATAR_HASH, hash)
 
-    fun getSessionId(): String = getString(PREF_SESSION_ID)
+    fun getSessionId(): String? = getString(PREF_SESSION_ID)
 
     fun setSessionId(sessionId: String?) = putString(PREF_SESSION_ID, sessionId)
 
-    private fun getString(key: String, defaultValue: String = ""): String = sharedPrefs.getString(key, defaultValue)
+    private fun getString(key: String, defaultValue: String = ""): String? = sharedPrefs.getString(key, defaultValue)
 
     private fun putString(key: String, value: String?) = sharedPrefs.edit().putString(key, value).apply()
 }

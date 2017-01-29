@@ -1,6 +1,7 @@
 package com.ashish.movies.ui.base.detail.fulldetail
 
 import com.ashish.movies.R
+import com.ashish.movies.data.models.Favorite
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
@@ -83,5 +84,9 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>> : Bas
 
     private fun isValidRating(rating: String?): Boolean {
         return rating.isNotNullOrEmpty() && rating != "N/A" && rating != "0"
+    }
+
+    fun markAsFavorite(mediaId: Long?, mediaType: String) {
+        val favorite = Favorite(true, mediaId, mediaType)
     }
 }

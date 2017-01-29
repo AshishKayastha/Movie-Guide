@@ -18,4 +18,6 @@ interface FullDetailContentView<in I> : BaseDetailView<I> {
     fun showMetaScore(metaScore: String, color: Int)
 
     fun showTmdbRating(tmdbRating: String)
+
+    fun handleMarkAsFavoriteError(isFavorite: Boolean)
 }

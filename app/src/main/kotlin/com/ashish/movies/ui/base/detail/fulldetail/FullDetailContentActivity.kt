@@ -1,6 +1,7 @@
 package com.ashish.movies.ui.base.detail.fulldetail
 
 import android.support.v7.widget.CardView
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import butterknife.bindView
@@ -12,6 +13,7 @@ import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.show
 
 /**
@@ -57,6 +59,11 @@ abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : Fu
         startNewActivityWithTransition(view, R.string.transition_person_profile, intent)
     }
 
+    override fun showDetailContent(detailContent: I) {
+        super.showDetailContent(detailContent)
+        showOrHideMenu(R.id.action_favorite, getMediaType())
+    }
+
     override fun showRatingCard() = ratingCardView.show()
 
     override fun showImdbRating(imdbRating: String) {
@@ -90,4 +97,28 @@ abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : Fu
     override fun getCastItemClickListener() = onCastItemClickListener
 
     override fun getCrewItemClickListener() = onCrewItemClickListener
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_favorite) {
+            val mediaType = getMediaType()
+            if (mediaType.isNotNullOrEmpty()) {
+                item.setIcon(R.drawable.ic_favorite_white_24dp)
+                presenter?.markAsFavorite(0, mediaType!!)
+            }
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    protected open fun getMediaType(): String? = null
+
+    override fun handleMarkAsFavoriteError(isFavorite: Boolean) {
+        val favItem = menu?.findItem(R.id.action_favorite)
+        if (isFavorite) {
+            favItem?.setIcon(R.drawable.ic_favorite_white_24dp)
+        } else {
+            favItem?.setIcon(R.drawable.ic_favorite_border_white_24dp)
+        }
+    }
 }

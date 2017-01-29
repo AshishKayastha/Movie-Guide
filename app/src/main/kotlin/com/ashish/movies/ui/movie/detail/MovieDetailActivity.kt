@@ -13,6 +13,7 @@ import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
+import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
@@ -92,6 +93,8 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
         inflateViewStubRecyclerView(similarMoviesViewStub, R.id.similar_content_recycler_view,
                 similarMoviesAdapter!!, similarMoviesList)
     }
+
+    override fun getMediaType() = MEDIA_TYPE_MOVIE
 
     override fun performCleanup() {
         similarMoviesAdapter?.removeListener()
