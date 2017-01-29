@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <size
+        android:width="@dimen/drawer_user_image_size"
+        android:height="@dimen/drawer_user_image_size" />
+    <solid android:color="#78212121" />
+</shape>

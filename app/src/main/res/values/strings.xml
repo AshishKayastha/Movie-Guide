@@ -166,4 +166,15 @@
     <string name="select_genre_txt">Select Genres</string>
     <string name="apply_filter_btn">Apply Filter</string>
     <string name="error_choose_valid_date">Please choose valid date</string>
+
+    <!-- TMDB Login -->
+    <string name="title_tmdb_login">TMDb Login</string>
+    <string name="content_tmdb_login">Do you want to login with your TMDb account?</string>
+    <string name="login_btn">Login</string>
+
+    <string name="logging_in">Logging into TMDb account…</string>
+    <string name="error_tmdb_login">Failed to login</string>
+    <string name="success_tmdb_login">Successfully logged in as %s!</string>
+    <string name="login_with_tmdb">Login with TMDb</string>
+    <string name="mark_as_favorite">Mark as favorite</string>
 </resources>

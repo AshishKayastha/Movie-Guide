@@ -53,6 +53,10 @@
             android:label=""
             android:theme="@style/ImageViewerTheme" />
 
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:label="" />
+
     </application>
 
 </manifest>

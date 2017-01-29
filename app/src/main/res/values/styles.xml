@@ -221,4 +221,9 @@
         <item name="cardCornerRadius">@dimen/corner_radius</item>
         <item name="cardBackgroundColor">@color/card_color</item>
     </style>
+
+    <style name="DrawerHeaderText" parent="PrimaryText">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+    </style>
 </resources>

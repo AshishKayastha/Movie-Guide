@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Match.Width"
-    android:layout_height="184dp">
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drawer_header_height">
 
     <ImageView
         android:id="@+id/header_bg_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/Match"
         android:background="@drawable/bg_drawer_header"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_above="@+id/user_name_text"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="@dimen/spacing_normal"
-        tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_movie_white_100dp" />
+    <com.ashish.movies.ui.widget.CircleImageView
+        android:id="@+id/user_image"
+        android:layout_width="@dimen/drawer_user_image_size"
+        android:layout_height="@dimen/drawer_user_image_size"
+        android:layout_above="@+id/drawer_subtitle_view"
+        android:layout_marginBottom="@dimen/spacing_micro"
+        android:layout_marginStart="@dimen/first_keyline"
+        android:background="@drawable/selector_drawer_user_image"
+        android:clickable="true"
+        android:elevation="@dimen/padding_2dp"
+        app:civ_borderColor="@android:color/white"
+        app:civ_borderWidth="@dimen/drawer_user_image_border_width"
+        tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/user_name_text"
-        style="@style/Wrap"
-        android:layout_above="@+id/email_text"
-        android:layout_centerInParent="true"
-        android:paddingEnd="@dimen/spacing_large"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
-        android:paddingStart="@dimen/spacing_large"
-        tools:text="Username" />
-
-    <TextView
-        android:id="@+id/email_text"
-        style="@style/Wrap"
+    <LinearLayout
+        android:id="@+id/drawer_subtitle_view"
+        style="@style/MaterialKeylinePadding"
+        android:layout_height="@dimen/drawer_subtitle_height"
         android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        android:layout_marginTop="@dimen/spacing_micro"
-        android:paddingEnd="@dimen/spacing_large"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
-        android:paddingStart="@dimen/spacing_large"
-        android:textSize="@dimen/text_size_normal"
-        tools:text="Email" />
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:gravity="center_vertical">
+
+        <com.ashish.movies.ui.widget.FontTextView
+            android:id="@+id/name_text"
+            style="@style/DrawerHeaderText"
+            android:layout_marginBottom="@dimen/spacing_micro"
+            app:fontName="@string/font_montserrat_medium"
+            tools:text="@string/login_with_tmdb" />
+
+        <com.ashish.movies.ui.widget.FontTextView
+            android:id="@+id/user_name_text"
+            style="@style/DrawerHeaderText"
+            tools:text="ashish_kayastha" />
+
+    </LinearLayout>
 
 </RelativeLayout>

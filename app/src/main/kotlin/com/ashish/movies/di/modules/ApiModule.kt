@@ -1,5 +1,6 @@
 package com.ashish.movies.di.modules
 
+import com.ashish.movies.data.api.AuthApi
 import com.ashish.movies.data.api.MovieApi
 import com.ashish.movies.data.api.OMDbApi
 import com.ashish.movies.data.api.PeopleApi
@@ -16,6 +17,10 @@ import javax.inject.Singleton
  */
 @Module
 class ApiModule {
+
+    @Provides
+    @Singleton
+    fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
 
     @Provides
     @Singleton

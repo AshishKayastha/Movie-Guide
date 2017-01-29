@@ -178,3 +178,15 @@ fun ViewGroup.getOverflowMenuButton(): ImageView? {
 
     return overflowMenu
 }
+
+fun ImageView.loadImageUrl(imageUrl: String?, placeHolder: Int = R.drawable.ic_person_white_80dp) {
+    if (imageUrl.isNotNullOrEmpty()) {
+        Glide.with(context)
+                .load(imageUrl)
+                .placeholder(placeHolder)
+                .error(placeHolder)
+                .into(this)
+    } else {
+        Glide.clear(this)
+    }
+}

@@ -25,8 +25,15 @@
     <dimen name="text_size_large">16sp</dimen>
     <dimen name="text_size_xlarge">18sp</dimen>
 
+    <!-- Progress Bar -->
     <dimen name="progress_bar_size">50dp</dimen>
     <dimen name="progress_bar_size_small">44dp</dimen>
+
+    <!-- Drawer -->
+    <dimen name="drawer_header_height">180dp</dimen>
+    <dimen name="drawer_subtitle_height">56dp</dimen>
+    <dimen name="drawer_user_image_size">72dp</dimen>
+    <dimen name="drawer_user_image_border_width">2dp</dimen>
 
     <!-- Detail Page -->
     <dimen name="detail_backdrop_height">360dp</dimen>

@@ -24,4 +24,9 @@
         <attr name="android:text" />
         <attr name="android:textSize" />
     </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_borderColor" format="color|reference" />
+        <attr name="civ_borderWidth" format="dimension|reference" />
+    </declare-styleable>
 </resources>

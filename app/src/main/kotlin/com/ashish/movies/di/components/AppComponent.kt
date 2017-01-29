@@ -5,6 +5,8 @@ import com.ashish.movies.di.modules.AppModule
 import com.ashish.movies.di.modules.NetModule
 import com.ashish.movies.ui.discover.common.DiscoverModule
 import com.ashish.movies.ui.discover.common.DiscoverSubComponent
+import com.ashish.movies.ui.main.MainModule
+import com.ashish.movies.ui.main.MainSubComponent
 import com.ashish.movies.ui.movie.detail.MovieDetailModule
 import com.ashish.movies.ui.movie.detail.MovieDetailSubComponent
 import com.ashish.movies.ui.movie.list.MovieModule
@@ -32,6 +34,8 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = arrayOf(AppModule::class, NetModule::class, ApiModule::class))
 interface AppComponent {
+
+    fun plus(mainModule: MainModule): MainSubComponent
 
     fun plus(movieModule: MovieModule): MovieSubComponent
 
