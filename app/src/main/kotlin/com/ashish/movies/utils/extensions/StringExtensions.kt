@@ -17,11 +17,9 @@ import java.util.*
 /**
  * Created by Ashish on Jan 03.
  */
-fun String?.isNotNullOrEmpty() = !this.isNullOrEmpty() && this != "null"
+fun CharSequence?.isNotNullOrEmpty() = !this.isNullOrEmpty() && this != "null"
 
-fun String?.getYearOnly(): String {
-    return if (isNotNullOrEmpty()) this!!.slice(0..3) else ""
-}
+fun String?.getYearOnly() = if (isNotNullOrEmpty()) this!!.slice(0..3) else ""
 
 fun String.getParsedDate(pattern: String = DEFAULT_DATE_PATTERN): Date? {
     try {
@@ -39,7 +37,6 @@ fun Int?.getFormattedNumber(): String {
     if (this != null && this > 0L) {
         return String.format("$%s", NumberFormat.getNumberInstance(Locale.US).format(this))
     }
-
     return ""
 }
 
@@ -88,12 +85,14 @@ fun String?.getPosterUrl() = getImageUrl(POSTER_W500_URL_PREFIX)
 
 fun String?.getOriginalImageUrl() = getImageUrl(ORIGINAL_IMAGE_URL_PREFIX)
 
-fun String?.getImageUrl(urlPrefix: String): String {
-    return if (this.isNotNullOrEmpty()) urlPrefix + this else ""
-}
+fun String?.getImageUrl(urlPrefix: String) = if (isNotNullOrEmpty()) urlPrefix + this else ""
 
-fun CharSequence.getTextWithCustomTypeface(typefaceSpan: TypefaceSpan): SpannableString {
-    val spannableString = SpannableString(this)
-    spannableString.setSpan(typefaceSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-    return spannableString
+fun CharSequence?.getTextWithCustomTypeface(typefaceSpan: TypefaceSpan): SpannableString? {
+    if (isNotNullOrEmpty()) {
+        val spannableString = SpannableString(this)
+        spannableString.setSpan(typefaceSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        return spannableString
+    } else {
+        return null
+    }
 }

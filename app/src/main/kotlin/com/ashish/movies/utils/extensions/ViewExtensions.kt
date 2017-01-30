@@ -12,8 +12,7 @@ import android.text.style.TypefaceSpan
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -35,17 +34,19 @@ fun View.show() {
     if (visibility != VISIBLE) visibility = VISIBLE
 }
 
-fun View.hide() {
-    if (visibility != GONE) visibility = GONE
+fun View.hide(viewGone: Boolean = true) {
+    if (visibility != GONE) visibility = if (viewGone) GONE else INVISIBLE
 }
 
 fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View? {
     return LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 }
 
-fun View.showSnackBar(messageId: Int, duration: Int = Snackbar.LENGTH_LONG) {
+fun View.showSnackBar(messageId: Int, duration: Int = Snackbar.LENGTH_LONG,
+                      @StringRes actionBtnTextId: Int = android.R.string.ok, action: (() -> Unit)? = null) {
+
     val snackbar = Snackbar.make(this, messageId, duration)
-            .setAction(android.R.string.ok, { })
+            .setAction(actionBtnTextId, { action?.invoke() })
 
     snackbar.changeSnackBarFont(android.support.design.R.id.snackbar_text)
     snackbar.changeSnackBarFont(android.support.design.R.id.snackbar_action)
@@ -103,12 +104,12 @@ fun ImageView.loadPaletteBitmap(imageUrl: String, func: ((PaletteBitmap?) -> Uni
             })
 }
 
-fun TextView.applyText(text: String?) {
+fun TextView.applyText(text: String?, viewGone: Boolean = true) {
     if (text.isNotNullOrEmpty()) {
         show()
         this.text = text
     } else {
-        hide()
+        hide(viewGone)
     }
 }
 

@@ -41,9 +41,9 @@ class DialogUtils @Inject constructor(private val context: Context) {
         showOkMessageDialog(getString(contentId))
     }
 
-    fun showOkMessageDialog(content: String) {
+    fun showOkMessageDialog(content: CharSequence?) {
         buildDialog().withContent(content)
-                .withPositiveButton(getString(android.R.string.ok), null)
+                .withPositiveButton(getString(android.R.string.ok))
                 .show()
     }
 
@@ -55,71 +55,60 @@ class DialogUtils @Inject constructor(private val context: Context) {
         }
 
         withTitle(null)
-        withPositiveButton("", null)
-        withNegativeButton("", null)
+        withPositiveButton(null)
+        withNegativeButton(null)
         return this
     }
 
-    fun withTitle(@StringRes titleId: Int): DialogUtils {
-        return withTitle(getString(titleId))
-    }
+    fun withTitle(@StringRes titleId: Int) = withTitle(getString(titleId))
 
     fun withTitle(title: CharSequence?): DialogUtils {
         checkMessageDialog()
-        if (!title.isNullOrEmpty()) {
-            val titleText = title!!.getTextWithCustomTypeface(mediumTypefaceSpan)
-            messageDialog?.setTitle(titleText)
-        }
-
+        messageDialog?.setTitle(title.getTextWithCustomTypeface(mediumTypefaceSpan))
         return this
     }
 
-    fun withContent(@StringRes contentId: Int): DialogUtils {
-        return withContent(getString(contentId))
-    }
+    fun withContent(@StringRes contentId: Int) = withContent(getString(contentId))
 
-    fun withContent(content: CharSequence): DialogUtils {
+    fun withContent(content: CharSequence?): DialogUtils {
         checkMessageDialog()
-        val contentText = content.getTextWithCustomTypeface(regularTypefaceSpan)
-        messageDialog?.setMessage(contentText)
+        messageDialog?.setMessage(content.getTextWithCustomTypeface(regularTypefaceSpan))
         return this
     }
 
-    fun withPositiveButton(@StringRes positiveTextId: Int, buttonClick: (() -> Unit)? = null): DialogUtils {
-        return withPositiveButton(getString(positiveTextId), buttonClick)
+    fun withPositiveButton(@StringRes positiveTextId: Int, positiveBtnClick: (() -> Unit)? = null): DialogUtils {
+        return withPositiveButton(getString(positiveTextId), positiveBtnClick)
     }
 
-    fun withPositiveButton(positiveText: CharSequence, buttonClick: (() -> Unit)? = null): DialogUtils {
+    fun withPositiveButton(positiveText: CharSequence?, positiveBtnClick: (() -> Unit)? = null): DialogUtils {
         checkMessageDialog()
 
         val positiveBtnText = positiveText.getTextWithCustomTypeface(mediumTypefaceSpan)
         messageDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveBtnText, { dialogInterface, which ->
             messageDialog?.dismiss()
-            buttonClick?.invoke()
+            positiveBtnClick?.invoke()
         })
 
         return this
     }
 
-    fun withNegativeButton(negativeTextId: Int, buttonClick: (() -> Unit)? = null): DialogUtils {
-        return withNegativeButton(getString(negativeTextId), buttonClick)
+    fun withNegativeButton(@StringRes negativeTextId: Int, negativeBtnClick: (() -> Unit)? = null): DialogUtils {
+        return withNegativeButton(getString(negativeTextId), negativeBtnClick)
     }
 
-    fun withNegativeButton(negativeText: CharSequence, buttonClick: (() -> Unit)? = null): DialogUtils {
+    fun withNegativeButton(negativeText: CharSequence?, negativeBtnClick: (() -> Unit)? = null): DialogUtils {
         checkMessageDialog()
 
         val negativeBtnText = negativeText.getTextWithCustomTypeface(mediumTypefaceSpan)
         messageDialog?.setButton(DialogInterface.BUTTON_NEGATIVE, negativeBtnText, { dialogInterface, which ->
             messageDialog?.dismiss()
-            buttonClick?.invoke()
+            negativeBtnClick?.invoke()
         })
 
         return this
     }
 
-    private fun getString(@StringRes stringId: Int): String {
-        return if (stringId != 0) context.getString(stringId) else ""
-    }
+    private fun getString(@StringRes stringId: Int) = if (stringId != 0) context.getString(stringId) else null
 
     fun show() {
         checkMessageDialog()
