@@ -1,5 +1,8 @@
 package com.ashish.movies.utils.extensions
 
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.TypefaceSpan
 import com.ashish.movies.utils.ApiConstants.BACKDROP_W1280_URL_PREFIX
 import com.ashish.movies.utils.ApiConstants.ORIGINAL_IMAGE_URL_PREFIX
 import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
@@ -87,4 +90,10 @@ fun String?.getOriginalImageUrl() = getImageUrl(ORIGINAL_IMAGE_URL_PREFIX)
 
 fun String?.getImageUrl(urlPrefix: String): String {
     return if (this.isNotNullOrEmpty()) urlPrefix + this else ""
+}
+
+fun CharSequence.getTextWithCustomTypeface(typefaceSpan: TypefaceSpan): SpannableString {
+    val spannableString = SpannableString(this)
+    spannableString.setSpan(typefaceSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    return spannableString
 }

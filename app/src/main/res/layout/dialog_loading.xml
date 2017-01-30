@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/spacing_xlarge"
+    android:paddingEnd="@dimen/spacing_large"
+    android:paddingStart="@dimen/spacing_large"
+    android:paddingTop="@dimen/spacing_xlarge">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/ProgressBar.Small"
+        android:visibility="visible" />
+
+    <com.ashish.movies.ui.widget.FontTextView
+        android:id="@+id/loading_text"
+        style="@style/PrimaryText"
+        android:layout_marginStart="@dimen/spacing_medium"
+        tools:text="Loading..." />
+
+</LinearLayout>

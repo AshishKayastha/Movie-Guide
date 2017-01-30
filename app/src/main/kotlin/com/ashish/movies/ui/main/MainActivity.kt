@@ -1,18 +1,14 @@
 package com.ashish.movies.ui.main
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat.START
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -28,21 +24,16 @@ import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
 import com.ashish.movies.ui.multisearch.MultiSearchActivity
 import com.ashish.movies.ui.widget.CircleImageView
 import com.ashish.movies.ui.widget.FontTextView
+import com.ashish.movies.utils.CustomTabsHelper
 import com.ashish.movies.utils.CustomTypefaceSpan
+import com.ashish.movies.utils.DialogUtils
 import com.ashish.movies.utils.FontUtils
-import com.ashish.movies.utils.extensions.applyText
-import com.ashish.movies.utils.extensions.changeMenuFont
-import com.ashish.movies.utils.extensions.changeViewGroupTextFont
-import com.ashish.movies.utils.extensions.getColorCompat
-import com.ashish.movies.utils.extensions.getStringArray
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.loadImageUrl
-import com.ashish.movies.utils.extensions.setVisibility
-import com.ashish.movies.utils.extensions.showToast
+import com.ashish.movies.utils.extensions.*
 import javax.inject.Inject
 
 class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
 
+    @Inject lateinit var dialogUtils: DialogUtils
     @Inject lateinit var preferenceHelper: PreferenceHelper
 
     private val viewPager: ViewPager by bindView(R.id.view_pager)
@@ -61,9 +52,6 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
     private lateinit var discoverTabTitles: Array<String>
 
     private lateinit var tabPagerAdapter: TabPagerAdapter
-
-    private var tmdbLoginDialog: AlertDialog? = null
-    private var progressDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_TransparentStatusBar)
@@ -129,18 +117,12 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
     }
 
     private fun showTmdbLoginDialog() {
-        if (tmdbLoginDialog == null) {
-            tmdbLoginDialog = AlertDialog.Builder(this)
-                    .setCancelable(false)
-                    .setTitle(R.string.title_tmdb_login)
-                    .setMessage(R.string.content_tmdb_login)
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .setPositiveButton(R.string.login_btn, { dialogInterface, which ->
-                        presenter?.createRequestToken()
-                    }).create()
-        }
-
-        tmdbLoginDialog?.show()
+        dialogUtils.buildDialog()
+                .withTitle(R.string.title_tmdb_login)
+                .withContent(R.string.content_tmdb_login)
+                .withNegativeButton(android.R.string.cancel)
+                .withPositiveButton(R.string.login_btn, { presenter?.createRequestToken() })
+                .show()
     }
 
     private fun showViewPagerFragment(contentType: Int, titleArray: Array<String>) {
@@ -194,29 +176,15 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
     }
 
     override fun showProgressDialog(messageId: Int) {
-        if (progressDialog == null) {
-            progressDialog = ProgressDialog(this)
-            progressDialog!!.setCancelable(false)
-            progressDialog!!.isIndeterminate = true
-        }
-
-        progressDialog!!.setMessage(getString(messageId))
-        progressDialog!!.show()
+        dialogUtils.showProgressDialog(messageId)
     }
 
     override fun hideProgressDialog() {
-        progressDialog?.dismiss()
+        dialogUtils.dismissProgressDialog()
     }
 
     override fun validateRequestToken(tokenValidationUrl: String) {
-        val customTabsIntent = CustomTabsIntent.Builder()
-                .setToolbarColor(getColorCompat(R.color.colorPrimary))
-                .setStartAnimations(this, R.anim.slide_in_right, R.anim.slide_out_left)
-                .setExitAnimations(this, R.anim.slide_in_left, R.anim.slide_out_right)
-                .enableUrlBarHiding()
-                .build()
-
-        customTabsIntent.launchUrl(this, Uri.parse(tokenValidationUrl))
+        CustomTabsHelper.launchUrl(this, tokenValidationUrl)
     }
 
     override fun onLoginSuccess() {
@@ -225,14 +193,12 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
-        hideProgressDialog()
-        tmdbLoginDialog?.dismiss()
+        dialogUtils.dismissAllDialogs()
         super.onConfigurationChanged(newConfig)
     }
 
     override fun onStop() {
-        hideProgressDialog()
-        tmdbLoginDialog?.dismiss()
+        dialogUtils.dismissAllDialogs()
         super.onStop()
     }
 

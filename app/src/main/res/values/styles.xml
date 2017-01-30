@@ -121,6 +121,11 @@
         <item name="android:visibility">gone</item>
     </style>
 
+    <style name="ProgressBar.Small">
+        <item name="android:layout_width">@dimen/progress_bar_size_small</item>
+        <item name="android:layout_height">@dimen/progress_bar_size_small</item>
+    </style>
+
     <style name="DetailNestedScrollView" parent="Match">
         <item name="android:fitsSystemWindows">true</item>
         <item name="layout_behavior">@string/appbar_scrolling_view_behavior</item>

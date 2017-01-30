@@ -8,8 +8,6 @@ import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.support.v7.widget.ActionMenuView
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.style.TypefaceSpan
 import android.view.LayoutInflater
 import android.view.Menu
@@ -132,11 +130,7 @@ fun Menu.changeMenuFont(typefaceSpan: TypefaceSpan) {
     (0..size - 1)
             .map { getItem(it) }
             .filterNotNull()
-            .forEach { menuItem ->
-                val spannableString = SpannableString(menuItem.title)
-                spannableString.setSpan(typefaceSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                menuItem.title = spannableString
-            }
+            .forEach { menuItem -> menuItem.title = menuItem.title.getTextWithCustomTypeface(typefaceSpan) }
 }
 
 fun ViewGroup.changeViewGroupTextFont() {
