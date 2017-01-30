@@ -1,7 +1,6 @@
 package com.ashish.movies.utils
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.support.annotation.StringRes
@@ -30,7 +29,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
 
     private val contentText: FontTextView
     private var messageDialog: AlertDialog? = null
-    private var progressDialog: ProgressDialog? = null
+    private var progressDialog: AlertDialog? = null
 
     init {
         contentText = contentView.findViewById(R.id.loading_text) as FontTextView
@@ -125,9 +124,10 @@ class DialogUtils @Inject constructor(private val context: Context) {
 
     fun showProgressDialog(@StringRes contentId: Int) {
         if (progressDialog == null) {
-            progressDialog = ProgressDialog(context)
-            progressDialog!!.setContentView(contentView)
-            progressDialog!!.setCancelable(false)
+            progressDialog = AlertDialog.Builder(context)
+                    .setView(contentView)
+                    .setCancelable(false)
+                    .create()
         }
 
         contentText.setText(contentId)
