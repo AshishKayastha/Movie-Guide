@@ -15,5 +15,5 @@ abstract class BaseModule(private val activity: Activity) {
     fun provideActivity() = activity
 
     @Provides
-    fun provideContext(): Context = activity.baseContext
+    fun provideContext(): Context = activity
 }

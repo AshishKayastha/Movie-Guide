@@ -66,7 +66,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
 
     fun withTitle(title: CharSequence?): DialogUtils {
         checkMessageDialog()
-        if (title.isNullOrEmpty()) {
+        if (!title.isNullOrEmpty()) {
             val titleText = title!!.getTextWithCustomTypeface(mediumTypefaceSpan)
             messageDialog?.setTitle(titleText)
         }
