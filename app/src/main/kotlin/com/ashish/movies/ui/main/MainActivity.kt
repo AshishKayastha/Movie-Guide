@@ -28,7 +28,14 @@ import com.ashish.movies.utils.CustomTabsHelper
 import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.DialogUtils
 import com.ashish.movies.utils.FontUtils
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.changeMenuFont
+import com.ashish.movies.utils.extensions.changeViewGroupTextFont
+import com.ashish.movies.utils.extensions.getStringArray
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.loadImageUrl
+import com.ashish.movies.utils.extensions.setVisibility
+import com.ashish.movies.utils.extensions.showToast
 import javax.inject.Inject
 
 class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
@@ -213,6 +220,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
             return true
         } else if (item.itemId == R.id.action_search) {
             startActivity(Intent(this, MultiSearchActivity::class.java))
+            overridePendingTransition(0, 0)
             return true
         }
 

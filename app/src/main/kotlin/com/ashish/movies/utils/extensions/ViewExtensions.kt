@@ -1,5 +1,6 @@
 package com.ashish.movies.utils.extensions
 
+import android.animation.Animator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.support.annotation.StringRes
@@ -12,7 +13,10 @@ import android.text.style.TypefaceSpan
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
+import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -184,4 +188,22 @@ fun ImageView.loadImageUrl(imageUrl: String?, placeHolder: Int = R.drawable.ic_p
     } else {
         Glide.clear(this)
     }
+}
+
+inline fun View.startCircularRevealAnimation(cx: Int, cy: Int, startRadius: Float, endRadius: Float,
+                                             duration: Long = 400L, crossinline animationEnd: () -> Unit) {
+    val animator = ViewAnimationUtils.createCircularReveal(this, cx, cy, startRadius, endRadius)
+    animator.duration = duration
+    animator.addListener(object : Animator.AnimatorListener {
+        override fun onAnimationStart(animation: Animator?) {}
+
+        override fun onAnimationEnd(animation: Animator?) = animationEnd()
+
+        override fun onAnimationCancel(animation: Animator?) = animationEnd()
+
+        override fun onAnimationRepeat(animation: Animator?) {}
+    })
+
+    show()
+    animator.start()
 }

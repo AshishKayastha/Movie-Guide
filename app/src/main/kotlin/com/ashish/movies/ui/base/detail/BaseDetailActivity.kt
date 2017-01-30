@@ -1,6 +1,5 @@
 package com.ashish.movies.ui.base.detail
 
-import android.animation.Animator
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
@@ -22,7 +21,6 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewAnimationUtils
 import android.view.ViewStub
 import android.view.ViewTreeObserver
 import android.widget.ImageButton
@@ -76,6 +74,7 @@ import com.ashish.movies.utils.extensions.setPaletteColor
 import com.ashish.movies.utils.extensions.setTransitionName
 import com.ashish.movies.utils.extensions.show
 import com.ashish.movies.utils.extensions.startActivityWithTransition
+import com.ashish.movies.utils.extensions.startCircularRevealAnimation
 import java.util.*
 
 /**
@@ -204,24 +203,9 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         val cy = backdropImage.bottom - titleText.height
         val endRadius = Math.max(backdropImage.width, backdropImage.height).toFloat()
 
-        val animator = ViewAnimationUtils.createCircularReveal(backdropImage, cx, cy, 0f, endRadius)
-        animator.duration = 400L
-        animator.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {}
-
-            override fun onAnimationEnd(animation: Animator?) {
-                removeSharedElementTransitionListener()
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {
-                removeSharedElementTransitionListener()
-            }
-
-            override fun onAnimationRepeat(animation: Animator?) {}
-        })
-
-        backdropImage.show()
-        animator.start()
+        backdropImage.startCircularRevealAnimation(cx, cy, 0f, endRadius) {
+            removeSharedElementTransitionListener()
+        }
     }
 
     private fun removeSharedElementTransitionListener() {

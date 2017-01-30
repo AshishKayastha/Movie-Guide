@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.widget.SearchView
 import android.util.TypedValue
 import android.view.MotionEvent
+import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import android.widget.TextView
 import butterknife.bindView
@@ -13,8 +15,10 @@ import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.common.BaseActivity
 import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.Utils
+import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.hideKeyboard
 import com.ashish.movies.utils.extensions.showKeyboard
+import com.ashish.movies.utils.extensions.startCircularRevealAnimation
 import com.ashish.movies.utils.keyboardwatcher.KeyboardWatcher
 import javax.inject.Inject
 
@@ -25,15 +29,19 @@ class MultiSearchActivity : BaseActivity() {
 
     @Inject lateinit var keyboardWatcher: KeyboardWatcher
 
+    private val rootView: View by bindView(R.id.content_layout)
     private val backIcon: ImageButton by bindView(R.id.back_icon)
     private val searchView: SearchView by bindView(R.id.search_view)
 
+    private var endRadius: Float = 0f
     private var multiSearchFragment: MultiSearchFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
+            performRevealAnimation()
+
             multiSearchFragment = MultiSearchFragment.newInstance()
             supportFragmentManager.beginTransaction()
                     .replace(R.id.container, multiSearchFragment)
@@ -41,8 +49,7 @@ class MultiSearchActivity : BaseActivity() {
         }
 
         setupSearchView()
-        searchView.showKeyboard()
-        backIcon.setOnClickListener { finish() }
+        backIcon.setOnClickListener { onBackPressed() }
     }
 
     override fun injectDependencies(appComponent: AppComponent) {
@@ -50,6 +57,21 @@ class MultiSearchActivity : BaseActivity() {
     }
 
     override fun getLayoutId() = R.layout.activity_multi_search
+
+    private fun performRevealAnimation() {
+        rootView.hide(false)
+        rootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                rootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                val right = rootView.right
+                endRadius = Math.hypot(right.toDouble(), rootView.bottom.toDouble()).toFloat()
+                rootView.startCircularRevealAnimation(right, 0, 0f, endRadius, 650L) {
+                    searchView.showKeyboard()
+                }
+            }
+        })
+    }
 
     private fun setupSearchView() {
         val searchText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as TextView
@@ -72,6 +94,14 @@ class MultiSearchActivity : BaseActivity() {
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         return keyboardWatcher.dispatchEditTextTouchEvent(event, super.dispatchTouchEvent(event))
+    }
+
+    override fun onBackPressed() {
+        hideKeyboard()
+        rootView.startCircularRevealAnimation(rootView.right, 0, endRadius, 0f) {
+            rootView.hide()
+            finishAfterTransition()
+        }
     }
 
     override fun onDestroy() {
