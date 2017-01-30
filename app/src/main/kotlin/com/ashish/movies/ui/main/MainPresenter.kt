@@ -4,6 +4,7 @@ import com.ashish.movies.R
 import com.ashish.movies.data.interactors.AuthInteractor
 import com.ashish.movies.data.models.RequestToken
 import com.ashish.movies.ui.base.mvp.RxPresenter
+import com.ashish.movies.utils.ApiConstants.VALIDATE_TMDB_REQUEST_TOKEN_URL
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import timber.log.Timber
 import javax.inject.Inject
@@ -27,7 +28,7 @@ class MainPresenter @Inject constructor(private val authInteractor: AuthInteract
     private fun onRequestTokenSuccess(requestToken: RequestToken) {
         if (requestToken.success && tmdbRequestToken.isNotNullOrEmpty()) {
             isChromeTabLaunched = true
-            getView()?.validateRequestToken("https://www.themoviedb.org/authenticate/" + tmdbRequestToken)
+            getView()?.validateRequestToken(VALIDATE_TMDB_REQUEST_TOKEN_URL + tmdbRequestToken)
         } else {
             onRequestTokenError(null)
         }

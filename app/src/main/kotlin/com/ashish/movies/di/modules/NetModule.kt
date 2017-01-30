@@ -36,11 +36,12 @@ class NetModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClientBuilder(): OkHttpClient.Builder {
+    fun provideOkHttpClientBuilder(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient.Builder {
         return OkHttpClient.Builder()
                 .connectTimeout(30, SECONDS)
                 .readTimeout(30, SECONDS)
                 .writeTimeout(30, SECONDS)
+                .addInterceptor(loggingInterceptor)
     }
 
     @Provides
@@ -49,18 +50,13 @@ class NetModule {
 
     @Provides
     @Singleton
-    fun provideTMDbClient(builder: OkHttpClient.Builder, apiKeyInterceptor: Interceptor,
-                          loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return builder.addNetworkInterceptor(apiKeyInterceptor)
-                .addInterceptor(loggingInterceptor)
-                .build()
-    }
+    @Named("omdb")
+    fun provideOMDbClient(builder: OkHttpClient.Builder): OkHttpClient = builder.build()
 
     @Provides
     @Singleton
-    @Named("omdb")
-    fun provideOMDbClient(builder: OkHttpClient.Builder, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return builder.addInterceptor(loggingInterceptor).build()
+    fun provideTMDbClient(builder: OkHttpClient.Builder, apiKeyInterceptor: Interceptor): OkHttpClient {
+        return builder.addNetworkInterceptor(apiKeyInterceptor).build()
     }
 
     @Provides
