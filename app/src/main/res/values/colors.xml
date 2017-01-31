@@ -6,9 +6,9 @@
     <color name="colorAccent">#5DFCAE</color>
 
     <!-- Gradient Colors -->
-    <color name="primary_gradient_start_color">#F532283D</color>
-    <color name="primary_gradient_center_color">#F5292233</color>
-    <color name="primary_gradient_end_color">#F51E1F2D</color>
+    <color name="primary_gradient_start_color">#32283D</color>
+    <color name="primary_gradient_center_color">#292233</color>
+    <color name="primary_gradient_end_color">#1E1F2D</color>
 
     <color name="accent_gradient_start_color">#84FFC3</color>
     <color name="accent_gradient_center_color">#26FF96</color>
@@ -21,7 +21,7 @@
 
     <color name="greyish_white">#D9E1E1E1</color>
 
-    <color name="card_color">#F5333049</color>
+    <color name="card_color">#333049</color>
 
     <!-- Image Viewer -->
     <color name="system_bar_color">#55202020</color>

@@ -55,7 +55,6 @@ class MultiSearchActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_multi_search
 
     private fun performRevealAnimation() {
-        rootView.hide(false)
         rootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 rootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
@@ -94,10 +93,15 @@ class MultiSearchActivity : BaseActivity() {
 
     override fun onBackPressed() {
         hideKeyboard()
-        rootView.startCircularRevealAnimation(rootView.right, 0, endRadius, 0f, 550L) {
+        rootView.startCircularRevealAnimation(rootView.right, 0, endRadius, 0f, 500L) {
             rootView.hide()
-            finishAfterTransition()
+            super.onBackPressed()
         }
+    }
+
+    override fun finishAfterTransition() {
+        super.finishAfterTransition()
+        overridePendingTransition(0, 0)
     }
 
     override fun onDestroy() {
