@@ -1,6 +1,7 @@
 package com.ashish.movies.utils
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.support.annotation.StringRes
@@ -13,6 +14,7 @@ import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.FontUtils.MONTSERRAT_MEDIUM
 import com.ashish.movies.utils.FontUtils.MONTSERRAT_REGULAR
 import com.ashish.movies.utils.FontUtils.getTypeface
+import com.ashish.movies.utils.extensions.changeTypeface
 import com.ashish.movies.utils.extensions.getTextWithCustomTypeface
 import javax.inject.Inject
 
@@ -48,9 +50,17 @@ class DialogUtils @Inject constructor(private val context: Context) {
 
     fun buildDialog(): DialogUtils {
         if (messageDialog == null) {
-            messageDialog = AlertDialog.Builder(context)
+            messageDialog = AlertDialog.Builder(context, R.style.AlertDialogTheme)
                     .setCancelable(false)
                     .create()
+
+            messageDialog?.setOnShowListener {
+                val btnPositive = messageDialog?.getButton(Dialog.BUTTON_POSITIVE)
+                btnPositive?.changeTypeface()
+
+                val btnNegative = messageDialog?.getButton(Dialog.BUTTON_NEGATIVE)
+                btnNegative?.changeTypeface()
+            }
         }
 
         withTitle(null)
@@ -82,8 +92,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
     fun withPositiveButton(positiveText: CharSequence?, positiveBtnClick: (() -> Unit)? = null): DialogUtils {
         checkMessageDialog()
 
-        val positiveBtnText = positiveText.getTextWithCustomTypeface(mediumTypefaceSpan)
-        messageDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveBtnText, { dialogInterface, which ->
+        messageDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, { dialogInterface, which ->
             messageDialog?.dismiss()
             positiveBtnClick?.invoke()
         })
@@ -98,8 +107,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
     fun withNegativeButton(negativeText: CharSequence?, negativeBtnClick: (() -> Unit)? = null): DialogUtils {
         checkMessageDialog()
 
-        val negativeBtnText = negativeText.getTextWithCustomTypeface(mediumTypefaceSpan)
-        messageDialog?.setButton(DialogInterface.BUTTON_NEGATIVE, negativeBtnText, { dialogInterface, which ->
+        messageDialog?.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText, { dialogInterface, which ->
             messageDialog?.dismiss()
             negativeBtnClick?.invoke()
         })
@@ -124,7 +132,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
 
     fun showProgressDialog(@StringRes contentId: Int) {
         if (progressDialog == null) {
-            progressDialog = AlertDialog.Builder(context)
+            progressDialog = AlertDialog.Builder(context, R.style.AlertDialogTheme)
                     .setView(contentView)
                     .setCancelable(false)
                     .create()

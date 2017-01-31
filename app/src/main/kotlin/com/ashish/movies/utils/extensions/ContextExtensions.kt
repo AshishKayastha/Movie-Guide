@@ -2,6 +2,8 @@ package com.ashish.movies.utils.extensions
 
 import android.content.Context
 import android.support.annotation.ArrayRes
+import android.support.annotation.ColorInt
+import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -9,7 +11,8 @@ import android.widget.Toast
 /**
  * Created by Ashish on Jan 08.
  */
-fun Context.getColorCompat(colorResId: Int) = ContextCompat.getColor(this, colorResId)
+@ColorInt
+fun Context.getColorCompat(@ColorRes colorResId: Int) = ContextCompat.getColor(this, colorResId)
 
 fun Context.showToast(messageId: Int, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(this, messageId, duration).show()

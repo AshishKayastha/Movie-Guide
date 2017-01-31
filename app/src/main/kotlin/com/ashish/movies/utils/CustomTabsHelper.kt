@@ -1,5 +1,6 @@
 package com.ashish.movies.utils
 
+import android.app.Activity
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -14,17 +15,25 @@ import com.ashish.movies.utils.extensions.getColorCompat
  */
 object CustomTabsHelper {
 
+    const val RC_TMDB_LOGIN = 1001
     private const val EXTRA_CUSTOM_TABS_KEEP_ALIVE = "android.support.customtabs.extra.KEEP_ALIVE"
 
-    fun launchUrl(context: Context, url: String) {
-        val customTabsIntent = CustomTabsIntent.Builder()
-                .setToolbarColor(context.getColorCompat(R.color.colorPrimary))
-                .setStartAnimations(context, R.anim.slide_in_right, R.anim.slide_out_left)
-                .setExitAnimations(context, R.anim.slide_in_left, R.anim.slide_out_right)
-                .build()
+    fun launchUrlForResult(activity: Activity, url: String, requestCode: Int = RC_TMDB_LOGIN) {
+        val tabsIntentBuilder = CustomTabsIntent.Builder()
 
-        addKeepAliveExtra(context, customTabsIntent.intent)
-        customTabsIntent.launchUrl(context, Uri.parse(url))
+        tabsIntentBuilder.apply {
+            setToolbarColor(activity.getColorCompat(R.color.colorPrimary))
+            setSecondaryToolbarColor(activity.getColorCompat(R.color.colorPrimary))
+            setStartAnimations(activity, R.anim.slide_in_right, R.anim.slide_out_left)
+            setExitAnimations(activity, R.anim.slide_in_left, R.anim.slide_out_right)
+        }
+
+        val customTabsIntent = tabsIntentBuilder.build()
+        val intent = customTabsIntent.intent
+
+        addKeepAliveExtra(activity, intent)
+        intent.data = Uri.parse(url)
+        activity.startActivityForResult(intent, requestCode)
     }
 
     fun addKeepAliveExtra(context: Context, intent: Intent) {

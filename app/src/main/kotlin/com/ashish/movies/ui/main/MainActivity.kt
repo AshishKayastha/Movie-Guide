@@ -28,14 +28,7 @@ import com.ashish.movies.utils.CustomTabsHelper
 import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.DialogUtils
 import com.ashish.movies.utils.FontUtils
-import com.ashish.movies.utils.extensions.applyText
-import com.ashish.movies.utils.extensions.changeMenuFont
-import com.ashish.movies.utils.extensions.changeViewGroupTextFont
-import com.ashish.movies.utils.extensions.getStringArray
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.loadImageUrl
-import com.ashish.movies.utils.extensions.setVisibility
-import com.ashish.movies.utils.extensions.showToast
+import com.ashish.movies.utils.extensions.*
 import javax.inject.Inject
 
 class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
@@ -177,9 +170,11 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter?.createSession()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CustomTabsHelper.RC_TMDB_LOGIN) {
+            presenter?.createSession()
+        }
     }
 
     override fun showProgressDialog(messageId: Int) {
@@ -191,7 +186,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
     }
 
     override fun validateRequestToken(tokenValidationUrl: String) {
-        CustomTabsHelper.launchUrl(this, tokenValidationUrl)
+        CustomTabsHelper.launchUrlForResult(this, tokenValidationUrl)
     }
 
     override fun onLoginSuccess() {

@@ -6,12 +6,13 @@
     <color name="colorAccent">#5DFCAE</color>
 
     <!-- Gradient Colors -->
-    <color name="primary_gradient_start_color">#F032283D</color>
-    <color name="primary_gradient_end_color">#F01E1F2D</color>
+    <color name="primary_gradient_start_color">#F532283D</color>
+    <color name="primary_gradient_center_color">#F5292233</color>
+    <color name="primary_gradient_end_color">#F51E1F2D</color>
 
-    <color name="accent_gradient_start_color">#5DFCAE</color>
-    <color name="accent_gradient_center_color">#35FC9C</color>
-    <color name="accent_gradient_end_color">#16FF8F</color>
+    <color name="accent_gradient_start_color">#84FFC3</color>
+    <color name="accent_gradient_center_color">#26FF96</color>
+    <color name="accent_gradient_end_color">#00E476</color>
 
     <!-- Text Colors -->
     <color name="primary_text_light">#FFFFFF</color>
@@ -20,7 +21,7 @@
 
     <color name="greyish_white">#D9E1E1E1</color>
 
-    <color name="card_color">#F0333049</color>
+    <color name="card_color">#F5333049</color>
 
     <!-- Image Viewer -->
     <color name="system_bar_color">#55202020</color>

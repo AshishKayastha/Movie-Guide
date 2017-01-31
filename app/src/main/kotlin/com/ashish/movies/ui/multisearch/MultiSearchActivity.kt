@@ -13,12 +13,8 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.ui.base.common.BaseActivity
-import com.ashish.movies.utils.FontUtils
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.hide
-import com.ashish.movies.utils.extensions.hideKeyboard
-import com.ashish.movies.utils.extensions.showKeyboard
-import com.ashish.movies.utils.extensions.startCircularRevealAnimation
+import com.ashish.movies.utils.extensions.*
 import com.ashish.movies.utils.keyboardwatcher.KeyboardWatcher
 import javax.inject.Inject
 
@@ -75,10 +71,10 @@ class MultiSearchActivity : BaseActivity() {
 
     private fun setupSearchView() {
         val searchText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as TextView
+        searchText.changeTypeface()
         searchText.setTextColor(Color.WHITE)
-        searchText.setHintTextColor(Color.parseColor("#D9E1E1E1"))
         searchText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-        FontUtils.setFontStyle(searchText, FontUtils.MONTSERRAT_REGULAR)
+        searchText.setHintTextColor(Color.parseColor("#D9E1E1E1"))
 
         searchView.maxWidth = Utils.getScreenWidth()
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -98,7 +94,7 @@ class MultiSearchActivity : BaseActivity() {
 
     override fun onBackPressed() {
         hideKeyboard()
-        rootView.startCircularRevealAnimation(rootView.right, 0, endRadius, 0f) {
+        rootView.startCircularRevealAnimation(rootView.right, 0, endRadius, 0f, 550L) {
             rootView.hide()
             finishAfterTransition()
         }

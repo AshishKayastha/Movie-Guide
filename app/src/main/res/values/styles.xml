@@ -44,6 +44,10 @@
         <item name="android:windowBackground">@color/image_view_bg_color</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@color/primary_gradient_end_color</item>
+    </style>
+
     <style name="Match">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
