@@ -15,6 +15,7 @@ import com.ashish.movies.utils.FontUtils.MONTSERRAT_MEDIUM
 import com.ashish.movies.utils.FontUtils.MONTSERRAT_REGULAR
 import com.ashish.movies.utils.FontUtils.getTypeface
 import com.ashish.movies.utils.extensions.changeTypeface
+import com.ashish.movies.utils.extensions.find
 import com.ashish.movies.utils.extensions.getTextWithCustomTypeface
 import javax.inject.Inject
 
@@ -34,7 +35,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
     private var progressDialog: AlertDialog? = null
 
     init {
-        contentText = contentView.findViewById(R.id.loading_text) as FontTextView
+        contentText = contentView.find<FontTextView>(R.id.loading_text)
     }
 
     @Suppress("unused")

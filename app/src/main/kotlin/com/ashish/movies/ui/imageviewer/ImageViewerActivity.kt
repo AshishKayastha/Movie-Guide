@@ -55,8 +55,8 @@ class ImageViewerActivity : BaseActivity() {
                     sharedElements.clear()
                 } else if (startingPosition != currentPosition) {
                     names.clear()
-                    names.add(sharedElement.transitionName)
                     sharedElements.clear()
+                    names.add(sharedElement.transitionName)
                     sharedElements.put(sharedElement.transitionName, sharedElement)
                 }
             }

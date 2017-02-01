@@ -8,10 +8,15 @@ import android.view.View
 class SystemUiHelper(activity: Activity, private var listener: OnVisibilityChangeListener? = null)
     : View.OnSystemUiVisibilityChangeListener {
 
-    var isShowing = true
     private val hideRunnable: Runnable
     private val decorView = activity.window.decorView
     private val handler: Handler = Handler(Looper.getMainLooper())
+
+    var isShowing = true
+        set(value) {
+            field = value
+            listener?.onVisibilityChange(field)
+        }
 
     init {
         hideRunnable = HideRunnable()
@@ -55,12 +60,7 @@ class SystemUiHelper(activity: Activity, private var listener: OnVisibilityChang
     }
 
     override fun onSystemUiVisibilityChange(visibility: Int) {
-        setIsShowing(visibility == 0)
-    }
-
-    private fun setIsShowing(isShowing: Boolean) {
-        this.isShowing = isShowing
-        listener?.onVisibilityChange(this.isShowing)
+        isShowing = visibility == 0
     }
 
     fun removeVisibilityChangeListener() {

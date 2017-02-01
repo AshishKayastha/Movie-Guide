@@ -14,7 +14,6 @@ import javax.inject.Inject
  */
 class MainPresenter @Inject constructor(private val authInteractor: AuthInteractor) : RxPresenter<MainView>() {
 
-    private var isChromeTabLaunched = false
     private var tmdbRequestToken: String? = null
 
     fun createRequestToken() {
@@ -27,7 +26,6 @@ class MainPresenter @Inject constructor(private val authInteractor: AuthInteract
 
     private fun onRequestTokenSuccess(requestToken: RequestToken) {
         if (requestToken.success && tmdbRequestToken.isNotNullOrEmpty()) {
-            isChromeTabLaunched = true
             getView()?.validateRequestToken(VALIDATE_TMDB_REQUEST_TOKEN_URL + tmdbRequestToken)
         } else {
             onRequestTokenError(null)
@@ -43,14 +41,13 @@ class MainPresenter @Inject constructor(private val authInteractor: AuthInteract
     }
 
     fun createSession() {
-        if (isChromeTabLaunched && tmdbRequestToken.isNotNullOrEmpty()) {
+        if (tmdbRequestToken.isNotNullOrEmpty()) {
             addDisposable(authInteractor.createUserSession(tmdbRequestToken!!)
                     .subscribe({ onCreateSessionSuccess() }, { t -> onCreateSessionError(t) }))
         }
     }
 
     private fun onCreateSessionSuccess() {
-        isChromeTabLaunched = false
         getView()?.apply {
             hideProgressDialog()
             onLoginSuccess()

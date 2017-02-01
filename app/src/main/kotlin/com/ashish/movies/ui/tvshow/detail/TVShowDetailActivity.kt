@@ -19,6 +19,7 @@ import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_TV_SHOW
+import com.ashish.movies.utils.extensions.find
 import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
@@ -112,7 +113,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
                 onSimilarTVShowItemClickLitener)
 
         similarTVShowsViewStub.setOnInflateListener { viewStub, view ->
-            val textView = view.findViewById(R.id.similar_content_title) as FontTextView
+            val textView = view.find<FontTextView>(R.id.similar_content_title)
             textView.setText(R.string.similar_tv_shows_title)
         }
 

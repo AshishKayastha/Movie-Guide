@@ -6,12 +6,7 @@ import android.text.style.TypefaceSpan
 import com.ashish.movies.utils.ApiConstants.BACKDROP_W1280_URL_PREFIX
 import com.ashish.movies.utils.ApiConstants.ORIGINAL_IMAGE_URL_PREFIX
 import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
-import com.ashish.movies.utils.Constants.DEFAULT_DATE_PATTERN
-import timber.log.Timber
-import java.text.DateFormat
 import java.text.NumberFormat
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -20,18 +15,6 @@ import java.util.*
 fun CharSequence?.isNotNullOrEmpty() = !this.isNullOrEmpty() && this != "null"
 
 fun String?.getYearOnly() = if (isNotNullOrEmpty()) this!!.slice(0..3) else ""
-
-fun String.getParsedDate(pattern: String = DEFAULT_DATE_PATTERN): Date? {
-    try {
-        val sdf = SimpleDateFormat(pattern, Locale.ENGLISH)
-        sdf.timeZone = TimeZone.getDefault()
-        return sdf.parse(this)
-    } catch (e: ParseException) {
-        Timber.e(e)
-    }
-
-    return null
-}
 
 fun Int?.getFormattedNumber(): String {
     if (this != null && this > 0L) {
@@ -57,18 +40,6 @@ fun Int?.getFormattedRuntime(): String {
     }
 
     return ""
-}
-
-fun String?.getFormattedMediumDate(): String {
-    var formattedReleaseDate = ""
-    if (isNotNullOrEmpty()) {
-        val parsedDate = this!!.getParsedDate()
-        if (parsedDate != null) {
-            formattedReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(parsedDate)
-        }
-    }
-
-    return formattedReleaseDate
 }
 
 inline fun <reified T> List<T>?.convertListToCommaSeparatedText(crossinline func: (T) -> String): String {

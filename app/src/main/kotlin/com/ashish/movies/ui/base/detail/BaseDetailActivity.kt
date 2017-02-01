@@ -60,6 +60,7 @@ import com.ashish.movies.utils.extensions.animateBackgroundColorChange
 import com.ashish.movies.utils.extensions.animateColorChange
 import com.ashish.movies.utils.extensions.animateTextColorChange
 import com.ashish.movies.utils.extensions.changeMenuFont
+import com.ashish.movies.utils.extensions.find
 import com.ashish.movies.utils.extensions.getColorCompat
 import com.ashish.movies.utils.extensions.getOverflowMenuButton
 import com.ashish.movies.utils.extensions.getPosterImagePair
@@ -335,13 +336,13 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     protected fun inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
                                               adapter: RecyclerView.Adapter<*>): RecyclerView {
         val inflatedView = viewStub.inflate()
-        val recyclerView = inflatedView.findViewById(viewId) as RecyclerView
+        val recyclerView = inflatedView.find<RecyclerView>(viewId)
 
         recyclerView.apply {
             setHasFixedSize(true)
             addItemDecoration(ItemOffsetDecoration())
             layoutManager = LinearLayoutManager(this@BaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)
-            recyclerView.adapter = adapter
+            this.adapter = adapter
             val snapHelper = GravitySnapHelper(Gravity.START)
             snapHelper.attachToRecyclerView(this)
         }

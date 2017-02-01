@@ -19,16 +19,14 @@ object CustomTabsHelper {
     private const val EXTRA_CUSTOM_TABS_KEEP_ALIVE = "android.support.customtabs.extra.KEEP_ALIVE"
 
     fun launchUrlForResult(activity: Activity, url: String, requestCode: Int = RC_TMDB_LOGIN) {
-        val tabsIntentBuilder = CustomTabsIntent.Builder()
+        val customTabsIntent = CustomTabsIntent.Builder()
+                .setShowTitle(true)
+                .setToolbarColor(activity.getColorCompat(R.color.colorPrimary))
+                .setSecondaryToolbarColor(activity.getColorCompat(R.color.colorPrimary))
+                .setStartAnimations(activity, R.anim.slide_in_right, R.anim.slide_out_left)
+                .setExitAnimations(activity, R.anim.slide_in_left, R.anim.slide_out_right)
+                .build()
 
-        tabsIntentBuilder.apply {
-            setToolbarColor(activity.getColorCompat(R.color.colorPrimary))
-            setSecondaryToolbarColor(activity.getColorCompat(R.color.colorPrimary))
-            setStartAnimations(activity, R.anim.slide_in_right, R.anim.slide_out_left)
-            setExitAnimations(activity, R.anim.slide_in_left, R.anim.slide_out_right)
-        }
-
-        val customTabsIntent = tabsIntentBuilder.build()
         val intent = customTabsIntent.intent
 
         addKeepAliveExtra(activity, intent)

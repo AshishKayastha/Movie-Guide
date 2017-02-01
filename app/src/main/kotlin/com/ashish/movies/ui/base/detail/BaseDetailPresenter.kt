@@ -89,7 +89,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() 
     private fun showYouTubeTrailer(detailContent: I) {
         val videoResults = getVideos(detailContent)?.results
         if (videoResults.isNotNullOrEmpty()) {
-            var youtubeTrailerUrl = videoResults!!.first { it.site == "YouTube" && it.type == "Trailer" }.key
+            var youtubeTrailerUrl = videoResults!!.firstOrNull { it.site == "YouTube" && it.type == "Trailer" }?.key
             if (youtubeTrailerUrl.isNullOrEmpty()) {
                 youtubeTrailerUrl = videoResults[0].key
             }

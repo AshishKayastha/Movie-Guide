@@ -30,6 +30,11 @@ import com.bumptech.glide.request.target.ImageViewTarget
 /**
  * Created by Ashish on Dec 27.
  */
+inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
+
+val ViewGroup.views: List<View>
+    get() = (0..childCount - 1).map { getChildAt(it) }
+
 fun View.setVisibility(visible: Boolean) {
     if (visible) show() else hide()
 }
@@ -59,9 +64,7 @@ fun View.showSnackBar(messageId: Int, duration: Int = Snackbar.LENGTH_LONG,
     snackbar.show()
 }
 
-fun Snackbar.changeSnackBarFont(viewId: Int) {
-    (view.findViewById(viewId) as TextView).changeTypeface()
-}
+fun Snackbar.changeSnackBarFont(viewId: Int) = view.find<TextView>(viewId).changeTypeface()
 
 fun TextView.changeTypeface() {
     typeface = FontUtils.getTypeface(context, FontUtils.MONTSERRAT_REGULAR)
@@ -139,11 +142,7 @@ fun Menu.changeMenuFont(typefaceSpan: TypefaceSpan) {
 }
 
 fun ViewGroup.changeViewGroupTextFont() {
-    val size = childCount
-    (0..size - 1)
-            .map { getChildAt(it) }
-            .filterIsInstance<TextView>()
-            .forEach(TextView::changeTypeface)
+    views.filterIsInstance<TextView>().forEach(TextView::changeTypeface)
 }
 
 fun View?.showKeyboard() {
@@ -151,7 +150,7 @@ fun View?.showKeyboard() {
 
     requestFocus()
 
-    val imm = context.getImm()
+    val imm = context.inputMethodManager!!
     imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     imm.showSoftInput(this, 0)
 

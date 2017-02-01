@@ -3,6 +3,7 @@ package com.ashish.movies.utils.extensions
 import android.content.Context
 import android.content.res.Resources
 import android.os.Build
+import android.os.Handler
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.common.palette.PaletteBitmapTranscoder
 import com.bumptech.glide.BitmapRequestBuilder
@@ -36,3 +37,5 @@ fun <T> Observable<T>.observeOnMainThread(): Observable<T> {
 }
 
 fun <T> Collection<T>?.isNotNullOrEmpty() = this != null && size != 0
+
+fun runDelayed(delayMillis: Long, action: () -> Unit) = Handler().postDelayed(Runnable(action), delayMillis)

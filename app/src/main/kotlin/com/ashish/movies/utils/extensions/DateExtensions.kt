@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.ashish.movies.utils.Constants.DEFAULT_DATE_PATTERN
 import com.ashish.movies.utils.Constants.MONTH_DAY_YEAR_PATTERN
 import timber.log.Timber
+import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,4 +49,28 @@ fun isValidDate(startDateString: String?, endDateString: String?): Boolean {
     }
 
     return true
+}
+
+fun String.getParsedDate(pattern: String = DEFAULT_DATE_PATTERN): Date? {
+    try {
+        val sdf = SimpleDateFormat(pattern, Locale.ENGLISH)
+        sdf.timeZone = TimeZone.getDefault()
+        return sdf.parse(this)
+    } catch (e: ParseException) {
+        Timber.e(e)
+    }
+
+    return null
+}
+
+fun String?.getFormattedMediumDate(): String {
+    var formattedReleaseDate = ""
+    if (isNotNullOrEmpty()) {
+        val parsedDate = this!!.getParsedDate()
+        if (parsedDate != null) {
+            formattedReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(parsedDate)
+        }
+    }
+
+    return formattedReleaseDate
 }

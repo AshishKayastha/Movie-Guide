@@ -3,7 +3,6 @@ package com.ashish.movies.ui.main
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat.START
@@ -28,7 +27,16 @@ import com.ashish.movies.utils.CustomTabsHelper
 import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.DialogUtils
 import com.ashish.movies.utils.FontUtils
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.applyText
+import com.ashish.movies.utils.extensions.changeMenuFont
+import com.ashish.movies.utils.extensions.changeViewGroupTextFont
+import com.ashish.movies.utils.extensions.find
+import com.ashish.movies.utils.extensions.getStringArray
+import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.extensions.loadImageUrl
+import com.ashish.movies.utils.extensions.runDelayed
+import com.ashish.movies.utils.extensions.setVisibility
+import com.ashish.movies.utils.extensions.showToast
 import javax.inject.Inject
 
 class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
@@ -85,14 +93,14 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
 
     private fun initDrawerHeader() {
         val headerView = navigationView.getHeaderView(0)
-        nameText = headerView.findViewById(R.id.name_text) as FontTextView
-        userImage = headerView.findViewById(R.id.user_image) as CircleImageView
-        userNameText = headerView.findViewById(R.id.user_name_text) as FontTextView
+        nameText = headerView.find<FontTextView>(R.id.name_text)
+        userImage = headerView.find<CircleImageView>(R.id.user_image)
+        userNameText = headerView.find<FontTextView>(R.id.user_name_text)
 
         showUserProfile()
         userImage?.setOnClickListener {
             drawerLayout.closeDrawers()
-            Handler().postDelayed({ showTmdbLoginDialog() }, 200L)
+            runDelayed(200L) { showTmdbLoginDialog() }
         }
     }
 

@@ -1,9 +1,8 @@
 package com.ashish.movies.utils
 
-import android.app.Service
 import android.content.res.Resources
-import android.net.ConnectivityManager
 import com.ashish.movies.app.MoviesApp
+import com.ashish.movies.utils.extensions.connectivityManager
 
 /**
  * Created by Ashish on Dec 30.
@@ -11,8 +10,7 @@ import com.ashish.movies.app.MoviesApp
 object Utils {
 
     fun isOnline(): Boolean {
-        val cm = MoviesApp.context.getSystemService(Service.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetworkInfo = cm.activeNetworkInfo
+        val activeNetworkInfo = MoviesApp.context.connectivityManager.activeNetworkInfo
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 

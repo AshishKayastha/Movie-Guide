@@ -2,8 +2,8 @@ package com.ashish.movies.data.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import com.ashish.movies.di.annotations.ForApplication
+import com.ashish.movies.utils.extensions.defaultSharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,7 +21,7 @@ class PreferenceHelper @Inject constructor(@ForApplication context: Context) {
         private const val PREF_GRAVATAR_HASH = "gravatar_hash"
     }
 
-    private val sharedPrefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
+    private val sharedPrefs: SharedPreferences = context.applicationContext.defaultSharedPreferences
 
     fun getId(): Long = sharedPrefs.getLong(PREF_ID, 0L)
 

@@ -1,6 +1,9 @@
 package com.ashish.movies.utils.extensions
 
 import android.content.Context
+import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.preference.PreferenceManager
 import android.support.annotation.ArrayRes
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
@@ -22,8 +25,13 @@ fun Context.showToast(message: CharSequence, duration: Int = Toast.LENGTH_LONG) 
     Toast.makeText(this, message, duration).show()
 }
 
-fun Context.getImm(): InputMethodManager {
-    return getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-}
+val Context.inputMethodManager: InputMethodManager?
+    get() = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+
+val Context.connectivityManager: ConnectivityManager
+    get() = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+val Context.defaultSharedPreferences: SharedPreferences
+    get() = PreferenceManager.getDefaultSharedPreferences(this)
 
 fun Context.getStringArray(@ArrayRes arrayId: Int): Array<String> = resources.getStringArray(arrayId)
