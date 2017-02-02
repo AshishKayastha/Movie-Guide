@@ -1,5 +1,8 @@
 package com.ashish.movies.ui.multisearch
 
+import android.app.SearchManager
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.SearchView
@@ -22,6 +25,7 @@ import com.ashish.movies.utils.extensions.showKeyboard
 import com.ashish.movies.utils.extensions.startCircularRevealAnimation
 import com.ashish.movies.utils.keyboardwatcher.KeyboardWatcher
 import javax.inject.Inject
+
 
 /**
  * Created by Ashish on Jan 05.
@@ -50,6 +54,7 @@ class MultiSearchActivity : BaseActivity() {
         }
 
         setupSearchView()
+        handleVoiceSearchIntent(intent)
         backIcon.setOnClickListener { onBackPressed() }
     }
 
@@ -74,6 +79,9 @@ class MultiSearchActivity : BaseActivity() {
     }
 
     private fun setupSearchView() {
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
         val searchText = searchView.find<TextView>(android.support.v7.appcompat.R.id.search_src_text)
         searchText.changeTypeface()
         searchText.setTextColor(Color.WHITE)
@@ -83,13 +91,29 @@ class MultiSearchActivity : BaseActivity() {
         searchView.maxWidth = Utils.getScreenWidth()
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                hideKeyboard()
-                multiSearchFragment?.searchQuery(query)
+                performSearch(query)
                 return true
             }
 
             override fun onQueryTextChange(query: String) = true
         })
+    }
+
+    private fun performSearch(query: String) {
+        hideKeyboard()
+        searchView.clearFocus()
+        multiSearchFragment?.searchQuery(query)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        setIntent(intent)
+        handleVoiceSearchIntent(intent)
+    }
+
+    private fun handleVoiceSearchIntent(intent: Intent?) {
+        if (intent != null && Intent.ACTION_SEARCH == intent.action) {
+            performSearch(intent.getStringExtra(SearchManager.QUERY))
+        }
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {

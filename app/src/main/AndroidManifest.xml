@@ -47,7 +47,16 @@
             android:name=".ui.multisearch.MultiSearchActivity"
             android:label=""
             android:theme="@style/AppTheme.MultiSearch"
-            android:windowSoftInputMode="adjustNothing|stateHidden" />
+            android:windowSoftInputMode="adjustNothing|stateHidden">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
 
         <activity
             android:name=".ui.imageviewer.ImageViewerActivity"
