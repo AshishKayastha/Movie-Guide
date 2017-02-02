@@ -3,7 +3,6 @@ package com.ashish.movies.ui.base.detail
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.IdRes
@@ -69,10 +68,12 @@ import com.ashish.movies.utils.extensions.hide
 import com.ashish.movies.utils.extensions.isDark
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.extensions.loadPaletteBitmap
+import com.ashish.movies.utils.extensions.openUrl
 import com.ashish.movies.utils.extensions.scrimify
 import com.ashish.movies.utils.extensions.setLightStatusBar
 import com.ashish.movies.utils.extensions.setPaletteColor
 import com.ashish.movies.utils.extensions.setTransitionName
+import com.ashish.movies.utils.extensions.setVisibility
 import com.ashish.movies.utils.extensions.show
 import com.ashish.movies.utils.extensions.startActivityWithTransition
 import com.ashish.movies.utils.extensions.startCircularRevealAnimation
@@ -174,8 +175,10 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         sharedElementEnterTransition?.addListener(transitionListener)
 
         regularFont = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
-        collapsingToolbar.setExpandedTitleTypeface(regularFont)
-        collapsingToolbar.setCollapsedTitleTypeface(regularFont)
+        collapsingToolbar.apply {
+            setExpandedTitleTypeface(regularFont)
+            setCollapsedTitleTypeface(regularFont)
+        }
     }
 
     abstract fun getTransitionNameId(): Int
@@ -299,7 +302,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     override fun showTrailerFAB(trailerUrl: String) {
         playTrailerFAB?.apply {
             postDelayed({ animate().alpha(1f).scaleX(1f).scaleY(1f).start() }, 80L)
-            setOnClickListener { openLinkExternally(YOUTUBE_BASE_URL + trailerUrl) }
+            setOnClickListener { openUrl(YOUTUBE_BASE_URL + trailerUrl) }
         }
     }
 
@@ -333,8 +336,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     abstract fun getCrewItemClickListener(): OnItemClickListener?
 
-    protected fun inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
-                                              adapter: RecyclerView.Adapter<*>): RecyclerView {
+    private fun inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
+                                            adapter: RecyclerView.Adapter<*>): RecyclerView {
         val inflatedView = viewStub.inflate()
         val recyclerView = inflatedView.find<RecyclerView>(viewId)
 
@@ -362,7 +365,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         playTrailerFAB?.apply {
             val isCollapsing = collapsingToolbar.height + verticalOffset <
                     2.4 * ViewCompat.getMinimumHeight(collapsingToolbar)
-            if (isCollapsing) hide() else show()
+            setVisibility(!isCollapsing)
         }
 
         if (appBarLayout.totalScrollRange + verticalOffset == 0) {
@@ -389,9 +392,10 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         super.onActivityReenter(resultCode, data)
 
         if (data != null) {
-            reenterState = Bundle(data.extras)
+            reenterState = data.extras
             val currentPosition = reenterState?.getInt(EXTRA_CURRENT_POSITION)
             val startingPosition = reenterState?.getInt(EXTRA_STARTING_POSITION)
+
             if (startingPosition != currentPosition) {
                 imagesRecyclerView?.smoothScrollToPosition(currentPosition!!)
             }
@@ -417,22 +421,18 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_imdb) {
             if (imdbId.isNotNullOrEmpty()) {
-                openLinkExternally(IMDB_BASE_URL + imdbId)
+                openUrl(IMDB_BASE_URL + imdbId)
             }
             return true
 
         } else if (item.itemId == R.id.action_rotten_tomatoes) {
             if (rottenTomatoesUrl.isNotNullOrEmpty()) {
-                openLinkExternally(rottenTomatoesUrl!!)
+                openUrl(rottenTomatoesUrl!!)
             }
             return true
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun openLinkExternally(siteUrl: String) {
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(siteUrl)))
     }
 
     override fun finishAfterTransition() {

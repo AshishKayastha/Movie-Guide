@@ -19,9 +19,7 @@ abstract class RxPresenter<V : MvpView> {
 
     protected fun getView() = view
 
-    protected fun addDisposable(disposable: Disposable) {
-        compositeDisposable.add(disposable)
-    }
+    protected fun addDisposable(disposable: Disposable) = compositeDisposable.add(disposable)
 
     @CallSuper
     open fun detachView() {
@@ -29,7 +27,5 @@ abstract class RxPresenter<V : MvpView> {
     }
 
     @CallSuper
-    open fun onDestroy() {
-        compositeDisposable.clear()
-    }
+    open fun onDestroy() = compositeDisposable.clear()
 }

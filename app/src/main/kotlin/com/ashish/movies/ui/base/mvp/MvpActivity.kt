@@ -32,14 +32,10 @@ abstract class MvpActivity<V : MvpView, P : RxPresenter<V>> : BaseActivity(), Mv
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportLoaderManager.initLoader(getLoaderId(), null, this)
+        supportLoaderManager.initLoader(LOADER_ID, null, this)
     }
 
-    protected open fun getLoaderId() = LOADER_ID
-
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<P> {
-        return presenterLoaderProvider.get()
-    }
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<P> = presenterLoaderProvider.get()
 
     override fun onLoadFinished(loader: Loader<P>?, presenter: P) {
         this.presenter = presenter
@@ -60,9 +56,7 @@ abstract class MvpActivity<V : MvpView, P : RxPresenter<V>> : BaseActivity(), Mv
         super.onStop()
     }
 
-    override fun showToastMessage(messageId: Int) {
-        showToast(messageId)
-    }
+    override fun showToastMessage(messageId: Int) = showToast(messageId)
 
     override fun showMessage(messageId: Int) {
         rootView?.showSnackBar(messageId)

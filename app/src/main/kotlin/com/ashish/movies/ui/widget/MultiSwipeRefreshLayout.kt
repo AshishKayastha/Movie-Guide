@@ -29,4 +29,9 @@ class MultiSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs:
         }
         return true
     }
+
+    fun performCleanup() {
+        clearAnimation()
+        setOnRefreshListener(null)
+    }
 }

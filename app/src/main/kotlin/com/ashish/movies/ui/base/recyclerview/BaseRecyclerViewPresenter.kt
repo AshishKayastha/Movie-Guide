@@ -17,14 +17,19 @@ import java.util.*
 abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpView<I>> : RxPresenter<V>() {
 
     private var totalPages = 1
+    private var isFirstStart = true
     private var currentPage: Int = 1
     private var itemList: ArrayList<I>? = null
 
     fun loadData(type: Int?, showProgress: Boolean = true) {
-        if (itemList.isNotNullOrEmpty()) {
-            showItemList()
-        } else {
-            loadFreshData(type, showProgress)
+        if (isFirstStart) {
+            if (itemList.isNotNullOrEmpty()) {
+                showItemList()
+            } else {
+                loadFreshData(type, showProgress)
+            }
+
+            isFirstStart = false
         }
     }
 

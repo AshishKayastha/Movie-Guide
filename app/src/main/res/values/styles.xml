@@ -98,7 +98,6 @@
     </style>
 
     <style name="SecondaryText.Title">
-        <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:lineSpacingExtra">@dimen/line_spacing</item>
         <item name="android:layout_marginTop">@dimen/spacing_normal</item>
     </style>

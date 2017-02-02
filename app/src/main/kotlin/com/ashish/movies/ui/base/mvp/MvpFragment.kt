@@ -29,7 +29,6 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : BaseFragment(), Mv
     lateinit var presenterLoaderProvider: Provider<PresenterLoader<P>>
 
     protected var presenter: P? = null
-    protected var isFirstStart: Boolean = true
 
     private var rootView: View? = null
 
@@ -51,10 +50,8 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : BaseFragment(), Mv
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        loaderManager.initLoader(getLoaderId(), null, this)
+        loaderManager.initLoader(LOADER_ID, null, this)
     }
-
-    protected open fun getLoaderId() = LOADER_ID
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<P> = presenterLoaderProvider.get()
 
