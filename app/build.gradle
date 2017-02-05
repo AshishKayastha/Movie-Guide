@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
     compileSdkVersion 25
@@ -12,7 +13,6 @@ android {
         targetSdkVersion 25
         versionCode 100
         versionName "1.0.0"
-        multiDexEnabled true
     }
 
     buildTypes {
@@ -39,6 +39,10 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
 }
 
 repositories {
@@ -48,7 +52,6 @@ repositories {
 
 dependencies {
     // Support Libraries
-    compile 'com.android.support:multidex:1.0.1'
     compile "com.android.support:design:$supportLibVersion"
     compile "com.android.support:customtabs:$supportLibVersion"
     compile "com.android.support:palette-v7:$supportLibVersion"
@@ -61,17 +64,23 @@ dependencies {
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
+    // StorIO
+    compile "com.pushtorefresh.storio:sqlite:$storioVersion"
+    compile "com.pushtorefresh.storio:sqlite-annotations:$storioVersion"
+    kapt "com.pushtorefresh.storio:sqlite-annotations-processor:$storioVersion"
+
     // Retrofit 2
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
     // OkHttp
-    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 
     // RxJava 2/RxAndroid 2
     compile 'io.reactivex.rxjava2:rxjava:2.0.5'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.github.akarnokd:rxjava2-interop:0.9.0'
 
     // Dagger 2
     compile "com.google.dagger:dagger:$daggerVersion"
@@ -88,16 +97,4 @@ dependencies {
     // Leak Canary
     debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
-}
-
-afterEvaluate {
-    tasks.matching {
-        it.name.startsWith('dex')
-    }.each { dx ->
-        if (dx.additionalParameters == null) {
-            dx.additionalParameters = []
-        }
-        dx.additionalParameters += '--multi-dex'
-        dx.additionalParameters += "--main-dex-list=$projectDir/multidex.keep".toString()
-    }
 }

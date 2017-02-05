@@ -26,7 +26,6 @@ import com.ashish.movies.utils.extensions.startCircularRevealAnimation
 import com.ashish.movies.utils.keyboardwatcher.KeyboardWatcher
 import javax.inject.Inject
 
-
 /**
  * Created by Ashish on Jan 05.
  */

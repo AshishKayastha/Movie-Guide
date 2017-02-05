@@ -1,7 +1,7 @@
 package com.ashish.movies.app
 
+import android.app.Application
 import android.content.Context
-import android.support.multidex.MultiDexApplication
 import com.ashish.movies.BuildConfig
 import com.ashish.movies.di.components.AppComponent
 import com.ashish.movies.di.components.DaggerAppComponent
@@ -14,7 +14,7 @@ import timber.log.Timber
 /**
  * Created by Ashish on Dec 28.
  */
-class MoviesApp : MultiDexApplication() {
+class MoviesApp : Application() {
 
     private lateinit var refWatcher: RefWatcher
 
@@ -30,16 +30,10 @@ class MoviesApp : MultiDexApplication() {
         @JvmStatic lateinit var context: Context
 
         @JvmStatic
-        fun getAppComponent(context: Context): AppComponent {
-            val app = context.applicationContext as MoviesApp
-            return app.appComponent
-        }
+        fun getRefWatcher(context: Context) = (context.applicationContext as MoviesApp).refWatcher
 
         @JvmStatic
-        fun getRefWatcher(context: Context): RefWatcher {
-            val app = context.applicationContext as MoviesApp
-            return app.refWatcher
-        }
+        fun getAppComponent(context: Context) = (context.applicationContext as MoviesApp).appComponent
     }
 
     override fun onCreate() {
