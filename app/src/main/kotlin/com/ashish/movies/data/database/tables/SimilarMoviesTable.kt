@@ -3,21 +3,16 @@ package com.ashish.movies.data.database.tables
 import android.database.sqlite.SQLiteDatabase
 
 /**
- * Created by Ashish on Feb 03.
+ * Created by Ashish on Feb 06.
  */
-object MoviesTable {
+object SimilarMoviesTable {
 
-    const val TABLE_NAME = "movies"
+    const val TABLE_NAME = "similar_movies"
 
     const val COL_ID = "_id"
+    const val COL_MEDIA_ID = "media_id"
     const val COL_TITLE = "title"
     const val COL_OVERVIEW = "overview"
-    const val COL_BUDGET = "budget"
-    const val COL_RUNTIME = "runtime"
-    const val COL_REVENUE = "revenue"
-    const val COL_STATUS = "status"
-    const val COL_TAGLINE = "tagline"
-    const val COL_IMDB_ID = "imdb_id"
     const val COL_VOTE_COUNT = "vote_count"
     const val COL_POSTER_PATH = "poster_path"
     const val COL_RELEASE_DATE = "release_date"
@@ -26,14 +21,9 @@ object MoviesTable {
 
     private const val CREATE_TABLE = "CREATE TABLE $TABLE_NAME(" +
             "$COL_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+            "$COL_MEDIA_ID INTEGER NOT NULL, " +
             "$COL_TITLE TEXT NOT NULL, " +
             "$COL_OVERVIEW TEXT, " +
-            "$COL_BUDGET INTEGER, " +
-            "$COL_RUNTIME INTEGER, " +
-            "$COL_REVENUE INTEGER, " +
-            "$COL_STATUS TEXT, " +
-            "$COL_TAGLINE TEXT, " +
-            "$COL_IMDB_ID TEXT, " +
             "$COL_RELEASE_DATE TEXT, " +
             "$COL_VOTE_COUNT INTEGER, " +
             "$COL_VOTE_AVERAGE INTEGER, " +

@@ -1,6 +1,7 @@
 package com.ashish.movies.data.models
 
 data class OMDbDetail(
+        val imdbId: String,
         val Rated: String? = null,
         val Country: String? = null,
         val Awards: String? = null,
