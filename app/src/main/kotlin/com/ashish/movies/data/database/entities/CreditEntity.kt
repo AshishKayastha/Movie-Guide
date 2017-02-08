@@ -11,7 +11,6 @@ import com.ashish.movies.data.database.tables.CreditsTable.COL_POSTER_PATH
 import com.ashish.movies.data.database.tables.CreditsTable.COL_PROFILE_PATH
 import com.ashish.movies.data.database.tables.CreditsTable.COL_RELEASE_DATE
 import com.ashish.movies.data.database.tables.CreditsTable.COL_TITLE
-import com.ashish.movies.data.database.tables.CreditsTable.TABLE_NAME
 import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteColumn
 import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteCreator
 import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteType
@@ -19,7 +18,7 @@ import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteType
 /**
  * Created by Ashish on Feb 06.
  */
-@StorIOSQLiteType(table = TABLE_NAME)
+@StorIOSQLiteType(table = "credits")
 data class CreditEntity @StorIOSQLiteCreator constructor(
         @get:StorIOSQLiteColumn(name = COL_ID, key = true) val id: Long,
         @get:StorIOSQLiteColumn(name = COL_MEDIA_ID) val mediaId: Long,

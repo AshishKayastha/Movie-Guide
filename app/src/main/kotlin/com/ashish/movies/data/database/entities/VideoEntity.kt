@@ -7,7 +7,6 @@ import com.ashish.movies.data.database.tables.VideosTable.COL_NAME
 import com.ashish.movies.data.database.tables.VideosTable.COL_SITE
 import com.ashish.movies.data.database.tables.VideosTable.COL_SIZE
 import com.ashish.movies.data.database.tables.VideosTable.COL_TYPE
-import com.ashish.movies.data.database.tables.VideosTable.TABLE_NAME
 import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteColumn
 import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteCreator
 import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteType
@@ -15,7 +14,7 @@ import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteType
 /**
  * Created by Ashish on Feb 05.
  */
-@StorIOSQLiteType(table = TABLE_NAME)
+@StorIOSQLiteType(table = "videos")
 data class VideoEntity @StorIOSQLiteCreator constructor(
         @get:StorIOSQLiteColumn(name = COL_ID, key = true) val id: String,
         @get:StorIOSQLiteColumn(name = COL_MEDIA_ID) val mediaId: Long,

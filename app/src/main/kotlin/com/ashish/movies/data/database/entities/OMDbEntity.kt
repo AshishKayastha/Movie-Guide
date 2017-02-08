@@ -16,7 +16,6 @@ import com.ashish.movies.data.database.tables.OMDbTable.COL_TOMATO_RATING
 import com.ashish.movies.data.database.tables.OMDbTable.COL_TOMATO_URL
 import com.ashish.movies.data.database.tables.OMDbTable.COL_TOMATO_USER_METER
 import com.ashish.movies.data.database.tables.OMDbTable.COL_TOMATO_USER_RATING
-import com.ashish.movies.data.database.tables.OMDbTable.TABLE_NAME
 import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteColumn
 import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteCreator
 import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteType
@@ -24,7 +23,7 @@ import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteType
 /**
  * Created by Ashish on Feb 06.
  */
-@StorIOSQLiteType(table = TABLE_NAME)
+@StorIOSQLiteType(table = "omdb_contents")
 data class OMDbEntity @StorIOSQLiteCreator constructor(
         @get:StorIOSQLiteColumn(name = COL_IMDB_ID, key = true) val imdbId: String,
         @get:StorIOSQLiteColumn(name = COL_MEDIA_ID) val mediaId: Long,

@@ -9,9 +9,7 @@ import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.support.v7.widget.ActionMenuView
-import android.text.style.TypefaceSpan
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
@@ -131,14 +129,6 @@ fun View.setLightStatusBar() {
 
 fun View.setTransitionName(@StringRes transitionNameId: Int) {
     ViewCompat.setTransitionName(this, context.getString(transitionNameId))
-}
-
-fun Menu.changeMenuFont(typefaceSpan: TypefaceSpan) {
-    val size = size()
-    (0..size - 1)
-            .map { getItem(it) }
-            .filterNotNull()
-            .forEach { menuItem -> menuItem.title = menuItem.title.getTextWithCustomTypeface(typefaceSpan) }
 }
 
 fun ViewGroup.changeViewGroupTextFont() {
