@@ -16,12 +16,7 @@ import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
-import android.view.Gravity
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewStub
-import android.view.ViewTreeObserver
+import android.view.*
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -31,17 +26,14 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.ui.base.mvp.MvpActivity
-import com.ashish.movies.ui.common.adapter.DetailContentAdapter
-import com.ashish.movies.ui.common.adapter.ImageAdapter
-import com.ashish.movies.ui.common.adapter.OnItemClickListener
-import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
-import com.ashish.movies.ui.common.adapter.ViewType
+import com.ashish.movies.ui.common.adapter.*
 import com.ashish.movies.ui.common.palette.PaletteBitmap
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity.Companion.EXTRA_CURRENT_POSITION
 import com.ashish.movies.ui.imageviewer.ImageViewerActivity.Companion.EXTRA_STARTING_POSITION
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.ui.widget.ItemOffsetDecoration
+import com.ashish.movies.utils.*
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_CREDIT
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
@@ -50,33 +42,7 @@ import com.ashish.movies.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movies.utils.Constants.IMDB_BASE_URL
 import com.ashish.movies.utils.Constants.YOUTUBE_BASE_URL
-import com.ashish.movies.utils.CustomTypefaceSpan
-import com.ashish.movies.utils.FontUtils
-import com.ashish.movies.utils.GravitySnapHelper
-import com.ashish.movies.utils.TransitionListenerAdapter
-import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.animateBackgroundColorChange
-import com.ashish.movies.utils.extensions.animateColorChange
-import com.ashish.movies.utils.extensions.animateTextColorChange
-import com.ashish.movies.utils.extensions.changeMenuFont
-import com.ashish.movies.utils.extensions.find
-import com.ashish.movies.utils.extensions.getColorCompat
-import com.ashish.movies.utils.extensions.getOverflowMenuButton
-import com.ashish.movies.utils.extensions.getPosterImagePair
-import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
-import com.ashish.movies.utils.extensions.hide
-import com.ashish.movies.utils.extensions.isDark
-import com.ashish.movies.utils.extensions.isNotNullOrEmpty
-import com.ashish.movies.utils.extensions.loadPaletteBitmap
-import com.ashish.movies.utils.extensions.openUrl
-import com.ashish.movies.utils.extensions.scrimify
-import com.ashish.movies.utils.extensions.setLightStatusBar
-import com.ashish.movies.utils.extensions.setPaletteColor
-import com.ashish.movies.utils.extensions.setTransitionName
-import com.ashish.movies.utils.extensions.setVisibility
-import com.ashish.movies.utils.extensions.show
-import com.ashish.movies.utils.extensions.startActivityWithTransition
-import com.ashish.movies.utils.extensions.startCircularRevealAnimation
+import com.ashish.movies.utils.extensions.*
 import java.util.*
 
 /**
@@ -296,7 +262,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun showImageList(imageUrlList: ArrayList<String>) {
         imageAdapter = ImageAdapter(imageUrlList, onImageItemClickListener)
-        imagesRecyclerView = inflateViewStubRecyclerView(imagesViewStub, R.id.detail_images_recycler_view, imageAdapter!!)
+        imagesRecyclerView = inflateViewStubRecyclerView(imagesViewStub, R.id.detail_images_recycler_view,
+                imageAdapter!!)
     }
 
     override fun showTrailerFAB(trailerUrl: String) {
@@ -419,20 +386,23 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_imdb) {
-            if (imdbId.isNotNullOrEmpty()) {
-                openUrl(IMDB_BASE_URL + imdbId)
+        when (item.itemId) {
+            R.id.action_imdb -> {
+                if (imdbId.isNotNullOrEmpty()) {
+                    openUrl(IMDB_BASE_URL + imdbId)
+                }
+                return true
             }
-            return true
 
-        } else if (item.itemId == R.id.action_rotten_tomatoes) {
-            if (rottenTomatoesUrl.isNotNullOrEmpty()) {
-                openUrl(rottenTomatoesUrl!!)
+            R.id.action_rotten_tomatoes -> {
+                if (rottenTomatoesUrl.isNotNullOrEmpty()) {
+                    openUrl(rottenTomatoesUrl!!)
+                }
+                return true
             }
-            return true
+
+            else -> return super.onOptionsItemSelected(item)
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
     override fun finishAfterTransition() {

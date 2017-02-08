@@ -1,13 +1,11 @@
 package com.ashish.movies.data.database.tables
 
-import android.database.sqlite.SQLiteDatabase
-
 /**
  * Created by Ashish on Feb 06.
  */
-object OMDbTable {
+object OMDbTable : DatabaseTable {
 
-    const val TABLE_NAME = "omdb_contents"
+    override val TABLE_NAME = "omdb_contents"
 
     const val COL_IMDB_ID = "imdb_id"
     const val COL_MEDIA_ID = "media_id"
@@ -26,7 +24,7 @@ object OMDbTable {
     const val COL_TOMATO_USER_METER = "tomato_user_meter"
     const val COL_TOMATO_USER_RATING = "tomato_user_rating"
 
-    private const val CREATE_TABLE = "CREATE TABLE $TABLE_NAME(" +
+    override val CREATE_TABLE = "CREATE TABLE $TABLE_NAME(" +
             "$COL_IMDB_ID TEXT NOT NULL PRIMARY KEY, " +
             "$COL_MEDIA_ID INTEGER NOT NULL, " +
             "$COL_RATED TEXT, " +
@@ -43,8 +41,4 @@ object OMDbTable {
             "$COL_TOMATO_URL TEXT, " +
             "$COL_TOMATO_USER_METER TEXT, " +
             "$COL_TOMATO_USER_RATING TEXT);"
-
-    fun onCreate(db: SQLiteDatabase) = db.execSQL(CREATE_TABLE)
-
-    fun dropTableIfExists(db: SQLiteDatabase) = db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
 }

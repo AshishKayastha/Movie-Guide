@@ -1,23 +1,9 @@
 package com.ashish.movies.data.database
 
-import com.ashish.movies.data.database.entities.CreditEntity
-import com.ashish.movies.data.database.entities.GenreEntity
-import com.ashish.movies.data.database.entities.ImageEntity
-import com.ashish.movies.data.database.entities.MovieDetailEntity
-import com.ashish.movies.data.database.entities.MovieEntity
-import com.ashish.movies.data.database.entities.OMDbEntity
-import com.ashish.movies.data.database.entities.SimilarMovieEntity
-import com.ashish.movies.data.database.entities.VideoEntity
+import com.ashish.movies.data.database.entities.*
 import com.ashish.movies.data.database.tables.CreditsTable
 import com.ashish.movies.data.database.tables.OMDbTable
-import com.ashish.movies.data.models.Credit
-import com.ashish.movies.data.models.FullDetailContent
-import com.ashish.movies.data.models.Genre
-import com.ashish.movies.data.models.ImageItem
-import com.ashish.movies.data.models.Movie
-import com.ashish.movies.data.models.MovieDetail
-import com.ashish.movies.data.models.OMDbDetail
-import com.ashish.movies.data.models.VideoItem
+import com.ashish.movies.data.models.*
 import com.pushtorefresh.storio.sqlite.StorIOSQLite
 import com.pushtorefresh.storio.sqlite.queries.Query
 import java.util.*
@@ -50,27 +36,14 @@ fun FullDetailContent<MovieDetail>.toMovieDetailEntity(): MovieDetailEntity {
     val movieDetail = detailContent!!
     val movieId = movieDetail.id!!
 
-    val genreList = movieDetail.genres
-            ?.map { it.toEntity(movieId) }
-            ?.toList()
+    val genreList = movieDetail.genres.toGenreEntityList(movieId)
 
     val creditsResults = movieDetail.creditsResults
-    val castList = creditsResults?.cast
-            ?.map { it.toEntity(movieId, CreditsTable.CREDIT_TYE_CAST) }
-            ?.toList()
+    val castList = creditsResults.toCreditEntityList(movieId, CreditsTable.CREDIT_TYE_CAST)
+    val crewList = creditsResults.toCreditEntityList(movieId, CreditsTable.CREDIT_TYE_CREW)
 
-    val crewList = creditsResults?.crew
-            ?.map { it.toEntity(movieId, CreditsTable.CREDIT_TYE_CREW) }
-            ?.toList()
-
-    val images = movieDetail.images
-    val imageList = ArrayList<ImageEntity>()
-    images?.backdrops?.forEach { imageList.add(it.toEntity(movieId)) }
-    images?.posters?.forEach { imageList.add(it.toEntity(movieId)) }
-
-    val videoList = movieDetail.videos?.results
-            ?.map { it.toEntity(movieId) }
-            ?.toList()
+    val imageList = movieDetail.images.toImageEntityList(movieId)
+    val videoList = movieDetail.videos.toVideoEntityList(movieId)
 
     val similarMoviesList = movieDetail.similarMovieResults?.results
             ?.map { it.toSimilarEntity(movieId) }
@@ -79,6 +52,20 @@ fun FullDetailContent<MovieDetail>.toMovieDetailEntity(): MovieDetailEntity {
     return MovieDetailEntity(movieDetail.toEntity(), omdbDetail?.toEntity(movieId),
             genreList, castList, crewList, imageList, videoList, similarMoviesList)
 }
+
+fun List<Genre>?.toGenreEntityList(mediaId: Long) = this?.map { it.toEntity(mediaId) }?.toList()
+
+fun CreditResults?.toCreditEntityList(mediaId: Long, creditType: String)
+        = this?.cast?.map { it.toEntity(mediaId, creditType) }?.toList()
+
+fun Images?.toImageEntityList(mediaId: Long): List<ImageEntity>? {
+    val imageList = ArrayList<ImageEntity>()
+    this?.backdrops?.forEach { imageList.add(it.toEntity(mediaId)) }
+    this?.posters?.forEach { imageList.add(it.toEntity(mediaId)) }
+    return imageList
+}
+
+fun Videos?.toVideoEntityList(mediaId: Long) = this?.results?.map { it.toEntity(mediaId) }?.toList()
 
 inline fun <reified T : Any> StorIOSQLite.getContentList(mediaId: Long, tableName: String,
                                                          colName: String = "media_id"): List<T>? {

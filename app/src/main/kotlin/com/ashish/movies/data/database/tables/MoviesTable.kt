@@ -1,13 +1,11 @@
 package com.ashish.movies.data.database.tables
 
-import android.database.sqlite.SQLiteDatabase
-
 /**
  * Created by Ashish on Feb 03.
  */
-object MoviesTable {
+object MoviesTable : DatabaseTable {
 
-    const val TABLE_NAME = "movies"
+    override val TABLE_NAME = "movies"
 
     const val COL_ID = "_id"
     const val COL_TITLE = "title"
@@ -24,8 +22,8 @@ object MoviesTable {
     const val COL_VOTE_AVERAGE = "vote_average"
     const val COL_BACKDROP_PATH = "backdrop_path"
 
-    private const val CREATE_TABLE = "CREATE TABLE $TABLE_NAME(" +
-            "$COL_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+    override val CREATE_TABLE = "CREATE TABLE $TABLE_NAME(" +
+            "$COL_ID INTEGER NOT NULL PRIMARY KEY, " +
             "$COL_TITLE TEXT NOT NULL, " +
             "$COL_OVERVIEW TEXT, " +
             "$COL_BUDGET INTEGER, " +
@@ -39,8 +37,4 @@ object MoviesTable {
             "$COL_VOTE_AVERAGE INTEGER, " +
             "$COL_POSTER_PATH TEXT, " +
             "$COL_BACKDROP_PATH TEXT);"
-
-    fun onCreate(db: SQLiteDatabase) = db.execSQL(CREATE_TABLE)
-
-    fun dropTableIfExists(db: SQLiteDatabase) = db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
 }
