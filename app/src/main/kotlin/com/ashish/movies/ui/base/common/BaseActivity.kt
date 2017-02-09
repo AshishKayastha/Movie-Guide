@@ -7,7 +7,8 @@ import android.view.MenuItem
 import butterknife.bindOptionalView
 import com.ashish.movies.R
 import com.ashish.movies.app.MoviesApp
-import com.ashish.movies.di.components.AppComponent
+import com.ashish.movies.di.components.UiComponent
+import com.ashish.movies.di.modules.UiModule
 import icepick.Icepick
 
 /**
@@ -18,7 +19,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected val toolbar: Toolbar? by bindOptionalView(R.id.toolbar)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies(MoviesApp.getAppComponent(this))
+        injectDependencies(MoviesApp.getAppComponent(this).plus(UiModule(this)))
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
         setSupportActionBar(toolbar)
@@ -32,7 +33,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected open fun getIntentExtras(extras: Bundle?) {}
 
-    open fun injectDependencies(appComponent: AppComponent) {}
+    protected open fun injectDependencies(uiComponent: UiComponent) {}
 
     abstract fun getLayoutId(): Int
 

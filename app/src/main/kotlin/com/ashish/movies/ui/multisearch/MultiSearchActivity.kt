@@ -14,10 +14,15 @@ import android.widget.ImageButton
 import android.widget.TextView
 import butterknife.bindView
 import com.ashish.movies.R
-import com.ashish.movies.di.components.AppComponent
+import com.ashish.movies.di.components.UiComponent
 import com.ashish.movies.ui.base.common.BaseActivity
 import com.ashish.movies.utils.Utils
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.changeTypeface
+import com.ashish.movies.utils.extensions.find
+import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.hideKeyboard
+import com.ashish.movies.utils.extensions.showKeyboard
+import com.ashish.movies.utils.extensions.startCircularRevealAnimation
 import com.ashish.movies.utils.keyboardwatcher.KeyboardWatcher
 import javax.inject.Inject
 
@@ -52,9 +57,7 @@ class MultiSearchActivity : BaseActivity() {
         backIcon.setOnClickListener { onBackPressed() }
     }
 
-    override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(MultiSearchModule(this)).inject(this)
-    }
+    override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
 
     override fun getLayoutId() = R.layout.activity_multi_search
 

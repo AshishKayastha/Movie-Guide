@@ -2,7 +2,7 @@ package com.ashish.movies.data.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.ashish.movies.di.annotations.ForApplication
+import com.ashish.movies.di.annotations.ApplicationQualifier
 import com.ashish.movies.utils.extensions.defaultSharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,7 +11,7 @@ import javax.inject.Singleton
  * Created by Ashish on Jan 28.
  */
 @Singleton
-class PreferenceHelper @Inject constructor(@ForApplication context: Context) {
+class PreferenceHelper @Inject constructor(@ApplicationQualifier context: Context) {
 
     companion object {
         private const val PREF_ID = "id"

@@ -16,7 +16,7 @@ import com.ashish.movies.data.database.entities.VideoEntity
 import com.ashish.movies.data.database.entities.VideoEntitySQLiteTypeMapping
 import com.ashish.movies.data.database.resolvers.movie.MovieSQLiteTypeMapping
 import com.ashish.movies.data.database.resolvers.moviedetail.MovieDetailSQLiteTypeMapping
-import com.ashish.movies.di.annotations.ForApplication
+import com.ashish.movies.di.annotations.ApplicationQualifier
 import com.pushtorefresh.storio.sqlite.StorIOSQLite
 import com.pushtorefresh.storio.sqlite.impl.DefaultStorIOSQLite
 import dagger.Module
@@ -31,12 +31,12 @@ class AppModule(val moviesApp: MoviesApp) {
 
     @Provides
     @Singleton
-    @ForApplication
+    @ApplicationQualifier
     fun provideAppContext(): Context = moviesApp
 
     @Provides
     @Singleton
-    fun provideSQLiteOperHelper(@ForApplication context: Context): SQLiteOpenHelper = DatabaseHelper(context)
+    fun provideSQLiteOperHelper(@ApplicationQualifier context: Context): SQLiteOpenHelper = DatabaseHelper(context)
 
     @Provides
     @Singleton

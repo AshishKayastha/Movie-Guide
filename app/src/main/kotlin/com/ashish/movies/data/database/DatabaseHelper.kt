@@ -3,14 +3,21 @@ package com.ashish.movies.data.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.ashish.movies.data.database.tables.*
-import com.ashish.movies.di.annotations.ForApplication
+import com.ashish.movies.data.database.tables.CreditsTable
+import com.ashish.movies.data.database.tables.DatabaseTable
+import com.ashish.movies.data.database.tables.GenresTable
+import com.ashish.movies.data.database.tables.ImagesTable
+import com.ashish.movies.data.database.tables.MoviesTable
+import com.ashish.movies.data.database.tables.OMDbTable
+import com.ashish.movies.data.database.tables.SimilarMoviesTable
+import com.ashish.movies.data.database.tables.VideosTable
+import com.ashish.movies.di.annotations.ApplicationQualifier
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Feb 03.
  */
-class DatabaseHelper @Inject constructor(@ForApplication context: Context)
+class DatabaseHelper @Inject constructor(@ApplicationQualifier context: Context)
     : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {

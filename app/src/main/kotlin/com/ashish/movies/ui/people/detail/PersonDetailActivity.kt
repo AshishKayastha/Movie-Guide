@@ -10,7 +10,7 @@ import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.Person
 import com.ashish.movies.data.models.PersonDetail
 import com.ashish.movies.data.models.TVShow
-import com.ashish.movies.di.components.AppComponent
+import com.ashish.movies.di.components.UiComponent
 import com.ashish.movies.ui.base.detail.BaseDetailActivity
 import com.ashish.movies.ui.base.detail.BaseDetailView
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
@@ -68,9 +68,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
         }
     }
 
-    override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(PersonDetailModule(this)).inject(this)
-    }
+    override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
 
     override fun getLayoutId() = R.layout.activity_detail_person
 

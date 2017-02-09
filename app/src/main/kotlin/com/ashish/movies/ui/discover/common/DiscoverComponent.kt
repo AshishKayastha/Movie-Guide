@@ -10,8 +10,8 @@ import dagger.Subcomponent
  * Created by Ashish on Jan 06.
  */
 @FragmentScope
-@Subcomponent(modules = arrayOf(DiscoverModule::class))
-interface DiscoverSubComponent {
+@Subcomponent
+interface DiscoverComponent {
 
     fun inject(discoverMovieFragment: DiscoverMovieFragment)
 

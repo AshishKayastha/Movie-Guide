@@ -29,7 +29,7 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         const val DISCOVER_TV_SHOW = 1
     }
 
-    lateinit var discoverComponent: DiscoverSubComponent
+    lateinit var discoverComponent: DiscoverComponent
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

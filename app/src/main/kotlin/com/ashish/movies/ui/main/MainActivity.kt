@@ -14,7 +14,7 @@ import android.view.ViewGroup
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.preferences.PreferenceHelper
-import com.ashish.movies.di.components.AppComponent
+import com.ashish.movies.di.components.UiComponent
 import com.ashish.movies.ui.base.mvp.MvpActivity
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_DISCOVER
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
@@ -85,9 +85,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
         setupNavigationView()
     }
 
-    override fun injectDependencies(appComponent: AppComponent) {
-        appComponent.plus(MainModule(this)).inject(this)
-    }
+    override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
 
     override fun getLayoutId() = R.layout.activity_main
 
