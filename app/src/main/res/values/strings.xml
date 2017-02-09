@@ -3,13 +3,6 @@
     <string name="error_no_internet">No Internet Connection</string>
     <string name="error_load_data">An error occurred while trying to fetch data</string>
 
-    <!-- Transition Names -->
-    <string name="transition_tv_poster">tv_poster_image</string>
-    <string name="transition_movie_poster">movie_poster_image</string>
-    <string name="transition_person_profile">person_profile_image</string>
-    <string name="transition_season_poster">season_poster_image</string>
-    <string name="transition_episode_image">episode_still_image</string>
-
     <!-- Movie -->
     <string name="title_movies">Movies</string>
     <string name="no_movies_available">No Movies Available</string>

@@ -98,17 +98,16 @@ abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : Fu
 
     override fun getCrewItemClickListener() = onCrewItemClickListener
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_favorite) {
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_favorite -> performAction {
             val mediaType = getMediaType()
             if (mediaType.isNotNullOrEmpty()) {
                 item.setIcon(R.drawable.ic_favorite_white_24dp)
                 presenter?.markAsFavorite(0, mediaType!!)
             }
-            return true
         }
 
-        return super.onOptionsItemSelected(item)
+        else -> super.onOptionsItemSelected(item)
     }
 
     protected open fun getMediaType(): String? = null

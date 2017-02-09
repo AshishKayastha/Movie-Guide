@@ -36,15 +36,17 @@ class SeasonDetailPresenter @Inject constructor(private val tvShowInteractor: TV
         val contentList = ArrayList<String>()
         fullDetailContent.detailContent?.apply {
             val omdbDetail = fullDetailContent.omdbDetail
-            contentList.add(overview ?: "")
-            contentList.add(omdbDetail?.Rated ?: "")
-            contentList.add(omdbDetail?.Awards ?: "")
-            contentList.add(seasonNumber.toString())
-            contentList.add(episodes?.size.toString())
-            contentList.add(airDate.getFormattedMediumDate())
-            contentList.add(omdbDetail?.Production ?: "")
-            contentList.add(omdbDetail?.Country ?: "")
-            contentList.add(omdbDetail?.Language ?: "")
+            contentList.apply {
+                add(overview ?: "")
+                add(omdbDetail?.Rated ?: "")
+                add(omdbDetail?.Awards ?: "")
+                add(seasonNumber.toString())
+                add(episodes?.size.toString())
+                add(airDate.getFormattedMediumDate())
+                add(omdbDetail?.Production ?: "")
+                add(omdbDetail?.Country ?: "")
+                add(omdbDetail?.Language ?: "")
+            }
         }
 
         return contentList

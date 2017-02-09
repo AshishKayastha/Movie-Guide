@@ -90,12 +90,8 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         inflater.inflate(R.menu.menu_discover, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_filter) {
-            presenter?.onFilterMenuItemClick()
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_filter -> performAction { presenter?.onFilterMenuItemClick() }
+        else -> super.onOptionsItemSelected(item)
     }
 }

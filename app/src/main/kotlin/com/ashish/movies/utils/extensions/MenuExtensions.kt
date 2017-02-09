@@ -9,7 +9,7 @@ import android.view.MenuItem
  * Created by Ashish on Feb 08.
  */
 val Menu.menus: List<MenuItem>
-    get() = (0..size() - 1).map { getItem(it) }
+    get() = (0 until size()).map { getItem(it) }
 
 fun Menu.changeMenuFont(typefaceSpan: TypefaceSpan) {
     menus.filterNotNull()

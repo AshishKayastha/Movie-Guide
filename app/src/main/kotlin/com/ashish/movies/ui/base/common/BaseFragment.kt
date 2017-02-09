@@ -36,6 +36,11 @@ abstract class BaseFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
+    inline fun performAction(action: () -> Unit): Boolean {
+        action()
+        return true
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         MoviesApp.getRefWatcher(activity).watch(this)

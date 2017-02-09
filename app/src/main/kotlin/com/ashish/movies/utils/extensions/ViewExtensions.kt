@@ -16,6 +16,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,7 +32,7 @@ import com.bumptech.glide.request.target.ImageViewTarget
 inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
 
 val ViewGroup.views: List<View>
-    get() = (0..childCount - 1).map { getChildAt(it) }
+    get() = (0 until childCount).map { getChildAt(it) }
 
 fun View.setVisibility(visible: Boolean) {
     if (visible) show() else hide()
@@ -152,7 +153,7 @@ fun View?.showKeyboard() {
 fun ViewGroup.getOverflowMenuButton(): ImageView? {
     val count = childCount
     var overflowMenu: ImageView? = null
-    for (i in 0..count - 1) {
+    for (i in 0 until count) {
         val view = getChildAt(i)
         if (view is ImageView && (view.javaClass.simpleName == "OverflowMenuButton"
                 || view is ActionMenuView.ActionMenuChildView)) {
@@ -195,4 +196,15 @@ inline fun View.startCircularRevealAnimation(cx: Int, cy: Int, startRadius: Floa
 
     show()
     animator.start()
+}
+
+inline fun <T : View> T.afterMeasured(crossinline func: T.() -> Unit) {
+    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            if (measuredWidth > 0 && measuredHeight > 0) {
+                viewTreeObserver.removeOnGlobalLayoutListener(this)
+                func()
+            }
+        }
+    })
 }

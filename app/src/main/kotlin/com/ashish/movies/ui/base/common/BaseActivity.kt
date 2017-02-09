@@ -42,12 +42,13 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finishAfterTransition()
-            return true
-        }
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> performAction { finishAfterTransition() }
+        else -> super.onOptionsItemSelected(item)
+    }
 
-        return super.onOptionsItemSelected(item)
+    inline fun performAction(action: () -> Unit): Boolean {
+        action()
+        return true
     }
 }

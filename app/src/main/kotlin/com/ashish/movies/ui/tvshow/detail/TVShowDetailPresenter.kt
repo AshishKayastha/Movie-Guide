@@ -33,19 +33,21 @@ class TVShowDetailPresenter @Inject constructor(private val tvShowInteractor: TV
         val contentList = ArrayList<String>()
         fullDetailContent.detailContent?.apply {
             val omdbDetail = fullDetailContent.omdbDetail
-            contentList.add(overview ?: "")
-            contentList.add(genres.convertListToCommaSeparatedText { it.name.toString() })
-            contentList.add(omdbDetail?.Rated ?: "")
-            contentList.add(status ?: "")
-            contentList.add(omdbDetail?.Awards ?: "")
-            contentList.add(omdbDetail?.Production ?: "")
-            contentList.add(omdbDetail?.Country ?: "")
-            contentList.add(omdbDetail?.Language ?: "")
-            contentList.add(firstAirDate.getFormattedMediumDate())
-            contentList.add(lastAirDate.getFormattedMediumDate())
-            contentList.add(numberOfSeasons.toString())
-            contentList.add(numberOfEpisodes.toString())
-            contentList.add(networks.convertListToCommaSeparatedText { it.name.toString() })
+            contentList.apply {
+                add(overview ?: "")
+                add(genres.convertListToCommaSeparatedText { it.name.toString() })
+                add(omdbDetail?.Rated ?: "")
+                add(status ?: "")
+                add(omdbDetail?.Awards ?: "")
+                add(omdbDetail?.Production ?: "")
+                add(omdbDetail?.Country ?: "")
+                add(omdbDetail?.Language ?: "")
+                add(firstAirDate.getFormattedMediumDate())
+                add(lastAirDate.getFormattedMediumDate())
+                add(numberOfSeasons.toString())
+                add(numberOfEpisodes.toString())
+                add(networks.convertListToCommaSeparatedText { it.name.toString() })
+            }
         }
 
         return contentList

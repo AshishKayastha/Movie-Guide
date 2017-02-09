@@ -22,12 +22,14 @@ class PersonDetailPresenter @Inject constructor(private val peopleInteractor: Pe
     override fun getContentList(fullDetailContent: FullDetailContent<PersonDetail>): List<String> {
         val contentList = ArrayList<String>()
         fullDetailContent.detailContent?.apply {
-            contentList.add(biography ?: "")
-            contentList.add(birthday.getFormattedMediumDate())
-            contentList.add(placeOfBirth ?: "")
-            contentList.add(deathday.getFormattedMediumDate())
-            contentList.add(fullDetailContent.omdbDetail?.Awards ?: "")
-            contentList.add(alsoKnownAs.convertListToCommaSeparatedText { it })
+            contentList.apply {
+                add(biography ?: "")
+                add(birthday.getFormattedMediumDate())
+                add(placeOfBirth ?: "")
+                add(deathday.getFormattedMediumDate())
+                add(fullDetailContent.omdbDetail?.Awards ?: "")
+                add(alsoKnownAs.convertListToCommaSeparatedText { it })
+            }
         }
 
         return contentList

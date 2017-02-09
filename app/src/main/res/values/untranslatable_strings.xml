@@ -4,4 +4,11 @@
 
     <string name="font_montserrat_regular" translatable="false">Montserrat-Regular</string>
     <string name="font_montserrat_medium" translatable="false">Montserrat-Medium</string>
+
+    <!-- Transition Names -->
+    <string name="transition_tv_poster">tv_poster_image</string>
+    <string name="transition_movie_poster">movie_poster_image</string>
+    <string name="transition_person_profile">person_profile_image</string>
+    <string name="transition_season_poster">season_poster_image</string>
+    <string name="transition_episode_image">episode_still_image</string>
 </resources>

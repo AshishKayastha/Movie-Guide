@@ -90,10 +90,11 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
     override fun getLayoutId() = R.layout.activity_main
 
     private fun initDrawerHeader() {
-        val headerView = navigationView.getHeaderView(0)
-        nameText = headerView.find<FontTextView>(R.id.name_text)
-        userImage = headerView.find<CircleImageView>(R.id.user_image)
-        userNameText = headerView.find<FontTextView>(R.id.user_name_text)
+        navigationView.getHeaderView(0).apply {
+            nameText = find<FontTextView>(R.id.name_text)
+            userImage = find<CircleImageView>(R.id.user_image)
+            userNameText = find<FontTextView>(R.id.user_name_text)
+        }
 
         showUserProfile()
         userImage?.setOnClickListener {
@@ -150,7 +151,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
 
     private fun changeTabFont() {
         val vg = tabLayout.getChildAt(0) as ViewGroup
-        (0..vg.childCount - 1)
+        (0 until vg.childCount)
                 .map { vg.getChildAt(it) as ViewGroup }
                 .forEach { it.changeViewGroupTextFont() }
     }
@@ -215,17 +216,13 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            drawerLayout.openDrawer(START)
-            return true
-        } else if (item.itemId == R.id.action_search) {
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> performAction { drawerLayout.openDrawer(START) }
+        R.id.action_search -> performAction {
             startActivity(Intent(this, MultiSearchActivity::class.java))
             overridePendingTransition(0, 0)
-            return true
         }
-
-        return super.onOptionsItemSelected(item)
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {

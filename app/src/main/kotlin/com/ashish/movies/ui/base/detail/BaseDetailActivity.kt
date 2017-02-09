@@ -421,24 +421,20 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_imdb -> {
-                if (imdbId.isNotNullOrEmpty()) {
-                    openUrl(IMDB_BASE_URL + imdbId)
-                }
-                return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_imdb -> performAction {
+            if (imdbId.isNotNullOrEmpty()) {
+                openUrl(IMDB_BASE_URL + imdbId)
             }
-
-            R.id.action_rotten_tomatoes -> {
-                if (rottenTomatoesUrl.isNotNullOrEmpty()) {
-                    openUrl(rottenTomatoesUrl!!)
-                }
-                return true
-            }
-
-            else -> return super.onOptionsItemSelected(item)
         }
+
+        R.id.action_rotten_tomatoes -> performAction {
+            if (rottenTomatoesUrl.isNotNullOrEmpty()) {
+                openUrl(rottenTomatoesUrl!!)
+            }
+        }
+
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun finishAfterTransition() {

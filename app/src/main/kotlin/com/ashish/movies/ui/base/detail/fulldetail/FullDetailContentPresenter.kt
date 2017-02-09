@@ -1,7 +1,6 @@
 package com.ashish.movies.ui.base.detail.fulldetail
 
 import com.ashish.movies.R
-import com.ashish.movies.data.models.Favorite
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
@@ -87,6 +86,6 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>> : Bas
     }
 
     fun markAsFavorite(mediaId: Long?, mediaType: String) {
-        val favorite = Favorite(true, mediaId, mediaType)
+//        val favorite = Favorite(true, mediaId, mediaType)
     }
 }

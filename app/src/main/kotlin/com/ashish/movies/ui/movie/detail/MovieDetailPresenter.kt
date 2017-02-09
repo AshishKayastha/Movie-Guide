@@ -34,19 +34,21 @@ class MovieDetailPresenter @Inject constructor(private val movieInteractor: Movi
         val contentList = ArrayList<String>()
         fullDetailContent.detailContent?.apply {
             val omdbDetail = fullDetailContent.omdbDetail
-            contentList.add(overview ?: "")
-            contentList.add(tagline ?: "")
-            contentList.add(genres.convertListToCommaSeparatedText { it.name.toString() })
-            contentList.add(omdbDetail?.Rated ?: "")
-            contentList.add(status ?: "")
-            contentList.add(omdbDetail?.Awards ?: "")
-            contentList.add(omdbDetail?.Production ?: "")
-            contentList.add(omdbDetail?.Country ?: "")
-            contentList.add(omdbDetail?.Language ?: "")
-            contentList.add(releaseDate.getFormattedMediumDate())
-            contentList.add(runtime.getFormattedRuntime())
-            contentList.add(budget.getFormattedNumber())
-            contentList.add(revenue.getFormattedNumber())
+            contentList.apply {
+                add(overview ?: "")
+                add(tagline ?: "")
+                add(genres.convertListToCommaSeparatedText { it.name.toString() })
+                add(omdbDetail?.Rated ?: "")
+                add(status ?: "")
+                add(omdbDetail?.Awards ?: "")
+                add(omdbDetail?.Production ?: "")
+                add(omdbDetail?.Country ?: "")
+                add(omdbDetail?.Language ?: "")
+                add(releaseDate.getFormattedMediumDate())
+                add(runtime.getFormattedRuntime())
+                add(budget.getFormattedNumber())
+                add(revenue.getFormattedNumber())
+            }
         }
 
         return contentList
