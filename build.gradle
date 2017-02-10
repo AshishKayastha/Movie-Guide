@@ -1,29 +1,15 @@
+apply from: 'dependencies.gradle'
+
 buildscript {
-    ext {
-        daggerVersion = '2.9'
-        kotlinVersion = '1.0.6'
-        storioVersion = '1.12.2'
-        icepickVersion = '3.2.0'
-        leakCanaryVersion = '1.5'
-        retrofitVersion = '2.1.0'
-        supportLibVersion = '25.1.1'
-        paperParcelVersion = '2.0.0-beta2'
-    }
+    apply from: 'dependencies.gradle'
 
     repositories {
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0-beta3'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    }
-}
-
-allprojects {
-    repositories {
-        jcenter()
+        def classpathDeps = classpathDependencies.values()
+        classpathDeps.each { classpath it }
     }
 }
 

@@ -1,0 +1,97 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+rootProject.project("app") {
+    repositories {
+        maven { url "https://clojars.org/repo/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+}
+
+ext {
+    androidMinSdkVersion = 21
+    androidTargetSdkVersion = 25
+    androidCompileSdkVersion = 25
+    androidBuildToolsVersion = "25.0.2"
+
+    // App
+    appVersionCode = 100
+    appVersionName = "1.0.0"
+    appId = "com.ashish.movies"
+
+    androidPluginVersion = '2.3.0-beta3'
+    dexCountPluginVersion = '0.6.2'
+
+    daggerVersion = '2.9'
+    timberVersion = '4.5.1'
+    storioVersion = '1.12.2'
+    icepickVersion = '3.2.0'
+    leakCanaryVersion = '1.5'
+    supportLibVersion = '25.1.1'
+    glideVersion = '3.8.0-SNAPSHOT'
+    paperParcelVersion = '2.0.0-beta2'
+
+    kotlinVersion = '1.0.6'
+    kotterknifeVersion = '0.1.0-SNAPSHOT'
+
+    rxJava2Version = '2.0.5'
+    rxAndroid2Version = '2.0.1'
+    rxJava2InteropVersion = '0.9.0'
+
+    okhttpVersion = '3.6.0'
+    retrofitVersion = '2.1.0'
+    retrofitRxJava2AdapterVersion = '1.0.0'
+
+    classpathDependencies = [
+            androidPlugin : "com.android.tools.build:gradle:$androidPluginVersion",
+            kotlinPlugin  : "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion",
+            dexcountPlugin: "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$dexCountPluginVersion"
+    ]
+
+    compileDependencies = [
+            supportDesign          : "com.android.support:design:$supportLibVersion",
+            supportPalette         : "com.android.support:palette-v7:$supportLibVersion",
+            supportCardView        : "com.android.support:cardview-v7:$supportLibVersion",
+            supportCustomTabs      : "com.android.support:customtabs:$supportLibVersion",
+
+            icePick                : "frankiesardo:icepick:${icepickVersion}",
+            dagger                 : "com.google.dagger:dagger:${daggerVersion}",
+            timber                 : "com.jakewharton.timber:timber:$timberVersion",
+            glide                  : "com.github.bumptech.glide:glide:$glideVersion",
+            paperParcel            : "nz.bradcampbell:paperparcel:$paperParcelVersion",
+
+            kotlin                 : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            kotterknife            : "com.jakewharton:kotterknife:$kotterknifeVersion",
+
+            retrofit               : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitMoshiConverter : "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
+            retrofitRxJava2Adapter : "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofitRxJava2AdapterVersion",
+
+            okhttp                 : "com.squareup.okhttp3:logging-interceptor:$okhttpVersion",
+
+            rxJava2                : "io.reactivex.rxjava2:rxjava:$rxJava2Version",
+            rxAndroid2             : "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
+            rxJava2Interop         : "com.github.akarnokd:rxjava2-interop:$rxJava2InteropVersion",
+
+            storIOSQLite           : "com.pushtorefresh.storio:sqlite:$storioVersion",
+            storIOSQLiteAnnotations: "com.pushtorefresh.storio:sqlite-annotations:$storioVersion"
+    ]
+
+    kaptDependencies = [
+            daggerCompiler                 : "com.google.dagger:dagger-compiler:$daggerVersion",
+            icePickProcessor               : "frankiesardo:icepick-processor:${icepickVersion}",
+            paperParcelCompiler            : "nz.bradcampbell:paperparcel-compiler:$paperParcelVersion",
+            storIOSQLiteAnnotationProcessor: "com.pushtorefresh.storio:sqlite-annotations-processor:$storioVersion"
+    ]
+
+    debugCompileDependencies = [
+            leakCanary: "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+    ]
+
+    releaseCompileDependencies = [
+            leakCanary: "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
+    ]
+}
