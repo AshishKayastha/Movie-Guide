@@ -22,7 +22,12 @@ import com.ashish.movies.ui.widget.ItemOffsetDecoration
 import com.ashish.movies.utils.Constants.DATE_PICKER_FORMAT
 import com.ashish.movies.utils.Constants.SORT_BY_MOVIE
 import com.ashish.movies.utils.Constants.SORT_BY_TV_SHOW
-import com.ashish.movies.utils.extensions.*
+import com.ashish.movies.utils.extensions.convertToDate
+import com.ashish.movies.utils.extensions.dpToPx
+import com.ashish.movies.utils.extensions.getFormattedDate
+import com.ashish.movies.utils.extensions.hide
+import com.ashish.movies.utils.extensions.isValidDate
+import com.ashish.movies.utils.extensions.showToast
 import icepick.Icepick
 import icepick.State
 import java.util.*
@@ -73,12 +78,12 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (targetFragment is BaseDiscoverFragment<*, *>) {
-            (targetFragment as BaseDiscoverFragment<*, *>).discoverComponent.createFilterComponent().inject(this)
+            (targetFragment as BaseDiscoverFragment<*, *>).discoverComponent.filterComponent().inject(this)
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.bottom_sheet_filter, container, false)
+        return inflater.inflate(R.layout.fragment_bottom_sheet_filter, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

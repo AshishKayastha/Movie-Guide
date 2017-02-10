@@ -14,7 +14,7 @@ class DiscoverTVShowFragment : BaseDiscoverFragment<TVShow, DiscoverTVShowPresen
     }
 
     override fun injectDependencies(uiComponent: UiComponent) {
-        discoverComponent = uiComponent.createDiscoverComponent()
+        discoverComponent = uiComponent.discoverComponent()
         discoverComponent.inject(this)
     }
 

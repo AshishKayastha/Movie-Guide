@@ -17,5 +17,5 @@ interface DiscoverComponent {
 
     fun inject(discoverTVShowFragment: DiscoverTVShowFragment)
 
-    fun createFilterComponent(): FilterComponent
+    fun filterComponent(): FilterComponent
 }

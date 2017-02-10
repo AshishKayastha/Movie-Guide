@@ -14,7 +14,7 @@ class DiscoverMovieFragment : BaseDiscoverFragment<Movie, DiscoverMoviePresenter
     }
 
     override fun injectDependencies(uiComponent: UiComponent) {
-        discoverComponent = uiComponent.createDiscoverComponent()
+        discoverComponent = uiComponent.discoverComponent()
         discoverComponent.inject(this)
     }
 

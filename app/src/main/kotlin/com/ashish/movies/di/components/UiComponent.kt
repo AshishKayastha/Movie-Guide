@@ -43,5 +43,5 @@ interface UiComponent {
 
     fun inject(personDetailActivity: PersonDetailActivity)
 
-    fun createDiscoverComponent(): DiscoverComponent
+    fun discoverComponent(): DiscoverComponent
 }
