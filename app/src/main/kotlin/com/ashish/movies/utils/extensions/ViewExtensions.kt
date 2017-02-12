@@ -15,7 +15,6 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
@@ -177,15 +176,4 @@ inline fun View.startCircularRevealAnimation(cx: Int, cy: Int, startRadius: Floa
 
     show()
     animator.start()
-}
-
-inline fun <T : View> T.afterMeasured(crossinline func: T.() -> Unit) {
-    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            if (measuredWidth > 0 && measuredHeight > 0) {
-                viewTreeObserver.removeOnGlobalLayoutListener(this)
-                func()
-            }
-        }
-    })
 }
