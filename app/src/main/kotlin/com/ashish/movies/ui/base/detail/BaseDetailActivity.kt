@@ -61,7 +61,6 @@ import com.ashish.movies.utils.extensions.animateTextColorChange
 import com.ashish.movies.utils.extensions.changeMenuFont
 import com.ashish.movies.utils.extensions.find
 import com.ashish.movies.utils.extensions.getColorCompat
-import com.ashish.movies.utils.extensions.getOverflowMenuButton
 import com.ashish.movies.utils.extensions.getPosterImagePair
 import com.ashish.movies.utils.extensions.getSwatchWithMostPixels
 import com.ashish.movies.utils.extensions.hide
@@ -71,6 +70,7 @@ import com.ashish.movies.utils.extensions.loadPaletteBitmap
 import com.ashish.movies.utils.extensions.openUrl
 import com.ashish.movies.utils.extensions.scrimify
 import com.ashish.movies.utils.extensions.setLightStatusBar
+import com.ashish.movies.utils.extensions.setOverflowMenuColor
 import com.ashish.movies.utils.extensions.setPaletteColor
 import com.ashish.movies.utils.extensions.setTransitionName
 import com.ashish.movies.utils.extensions.setVisibility
@@ -232,8 +232,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
                 backButton?.setColorFilter(primaryBlack)
 
                 menu?.tint(primaryBlack)
+                setOverflowMenuColor(primaryBlack)
                 collapsingToolbar.setCollapsedTitleTextColor(primaryBlack)
-                toolbar?.getOverflowMenuButton()?.setColorFilter(primaryBlack)
             }
 
             statusBarColor = window.statusBarColor

@@ -21,6 +21,10 @@ object MoviesTable : DatabaseTable {
     const val COL_RELEASE_DATE = "release_date"
     const val COL_VOTE_AVERAGE = "vote_average"
     const val COL_BACKDROP_PATH = "backdrop_path"
+    const val COL_IS_NOW_PLAYING = "is_now_playing"
+    const val COL_IS_POPULAR = "is_popular"
+    const val COL_IS_TOP_RATED = "is_top_rated"
+    const val COL_IS_UPCOMING = "is_upcoming"
 
     override val CREATE_TABLE = "CREATE TABLE $TABLE_NAME(" +
             "$COL_ID INTEGER NOT NULL PRIMARY KEY, " +
@@ -36,5 +40,9 @@ object MoviesTable : DatabaseTable {
             "$COL_VOTE_COUNT INTEGER, " +
             "$COL_VOTE_AVERAGE INTEGER, " +
             "$COL_POSTER_PATH TEXT, " +
-            "$COL_BACKDROP_PATH TEXT);"
+            "$COL_BACKDROP_PATH TEXT, " +
+            "$COL_IS_NOW_PLAYING INTEGER, " +
+            "$COL_IS_POPULAR INTEGER, " +
+            "$COL_IS_TOP_RATED INTEGER, " +
+            "$COL_IS_UPCOMING INTEGER);"
 }

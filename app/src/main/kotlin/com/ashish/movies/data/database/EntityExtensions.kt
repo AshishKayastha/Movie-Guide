@@ -1,9 +1,26 @@
 package com.ashish.movies.data.database
 
-import com.ashish.movies.data.database.entities.*
+import com.ashish.movies.data.database.entities.CreditEntity
+import com.ashish.movies.data.database.entities.GenreEntity
+import com.ashish.movies.data.database.entities.ImageEntity
+import com.ashish.movies.data.database.entities.MovieDetailEntity
+import com.ashish.movies.data.database.entities.MovieEntity
+import com.ashish.movies.data.database.entities.OMDbEntity
+import com.ashish.movies.data.database.entities.SimilarMovieEntity
+import com.ashish.movies.data.database.entities.VideoEntity
 import com.ashish.movies.data.database.tables.CreditsTable
 import com.ashish.movies.data.database.tables.OMDbTable
-import com.ashish.movies.data.models.*
+import com.ashish.movies.data.models.Credit
+import com.ashish.movies.data.models.CreditResults
+import com.ashish.movies.data.models.FullDetailContent
+import com.ashish.movies.data.models.Genre
+import com.ashish.movies.data.models.ImageItem
+import com.ashish.movies.data.models.Images
+import com.ashish.movies.data.models.Movie
+import com.ashish.movies.data.models.MovieDetail
+import com.ashish.movies.data.models.OMDbDetail
+import com.ashish.movies.data.models.VideoItem
+import com.ashish.movies.data.models.Videos
 import com.pushtorefresh.storio.sqlite.StorIOSQLite
 import com.pushtorefresh.storio.sqlite.queries.Query
 import java.util.*
@@ -11,7 +28,8 @@ import java.util.*
 /**
  * Created by Ashish on Feb 06.
  */
-fun Movie.toEntity() = MovieEntity(id!!, title, overview, voteCount, posterPath, releaseDate, voteAverage, backdropPath)
+fun Movie.toEntity(movieType: String) = MovieEntity(id!!, title, overview, voteCount, posterPath, releaseDate,
+        voteAverage, backdropPath, movieType = movieType)
 
 fun MovieDetail.toEntity() = MovieEntity(id!!, title, overview, voteCount, posterPath, releaseDate, voteAverage,
         backdropPath, runtime, budget, revenue, status, tagline, imdbId)

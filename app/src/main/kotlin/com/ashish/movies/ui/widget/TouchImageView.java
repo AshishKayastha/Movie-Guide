@@ -467,10 +467,7 @@ public class TouchImageView extends AppCompatImageView {
             // These values should never be 0 or we will set viewWidth and viewHeight
             // to NaN in translateMatrixAfterRotate. To avoid this, call savePreviousImageValues
             // to set them equal to the current values.
-            //
-//        	if (prevMatchViewWidth == 0 || prevMatchViewHeight == 0) {
             savePreviousImageValues();
-//        	}
 
             prevMatrix.getValues(m);
 
@@ -643,7 +640,9 @@ public class TouchImageView extends AppCompatImageView {
         return new PointF(finalX, finalY);
     }
 
-    private enum State {NONE, DRAG, ZOOM, FLING, ANIMATE_ZOOM}
+    private enum State {
+        NONE, DRAG, ZOOM, FLING, ANIMATE_ZOOM
+    }
 
     interface OnTouchImageViewListener {
         void onMove();

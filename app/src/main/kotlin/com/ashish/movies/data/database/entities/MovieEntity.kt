@@ -17,5 +17,6 @@ data class MovieEntity(
         val revenue: Int? = null,
         val status: String? = null,
         val tagline: String? = null,
-        val imdbId: String? = null
+        val imdbId: String? = null,
+        val movieType: String? = null
 )

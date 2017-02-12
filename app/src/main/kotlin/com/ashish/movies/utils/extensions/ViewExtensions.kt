@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar
 import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
-import android.support.v7.widget.ActionMenuView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -148,24 +147,6 @@ fun View?.showKeyboard() {
     if (!imm.isActive(this)) {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
-}
-
-fun ViewGroup.getOverflowMenuButton(): ImageView? {
-    val count = childCount
-    var overflowMenu: ImageView? = null
-    for (i in 0 until count) {
-        val view = getChildAt(i)
-        if (view is ImageView && (view.javaClass.simpleName == "OverflowMenuButton"
-                || view is ActionMenuView.ActionMenuChildView)) {
-            overflowMenu = view
-        } else if (view is ViewGroup) {
-            overflowMenu = view.getOverflowMenuButton()
-        }
-
-        if (overflowMenu != null) break
-    }
-
-    return overflowMenu
 }
 
 fun ImageView.loadImageUrl(imageUrl: String?, placeHolder: Int = R.drawable.ic_person_white_80dp) {

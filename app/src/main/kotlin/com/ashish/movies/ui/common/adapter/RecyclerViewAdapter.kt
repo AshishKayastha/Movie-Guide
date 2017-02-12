@@ -6,43 +6,26 @@ import android.view.ViewGroup
 import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.LOADING_VIEW
-import com.ashish.movies.ui.movie.list.MovieDelegateAdapter
-import com.ashish.movies.ui.multisearch.MultiSearchDelegateAdapter
-import com.ashish.movies.ui.people.list.PeopleDelegateAdapter
-import com.ashish.movies.ui.tvshow.detail.SeasonDelegateAdapter
-import com.ashish.movies.ui.tvshow.list.TVShowDelegateAdapter
-import com.ashish.movies.ui.tvshow.season.EpisodeDelegateAdapter
 import com.bumptech.glide.Glide
 import java.util.*
 
 /**
  * Created by Ashish on Dec 30.
  */
-class RecyclerViewAdapter<in I : ViewType>(layoutId: Int, private val adapterType: Int,
-                                           onItemClickListener: OnItemClickListener?)
+class RecyclerViewAdapter<in I : ViewType>(layoutId: Int, adapterType: Int, onItemClickListener: OnItemClickListener?)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
 
     private val loadingItem = object : ViewType {
         override fun getViewType() = LOADING_VIEW
     }
 
-    private val DELEGATE_ADAPTERS = arrayOf(
-            MovieDelegateAdapter(layoutId, onItemClickListener),
-            TVShowDelegateAdapter(layoutId, onItemClickListener),
-            PeopleDelegateAdapter(layoutId, onItemClickListener),
-            CreditDelegateAdapter(layoutId, onItemClickListener),
-            SeasonDelegateAdapter(layoutId, onItemClickListener),
-            EpisodeDelegateAdapter(layoutId, onItemClickListener),
-            MultiSearchDelegateAdapter(layoutId, onItemClickListener)
-    )
-
     private var itemList: ArrayList<ViewType> = ArrayList()
-
     private var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()
+    private val contentAdapter = AdapterFactory.getAdapter(layoutId, adapterType, onItemClickListener)
 
     init {
         delegateAdapters.put(LOADING_VIEW, LoadingDelegateAdapter())
-        delegateAdapters.put(CONTENT_VIEW, DELEGATE_ADAPTERS[adapterType] as ViewTypeDelegateAdapter)
+        delegateAdapters.put(CONTENT_VIEW, contentAdapter)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -101,7 +84,5 @@ class RecyclerViewAdapter<in I : ViewType>(layoutId: Int, private val adapterTyp
         }
     }
 
-    override fun removeListener() {
-        (DELEGATE_ADAPTERS[adapterType] as RemoveListener).removeListener()
-    }
+    override fun removeListener() = (contentAdapter as RemoveListener).removeListener()
 }

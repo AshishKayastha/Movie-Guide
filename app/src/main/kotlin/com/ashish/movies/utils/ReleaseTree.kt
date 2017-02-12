@@ -9,6 +9,19 @@ import timber.log.Timber
  */
 class ReleaseTree : Timber.Tree() {
 
+    companion object {
+
+        private const val MAX_LOG_LENGTH = 4000
+
+        private fun logMessage(priority: Int, tag: String, message: String) {
+            if (priority == Log.ASSERT) {
+                Log.wtf(tag, message)
+            } else {
+                Log.println(priority, tag, message)
+            }
+        }
+    }
+
     override fun isLoggable(tag: String?, priority: Int): Boolean {
         return !(priority == Log.VERBOSE || priority == Log.DEBUG || priority == Log.INFO)
     }
@@ -37,19 +50,6 @@ class ReleaseTree : Timber.Tree() {
             } while (i < newLine)
 
             i++
-        }
-    }
-
-    companion object {
-
-        private const val MAX_LOG_LENGTH = 4000
-
-        private fun logMessage(priority: Int, tag: String, message: String) {
-            if (priority == Log.ASSERT) {
-                Log.wtf(tag, message)
-            } else {
-                Log.println(priority, tag, message)
-            }
         }
     }
 }
