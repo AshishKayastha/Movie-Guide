@@ -31,14 +31,6 @@ import icepick.State
  */
 class ImageViewerFragment : BaseFragment() {
 
-    @JvmField @State var position: Int = 0
-    @JvmField @State var imageUrl: String? = null
-
-    private val imageView: TouchImageView by bindView(R.id.image_view)
-
-    private var fullBitmap: BitmapRequestBuilder<String, Bitmap>? = null
-    private var thumbBitmap: BitmapRequestBuilder<String, Bitmap>? = null
-
     companion object {
         private const val ARG_POSITION = "position"
         private const val ARG_IMAGE_URL = "image_url"
@@ -52,6 +44,14 @@ class ImageViewerFragment : BaseFragment() {
             return fragment
         }
     }
+
+    @JvmField @State var position: Int = 0
+    @JvmField @State var imageUrl: String? = null
+
+    private val imageView: TouchImageView by bindView(R.id.image_view)
+
+    private var fullBitmap: BitmapRequestBuilder<String, Bitmap>? = null
+    private var thumbBitmap: BitmapRequestBuilder<String, Bitmap>? = null
 
     override fun getLayoutId() = R.layout.fragment_image_viewer
 

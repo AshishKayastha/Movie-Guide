@@ -11,33 +11,39 @@ class DepthPageTransformer : PageTransformer {
     }
 
     private fun onPreTransform(page: View, position: Float) {
-        page.rotationX = 0f
-        page.rotationY = 0f
-        page.rotation = 0f
-        page.scaleX = 1f
-        page.scaleY = 1f
-        page.pivotX = 0f
-        page.pivotY = 0f
+        page.apply {
+            rotationX = 0f
+            rotationY = 0f
+            rotation = 0f
+            scaleX = 1f
+            scaleY = 1f
+            pivotX = 0f
+            pivotY = 0f
 
-        page.translationX = 0f
-        page.translationY = 0f
+            translationX = 0f
+            translationY = 0f
 
-        page.alpha = if (position <= -1f || position >= 1f) 0f else 1f
-        page.isEnabled = false
+            alpha = if (position <= -1f || position >= 1f) 0f else 1f
+            isEnabled = false
+        }
     }
 
     private fun onTransform(view: View, position: Float) {
         if (position <= 0f) {
-            view.translationX = 0f
-            view.scaleX = 1f
-            view.scaleY = 1f
+            view.apply {
+                translationX = 0f
+                scaleX = 1f
+                scaleY = 1f
+            }
         } else if (position <= 1f) {
             val scaleFactor = 0.75f + (1 - 0.75f) * (1 - Math.abs(position))
-            view.alpha = 1 - position
-            view.pivotY = 0.5f * view.height
-            view.translationX = view.width * -position
-            view.scaleX = scaleFactor
-            view.scaleY = scaleFactor
+            view.apply {
+                alpha = 1 - position
+                pivotY = 0.5f * view.height
+                translationX = view.width * -position
+                scaleX = scaleFactor
+                scaleY = scaleFactor
+            }
         }
     }
 }

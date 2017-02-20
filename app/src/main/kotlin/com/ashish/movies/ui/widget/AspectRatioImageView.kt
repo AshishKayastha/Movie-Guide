@@ -15,7 +15,7 @@ class AspectRatioImageView @JvmOverloads constructor(context: Context, attrs: At
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AspectRatioImageView)
-        this.heightRatio = typedArray.getFloat(R.styleable.AspectRatioImageView_heightRatio, 1.0f)
+        heightRatio = typedArray.getFloat(R.styleable.AspectRatioImageView_heightRatio, 1.0f)
         typedArray.recycle()
     }
 

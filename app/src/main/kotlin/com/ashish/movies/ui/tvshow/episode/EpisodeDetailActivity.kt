@@ -19,9 +19,6 @@ import icepick.State
  */
 class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, FullDetailContentView<EpisodeDetail>, EpisodeDetailPresenter>() {
 
-    @JvmField @State var tvShowId: Long? = null
-    @JvmField @State var episode: Episode? = null
-
     companion object {
         private const val EXTRA_EPISODE = "episode"
         private const val EXTRA_TV_SHOW_ID = "tv_show_id"
@@ -32,6 +29,9 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, FullDetai
                     .putExtra(EXTRA_EPISODE, episode)
         }
     }
+
+    @JvmField @State var tvShowId: Long? = null
+    @JvmField @State var episode: Episode? = null
 
     override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
 

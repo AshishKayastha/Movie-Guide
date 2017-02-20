@@ -22,6 +22,7 @@ class TabPagerAdapter constructor(private val contentType: Int, fragmentManager:
     }
 
     override fun getItem(position: Int) = when (contentType) {
+        CONTENT_TYPE_MOVIE -> MovieFragment.newInstance(position)
         CONTENT_TYPE_TV_SHOW -> TVShowFragment.newInstance(position)
         CONTENT_TYPE_PEOPLE -> PeopleFragment.newInstance()
         CONTENT_TYPE_DISCOVER -> {
@@ -31,7 +32,7 @@ class TabPagerAdapter constructor(private val contentType: Int, fragmentManager:
                 DiscoverTVShowFragment.newInstance()
             }
         }
-        else -> MovieFragment.newInstance(position)
+        else -> throw IllegalArgumentException("Invalid content type: $contentType")
     }
 
     override fun getCount() = tabTitles.size

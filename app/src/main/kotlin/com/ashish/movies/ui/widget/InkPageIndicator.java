@@ -76,17 +76,17 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
     float controlY2;
 
     // configurable attributes
-    private int dotDiameter;
     private int gap;
+    private int dotDiameter;
     private long animDuration;
 
     // derived from attributes
-    private float dotRadius;
-    private float halfDotRadius;
-    private long animHalfDuration;
     private float dotTopY;
+    private float dotRadius;
     private float dotCenterY;
     private float dotBottomY;
+    private float halfDotRadius;
+    private long animHalfDuration;
 
     private ViewPager viewPager;
 
@@ -94,15 +94,18 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
     private int pageCount;
     private int currentPage;
     private int previousPage;
+
     private float selectedDotX;
-    private boolean selectedDotInPosition;
-    private float[] dotCenterX;
-    private float[] joiningFractions;
     private float retreatingJoinX1;
     private float retreatingJoinX2;
+
+    private float[] dotCenterX;
+    private float[] joiningFractions;
     private float[] dotRevealFractions;
-    private boolean isAttachedToWindow;
+
     private boolean pageChanging;
+    private boolean isAttachedToWindow;
+    private boolean selectedDotInPosition;
 
     private AnimatorSet joiningAnimationSet;
     private PendingRetreatAnimator retreatAnimation;
@@ -229,11 +232,7 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
     }
 
     private void setCurrentPageImmediate() {
-        if (viewPager != null) {
-            currentPage = viewPager.getCurrentItem();
-        } else {
-            currentPage = 0;
-        }
+        currentPage = viewPager != null ? viewPager.getCurrentItem() : 0;
         if (dotCenterX != null) {
             selectedDotX = dotCenterX[currentPage];
         }
@@ -252,7 +251,6 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
     @Override
     @SuppressLint("SwitchIntDef")
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
         int desiredHeight = getDesiredHeight();
         int height;
         switch (MeasureSpec.getMode(heightMeasureSpec)) {
@@ -497,7 +495,6 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
         // case #5 is handled by #getRetreatingJoinPath()
         // this is done separately so that we can have a single retreating path spanning
         // multiple dots and therefore animate it's movement smoothly
-
         if (dotRevealFraction > MINIMAL_REVEAL) {
 
             // case #6 – previously hidden dot revealing
@@ -520,7 +517,9 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
     }
 
     private void setSelectedPage(int now) {
-        if (now == currentPage) return;
+        if (now == currentPage) {
+            return;
+        }
 
         pageChanging = true;
         previousPage = currentPage;
@@ -555,8 +554,7 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
 
         // also set up a pending retreat anim – this starts when the move is 75% complete
         retreatAnimation = new PendingRetreatAnimator(was, now, steps,
-                now > was ?
-                        new RightwardStartPredicate(moveTo - ((moveTo - selectedDotX) * 0.25f)) :
+                now > was ? new RightwardStartPredicate(moveTo - ((moveTo - selectedDotX) * 0.25f)) :
                         new LeftwardStartPredicate(moveTo + ((selectedDotX - moveTo) * 0.25f)));
         retreatAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -565,15 +563,16 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
                 pageChanging = false;
             }
         });
+
         moveSelected.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                // todo avoid autoboxing
                 selectedDotX = (Float) valueAnimator.getAnimatedValue();
                 retreatAnimation.startIfNecessary(selectedDotX);
                 postInvalidateOnAnimation();
             }
         });
+
         moveSelected.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -589,6 +588,7 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
                 selectedDotInPosition = true;
             }
         });
+
         // slightly delay the start to give the joins a chance to run
         // unless dot isn't in position yet – then don't delay!
         moveSelected.setStartDelay(selectedDotInPosition ? animDuration / 4L : 0L);
@@ -679,10 +679,10 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
                             new RightwardStartPredicate(dotCenterX[was + i]));
                     dotsToHide[i] = was + i;
                 }
+
                 addUpdateListener(new AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        // todo avoid autoboxing
                         retreatingJoinX1 = (Float) valueAnimator.getAnimatedValue();
                         postInvalidateOnAnimation();
                         // start any reveal animations if we've passed them

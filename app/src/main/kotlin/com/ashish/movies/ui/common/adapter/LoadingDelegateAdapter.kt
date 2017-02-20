@@ -21,6 +21,6 @@ class LoadingDelegateAdapter : ViewTypeDelegateAdapter {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {}
 
-    class LoadingViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+    inner class LoadingViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             parent.inflate(R.layout.list_item_loading_footer))
 }

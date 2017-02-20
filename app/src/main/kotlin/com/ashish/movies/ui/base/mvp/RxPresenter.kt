@@ -5,7 +5,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 /**
- * Created by Ashish on Dec 28.
+ * This is a base presenter class which handles attaching/detaching presenter from view and
+ * will also clear any network request when the presenter is completely destroyed.
  */
 abstract class RxPresenter<V : MvpView> {
 

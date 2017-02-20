@@ -1,12 +1,12 @@
 package com.ashish.movies.ui.base.recyclerview
 
-import com.ashish.movies.ui.base.mvp.LceView
+import com.ashish.movies.ui.base.mvp.ProgressView
 import com.ashish.movies.ui.common.adapter.ViewType
 
 /**
  * Created by Ashish on Dec 30.
  */
-interface BaseRecyclerViewMvpView<in I : ViewType> : LceView {
+interface BaseRecyclerViewMvpView<in I : ViewType> : ProgressView {
 
     fun setCurrentPage(currentPage: Int)
 

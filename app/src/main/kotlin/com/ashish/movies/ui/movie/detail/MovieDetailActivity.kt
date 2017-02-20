@@ -27,12 +27,6 @@ import icepick.State
 class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailView, MovieDetailPresenter>(),
         MovieDetailView {
 
-    @JvmField @State var movie: Movie? = null
-
-    private val similarMoviesViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
-
-    private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
-
     companion object {
         private const val EXTRA_MOVIE = "movie"
 
@@ -41,6 +35,12 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
                     .putExtra(EXTRA_MOVIE, movie)
         }
     }
+
+    @JvmField @State var movie: Movie? = null
+
+    private val similarMoviesViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
+
+    private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
 
     private val onSimilarMovieItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {

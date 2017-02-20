@@ -11,10 +11,6 @@ import java.util.*
 
 abstract class BaseItemAnimator : SimpleItemAnimator() {
 
-    init {
-        supportsChangeAnimations = false
-    }
-
     companion object {
 
         @JvmStatic protected val INTERPOLATOR: Interpolator = LinearInterpolator()
@@ -34,19 +30,23 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
         private val moveAnimations = ArrayList<ViewHolder>()
         private val changeAnimations = ArrayList<ViewHolder>()
 
-        private fun clear(v: View) {
-            ViewCompat.setAlpha(v, 1f)
-            ViewCompat.setScaleY(v, 1f)
-            ViewCompat.setScaleX(v, 1f)
-            ViewCompat.setTranslationY(v, 0f)
-            ViewCompat.setTranslationX(v, 0f)
-            ViewCompat.setRotation(v, 0f)
-            ViewCompat.setRotationY(v, 0f)
-            ViewCompat.setRotationX(v, 0f)
-            ViewCompat.setPivotY(v, (v.measuredHeight / 2).toFloat())
-            ViewCompat.setPivotX(v, (v.measuredWidth / 2).toFloat())
-            ViewCompat.animate(v).setInterpolator(null).startDelay = 0
+        private fun clear(view: View) {
+            ViewCompat.setAlpha(view, 1f)
+            ViewCompat.setScaleY(view, 1f)
+            ViewCompat.setScaleX(view, 1f)
+            ViewCompat.setTranslationY(view, 0f)
+            ViewCompat.setTranslationX(view, 0f)
+            ViewCompat.setRotation(view, 0f)
+            ViewCompat.setRotationY(view, 0f)
+            ViewCompat.setRotationX(view, 0f)
+            ViewCompat.setPivotY(view, (view.measuredHeight / 2).toFloat())
+            ViewCompat.setPivotX(view, (view.measuredWidth / 2).toFloat())
+            ViewCompat.animate(view).setInterpolator(null).startDelay = 0
         }
+    }
+
+    init {
+        supportsChangeAnimations = false
     }
 
     override fun runPendingAnimations() {

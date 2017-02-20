@@ -3,9 +3,9 @@ package com.ashish.movies.ui.common.adapter
 import com.ashish.movies.ui.movie.list.MovieDelegateAdapter
 import com.ashish.movies.ui.multisearch.MultiSearchDelegateAdapter
 import com.ashish.movies.ui.people.list.PeopleDelegateAdapter
-import com.ashish.movies.ui.tvshow.detail.SeasonDelegateAdapter
+import com.ashish.movies.ui.tvshow.episode.EpisodeDelegateAdapter
 import com.ashish.movies.ui.tvshow.list.TVShowDelegateAdapter
-import com.ashish.movies.ui.tvshow.season.EpisodeDelegateAdapter
+import com.ashish.movies.ui.tvshow.season.SeasonDelegateAdapter
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_CREDIT
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
@@ -28,6 +28,6 @@ object AdapterFactory {
         ADAPTER_TYPE_SEASON -> SeasonDelegateAdapter(layoutId, onItemClickListener)
         ADAPTER_TYPE_EPISODE -> EpisodeDelegateAdapter(layoutId, onItemClickListener)
         ADAPTER_TYPE_MULTI_SEARCH -> MultiSearchDelegateAdapter(layoutId, onItemClickListener)
-        else -> throw IllegalArgumentException("Invalid adapter type!")
+        else -> throw IllegalArgumentException("Invalid adapter type: $adapterType")
     }
 }

@@ -42,7 +42,7 @@ fun Int?.getFormattedRuntime(): String {
     return ""
 }
 
-inline fun <reified T> List<T>?.convertListToCommaSeparatedText(crossinline func: (T) -> String): String {
+inline fun <T> List<T>?.convertListToCommaSeparatedText(crossinline func: (T) -> String): String {
     var formattedGenre = ""
     if (this != null && isNotEmpty()) {
         formattedGenre = joinToString { func(it) }

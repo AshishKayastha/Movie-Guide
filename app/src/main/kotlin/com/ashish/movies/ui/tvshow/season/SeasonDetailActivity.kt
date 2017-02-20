@@ -28,6 +28,17 @@ import icepick.State
 class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetailView, SeasonDetailPresenter>(),
         SeasonDetailView {
 
+    companion object {
+        private const val EXTRA_SEASON = "season"
+        private const val EXTRA_TV_SHOW_ID = "tv_show_id"
+
+        fun createIntent(context: Context, tvShowId: Long?, season: Season?): Intent {
+            return Intent(context, SeasonDetailActivity::class.java)
+                    .putExtra(EXTRA_TV_SHOW_ID, tvShowId)
+                    .putExtra(EXTRA_SEASON, season)
+        }
+    }
+
     @JvmField @State var tvShowId: Long? = null
     @JvmField @State var season: Season? = null
 
@@ -40,17 +51,6 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
             val episode = episodesAdapter?.getItem<Episode>(position)
             val intent = EpisodeDetailActivity.createIntent(this@SeasonDetailActivity, tvShowId, episode)
             startNewActivityWithTransition(view, R.string.transition_episode_image, intent)
-        }
-    }
-
-    companion object {
-        private const val EXTRA_SEASON = "season"
-        private const val EXTRA_TV_SHOW_ID = "tv_show_id"
-
-        fun createIntent(context: Context, tvShowId: Long?, season: Season?): Intent {
-            return Intent(context, SeasonDetailActivity::class.java)
-                    .putExtra(EXTRA_TV_SHOW_ID, tvShowId)
-                    .putExtra(EXTRA_SEASON, season)
         }
     }
 

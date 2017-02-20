@@ -29,6 +29,15 @@ import icepick.State
  */
 class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<PersonDetail>, PersonDetailPresenter>() {
 
+    companion object {
+        private const val EXTRA_PERSON = "person"
+
+        fun createIntent(context: Context, person: Person?): Intent {
+            return Intent(context, PersonDetailActivity::class.java)
+                    .putExtra(EXTRA_PERSON, person)
+        }
+    }
+
     @JvmField @State var person: Person? = null
 
     private val onCastItemClickListener = object : OnItemClickListener {
@@ -56,15 +65,6 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
             val tvShow = TVShow(credit?.id, credit?.name, posterPath = credit?.posterPath)
             val intent = TVShowDetailActivity.createIntent(this@PersonDetailActivity, tvShow)
             startNewActivityWithTransition(view, R.string.transition_tv_poster, intent)
-        }
-    }
-
-    companion object {
-        private const val EXTRA_PERSON = "person"
-
-        fun createIntent(context: Context, person: Person?): Intent {
-            return Intent(context, PersonDetailActivity::class.java)
-                    .putExtra(EXTRA_PERSON, person)
         }
     }
 

@@ -16,15 +16,6 @@ import timber.log.Timber
  */
 class MoviesApp : Application() {
 
-    private lateinit var refWatcher: RefWatcher
-
-    @Suppress("DEPRECATION")
-    private val appComponent: AppComponent by lazy(LazyThreadSafetyMode.NONE) {
-        DaggerAppComponent.builder()
-                .appModule(AppModule(this))
-                .build()
-    }
-
     companion object {
 
         @JvmStatic lateinit var context: Context
@@ -34,6 +25,15 @@ class MoviesApp : Application() {
 
         @JvmStatic
         fun getAppComponent(context: Context) = (context.applicationContext as MoviesApp).appComponent
+    }
+
+    private lateinit var refWatcher: RefWatcher
+
+    @Suppress("DEPRECATION")
+    private val appComponent: AppComponent by lazy(LazyThreadSafetyMode.NONE) {
+        DaggerAppComponent.builder()
+                .appModule(AppModule(this))
+                .build()
     }
 
     override fun onCreate() {

@@ -24,6 +24,25 @@ import java.util.*
  */
 class ImageViewerActivity : BaseActivity() {
 
+    companion object {
+        const val SHOW_UI_MILLIS = 4000L
+        const val EXTRA_CURRENT_POSITION = "current_position"
+        const val EXTRA_STARTING_POSITION = "starting_position"
+
+        private const val EXTRA_TITLE = "title"
+        private const val EXTRA_IMAGE_URL_LIST = "image_url_list"
+
+        @JvmStatic private val INTERPOLATOR = FastOutSlowInInterpolator()
+
+        fun createIntent(context: Context, title: String, startingPosition: Int,
+                         imageUrlList: ArrayList<String>): Intent {
+            return Intent(context, ImageViewerActivity::class.java)
+                    .putExtra(EXTRA_TITLE, title)
+                    .putExtra(EXTRA_IMAGE_URL_LIST, imageUrlList)
+                    .putExtra(EXTRA_STARTING_POSITION, startingPosition)
+        }
+    }
+
     @JvmField @State var title: String = ""
     @JvmField @State var currentPosition: Int = 0
     @JvmField @State var startingPosition: Int = 0
@@ -71,25 +90,6 @@ class ImageViewerActivity : BaseActivity() {
                     .setDuration(400L)
                     .setInterpolator(INTERPOLATOR)
                     .start()
-        }
-    }
-
-    companion object {
-        const val SHOW_UI_MILLIS = 4000L
-        const val EXTRA_CURRENT_POSITION = "current_position"
-        const val EXTRA_STARTING_POSITION = "starting_position"
-
-        private const val EXTRA_TITLE = "title"
-        private const val EXTRA_IMAGE_URL_LIST = "image_url_list"
-
-        @JvmStatic private val INTERPOLATOR = FastOutSlowInInterpolator()
-
-        fun createIntent(context: Context, title: String, startingPosition: Int,
-                         imageUrlList: ArrayList<String>): Intent {
-            return Intent(context, ImageViewerActivity::class.java)
-                    .putExtra(EXTRA_TITLE, title)
-                    .putExtra(EXTRA_IMAGE_URL_LIST, imageUrlList)
-                    .putExtra(EXTRA_STARTING_POSITION, startingPosition)
         }
     }
 

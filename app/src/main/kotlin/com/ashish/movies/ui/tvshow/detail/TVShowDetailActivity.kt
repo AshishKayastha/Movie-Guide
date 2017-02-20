@@ -32,6 +32,15 @@ import icepick.State
 class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetailView, TVShowDetailPresenter>(),
         TVShowDetailView {
 
+    companion object {
+        private const val EXTRA_TV_SHOW = "tv_show"
+
+        fun createIntent(context: Context, tvShow: TVShow?): Intent {
+            return Intent(context, TVShowDetailActivity::class.java)
+                    .putExtra(EXTRA_TV_SHOW, tvShow)
+        }
+    }
+
     @JvmField @State var tvShow: TVShow? = null
 
     private val seasonsViewStub: ViewStub by bindView(R.id.seasons_view_stub)
@@ -53,15 +62,6 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
             val tvShow = similarTVShowsAdapter?.getItem<TVShow>(position)
             val intent = TVShowDetailActivity.createIntent(this@TVShowDetailActivity, tvShow)
             startNewActivityWithTransition(view, R.string.transition_tv_poster, intent)
-        }
-    }
-
-    companion object {
-        private const val EXTRA_TV_SHOW = "tv_show"
-
-        fun createIntent(context: Context, tvShow: TVShow?): Intent {
-            return Intent(context, TVShowDetailActivity::class.java)
-                    .putExtra(EXTRA_TV_SHOW, tvShow)
         }
     }
 

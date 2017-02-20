@@ -15,6 +15,10 @@ import javax.inject.Inject
  */
 class KeyboardWatcher @Inject constructor(private val activity: Activity) : ViewTreeObserver.OnGlobalLayoutListener {
 
+    companion object {
+        private const val MIN_KEYBOARD_HEIGHT_PX = 150
+    }
+
     private val coordinates = IntArray(2)
 
     private val touchRect: Rect = Rect()
@@ -25,10 +29,6 @@ class KeyboardWatcher @Inject constructor(private val activity: Activity) : View
     private var lastVisibleDecorViewHeight: Int = 0
     private var touchWasInsideFocusedView: Boolean = false
     private var listener: KeyboardVisibilityListener? = null
-
-    companion object {
-        private const val MIN_KEYBOARD_HEIGHT_PX = 150
-    }
 
     fun watchKeyboard(listener: KeyboardVisibilityListener) {
         this.listener = listener
