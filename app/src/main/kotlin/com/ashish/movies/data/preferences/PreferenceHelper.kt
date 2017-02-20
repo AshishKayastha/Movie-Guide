@@ -1,9 +1,6 @@
 package com.ashish.movies.data.preferences
 
-import android.content.Context
 import android.content.SharedPreferences
-import com.ashish.movies.di.annotations.ApplicationQualifier
-import com.ashish.movies.utils.extensions.defaultSharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -11,7 +8,7 @@ import javax.inject.Singleton
  * Created by Ashish on Jan 28.
  */
 @Singleton
-class PreferenceHelper @Inject constructor(@ApplicationQualifier context: Context) {
+class PreferenceHelper @Inject constructor(private val sharedPrefs: SharedPreferences) {
 
     companion object {
         private const val PREF_ID = "id"
@@ -20,8 +17,6 @@ class PreferenceHelper @Inject constructor(@ApplicationQualifier context: Contex
         private const val PREF_SESSION_ID = "session_id"
         private const val PREF_GRAVATAR_HASH = "gravatar_hash"
     }
-
-    private val sharedPrefs: SharedPreferences = context.applicationContext.defaultSharedPreferences
 
     fun getId(): Long = sharedPrefs.getLong(PREF_ID, 0L)
 

@@ -29,7 +29,6 @@ class MoviesApp : Application() {
 
     private lateinit var refWatcher: RefWatcher
 
-    @Suppress("DEPRECATION")
     private val appComponent: AppComponent by lazy(LazyThreadSafetyMode.NONE) {
         DaggerAppComponent.builder()
                 .appModule(AppModule(this))
