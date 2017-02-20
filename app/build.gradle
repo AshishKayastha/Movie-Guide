@@ -86,9 +86,9 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 
     // RxJava 2/RxAndroid 2
-    compile 'io.reactivex.rxjava2:rxjava:2.0.5'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.6'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.github.akarnokd:rxjava2-interop:0.9.0'
+    compile 'com.github.akarnokd:rxjava2-interop:0.9.1'
 
     // Dagger 2
     compile "com.google.dagger:dagger:$daggerVersion"
