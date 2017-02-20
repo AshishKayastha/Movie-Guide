@@ -27,4 +27,12 @@
 
     </LinearLayout>
 
+    <com.ashish.movies.ui.widget.InkPageIndicator
+        android:id="@+id/indicator"
+        style="@style/Wrap"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/spacing_large"
+        app:currentPageIndicatorColor="@android:color/white"
+        app:pageIndicatorColor="#515151" />
+
 </merge>

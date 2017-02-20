@@ -18,7 +18,6 @@ package com.ashish.movies.ui.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -45,7 +44,7 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
         View.OnAttachStateChangeListener {
 
     // defaults
-    private static final int DEFAULT_DOT_SIZE = 8;                      // dp
+    private static final int DEFAULT_DOT_SIZE = 10;                      // dp
     private static final int DEFAULT_GAP = 12;                          // dp
     private static final int DEFAULT_ANIM_DURATION = 400;               // ms
     private static final int DEFAULT_UNSELECTED_COLOUR = 0x80ffffff;    // 50% white
@@ -107,7 +106,6 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
     private boolean isAttachedToWindow;
     private boolean selectedDotInPosition;
 
-    private AnimatorSet joiningAnimationSet;
     private PendingRetreatAnimator retreatAnimation;
     private PendingRevealAnimator[] revealAnimations;
 
@@ -614,12 +612,6 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
         postInvalidateOnAnimation();
     }
 
-    private void cancelJoiningAnimations() {
-        if (joiningAnimationSet != null && joiningAnimationSet.isRunning()) {
-            joiningAnimationSet.cancel();
-        }
-    }
-
     /**
      * A {@link ValueAnimator} that starts once a given predicate returns true.
      */
@@ -716,7 +708,6 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
             addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationStart(Animator animation) {
-                    cancelJoiningAnimations();
                     clearJoiningFractions();
                     // we need to set this so that the dots are hidden until the reveal anim runs
                     for (int dot : dotsToHide) {

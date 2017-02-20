@@ -50,8 +50,13 @@ class ImageViewerFragment : BaseFragment() {
 
     private val imageView: TouchImageView by bindView(R.id.image_view)
 
+    private var sharedElementEnterTransition: Transition? = null
     private var fullBitmap: BitmapRequestBuilder<String, Bitmap>? = null
     private var thumbBitmap: BitmapRequestBuilder<String, Bitmap>? = null
+
+    private val transitionListener = object : TransitionListenerAdapter() {
+        override fun onTransitionEnd(transition: Transition) = loadFullImage()
+    }
 
     override fun getLayoutId() = R.layout.fragment_image_viewer
 
@@ -102,12 +107,8 @@ class ImageViewerFragment : BaseFragment() {
     private fun setupImage() {
         imageView.transitionName = "image_$position"
 
-        activity?.window?.sharedElementEnterTransition?.addListener(object : TransitionListenerAdapter() {
-            override fun onTransitionEnd(transition: Transition) {
-                activity?.window?.sharedElementEnterTransition?.removeListener(this)
-                loadFullImage()
-            }
-        })
+        sharedElementEnterTransition = activity?.window?.sharedElementEnterTransition
+        sharedElementEnterTransition?.addListener(transitionListener)
 
         loadThumbnail(true)
         fullBitmap?.preload()
@@ -157,6 +158,7 @@ class ImageViewerFragment : BaseFragment() {
     override fun onDestroyView() {
         Glide.clear(imageView)
         imageView.setOnTouchListener(null)
+        sharedElementEnterTransition?.removeListener(transitionListener)
         super.onDestroyView()
     }
 }

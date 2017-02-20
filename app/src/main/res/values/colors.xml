@@ -25,5 +25,5 @@
 
     <!-- Image Viewer -->
     <color name="system_bar_color">#55202020</color>
-    <color name="image_view_bg_color">#E1313131</color>
+    <color name="image_view_bg_color">#C8313131</color>
 </resources>
