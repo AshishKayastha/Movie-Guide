@@ -80,7 +80,7 @@ dependencies {
     // Retrofit 2
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
 
     // OkHttp
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'

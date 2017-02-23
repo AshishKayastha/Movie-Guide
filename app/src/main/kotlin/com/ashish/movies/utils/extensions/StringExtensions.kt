@@ -7,7 +7,6 @@ import com.ashish.movies.utils.ApiConstants.BACKDROP_W1280_URL_PREFIX
 import com.ashish.movies.utils.ApiConstants.ORIGINAL_IMAGE_URL_PREFIX
 import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
 import java.text.NumberFormat
-import java.util.*
 
 /**
  * Created by Ashish on Jan 03.
@@ -18,7 +17,7 @@ fun String?.getYearOnly() = if (isNotNullOrEmpty()) this!!.slice(0..3) else ""
 
 fun Int?.getFormattedNumber(): String {
     if (this != null && this > 0L) {
-        return String.format("$%s", NumberFormat.getNumberInstance(Locale.US).format(this))
+        return String.format("$%s", NumberFormat.getNumberInstance().format(this))
     }
     return ""
 }

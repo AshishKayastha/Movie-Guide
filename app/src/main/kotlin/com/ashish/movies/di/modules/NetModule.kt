@@ -4,7 +4,6 @@ import com.ashish.movies.BuildConfig
 import com.ashish.movies.utils.ApiConstants.OMDB_BASE_API_URL
 import com.ashish.movies.utils.ApiConstants.TMDB_BASE_API_URL
 import com.ashish.movies.utils.ApiKeyInterceptor
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -15,6 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Named

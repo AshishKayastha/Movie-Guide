@@ -37,11 +37,12 @@ import com.ashish.movies.utils.extensions.loadImageUrl
 import com.ashish.movies.utils.extensions.runDelayed
 import com.ashish.movies.utils.extensions.setVisibility
 import com.ashish.movies.utils.extensions.showToast
+import dagger.Lazy
 import javax.inject.Inject
 
 class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
 
-    @Inject lateinit var dialogUtils: DialogUtils
+    @Inject lateinit var dialogUtils: Lazy<DialogUtils>
     @Inject lateinit var preferenceHelper: PreferenceHelper
 
     private val viewPager: ViewPager by bindView(R.id.view_pager)
@@ -124,7 +125,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
     }
 
     private fun showTmdbLoginDialog() {
-        dialogUtils.buildDialog()
+        dialogUtils.get().buildDialog()
                 .withTitle(R.string.title_tmdb_login)
                 .withContent(R.string.content_tmdb_login)
                 .withNegativeButton(android.R.string.cancel)
@@ -185,11 +186,11 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
     }
 
     override fun showProgressDialog(messageId: Int) {
-        dialogUtils.showProgressDialog(messageId)
+        dialogUtils.get().showProgressDialog(messageId)
     }
 
     override fun hideProgressDialog() {
-        dialogUtils.dismissProgressDialog()
+        dialogUtils.get().dismissProgressDialog()
     }
 
     override fun validateRequestToken(tokenValidationUrl: String) {
@@ -202,12 +203,12 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
-        dialogUtils.dismissAllDialogs()
+        dialogUtils.get().dismissAllDialogs()
         super.onConfigurationChanged(newConfig)
     }
 
     override fun onStop() {
-        dialogUtils.dismissAllDialogs()
+        dialogUtils.get().dismissAllDialogs()
         super.onStop()
     }
 

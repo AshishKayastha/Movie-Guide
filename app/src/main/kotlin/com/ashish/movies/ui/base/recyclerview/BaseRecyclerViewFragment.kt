@@ -45,8 +45,8 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     protected lateinit var recyclerViewAdapter: RecyclerViewAdapter<I>
 
-    private val scrollListener: InfiniteScrollListener = InfiniteScrollListener {
-        if (it > 1) recyclerView.post { presenter?.loadMoreData(type, it) }
+    private val scrollListener: InfiniteScrollListener = InfiniteScrollListener { currentPage ->
+        if (currentPage > 1) recyclerView.post { presenter?.loadMoreData(type, currentPage) }
     }
 
     override fun getLayoutId() = R.layout.fragment_recycler_view
