@@ -6,13 +6,13 @@ import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.ImageItem
 import com.ashish.movies.data.models.Videos
 import com.ashish.movies.ui.base.mvp.RxPresenter
+import com.ashish.movies.utils.Logger
 import com.ashish.movies.utils.Utils
 import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
-import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
@@ -125,7 +125,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
     }
 
     protected fun onLoadDetailError(t: Throwable, messageId: Int) {
-        Timber.e(t)
+        Logger.e(t)
         getView()?.apply {
             showErrorToast(t, messageId)
             finishActivity()

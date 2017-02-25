@@ -19,7 +19,7 @@ import android.support.v7.widget.AppCompatImageView
 import android.util.AttributeSet
 import android.widget.ImageView
 import com.ashish.movies.R
-import timber.log.Timber
+import com.ashish.movies.utils.Logger
 
 /**
  * Created by Ashish on Jan 29.
@@ -148,7 +148,7 @@ class CircleImageView @JvmOverloads constructor(
             drawable.draw(canvas)
             return bitmap
         } catch (e: OutOfMemoryError) {
-            Timber.e(e)
+            Logger.e(e)
             return null
         }
     }

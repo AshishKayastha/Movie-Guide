@@ -5,9 +5,9 @@ import com.ashish.movies.data.interactors.AuthInteractor
 import com.ashish.movies.data.models.RequestToken
 import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.utils.Constants.VALIDATE_TMDB_REQUEST_TOKEN_URL
+import com.ashish.movies.utils.Logger
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -37,7 +37,7 @@ class MainPresenter @Inject constructor(
     }
 
     private fun onRequestTokenError(t: Throwable?) {
-        t?.let { Timber.e(t) }
+        t?.let { Logger.e(t) }
         getView()?.apply {
             hideProgressDialog()
             showMessage(R.string.error_tmdb_login)
@@ -60,7 +60,7 @@ class MainPresenter @Inject constructor(
     }
 
     private fun onCreateSessionError(t: Throwable) {
-        Timber.e(t)
+        Logger.e(t)
         getView()?.apply {
             hideProgressDialog()
             showMessage(R.string.error_tmdb_login)

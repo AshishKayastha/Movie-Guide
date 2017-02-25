@@ -3,7 +3,7 @@ package com.ashish.movies.utils.extensions
 import android.annotation.SuppressLint
 import com.ashish.movies.utils.Constants.DEFAULT_DATE_PATTERN
 import com.ashish.movies.utils.Constants.MONTH_DAY_YEAR_PATTERN
-import timber.log.Timber
+import com.ashish.movies.utils.Logger
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -19,7 +19,7 @@ fun String?.convertToDate(datePattern: String = DEFAULT_DATE_PATTERN): Date? {
             val sdf = SimpleDateFormat(datePattern)
             return sdf.parse(this)
         } catch (e: ParseException) {
-            Timber.e(e)
+            Logger.e(e)
         }
     }
     return null
@@ -35,7 +35,7 @@ fun String?.getFormattedDate(inputDateFormat: String = DEFAULT_DATE_PATTERN,
             sdf.applyPattern(outputDateFormat)
             return sdf.format(date)
         } catch (e: ParseException) {
-            Timber.e(e)
+            Logger.e(e)
         }
     }
     return null
@@ -57,7 +57,7 @@ fun String.getParsedDate(pattern: String = DEFAULT_DATE_PATTERN): Date? {
         sdf.timeZone = TimeZone.getDefault()
         return sdf.parse(this)
     } catch (e: ParseException) {
-        Timber.e(e)
+        Logger.e(e)
     }
 
     return null
