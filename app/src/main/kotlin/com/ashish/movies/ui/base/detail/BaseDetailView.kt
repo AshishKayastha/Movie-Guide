@@ -3,7 +3,7 @@ package com.ashish.movies.ui.base.detail
 import com.ashish.movies.data.models.Credit
 import com.ashish.movies.data.models.OMDbDetail
 import com.ashish.movies.ui.base.mvp.ProgressView
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Ashish on Jan 03.

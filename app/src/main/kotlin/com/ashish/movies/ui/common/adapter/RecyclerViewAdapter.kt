@@ -7,7 +7,7 @@ import com.ashish.movies.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.ashish.movies.ui.common.adapter.ViewType.Companion.LOADING_VIEW
 import com.bumptech.glide.Glide
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Ashish on Dec 30.

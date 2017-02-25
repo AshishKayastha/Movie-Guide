@@ -5,7 +5,7 @@ import android.support.v4.view.ViewCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.util.AttributeSet
 import android.view.View
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Ashish on Dec 27.

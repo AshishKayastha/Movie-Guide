@@ -10,7 +10,8 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Season
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.data.models.TVShowDetail
-import com.ashish.movies.di.components.UiComponent
+import com.ashish.movies.di.modules.ActivityModule
+import com.ashish.movies.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
@@ -65,7 +66,12 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
         }
     }
 
-    override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
+    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
+        builderHost.getActivityComponentBuilder(TVShowDetailActivity::class.java, TVShowDetailComponent.Builder::class.java)
+                .withModule(ActivityModule(this))
+                .build()
+                .inject(this)
+    }
 
     override fun getLayoutId() = R.layout.acivity_detail_tv_show
 

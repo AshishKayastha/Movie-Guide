@@ -1,7 +1,7 @@
 package com.ashish.movies.ui.common.adapter
 
 import com.ashish.movies.ui.movie.list.MovieDelegateAdapter
-import com.ashish.movies.ui.multisearch.MultiSearchDelegateAdapter
+import com.ashish.movies.ui.multisearch.fragment.MultiSearchDelegateAdapter
 import com.ashish.movies.ui.people.list.PeopleDelegateAdapter
 import com.ashish.movies.ui.tvshow.episode.EpisodeDelegateAdapter
 import com.ashish.movies.ui.tvshow.list.TVShowDelegateAdapter

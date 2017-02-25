@@ -90,7 +90,6 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     abstract fun getAdapterType(): Int
 
     override fun onRefresh() {
-        recyclerViewAdapter.clearAll()
         scrollListener.resetPageCount()
         presenter?.loadFreshData(type, recyclerViewAdapter.itemCount == 0)
     }

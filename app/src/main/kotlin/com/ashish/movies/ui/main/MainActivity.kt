@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat.START
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
@@ -14,13 +15,17 @@ import android.view.ViewGroup
 import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.preferences.PreferenceHelper
-import com.ashish.movies.di.components.UiComponent
+import com.ashish.movies.di.modules.ActivityModule
+import com.ashish.movies.di.multibindings.AbstractComponent
+import com.ashish.movies.di.multibindings.activity.ActivityComponentBuilderHost
+import com.ashish.movies.di.multibindings.fragment.FragmentComponentBuilder
+import com.ashish.movies.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movies.ui.base.mvp.MvpActivity
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_DISCOVER
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_PEOPLE
 import com.ashish.movies.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
-import com.ashish.movies.ui.multisearch.MultiSearchActivity
+import com.ashish.movies.ui.multisearch.activity.MultiSearchActivity
 import com.ashish.movies.ui.widget.CircleImageView
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.CustomTabsHelper
@@ -39,11 +44,15 @@ import com.ashish.movies.utils.extensions.setVisibility
 import com.ashish.movies.utils.extensions.showToast
 import dagger.Lazy
 import javax.inject.Inject
+import javax.inject.Provider
 
-class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
+class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentComponentBuilderHost {
 
     @Inject lateinit var dialogUtils: Lazy<DialogUtils>
     @Inject lateinit var preferenceHelper: PreferenceHelper
+
+    @Inject
+    lateinit var componentBuilders: Map<Class<out Fragment>, @JvmSuppressWildcards Provider<FragmentComponentBuilder<*, *>>>
 
     private val viewPager: ViewPager by bindView(R.id.view_pager)
     private val tabLayout: TabLayout by bindView(R.id.tab_layout)
@@ -86,7 +95,17 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
         setupNavigationView()
     }
 
-    override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
+    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
+        builderHost.getActivityComponentBuilder(MainActivity::class.java, MainComponent.Builder::class.java)
+                .withModule(ActivityModule(this))
+                .build()
+                .inject(this)
+    }
+
+    override fun <F : Fragment, B : FragmentComponentBuilder<F, AbstractComponent<F>>>
+            getFragmentComponentBuilder(fragmentKey: Class<F>, builderType: Class<B>): B {
+        return builderType.cast(componentBuilders[fragmentKey]!!.get())
+    }
 
     override fun getLayoutId() = R.layout.activity_main
 

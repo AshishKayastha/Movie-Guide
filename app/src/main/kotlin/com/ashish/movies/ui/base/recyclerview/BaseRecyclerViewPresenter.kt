@@ -10,7 +10,7 @@ import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import java.io.IOException
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Ashish on Dec 31.

@@ -7,7 +7,9 @@ import com.ashish.movies.utils.Logger
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 /**
  * Created by Ashish Kayastha on Jan 26.

@@ -19,7 +19,7 @@ import com.pushtorefresh.storio.sqlite.StorIOSQLite
 import com.pushtorefresh.storio.sqlite.operations.get.GetResolver
 import com.pushtorefresh.storio.sqlite.queries.Query
 import com.pushtorefresh.storio.sqlite.queries.RawQuery
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Ashish on Feb 05.

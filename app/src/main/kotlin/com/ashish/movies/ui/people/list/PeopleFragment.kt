@@ -5,7 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Person
-import com.ashish.movies.di.components.UiComponent
+import com.ashish.movies.di.modules.FragmentModule
+import com.ashish.movies.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
@@ -20,7 +21,12 @@ class PeopleFragment : BaseRecyclerViewFragment<Person, BaseRecyclerViewMvpView<
         fun newInstance() = PeopleFragment()
     }
 
-    override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
+    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
+        builderHost.getFragmentComponentBuilder(PeopleFragment::class.java, PeopleComponent.Builder::class.java)
+                .withModule(FragmentModule(activity))
+                .build()
+                .inject(this)
+    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

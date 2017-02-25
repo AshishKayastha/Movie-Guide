@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.Window
 import android.widget.EditText
+import com.ashish.movies.di.scopes.ActivityScope
 import com.ashish.movies.utils.extensions.hideKeyboard
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 08.
  */
+@ActivityScope
 class KeyboardWatcher @Inject constructor(
         private val activity: Activity
 ) : ViewTreeObserver.OnGlobalLayoutListener {

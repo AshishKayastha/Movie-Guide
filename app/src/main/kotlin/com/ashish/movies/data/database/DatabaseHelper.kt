@@ -11,7 +11,7 @@ import com.ashish.movies.data.database.tables.MoviesTable
 import com.ashish.movies.data.database.tables.OMDbTable
 import com.ashish.movies.data.database.tables.SimilarMoviesTable
 import com.ashish.movies.data.database.tables.VideosTable
-import com.ashish.movies.di.annotations.ApplicationContext
+import com.ashish.movies.di.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 /**

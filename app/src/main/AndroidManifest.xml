@@ -44,7 +44,7 @@
             android:label="" />
 
         <activity
-            android:name=".ui.multisearch.MultiSearchActivity"
+            android:name=".ui.multisearch.activity.MultiSearchActivity"
             android:label=""
             android:theme="@style/AppTheme.MultiSearch"
             android:windowSoftInputMode="adjustNothing|stateHidden">

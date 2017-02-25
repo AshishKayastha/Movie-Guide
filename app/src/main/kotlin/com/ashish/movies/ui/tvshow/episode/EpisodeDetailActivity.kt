@@ -6,7 +6,8 @@ import android.os.Bundle
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Episode
 import com.ashish.movies.data.models.EpisodeDetail
-import com.ashish.movies.di.components.UiComponent
+import com.ashish.movies.di.modules.ActivityModule
+import com.ashish.movies.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentView
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_EPISODE
@@ -34,7 +35,13 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
     @JvmField @State var tvShowId: Long? = null
     @JvmField @State var episode: Episode? = null
 
-    override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
+    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
+        builderHost.getActivityComponentBuilder(EpisodeDetailActivity::class.java,
+                EpisodeDetailComponent.Builder::class.java)
+                .withModule(ActivityModule(this))
+                .build()
+                .inject(this)
+    }
 
     override fun getLayoutId() = R.layout.activity_detail_episode
 

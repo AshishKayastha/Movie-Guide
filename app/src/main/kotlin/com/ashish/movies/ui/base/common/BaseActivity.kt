@@ -6,9 +6,7 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import butterknife.bindOptionalView
 import com.ashish.movies.R
-import com.ashish.movies.app.MoviesApp
-import com.ashish.movies.di.components.UiComponent
-import com.ashish.movies.di.modules.UiModule
+import com.ashish.movies.di.multibindings.activity.ActivityComponentBuilderHost
 import icepick.Icepick
 
 /**
@@ -19,7 +17,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected val toolbar: Toolbar? by bindOptionalView(R.id.toolbar)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies(MoviesApp.getAppComponent(this).plus(UiModule(this)))
+        injectDependencies(application as ActivityComponentBuilderHost)
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
         setSupportActionBar(toolbar)
@@ -33,7 +31,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected open fun getIntentExtras(extras: Bundle?) {}
 
-    protected open fun injectDependencies(uiComponent: UiComponent) {}
+    protected open fun injectDependencies(builderHost: ActivityComponentBuilderHost) {}
 
     abstract fun getLayoutId(): Int
 

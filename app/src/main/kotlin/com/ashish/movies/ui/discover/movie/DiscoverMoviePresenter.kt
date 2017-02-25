@@ -3,8 +3,8 @@ package com.ashish.movies.ui.discover.movie
 import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.Results
-import com.ashish.movies.ui.discover.common.BaseDiscoverPresenter
-import com.ashish.movies.ui.discover.common.filter.FilterQueryModel
+import com.ashish.movies.ui.discover.base.BaseDiscoverPresenter
+import com.ashish.movies.ui.discover.filter.FilterQueryModel
 import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import javax.inject.Inject

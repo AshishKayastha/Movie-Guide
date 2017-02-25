@@ -10,7 +10,9 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.Episode
 import com.ashish.movies.data.models.Season
 import com.ashish.movies.data.models.SeasonDetail
-import com.ashish.movies.di.components.UiComponent
+import com.ashish.movies.di.modules.ActivityModule
+import com.ashish.movies.di.multibindings.activity.ActivityComponentBuilderHost
+import com.ashish.movies.di.scopes.ActivityScope
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
@@ -25,6 +27,7 @@ import icepick.State
 /**
  * Created by Ashish on Jan 07.
  */
+@ActivityScope
 class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetailView, SeasonDetailPresenter>(),
         SeasonDetailView {
 
@@ -54,7 +57,13 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
         }
     }
 
-    override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
+    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
+        builderHost.getActivityComponentBuilder(SeasonDetailActivity::class.java,
+                SeasonDetailComponent.Builder::class.java)
+                .withModule(ActivityModule(this))
+                .build()
+                .inject(this)
+    }
 
     override fun getLayoutId() = R.layout.activity_detail_season
 

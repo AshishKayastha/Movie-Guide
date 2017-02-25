@@ -77,7 +77,7 @@ import com.ashish.movies.utils.extensions.show
 import com.ashish.movies.utils.extensions.startActivityWithTransition
 import com.ashish.movies.utils.extensions.startCircularRevealAnimation
 import com.ashish.movies.utils.extensions.tint
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Ashish on Jan 03.

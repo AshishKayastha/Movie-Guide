@@ -10,7 +10,7 @@ import com.ashish.movies.utils.Constants.THUMBNAIL_SIZE
 import com.ashish.movies.utils.extensions.inflate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Ashish on Jan 14.

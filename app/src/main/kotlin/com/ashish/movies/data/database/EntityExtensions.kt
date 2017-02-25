@@ -23,7 +23,7 @@ import com.ashish.movies.data.models.VideoItem
 import com.ashish.movies.data.models.Videos
 import com.pushtorefresh.storio.sqlite.StorIOSQLite
 import com.pushtorefresh.storio.sqlite.queries.Query
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Ashish on Feb 06.

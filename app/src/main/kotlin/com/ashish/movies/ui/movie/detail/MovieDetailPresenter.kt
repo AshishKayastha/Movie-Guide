@@ -4,18 +4,20 @@ import com.ashish.movies.R
 import com.ashish.movies.data.interactors.MovieInteractor
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.MovieDetail
+import com.ashish.movies.di.scopes.ActivityScope
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import com.ashish.movies.utils.extensions.getFormattedNumber
 import com.ashish.movies.utils.extensions.getFormattedRuntime
 import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
-import java.util.*
+import java.util.ArrayList
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 31.
  */
+@ActivityScope
 class MovieDetailPresenter @Inject constructor(
         private val movieInteractor: MovieInteractor,
         schedulerProvider: BaseSchedulerProvider

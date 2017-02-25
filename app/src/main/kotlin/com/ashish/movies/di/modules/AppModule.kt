@@ -16,7 +16,7 @@ import com.ashish.movies.data.database.entities.VideoEntity
 import com.ashish.movies.data.database.entities.VideoEntitySQLiteTypeMapping
 import com.ashish.movies.data.database.resolvers.movie.MovieSQLiteTypeMapping
 import com.ashish.movies.data.database.resolvers.moviedetail.MovieDetailSQLiteTypeMapping
-import com.ashish.movies.di.annotations.ApplicationContext
+import com.ashish.movies.di.qualifiers.ApplicationContext
 import com.ashish.movies.utils.extensions.defaultSharedPreferences
 import com.pushtorefresh.storio.sqlite.StorIOSQLite
 import com.pushtorefresh.storio.sqlite.impl.DefaultStorIOSQLite

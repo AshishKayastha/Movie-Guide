@@ -1,7 +1,7 @@
 package com.ashish.movies.di.modules
 
 import com.ashish.movies.BuildConfig
-import com.ashish.movies.di.annotations.BaseOkHttp
+import com.ashish.movies.di.qualifiers.BaseOkHttp
 import com.ashish.movies.utils.ApiKeyInterceptor
 import com.ashish.movies.utils.Constants.OMDB_API_BASE_URL
 import com.ashish.movies.utils.Constants.TMDB_API_BASE_URL

@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ashish.movies.R
-import com.ashish.movies.app.MoviesApp
-import com.ashish.movies.di.components.UiComponent
-import com.ashish.movies.di.modules.UiModule
+import com.ashish.movies.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movies.ui.base.common.BaseFragment
 import com.ashish.movies.utils.extensions.inflate
 import com.ashish.movies.utils.extensions.showSnackBar
@@ -37,10 +35,10 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : BaseFragment(), Mv
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injectDependencies(MoviesApp.getAppComponent(activity).plus(UiModule(activity)))
+        injectDependencies(activity as FragmentComponentBuilderHost)
     }
 
-    abstract fun injectDependencies(uiComponent: UiComponent)
+    abstract fun injectDependencies(builderHost: FragmentComponentBuilderHost)
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(getLayoutId())

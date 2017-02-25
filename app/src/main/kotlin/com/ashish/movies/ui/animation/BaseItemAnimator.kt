@@ -7,7 +7,7 @@ import android.support.v7.widget.SimpleItemAnimator
 import android.view.View
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
-import java.util.*
+import java.util.ArrayList
 
 abstract class BaseItemAnimator : SimpleItemAnimator() {
 

@@ -4,16 +4,18 @@ import com.ashish.movies.R
 import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.data.models.TVShowDetail
+import com.ashish.movies.di.scopes.ActivityScope
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
-import java.util.*
+import java.util.ArrayList
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 03.
  */
+@ActivityScope
 class TVShowDetailPresenter @Inject constructor(
         private val tvShowInteractor: TVShowInteractor,
         schedulerProvider: BaseSchedulerProvider

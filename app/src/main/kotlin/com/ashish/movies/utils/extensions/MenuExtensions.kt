@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.ImageView
 import com.ashish.movies.R
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Ashish on Feb 08.

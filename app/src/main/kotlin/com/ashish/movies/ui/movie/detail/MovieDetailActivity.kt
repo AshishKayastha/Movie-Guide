@@ -9,7 +9,8 @@ import butterknife.bindView
 import com.ashish.movies.R
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
-import com.ashish.movies.di.components.UiComponent
+import com.ashish.movies.di.modules.ActivityModule
+import com.ashish.movies.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
@@ -50,7 +51,12 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
         }
     }
 
-    override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
+    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
+        builderHost.getActivityComponentBuilder(MovieDetailActivity::class.java, MovieDetailComponent.Builder::class.java)
+                .withModule(ActivityModule(this))
+                .build()
+                .inject(this)
+    }
 
     override fun getLayoutId() = R.layout.activity_detail_movie
 

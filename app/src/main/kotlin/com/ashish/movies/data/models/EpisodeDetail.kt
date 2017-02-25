@@ -3,7 +3,7 @@ package com.ashish.movies.data.models
 import com.squareup.moshi.Json
 
 data class EpisodeDetail(
-        val id: Int? = null,
+        val id: Long? = null,
         val name: String? = null,
         val images: Images? = null,
         val overview: String? = null,

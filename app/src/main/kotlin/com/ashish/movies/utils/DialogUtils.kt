@@ -10,6 +10,7 @@ import android.text.style.TypefaceSpan
 import android.view.LayoutInflater
 import android.view.View
 import com.ashish.movies.R
+import com.ashish.movies.di.scopes.ActivityScope
 import com.ashish.movies.ui.widget.FontTextView
 import com.ashish.movies.utils.FontUtils.MONTSERRAT_MEDIUM
 import com.ashish.movies.utils.FontUtils.MONTSERRAT_REGULAR
@@ -22,6 +23,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 30.
  */
+@ActivityScope
 class DialogUtils @Inject constructor(private val context: Context) {
 
     @SuppressLint("InflateParams")

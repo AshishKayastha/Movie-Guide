@@ -5,7 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movies.R
 import com.ashish.movies.data.models.TVShow
-import com.ashish.movies.di.components.UiComponent
+import com.ashish.movies.di.modules.FragmentModule
+import com.ashish.movies.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
@@ -28,7 +29,12 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow, BaseRecyclerViewMvpView<
         }
     }
 
-    override fun injectDependencies(uiComponent: UiComponent) = uiComponent.inject(this)
+    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
+        builderHost.getFragmentComponentBuilder(TVShowFragment::class.java, TVShowComponent.Builder::class.java)
+                .withModule(FragmentModule(activity))
+                .build()
+                .inject(this)
+    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

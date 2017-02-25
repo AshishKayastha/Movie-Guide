@@ -18,7 +18,7 @@ import com.ashish.movies.ui.widget.InkPageIndicator
 import com.ashish.movies.utils.SystemUiHelper
 import com.ashish.movies.utils.extensions.changeViewGroupTextFont
 import icepick.State
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by Ashish on Jan 08.
