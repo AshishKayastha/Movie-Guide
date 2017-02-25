@@ -14,15 +14,16 @@ import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movies.ui.movie.detail.MovieDetailActivity
 import com.ashish.movies.ui.people.detail.PersonDetailActivity
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
-import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
-import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_PERSON
-import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MULTI_SEARCH
+import com.ashish.movies.utils.Constants.MEDIA_TYPE_MOVIE
+import com.ashish.movies.utils.Constants.MEDIA_TYPE_PERSON
+import com.ashish.movies.utils.Constants.MEDIA_TYPE_TV
 
 /**
  * Created by Ashish on Jan 05.
  */
-class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch, BaseRecyclerViewMvpView<MultiSearch>, MultiSearchPresenter>() {
+class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
+        BaseRecyclerViewMvpView<MultiSearch>, MultiSearchPresenter>() {
 
     companion object {
         fun newInstance() = MultiSearchFragment()

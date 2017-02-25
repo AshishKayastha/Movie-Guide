@@ -5,12 +5,15 @@ import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.ui.discover.common.filter.FilterQueryModel
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 
 /**
  * Created by Ashish on Jan 24.
  */
-abstract class BaseDiscoverPresenter<I : ViewType> constructor(private val filterQueryModel: FilterQueryModel)
-    : BaseRecyclerViewPresenter<I, DiscoverView<I>>() {
+abstract class BaseDiscoverPresenter<I : ViewType> constructor(
+        private val filterQueryModel: FilterQueryModel,
+        schedulerProvider: BaseSchedulerProvider
+) : BaseRecyclerViewPresenter<I, DiscoverView<I>>(schedulerProvider) {
 
     protected var minDate: String? = null
     protected var maxDate: String? = null

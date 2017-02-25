@@ -3,7 +3,7 @@ package com.ashish.movies.data.api
 import com.ashish.movies.data.models.Person
 import com.ashish.movies.data.models.PersonDetail
 import com.ashish.movies.data.models.Results
-import com.ashish.movies.utils.ApiConstants.INCLUDE_IMAGE_LANGUAGE
+import com.ashish.movies.utils.Constants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,6 +18,8 @@ interface PeopleApi {
     fun getPopularPeople(@Query("page") page: Int = 1): Observable<Results<Person>>
 
     @GET("person/{personId}" + INCLUDE_IMAGE_LANGUAGE)
-    fun getPersonDetail(@Path("personId") personId: Long,
-                        @Query("append_to_response") appendedResponse: String): Observable<PersonDetail>
+    fun getPersonDetail(
+            @Path("personId") personId: Long,
+            @Query("append_to_response") appendedResponse: String
+    ): Observable<PersonDetail>
 }

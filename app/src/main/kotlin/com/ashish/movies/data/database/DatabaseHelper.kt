@@ -11,14 +11,15 @@ import com.ashish.movies.data.database.tables.MoviesTable
 import com.ashish.movies.data.database.tables.OMDbTable
 import com.ashish.movies.data.database.tables.SimilarMoviesTable
 import com.ashish.movies.data.database.tables.VideosTable
-import com.ashish.movies.di.annotations.ApplicationQualifier
+import com.ashish.movies.di.annotations.ApplicationContext
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Feb 03.
  */
-class DatabaseHelper @Inject constructor(@ApplicationQualifier context: Context)
-    : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class DatabaseHelper @Inject constructor(
+        @ApplicationContext context: Context
+) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 1

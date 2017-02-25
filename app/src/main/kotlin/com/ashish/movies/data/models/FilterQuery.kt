@@ -8,8 +8,12 @@ import paperparcel.PaperParcel
  * Created by Ashish on Jan 24.
  */
 @PaperParcel
-data class FilterQuery(var sortBy: String = "popularity.desc", var genreIds: String? = null,
-                       var minDate: String? = null, var maxDate: String? = null) : Parcelable {
+data class FilterQuery(
+        var sortBy: String = "popularity.desc",
+        var genreIds: String? = null,
+        var minDate: String? = null,
+        var maxDate: String? = null
+) : Parcelable {
 
     companion object {
         @JvmField @Suppress("unused")

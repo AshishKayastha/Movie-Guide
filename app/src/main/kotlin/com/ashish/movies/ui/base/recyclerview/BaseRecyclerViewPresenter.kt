@@ -6,6 +6,7 @@ import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.ui.common.adapter.ViewType
 import com.ashish.movies.utils.Utils
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import timber.log.Timber
 import java.io.IOException
@@ -14,7 +15,9 @@ import java.util.*
 /**
  * Created by Ashish on Dec 31.
  */
-abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpView<I>> : RxPresenter<V>() {
+abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpView<I>>(
+        schedulerProvider: BaseSchedulerProvider
+) : RxPresenter<V>(schedulerProvider) {
 
     private var totalPages = 1
     private var isFirstStart = true
@@ -35,10 +38,12 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     fun loadFreshData(type: Int?, showProgress: Boolean = true) {
         if (Utils.isOnline()) {
-            if (showProgress) getView()?.showProgress()
             addDisposable(getResultsObservable(getType(type), 1)
                     .doOnNext { totalPages = it.totalPages }
-                    .subscribe({ showResults(it) }, { handleError(it) }))
+                    .observeOn(schedulerProvider.ui())
+                    .doOnSubscribe { if (showProgress) getView()?.showProgress() }
+                    .doFinally { getView()?.hideProgress() }
+                    .subscribe({ showResults(it) }, { showErrorMessage(it) }))
         } else {
             getView()?.apply {
                 hideProgress()
@@ -55,7 +60,6 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         currentPage = data.page
         itemList = ArrayList(data.results)
         showItemList()
-        getView()?.hideProgress()
     }
 
     private fun showItemList() {
@@ -65,19 +69,12 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         }
     }
 
-    protected fun handleError(t: Throwable) {
-        Timber.e(t)
-        getView()?.apply {
-            hideProgress()
-            showErrorMessage(t)
-        }
-    }
-
     fun loadMoreData(type: Int?, page: Int) {
         if (Utils.isOnline()) {
             if (page <= totalPages) {
                 getView()?.showLoadingItem()
                 addDisposable(getResultsObservable(getType(type), page)
+                        .observeOn(schedulerProvider.ui())
                         .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))
             }
         } else {
@@ -102,7 +99,6 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     protected fun handleLoadMoreError(t: Throwable) {
-        Timber.e(t)
         getView()?.apply {
             removeLoadingItem()
             resetLoading()
@@ -111,6 +107,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     protected fun showErrorMessage(t: Throwable) {
+        Timber.e(t)
         getView()?.apply {
             if (t is IOException) {
                 showMessage(R.string.error_no_internet)

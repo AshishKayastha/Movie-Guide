@@ -18,7 +18,9 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 /**
- * Created by Ashish on Dec 26.
+ * Base fragment class that follows MVP pattern. This will handle injecting
+ * [PresenterLoader] which is useful for saving and restoring [RxPresenter]
+ * state using [LoaderManager].
  */
 abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : BaseFragment(), MvpView, LoaderManager.LoaderCallbacks<P> {
 

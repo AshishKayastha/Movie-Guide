@@ -15,8 +15,10 @@ import java.util.*
 /**
  * Created by Ashish on Jan 14.
  */
-class ImageAdapter(val imageUrlList: ArrayList<String>, private var onItemClickListener: OnItemClickListener?)
-    : RecyclerView.Adapter<ImageAdapter.ImageHolder>(), RemoveListener {
+class ImageAdapter(
+        val imageUrlList: ArrayList<String>,
+        private var onItemClickListener: OnItemClickListener?
+) : RecyclerView.Adapter<ImageAdapter.ImageHolder>(), RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ImageHolder {
         return ImageHolder(parent?.inflate(R.layout.list_item_detail_image)!!)

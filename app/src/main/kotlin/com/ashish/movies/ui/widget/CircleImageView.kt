@@ -24,8 +24,11 @@ import timber.log.Timber
 /**
  * Created by Ashish on Jan 29.
  */
-class CircleImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)
-    : AppCompatImageView(context, attrs, defStyle) {
+class CircleImageView @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyle: Int = 0
+) : AppCompatImageView(context, attrs, defStyle) {
 
     companion object {
         private const val DEFAULT_BORDER_WIDTH = 0

@@ -8,13 +8,16 @@ import com.ashish.movies.data.interactors.TVShowInteractor
 import com.ashish.movies.data.models.TVShow
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movies.ui.base.recyclerview.BaseRecyclerViewPresenter
+import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 30.
  */
-class TVShowPresenter @Inject constructor(private val tvShowInteractor: TVShowInteractor)
-    : BaseRecyclerViewPresenter<TVShow, BaseRecyclerViewMvpView<TVShow>>() {
+class TVShowPresenter @Inject constructor(
+        private val tvShowInteractor: TVShowInteractor,
+        schedulerProvider: BaseSchedulerProvider
+) : BaseRecyclerViewPresenter<TVShow, BaseRecyclerViewMvpView<TVShow>>(schedulerProvider) {
 
     companion object {
         @JvmStatic private val TV_SHOW_TYPES = arrayOf(ON_THE_AIR, POPULAR, TOP_RATED, AIRING_TODAY)

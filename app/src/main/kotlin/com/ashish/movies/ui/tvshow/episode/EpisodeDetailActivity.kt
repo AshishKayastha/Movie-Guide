@@ -17,7 +17,8 @@ import icepick.State
 /**
  * Created by Ashish on Jan 08.
  */
-class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, FullDetailContentView<EpisodeDetail>, EpisodeDetailPresenter>() {
+class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
+        FullDetailContentView<EpisodeDetail>, EpisodeDetailPresenter>() {
 
     companion object {
         private const val EXTRA_EPISODE = "episode"

@@ -6,5 +6,5 @@ import javax.inject.Scope
  * Created by Ashish on Jan 24.
  */
 @Scope
-@Retention
+@Retention(AnnotationRetention.RUNTIME)
 annotation class FragmentScope

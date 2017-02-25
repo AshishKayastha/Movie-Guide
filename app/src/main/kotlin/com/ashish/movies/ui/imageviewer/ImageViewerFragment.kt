@@ -84,6 +84,7 @@ class ImageViewerFragment : BaseFragment() {
         fullBitmap = Glide.with(this)
                 .load(imageUrl)
                 .asBitmap()
+                .dontAnimate()
                 .override(Resources.getSystem().displayMetrics.widthPixels, Target.SIZE_ORIGINAL)
     }
 

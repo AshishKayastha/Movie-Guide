@@ -9,14 +9,17 @@ import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
 import com.ashish.movies.utils.extensions.getFormattedNumber
 import com.ashish.movies.utils.extensions.getFormattedRuntime
+import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 31.
  */
-class MovieDetailPresenter @Inject constructor(private val movieInteractor: MovieInteractor)
-    : FullDetailContentPresenter<MovieDetail, MovieDetailView>() {
+class MovieDetailPresenter @Inject constructor(
+        private val movieInteractor: MovieInteractor,
+        schedulerProvider: BaseSchedulerProvider
+) : FullDetailContentPresenter<MovieDetail, MovieDetailView>(schedulerProvider) {
 
     override fun getDetailContent(id: Long) = movieInteractor.getFullMovieDetail(id)
 

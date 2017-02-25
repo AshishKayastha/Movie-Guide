@@ -16,9 +16,9 @@ import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.tvshow.season.SeasonDetailActivity
 import com.ashish.movies.ui.widget.FontTextView
-import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_TV_SHOW
+import com.ashish.movies.utils.Constants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.extensions.find
 import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getPosterUrl

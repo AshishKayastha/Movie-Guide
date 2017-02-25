@@ -7,8 +7,9 @@ import android.os.Bundle
 /**
  * Created by Ashish on Jan 08.
  */
-abstract class AutoActivityLifecycleCallbacks(private val targetActivity: Activity)
-    : Application.ActivityLifecycleCallbacks {
+abstract class AutoActivityLifecycleCallbacks(
+        private val targetActivity: Activity
+) : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle) {
     }

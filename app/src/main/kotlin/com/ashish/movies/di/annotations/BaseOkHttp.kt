@@ -3,7 +3,7 @@ package com.ashish.movies.di.annotations
 import javax.inject.Qualifier
 
 /**
- * Created by Ashish on Jan 12.
+ * Created by Ashish on Feb 25.
  */
 @Qualifier
-annotation class ApplicationQualifier
+annotation class BaseOkHttp

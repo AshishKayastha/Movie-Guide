@@ -10,8 +10,10 @@ import java.util.*
 /**
  * Created by Ashish on Dec 27.
  */
-class MultiSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
-    : SwipeRefreshLayout(context, attrs) {
+class MultiSwipeRefreshLayout @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null
+) : SwipeRefreshLayout(context, attrs) {
 
     var swipeableChildren = ArrayList<View>()
 
@@ -30,7 +32,12 @@ class MultiSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs:
         return true
     }
 
-    fun performCleanup() {
+    override fun onDetachedFromWindow() {
+        performCleanup()
+        super.onDetachedFromWindow()
+    }
+
+    private fun performCleanup() {
         clearAnimation()
         setOnRefreshListener(null)
     }

@@ -7,14 +7,17 @@ import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentView
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
+import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 08.
  */
-class EpisodeDetailPresenter @Inject constructor(private val tvShowInteractor: TVShowInteractor)
-    : FullDetailContentPresenter<EpisodeDetail, FullDetailContentView<EpisodeDetail>>() {
+class EpisodeDetailPresenter @Inject constructor(
+        private val tvShowInteractor: TVShowInteractor,
+        schedulerProvider: BaseSchedulerProvider
+) : FullDetailContentPresenter<EpisodeDetail, FullDetailContentView<EpisodeDetail>>(schedulerProvider) {
 
     private var seasonNumber: Int = 1
     private var episodeNumber: Int = 1

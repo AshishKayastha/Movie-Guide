@@ -12,8 +12,11 @@ import com.ashish.movies.R
 /**
  * Created by Ashish on Jan 18.
  */
-class StaggeredGridRecyclerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)
-    : EmptyRecyclerView(context, attrs, defStyle) {
+class StaggeredGridRecyclerView @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyle: Int = 0
+) : EmptyRecyclerView(context, attrs, defStyle) {
 
     override fun onFinishInflate() {
         super.onFinishInflate()

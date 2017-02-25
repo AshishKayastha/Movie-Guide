@@ -5,10 +5,8 @@ import com.ashish.movies.data.models.Account
 import com.ashish.movies.data.models.Favorite
 import com.ashish.movies.data.models.RequestToken
 import com.ashish.movies.data.preferences.PreferenceHelper
-import com.ashish.movies.utils.extensions.observeOnMainThread
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,10 +14,13 @@ import javax.inject.Singleton
  * Created by Ashish on Jan 29.
  */
 @Singleton
-class AuthInteractor @Inject constructor(private val authApi: AuthApi, private val preferenceHelper: PreferenceHelper) {
+class AuthInteractor @Inject constructor(
+        private val authApi: AuthApi,
+        private val preferenceHelper: PreferenceHelper
+) {
 
     fun createRequestToken(): Observable<RequestToken> {
-        return authApi.createRequestToken().observeOnMainThread()
+        return authApi.createRequestToken()
     }
 
     fun createUserSession(tmdbRequestToken: String): Observable<Account> {
@@ -28,7 +29,6 @@ class AuthInteractor @Inject constructor(private val authApi: AuthApi, private v
                 .doOnNext { preferenceHelper.setSessionId(it.sessionId) }
                 .flatMap { authApi.getUserAccount(it.sessionId!!) }
                 .doOnNext { saveUserProfile(it) }
-                .observeOnMainThread()
     }
 
     private fun saveUserProfile(account: Account?) {
@@ -44,6 +44,5 @@ class AuthInteractor @Inject constructor(private val authApi: AuthApi, private v
 
     fun markAsFavorite(favorite: Favorite): Completable {
         return authApi.markAsFavorite(preferenceHelper.getId(), favorite)
-                .observeOn(AndroidSchedulers.mainThread())
     }
 }

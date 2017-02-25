@@ -12,8 +12,10 @@ import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 /**
  * Created by Ashish on Jan 03.
  */
-class CreditDelegateAdapter(private val layoutId: Int, private var onItemClickListener: OnItemClickListener?)
-    : ViewTypeDelegateAdapter, RemoveListener {
+class CreditDelegateAdapter(
+        private val layoutId: Int,
+        private var onItemClickListener: OnItemClickListener?
+) : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = CreditHolder(parent)
 

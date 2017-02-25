@@ -6,11 +6,13 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 /**
- * Created by Ashish on Jan 12.
+ * An extension of [Loader] which will handle delivering [RxPresenter] synchronously
+ * to view along with saving and restoring [RxPresenter] state when configuration changes.
  */
-class PresenterLoader<P : RxPresenter<*>> @Inject constructor(context: Context,
-                                                              private val presenterProvider: Provider<P>)
-    : Loader<P>(context) {
+class PresenterLoader<P : RxPresenter<*>> @Inject constructor(
+        context: Context,
+        private val presenterProvider: Provider<P>
+) : Loader<P>(context) {
 
     private var presenter: P? = null
 

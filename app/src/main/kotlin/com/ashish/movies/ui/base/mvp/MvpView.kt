@@ -1,7 +1,7 @@
 package com.ashish.movies.ui.base.mvp
 
 /**
- * Created by Ashish on Dec 28.
+ * Base interface from which every other MVP view should extend from.
  */
 interface MvpView {
 

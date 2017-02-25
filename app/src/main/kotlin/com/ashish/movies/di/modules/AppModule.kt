@@ -1,8 +1,8 @@
 package com.ashish.movies.di.modules
 
+import android.app.Application
 import android.content.Context
 import android.database.sqlite.SQLiteOpenHelper
-import com.ashish.movies.app.MoviesApp
 import com.ashish.movies.data.database.DatabaseHelper
 import com.ashish.movies.data.database.entities.CreditEntity
 import com.ashish.movies.data.database.entities.CreditEntitySQLiteTypeMapping
@@ -16,7 +16,7 @@ import com.ashish.movies.data.database.entities.VideoEntity
 import com.ashish.movies.data.database.entities.VideoEntitySQLiteTypeMapping
 import com.ashish.movies.data.database.resolvers.movie.MovieSQLiteTypeMapping
 import com.ashish.movies.data.database.resolvers.moviedetail.MovieDetailSQLiteTypeMapping
-import com.ashish.movies.di.annotations.ApplicationQualifier
+import com.ashish.movies.di.annotations.ApplicationContext
 import com.ashish.movies.utils.extensions.defaultSharedPreferences
 import com.pushtorefresh.storio.sqlite.StorIOSQLite
 import com.pushtorefresh.storio.sqlite.impl.DefaultStorIOSQLite
@@ -28,20 +28,19 @@ import javax.inject.Singleton
  * Created by Ashish on Jan 02.
  */
 @Module
-class AppModule(val moviesApp: MoviesApp) {
+class AppModule(val application: Application) {
+
+    @Provides
+    @ApplicationContext
+    fun provideAppContext(): Context = application
 
     @Provides
     @Singleton
-    @ApplicationQualifier
-    fun provideAppContext(): Context = moviesApp
+    fun provideSQLiteOperHelper(@ApplicationContext context: Context): SQLiteOpenHelper = DatabaseHelper(context)
 
     @Provides
     @Singleton
-    fun provideSQLiteOperHelper(@ApplicationQualifier context: Context): SQLiteOpenHelper = DatabaseHelper(context)
-
-    @Provides
-    @Singleton
-    fun provideSharedPrefs(@ApplicationQualifier context: Context) = context.defaultSharedPreferences
+    fun provideSharedPrefs(@ApplicationContext context: Context) = context.defaultSharedPreferences
 
     @Provides
     @Singleton

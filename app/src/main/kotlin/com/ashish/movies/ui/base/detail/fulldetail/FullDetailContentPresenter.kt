@@ -4,11 +4,14 @@ import com.ashish.movies.R
 import com.ashish.movies.data.models.FullDetailContent
 import com.ashish.movies.ui.base.detail.BaseDetailPresenter
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 
 /**
  * Created by Ashish on Jan 20.
  */
-abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>> : BaseDetailPresenter<I, V>() {
+abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
+        schedulerProvider: BaseSchedulerProvider
+) : BaseDetailPresenter<I, V>(schedulerProvider) {
 
     override fun showDetailContent(fullDetailContent: FullDetailContent<I>) {
         fullDetailContent.omdbDetail?.apply {

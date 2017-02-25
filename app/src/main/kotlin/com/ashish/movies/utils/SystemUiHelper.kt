@@ -5,8 +5,10 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 
-class SystemUiHelper(activity: Activity, private var listener: OnVisibilityChangeListener? = null)
-    : View.OnSystemUiVisibilityChangeListener {
+class SystemUiHelper(
+        activity: Activity,
+        private var listener: OnVisibilityChangeListener? = null
+) : View.OnSystemUiVisibilityChangeListener {
 
     private val hideRunnable: Runnable
     private val decorView = activity.window.decorView

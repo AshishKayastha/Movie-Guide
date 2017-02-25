@@ -16,7 +16,6 @@ import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -52,7 +51,7 @@ import com.ashish.movies.utils.Constants.IMDB_BASE_URL
 import com.ashish.movies.utils.Constants.YOUTUBE_BASE_URL
 import com.ashish.movies.utils.CustomTypefaceSpan
 import com.ashish.movies.utils.FontUtils
-import com.ashish.movies.utils.GravitySnapHelper
+import com.ashish.movies.utils.StartSnapHelper
 import com.ashish.movies.utils.TransitionListenerAdapter
 import com.ashish.movies.utils.Utils
 import com.ashish.movies.utils.extensions.animateBackgroundColorChange
@@ -349,7 +348,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
             addItemDecoration(ItemOffsetDecoration())
             layoutManager = LinearLayoutManager(this@BaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)
             this.adapter = adapter
-            val snapHelper = GravitySnapHelper(Gravity.START)
+            val snapHelper = StartSnapHelper()
             snapHelper.attachToRecyclerView(this)
         }
 

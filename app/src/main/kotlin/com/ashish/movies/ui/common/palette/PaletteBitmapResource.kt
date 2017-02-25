@@ -7,8 +7,10 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 /**
  * A [Resource] implementation for [PaletteBitmap].
  */
-class PaletteBitmapResource(private val paletteBitmap: PaletteBitmap, private val bitmapPool: BitmapPool)
-    : Resource<PaletteBitmap> {
+class PaletteBitmapResource(
+        private val paletteBitmap: PaletteBitmap,
+        private val bitmapPool: BitmapPool
+) : Resource<PaletteBitmap> {
 
     override fun get() = paletteBitmap
 

@@ -9,8 +9,11 @@ import com.ashish.movies.utils.extensions.setVisibility
 /**
  * Created by Ashish on Dec 27.
  */
-open class EmptyRecyclerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)
-    : RecyclerView(context, attrs, defStyle) {
+open class EmptyRecyclerView @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyle: Int = 0
+) : RecyclerView(context, attrs, defStyle) {
 
     var emptyView: View? = null
 
@@ -45,7 +48,12 @@ open class EmptyRecyclerView @JvmOverloads constructor(context: Context, attrs: 
         emptyView?.setVisibility(!hasItems)
     }
 
-    fun performCleanup() {
+    override fun onDetachedFromWindow() {
+        performCleanup()
+        super.onDetachedFromWindow()
+    }
+
+    private fun performCleanup() {
         adapter?.unregisterAdapterDataObserver(dataObserver)
         clearOnScrollListeners()
         adapter = null

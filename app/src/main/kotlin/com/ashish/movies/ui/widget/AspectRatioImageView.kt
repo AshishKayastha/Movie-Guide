@@ -8,8 +8,11 @@ import com.ashish.movies.R
 /**
  * Created by Ashish on Dec 29.
  */
-class AspectRatioImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
-                                                     defStyleAttr: Int = 0) : AppCompatImageView(context, attrs, defStyleAttr) {
+class AspectRatioImageView @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0
+) : AppCompatImageView(context, attrs, defStyleAttr) {
 
     private var heightRatio: Float = 1.0f
 

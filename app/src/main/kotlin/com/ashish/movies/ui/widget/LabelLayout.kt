@@ -20,8 +20,11 @@ import com.ashish.movies.utils.extensions.spToPx
 /**
  * LabelLayout provides a label at the corner to display text
  */
-class LabelLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
-                                            defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
+class LabelLayout @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val labelRect = Rect()
     private val textBounds = Rect()

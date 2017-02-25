@@ -10,6 +10,7 @@ import com.ashish.movies.utils.Utils
 import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
+import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import timber.log.Timber
 import java.io.IOException
@@ -18,7 +19,9 @@ import java.util.*
 /**
  * Created by Ashish on Jan 03.
  */
-abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() {
+abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
+        schedulerProvider: BaseSchedulerProvider
+) : RxPresenter<V>(schedulerProvider) {
 
     protected var fullDetailContent: FullDetailContent<I>? = null
 
@@ -36,6 +39,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() 
                 getView()?.showProgress()
                 addDisposable(getDetailContent(id)
                         .doOnNext { fullDetailContent = it }
+                        .observeOn(schedulerProvider.ui())
                         .subscribe({ showDetailContent(it) }, { onLoadDetailError(it, getErrorMessageId()) }))
             }
         } else {
@@ -73,7 +77,9 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() 
         addImages(imageUrlList, getPosterImages(detailContent), String?::getPosterUrl)
         addImages(imageUrlList, getBackdropImages(detailContent), String?::getBackdropUrl)
 
-        if (imageUrlList.isNotEmpty()) getView()?.showImageList(imageUrlList)
+        if (imageUrlList.isNotEmpty()) {
+            getView()?.showImageList(imageUrlList)
+        }
     }
 
     private fun addImages(urlList: ArrayList<String>, imageItemList: List<ImageItem>?, getImage: (String?) -> String?) {
@@ -89,7 +95,10 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>> : RxPresenter<V>() 
     private fun showYouTubeTrailer(detailContent: I) {
         val videoResults = getVideos(detailContent)?.results
         if (videoResults.isNotNullOrEmpty()) {
-            var youtubeTrailerUrl = videoResults!!.firstOrNull { it.site == "YouTube" && it.type == "Trailer" }?.key
+            var youtubeTrailerUrl = videoResults!!
+                    .firstOrNull { it.site == "YouTube" && it.type == "Trailer" }
+                    ?.key
+
             if (youtubeTrailerUrl.isNullOrEmpty()) {
                 youtubeTrailerUrl = videoResults[0].key
             }

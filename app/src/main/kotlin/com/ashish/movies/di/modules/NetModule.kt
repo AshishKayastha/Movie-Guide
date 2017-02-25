@@ -1,9 +1,12 @@
 package com.ashish.movies.di.modules
 
 import com.ashish.movies.BuildConfig
-import com.ashish.movies.utils.ApiConstants.OMDB_BASE_API_URL
-import com.ashish.movies.utils.ApiConstants.TMDB_BASE_API_URL
+import com.ashish.movies.di.annotations.BaseOkHttp
 import com.ashish.movies.utils.ApiKeyInterceptor
+import com.ashish.movies.utils.Constants.OMDB_API_BASE_URL
+import com.ashish.movies.utils.Constants.TMDB_API_BASE_URL
+import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
+import com.ashish.movies.utils.schedulers.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -24,10 +27,11 @@ import javax.inject.Singleton
  * Created by Ashish on Dec 27.
  */
 @Module
-class NetModule {
+object NetModule {
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = if (BuildConfig.DEBUG) BODY else NONE
@@ -36,44 +40,49 @@ class NetModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClientBuilder(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient.Builder {
+    @JvmStatic
+    @BaseOkHttp
+    fun provideBaseOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
                 .connectTimeout(30, SECONDS)
                 .readTimeout(30, SECONDS)
                 .writeTimeout(30, SECONDS)
                 .addInterceptor(loggingInterceptor)
+                .build()
     }
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideApiKeyInterceptor(): Interceptor = ApiKeyInterceptor()
 
     @Provides
     @Singleton
-    @Named("omdb")
-    fun provideOMDbClient(builder: OkHttpClient.Builder): OkHttpClient = builder.build()
-
-    @Provides
-    @Singleton
-    fun provideTMDbClient(builder: OkHttpClient.Builder, apiKeyInterceptor: Interceptor): OkHttpClient {
-        return builder.addNetworkInterceptor(apiKeyInterceptor).build()
+    @JvmStatic
+    fun provideTMDbClient(@BaseOkHttp okHttpClient: OkHttpClient, apiKeyInterceptor: Interceptor): OkHttpClient {
+        return okHttpClient.newBuilder()
+                .addNetworkInterceptor(apiKeyInterceptor)
+                .build()
     }
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideMoshiConverterFactory(): MoshiConverterFactory = MoshiConverterFactory.create()
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideRxJavaCallAdapterFactory(): CallAdapter.Factory
             = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
                         callAdapterFactory: CallAdapter.Factory): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(TMDB_BASE_API_URL)
+                .baseUrl(TMDB_API_BASE_URL)
                 .client(client)
                 .addConverterFactory(moshiConverterFactory)
                 .addCallAdapterFactory(callAdapterFactory)
@@ -82,14 +91,20 @@ class NetModule {
 
     @Provides
     @Singleton
+    @JvmStatic
     @Named("omdb")
-    fun provideOMDbRetrofit(@Named("omdb") client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
+    fun provideOMDbRetrofit(@BaseOkHttp client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
                             callAdapterFactory: CallAdapter.Factory): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(OMDB_BASE_API_URL)
+                .baseUrl(OMDB_API_BASE_URL)
                 .client(client)
                 .addConverterFactory(moshiConverterFactory)
                 .addCallAdapterFactory(callAdapterFactory)
                 .build()
     }
+
+    @Provides
+    @Singleton
+    @JvmStatic
+    fun schedulerProvider(schedulerProvider: SchedulerProvider): BaseSchedulerProvider = schedulerProvider
 }

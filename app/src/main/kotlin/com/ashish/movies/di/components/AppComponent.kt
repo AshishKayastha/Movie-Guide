@@ -11,7 +11,11 @@ import javax.inject.Singleton
  * Created by Ashish on Dec 27.
  */
 @Singleton
-@Component(modules = arrayOf(AppModule::class, NetModule::class, ApiModule::class))
+@Component(modules = arrayOf(
+        AppModule::class,
+        NetModule::class,
+        ApiModule::class
+))
 interface AppComponent {
 
     fun plus(uiModule: UiModule): UiComponent

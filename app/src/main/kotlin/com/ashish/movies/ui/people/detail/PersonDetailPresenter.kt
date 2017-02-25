@@ -8,14 +8,17 @@ import com.ashish.movies.ui.base.detail.BaseDetailPresenter
 import com.ashish.movies.ui.base.detail.BaseDetailView
 import com.ashish.movies.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movies.utils.extensions.getFormattedMediumDate
+import com.ashish.movies.utils.schedulers.BaseSchedulerProvider
 import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 04.
  */
-class PersonDetailPresenter @Inject constructor(private val peopleInteractor: PeopleInteractor)
-    : BaseDetailPresenter<PersonDetail, BaseDetailView<PersonDetail>>() {
+class PersonDetailPresenter @Inject constructor(
+        private val peopleInteractor: PeopleInteractor,
+        schedulerProvider: BaseSchedulerProvider
+) : BaseDetailPresenter<PersonDetail, BaseDetailView<PersonDetail>>(schedulerProvider) {
 
     override fun getDetailContent(id: Long) = peopleInteractor.getFullPersonDetail(id)
 

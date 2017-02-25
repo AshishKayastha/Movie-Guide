@@ -16,29 +16,35 @@ import javax.inject.Singleton
  * Created by Ashish on Dec 27.
  */
 @Module
-class ApiModule {
+object ApiModule {
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideMovieApi(retrofit: Retrofit): MovieApi = retrofit.create(MovieApi::class.java)
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideTVShowApi(retrofit: Retrofit): TVShowApi = retrofit.create(TVShowApi::class.java)
 
     @Provides
     @Singleton
+    @JvmStatic
     fun providePeopleApi(retrofit: Retrofit): PeopleApi = retrofit.create(PeopleApi::class.java)
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideSearchApi(retrofit: Retrofit): SearchApi = retrofit.create(SearchApi::class.java)
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideOMDbApi(@Named("omdb") retrofit: Retrofit): OMDbApi = retrofit.create(OMDbApi::class.java)
 }

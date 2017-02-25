@@ -3,9 +3,9 @@ package com.ashish.movies.utils.extensions
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TypefaceSpan
-import com.ashish.movies.utils.ApiConstants.BACKDROP_W1280_URL_PREFIX
-import com.ashish.movies.utils.ApiConstants.ORIGINAL_IMAGE_URL_PREFIX
-import com.ashish.movies.utils.ApiConstants.POSTER_W500_URL_PREFIX
+import com.ashish.movies.utils.Constants.BACKDROP_W1280_URL_PREFIX
+import com.ashish.movies.utils.Constants.ORIGINAL_IMAGE_URL_PREFIX
+import com.ashish.movies.utils.Constants.POSTER_W500_URL_PREFIX
 import java.text.NumberFormat
 
 /**

@@ -18,7 +18,8 @@ class MoviesApp : Application() {
 
     companion object {
 
-        @JvmStatic lateinit var context: Context
+        @JvmStatic
+        lateinit var context: Context
 
         @JvmStatic
         fun getRefWatcher(context: Context) = (context.applicationContext as MoviesApp).refWatcher

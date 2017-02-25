@@ -219,10 +219,12 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         android.R.id.home -> performAction { drawerLayout.openDrawer(START) }
+
         R.id.action_search -> performAction {
             startActivity(Intent(this, MultiSearchActivity::class.java))
             overridePendingTransition(0, 0)
         }
+
         else -> super.onOptionsItemSelected(item)
     }
 

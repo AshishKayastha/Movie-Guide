@@ -13,7 +13,9 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 08.
  */
-class KeyboardWatcher @Inject constructor(private val activity: Activity) : ViewTreeObserver.OnGlobalLayoutListener {
+class KeyboardWatcher @Inject constructor(
+        private val activity: Activity
+) : ViewTreeObserver.OnGlobalLayoutListener {
 
     companion object {
         private const val MIN_KEYBOARD_HEIGHT_PX = 150

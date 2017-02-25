@@ -18,8 +18,10 @@ import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 /**
  * Created by Ashish on Jan 05.
  */
-class MultiSearchDelegateAdapter(private val layoutId: Int, private var onItemClickListener: OnItemClickListener?)
-    : ViewTypeDelegateAdapter, RemoveListener {
+class MultiSearchDelegateAdapter(
+        private val layoutId: Int,
+        private var onItemClickListener: OnItemClickListener?
+) : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = MultiSearchHolder(parent)
 

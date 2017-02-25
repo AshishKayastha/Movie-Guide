@@ -7,7 +7,8 @@ import android.support.v4.graphics.ColorUtils
 import android.support.v7.graphics.Palette
 
 /**
- * Created by Ashish on Jan 04.
+ * Determines if a given bitmap is dark. This extracts a palette inline so should not be called
+ * with a large image!! If palette fails then check the color of the specified pixel
  */
 fun Bitmap.isDark(pixelX: Int, pixelY: Int): Boolean {
     // first try palette with a small color quant size
@@ -34,8 +35,19 @@ fun Int.isDark(): Boolean {
     return hsl.isDark()
 }
 
+/**
+ * Check that the lightness value (0–1)
+ */
 fun FloatArray.isDark() = this[2] < 0.5f
 
+/**
+ * Calculate a variant of the color to make it more suitable for overlaying information. Light
+ * colors will be lightened and dark colors will be darkened
+ *
+ * @param isDark              whether color is light or dark
+ * @param lightnessMultiplier the amount to modify the color e.g. 0.1f will alter it by 10%
+ * @return the adjusted color
+ */
 @ColorInt
 fun Int.scrimify(isDark: Boolean, @FloatRange(from = 0.0, to = 1.0) lightnessMultiplier: Float = 0.075f): Int {
     val hsl = FloatArray(3)

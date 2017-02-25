@@ -15,8 +15,10 @@ import com.ashish.movies.utils.extensions.getYearOnly
 /**
  * Created by Ashish on Dec 30.
  */
-class MovieDelegateAdapter(private val layoutId: Int, private var onItemClickListener: OnItemClickListener?)
-    : ViewTypeDelegateAdapter, RemoveListener {
+class MovieDelegateAdapter(
+        private val layoutId: Int,
+        private var onItemClickListener: OnItemClickListener?
+) : ViewTypeDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup) = MovieHolder(parent)
 

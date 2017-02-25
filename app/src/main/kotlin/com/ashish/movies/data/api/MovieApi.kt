@@ -3,7 +3,7 @@ package com.ashish.movies.data.api
 import com.ashish.movies.data.models.Movie
 import com.ashish.movies.data.models.MovieDetail
 import com.ashish.movies.data.models.Results
-import com.ashish.movies.utils.ApiConstants.INCLUDE_IMAGE_LANGUAGE
+import com.ashish.movies.utils.Constants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -22,16 +22,23 @@ interface MovieApi {
     }
 
     @GET("movie/{movieType}")
-    fun getMovies(@Path("movieType") movieType: String?, @Query("page") page: Int = 1): Observable<Results<Movie>>
+    fun getMovies(
+            @Path("movieType") movieType: String?,
+            @Query("page") page: Int = 1
+    ): Observable<Results<Movie>>
 
     @GET("movie/{movieId}" + INCLUDE_IMAGE_LANGUAGE)
-    fun getMovieDetail(@Path("movieId") movieId: Long,
-                       @Query("append_to_response") appendedResponse: String): Observable<MovieDetail>
+    fun getMovieDetail(
+            @Path("movieId") movieId: Long,
+            @Query("append_to_response") appendedResponse: String
+    ): Observable<MovieDetail>
 
     @GET("discover/movie")
-    fun discoverMovie(@Query("sort_by") sortBy: String = "popularity.desc",
-                      @Query("release_date.gte") minReleaseDate: String? = null,
-                      @Query("release_date.lte") maxReleaseDate: String? = null,
-                      @Query("with_genres") genreIds: String? = null,
-                      @Query("page") page: Int = 1): Observable<Results<Movie>>
+    fun discoverMovie(
+            @Query("sort_by") sortBy: String = "popularity.desc",
+            @Query("release_date.gte") minReleaseDate: String? = null,
+            @Query("release_date.lte") maxReleaseDate: String? = null,
+            @Query("with_genres") genreIds: String? = null,
+            @Query("page") page: Int = 1
+    ): Observable<Results<Movie>>
 }

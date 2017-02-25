@@ -17,9 +17,9 @@ import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movies.ui.movie.detail.MovieDetailActivity
 import com.ashish.movies.ui.tvshow.detail.TVShowDetailActivity
-import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
-import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_PERSON
+import com.ashish.movies.utils.Constants.MEDIA_TYPE_MOVIE
+import com.ashish.movies.utils.Constants.MEDIA_TYPE_TV
 import com.ashish.movies.utils.extensions.getOriginalImageUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty
 import icepick.State
@@ -101,6 +101,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
                 showBackdropImage(getPosterPath())
             }
         }
+
         super.showDetailContent(detailContent)
     }
 

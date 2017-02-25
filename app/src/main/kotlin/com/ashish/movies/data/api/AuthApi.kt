@@ -27,5 +27,8 @@ interface AuthApi {
     fun getUserAccount(@Query("session_id") sessionId: String): Observable<Account>
 
     @POST("account/{accountId}/favorite")
-    fun markAsFavorite(@Path("accountId") accountId: Long, @Body favorite: Favorite): Completable
+    fun markAsFavorite(
+            @Path("accountId") accountId: Long,
+            @Body favorite: Favorite
+    ): Completable
 }

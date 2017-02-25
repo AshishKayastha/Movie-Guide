@@ -13,8 +13,8 @@ import com.ashish.movies.di.components.UiComponent
 import com.ashish.movies.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movies.ui.common.adapter.OnItemClickListener
 import com.ashish.movies.ui.common.adapter.RecyclerViewAdapter
-import com.ashish.movies.utils.ApiConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.Constants.ADAPTER_TYPE_MOVIE
+import com.ashish.movies.utils.Constants.MEDIA_TYPE_MOVIE
 import com.ashish.movies.utils.extensions.getBackdropUrl
 import com.ashish.movies.utils.extensions.getPosterUrl
 import com.ashish.movies.utils.extensions.isNotNullOrEmpty

@@ -1,9 +1,9 @@
 package com.ashish.movies.utils
 
-import com.ashish.movies.utils.ApiConstants.API_KEY
-import com.ashish.movies.utils.ApiConstants.LANGUAGE
-import com.ashish.movies.utils.ApiConstants.TMDB_API_KEY
-import com.ashish.movies.utils.ApiConstants.US_ENGLISH
+import com.ashish.movies.utils.Constants.API_KEY
+import com.ashish.movies.utils.Constants.LANGUAGE
+import com.ashish.movies.utils.Constants.TMDB_API_KEY
+import com.ashish.movies.utils.Constants.US_ENGLISH
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

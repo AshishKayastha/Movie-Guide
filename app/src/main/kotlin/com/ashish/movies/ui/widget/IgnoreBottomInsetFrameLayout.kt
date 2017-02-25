@@ -8,9 +8,11 @@ import android.widget.FrameLayout
 /**
  * Created by Ashish on Jan 15.
  */
-class IgnoreBottomInsetFrameLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
-                                                             defStyleAttr: Int = 0)
-    : FrameLayout(context, attrs, defStyleAttr) {
+class IgnoreBottomInsetFrameLayout @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     @Suppress("DEPRECATION", "OverridingDeprecatedMember")
     override fun fitSystemWindows(insets: Rect): Boolean {

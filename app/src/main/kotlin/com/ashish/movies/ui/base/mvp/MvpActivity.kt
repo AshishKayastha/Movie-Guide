@@ -13,7 +13,9 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 /**
- * Created by Ashish on Dec 31.
+ * Base Activity class that follows MVP pattern. This will handle injecting
+ * [PresenterLoader] which is useful for saving and restoring [RxPresenter]
+ * state using [LoaderManager].
  */
 abstract class MvpActivity<V : MvpView, P : RxPresenter<V>> : BaseActivity(), MvpView,
         LoaderManager.LoaderCallbacks<P> {

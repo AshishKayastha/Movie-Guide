@@ -12,8 +12,11 @@ import java.util.*
 /**
  * Created by Ashish on Dec 30.
  */
-class RecyclerViewAdapter<in I : ViewType>(layoutId: Int, adapterType: Int, onItemClickListener: OnItemClickListener?)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
+class RecyclerViewAdapter<in I : ViewType>(
+        layoutId: Int,
+        adapterType: Int,
+        onItemClickListener: OnItemClickListener?
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
 
     private val loadingItem = object : ViewType {
         override fun getViewType() = LOADING_VIEW

@@ -84,6 +84,9 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     protected open fun loadData() = presenter?.loadData(type)
 
+    /**
+     * Get type of adapter to represent type of data being shown in this list
+     */
     abstract fun getAdapterType(): Int
 
     override fun onRefresh() {
@@ -131,18 +134,18 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         }
     }
 
+    /**
+     * Get transition name for shared element transition
+     */
     abstract fun getTransitionNameId(position: Int): Int
 
+    /**
+     * Create intent to start detail activity
+     */
     abstract fun getDetailIntent(position: Int): Intent?
 
     override fun onDestroyView() {
-        performCleanup()
-        super.onDestroyView()
-    }
-
-    protected open fun performCleanup() {
-        recyclerView.performCleanup()
         recyclerViewAdapter.removeListener()
-        swipeRefreshLayout.performCleanup()
+        super.onDestroyView()
     }
 }

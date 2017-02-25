@@ -1,7 +1,8 @@
 package com.ashish.movies.ui.base.mvp
 
 /**
- * Created by Ashish on Dec 28.
+ * Base MVP interface to handle showing or hiding progress bar
+ * depending upon whether data is loading or loaded.
  */
 interface ProgressView : MvpView {
 
