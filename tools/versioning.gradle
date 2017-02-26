@@ -1,0 +1,57 @@
+ext.versions = [
+        //Plugins
+        kotlinVersion        : '1.0.6',
+        dexCountPluginVersion: '0.6.2',
+
+        // Libraries
+        daggerVersion        : '2.9',
+        leakCanaryVersion    : '1.5',
+        okHttpVersion        : '3.6.0',
+        timberVersion        : '4.5.1',
+        icepickVersion       : '3.2.0',
+        retrofitVersion      : '2.2.0',
+        rxJava2Version       : '2.0.6',
+        rxAndroid2Version    : '2.0.1',
+        rxJava2InteropVersion: '0.9.1',
+        paperParcelVersion   : '2.0.0',
+        storioVersion        : '1.12.3',
+        supportLibVersion    : '25.2.0',
+        glideVersion         : '3.8.0-SNAPSHOT',
+        kotterKnifeVersion   : '0.1.0-SNAPSHOT'
+]
+
+ext {
+    /**
+     * Builds an Android version code from the version of the project.
+     * This is designed to handle the -SNAPSHOT and -RC format.
+     *
+     * I.e. during development the version ends with -SNAPSHOT. As the code stabilizes and release nears
+     * one or many Release Candidates are tagged. These all end with "-RC1", "-RC2" etc.
+     * And the final release is without any suffix.
+     * @return
+     */
+    buildVersionCode = {
+        // The rules is as follows:
+        // -SNAPSHOT counts as 0
+        // -RC* counts as the RC number, i.e. 1 to 98
+        // final release counts as 99.
+        // Thus you can only have 98 Release Candidates, which ought to be enough for everyone
+
+        def candidate = "99"
+        def (major, minor, patch) = version.toLowerCase().replaceAll('-', '').tokenize('.')
+        if (patch.endsWith("snapshot")) {
+            candidate = "0"
+            patch = patch.replaceAll("[^0-9]", "")
+        } else {
+            def rc
+            (patch, rc) = patch.tokenize("rc")
+            if (rc) {
+                candidate = rc
+            }
+        }
+
+        (major, minor, patch, candidate) = [major, minor, patch, candidate].collect { it.toInteger() }
+
+        (major * 1000000) + (minor * 10000) + (patch * 100) + candidate;
+    }
+}

@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlinVersion = '1.0.6'
+    apply from: 'tools/versioning.gradle'
 
     repositories {
         jcenter()
@@ -7,8 +7,8 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0-rc1'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlinVersion"
+        classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$versions.dexCountPluginVersion"
     }
 }
 
@@ -24,21 +24,4 @@ task clean(type: Delete) {
 
 task wrapper(type: Wrapper) {
     gradleVersion = "3.4"
-}
-
-ext {
-    daggerVersion = '2.9'
-    okHttpVersion = '3.6.0'
-    timberVersion = '4.5.1'
-    storioVersion = '1.12.3'
-    icepickVersion = '3.2.0'
-    leakCanaryVersion = '1.5'
-    retrofitVersion = '2.2.0'
-    rxJava2Version = '2.0.6'
-    rxAndroid2Version = '2.0.1'
-    rxJava2InteropVersion = '0.9.1'
-    supportLibVersion = '25.2.0'
-    paperParcelVersion = '2.0.0'
-    glideVersion = '3.8.0-SNAPSHOT'
-    kotterKnifeVersion = '0.1.0-SNAPSHOT'
 }
