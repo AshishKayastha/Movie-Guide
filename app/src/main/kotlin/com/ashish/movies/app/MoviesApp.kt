@@ -35,11 +35,10 @@ class MoviesApp : Application(), ActivityComponentBuilderHost {
 
     override fun onCreate() {
         super.onCreate()
-        initDagger()
-
         if (LeakCanary.isInAnalyzerProcess(this)) return
         refWatcher = LeakCanary.install(this)
 
+        initDagger()
         context = this
         Logger.init()
     }

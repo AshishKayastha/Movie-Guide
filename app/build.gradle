@@ -13,22 +13,73 @@ android {
         targetSdkVersion 25
         versionCode 100
         versionName "1.0.0"
+
+        buildConfigField 'String', 'TMDB_API_KEY', TMDB_API_KEY
+    }
+
+    signingConfigs {
+        release {
+            def keystoreProperties = new Properties()
+            def keystorePropertiesFile = file("../tools/signing.properties")
+            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+            keyAlias keystoreProperties['RELEASE_KEY_ALIAS']
+            keyPassword keystoreProperties['RELEASE_KEY_PASSWORD']
+            storePassword keystoreProperties['RELEASE_STORE_PASSWORD']
+            storeFile file(keystoreProperties['RELEASE_STORE_FILE'])
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        buildTypes.each {
-            it.buildConfigField 'String', 'TMDB_API_KEY', TMDB_API_KEY
+        applicationVariants.all { variant ->
+            // Perform extra task for release build type
+            if (variant.buildType.name.contains('release')) {
+
+                // Change release file name to "Movies v{versionName}.apk"
+                variant.outputs.each { output ->
+                    def apk = output.outputFile;
+                    def newName = "Movies v" + defaultConfig.versionName + ".apk";
+                    output.outputFile = new File(apk.parentFile, newName);
+                }
+
+                variant.assemble.doLast {
+                    def path = null;
+                    variant.outputs.each { output ->
+                        //noinspection GrReassignedInClosureLocalVar
+                        path = output.outputFile
+
+                        // Delete unaligned apk file
+                        File aligned = output.outputFile
+                        File unaligned = output.packageApplication.outputFile;
+                        if (!unaligned.getName().equalsIgnoreCase(aligned.getName())) {
+                            unaligned.delete()
+                        }
+                    }
+
+                    // Show file in explorer/finder
+                    exec {
+                        if (System.properties['os.name'].toLowerCase().contains('windows')) {
+                            ['explorer', '/select,', path].execute()
+                        } else if (System.properties['os.name'].toLowerCase().contains('mac os x')) {
+                            ['open', '-R', path].execute()
+                        }
+                    }
+                }
+            }
         }
     }
 
     lintOptions {
-        abortOnError false
-        disable 'BinaryOperationInTimber'
+        xmlReport false
+        warningsAsErrors true
+        lintConfig file("$project.rootDir/tools/lint.xml")
+        htmlOutput file("$project.buildDir/outputs/lint/lint.html")
     }
 
     dexOptions {
@@ -65,9 +116,14 @@ dependencies {
     compile "com.android.support:palette-v7:$supportLibVersion"
     compile "com.android.support:cardview-v7:$supportLibVersion"
 
-    compile 'com.jakewharton.timber:timber:4.5.1'
-    compile 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
-    compile 'com.github.bumptech.glide:glide:3.8.0-SNAPSHOT'
+    // Timber for logging
+    compile "com.jakewharton.timber:timber:$timberVersion"
+
+    // KotterKnife
+    compile "com.jakewharton:kotterknife:$kotterKnifeVersion"
+
+    // Glide (Image Loading)
+    compile "com.github.bumptech.glide:glide:$glideVersion"
 
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
@@ -83,12 +139,12 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
 
     // OkHttp
-    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 
     // RxJava 2/RxAndroid 2
-    compile 'io.reactivex.rxjava2:rxjava:2.0.6'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.github.akarnokd:rxjava2-interop:0.9.1'
+    compile "io.reactivex.rxjava2:rxjava:$rxJava2Version"
+    compile "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version"
+    compile "com.github.akarnokd:rxjava2-interop:$rxJava2InteropVersion"
 
     // Dagger 2
     compile "com.google.dagger:dagger:$daggerVersion"
