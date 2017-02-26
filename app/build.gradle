@@ -9,7 +9,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.ashish.movies"
+        applicationId "com.ashish.movieguide"
         minSdkVersion 21
         targetSdkVersion 25
         versionName version
@@ -42,10 +42,10 @@ android {
             // Perform extra task for release build type
             if (variant.buildType.name.contains('release')) {
 
-                // Change release file name to "Movies v{versionName}.apk"
+                // Change release file name to "Movie Guide v{versionName}.apk"
                 variant.outputs.each { output ->
                     def apk = output.outputFile;
-                    def newName = "Movies v" + defaultConfig.versionName + ".apk";
+                    def newName = "Movie Guide v" + defaultConfig.versionName + ".apk";
                     output.outputFile = new File(apk.parentFile, newName);
                 }
 

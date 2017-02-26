@@ -3,7 +3,7 @@
     style="@style/Match.Width"
     android:paddingBottom="@dimen/spacing_medium">
 
-    <com.ashish.movies.ui.widget.FontTextView
+    <com.ashish.movieguide.ui.widget.FontTextView
         style="@style/DetailTitle"
         android:text="@string/seasons_title" />
 

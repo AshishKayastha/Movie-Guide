@@ -9,7 +9,7 @@
         android:id="@+id/item_content_view"
         style="@style/Match.Width">
 
-        <com.ashish.movies.ui.widget.AspectRatioImageView
+        <com.ashish.movieguide.ui.widget.AspectRatioImageView
             android:id="@+id/poster_image"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             style="@style/Match.Width"
             android:padding="@dimen/spacing_large">
 
-            <com.ashish.movies.ui.widget.FontTextView
+            <com.ashish.movieguide.ui.widget.FontTextView
                 android:id="@+id/content_title"
                 style="@style/PrimaryText"
                 android:lineSpacingExtra="@dimen/spacing_micro"
@@ -30,7 +30,7 @@
                 app:fontName="@string/font_montserrat_medium"
                 tools:text="Movie Title" />
 
-            <com.ashish.movies.ui.widget.FontTextView
+            <com.ashish.movieguide.ui.widget.FontTextView
                 android:id="@+id/content_subtitle"
                 style="@style/SecondaryText"
                 android:layout_marginTop="@dimen/spacing_micro"

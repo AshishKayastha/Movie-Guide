@@ -15,7 +15,7 @@
         style="@style/ProgressBar.Small"
         android:visibility="visible" />
 
-    <com.ashish.movies.ui.widget.FontTextView
+    <com.ashish.movieguide.ui.widget.FontTextView
         android:id="@+id/loading_text"
         style="@style/PrimaryText"
         android:layout_marginStart="@dimen/spacing_medium"

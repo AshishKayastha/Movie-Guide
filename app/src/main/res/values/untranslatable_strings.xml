@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Movies</string>
+    <string name="app_name" translatable="false">Movie Guide</string>
 
     <string name="font_montserrat_regular" translatable="false">Montserrat-Regular</string>
     <string name="font_montserrat_medium" translatable="false">Montserrat-Medium</string>
 
     <!-- Transition Names -->
-    <string name="transition_tv_poster">tv_poster_image</string>
-    <string name="transition_movie_poster">movie_poster_image</string>
-    <string name="transition_person_profile">person_profile_image</string>
-    <string name="transition_season_poster">season_poster_image</string>
-    <string name="transition_episode_image">episode_still_image</string>
+    <string name="transition_tv_poster" translatable="false">tv_poster_image</string>
+    <string name="transition_movie_poster" translatable="false">movie_poster_image</string>
+    <string name="transition_person_profile" translatable="false">person_profile_image</string>
+    <string name="transition_season_poster" translatable="false">season_poster_image</string>
+    <string name="transition_episode_image" translatable="false">episode_still_image</string>
 </resources>

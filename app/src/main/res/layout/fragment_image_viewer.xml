@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Match">
 
-    <com.ashish.movies.ui.widget.TouchImageView
+    <com.ashish.movieguide.ui.widget.TouchImageView
         android:id="@+id/image_view"
         style="@style/Match" />
 

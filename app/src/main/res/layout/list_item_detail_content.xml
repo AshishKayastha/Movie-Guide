@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Match.Width">
 
-    <com.ashish.movies.ui.widget.FontTextView
+    <com.ashish.movieguide.ui.widget.FontTextView
         android:id="@+id/content_title"
         style="@style/PrimaryText.Title"
         tools:text="@string/runtime_title" />
 
-    <com.ashish.movies.ui.widget.FontTextView
+    <com.ashish.movieguide.ui.widget.FontTextView
         android:id="@+id/content_text"
         style="@style/SecondaryText.Title"
         tools:text="2h 30min" />

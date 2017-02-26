@@ -11,7 +11,7 @@
         style="@style/Match.Width"
         android:elevation="@dimen/toolbar_elevation">
 
-        <com.ashish.movies.ui.widget.IgnoreBottomInsetFrameLayout
+        <com.ashish.movieguide.ui.widget.IgnoreBottomInsetFrameLayout
             android:id="@+id/app_bar"
             style="@style/Match.Width"
             android:background="@color/image_view_bg_color"
@@ -23,11 +23,11 @@
                 style="@style/Toolbar"
                 android:background="@null" />
 
-        </com.ashish.movies.ui.widget.IgnoreBottomInsetFrameLayout>
+        </com.ashish.movieguide.ui.widget.IgnoreBottomInsetFrameLayout>
 
     </LinearLayout>
 
-    <com.ashish.movies.ui.widget.InkPageIndicator
+    <com.ashish.movieguide.ui.widget.InkPageIndicator
         android:id="@+id/indicator"
         style="@style/Wrap"
         android:layout_gravity="bottom|center_horizontal"

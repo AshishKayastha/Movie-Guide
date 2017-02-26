@@ -5,7 +5,7 @@
     android:foreground="?selectableItemBackground"
     android:stateListAnimator="@animator/elevation_animator">
 
-    <com.ashish.movies.ui.widget.AspectRatioImageView
+    <com.ashish.movieguide.ui.widget.AspectRatioImageView
         android:id="@+id/detail_content_image"
         android:layout_width="180dp"
         android:layout_height="wrap_content"

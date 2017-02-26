@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Match.Width">
 
-    <com.ashish.movies.ui.widget.FontTextView
+    <com.ashish.movieguide.ui.widget.FontTextView
         android:id="@+id/similar_content_title"
         style="@style/DetailTitle"
         android:text="@string/similar_movies_title" />

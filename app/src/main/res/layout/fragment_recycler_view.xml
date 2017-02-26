@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ashish.movies.ui.widget.MultiSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_refresh"
     style="@style/Match">
 
@@ -7,7 +7,7 @@
 
         <include layout="@layout/layout_empty_view" />
 
-        <com.ashish.movies.ui.widget.StaggeredGridRecyclerView
+        <com.ashish.movieguide.ui.widget.StaggeredGridRecyclerView
             android:id="@+id/recycler_view"
             style="@style/Match"
             android:clipToPadding="false"
@@ -17,4 +17,4 @@
 
     </FrameLayout>
 
-</com.ashish.movies.ui.widget.MultiSwipeRefreshLayout>
+</com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout>

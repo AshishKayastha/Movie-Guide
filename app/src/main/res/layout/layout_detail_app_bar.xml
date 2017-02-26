@@ -38,7 +38,7 @@
                 android:scaleType="centerCrop"
                 tools:ignore="ContentDescription" />
 
-            <com.ashish.movies.ui.widget.FontTextView
+            <com.ashish.movieguide.ui.widget.FontTextView
                 android:id="@+id/content_title_text"
                 style="@style/PrimaryText"
                 android:layout_gravity="bottom"

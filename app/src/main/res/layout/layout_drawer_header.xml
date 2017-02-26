@@ -12,7 +12,7 @@
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
-    <com.ashish.movies.ui.widget.CircleImageView
+    <com.ashish.movieguide.ui.widget.CircleImageView
         android:id="@+id/user_image"
         android:layout_width="@dimen/drawer_user_image_size"
         android:layout_height="@dimen/drawer_user_image_size"
@@ -34,14 +34,14 @@
         android:layout_marginBottom="@dimen/spacing_normal"
         android:gravity="center_vertical">
 
-        <com.ashish.movies.ui.widget.FontTextView
+        <com.ashish.movieguide.ui.widget.FontTextView
             android:id="@+id/name_text"
             style="@style/DrawerHeaderText"
             android:layout_marginBottom="@dimen/spacing_micro"
             app:fontName="@string/font_montserrat_medium"
             tools:text="@string/login_with_tmdb" />
 
-        <com.ashish.movies.ui.widget.FontTextView
+        <com.ashish.movieguide.ui.widget.FontTextView
             android:id="@+id/user_name_text"
             style="@style/DrawerHeaderText"
             tools:text="ashish_kayastha" />
