@@ -3,6 +3,7 @@ package com.ashish.movies.ui.main
 import com.ashish.movies.R
 import com.ashish.movies.data.interactors.AuthInteractor
 import com.ashish.movies.data.models.RequestToken
+import com.ashish.movies.di.scopes.ActivityScope
 import com.ashish.movies.ui.base.mvp.RxPresenter
 import com.ashish.movies.utils.Constants.VALIDATE_TMDB_REQUEST_TOKEN_URL
 import com.ashish.movies.utils.Logger
@@ -13,6 +14,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 28.
  */
+@ActivityScope
 class MainPresenter @Inject constructor(
         private val authInteractor: AuthInteractor,
         schedulerProvider: BaseSchedulerProvider

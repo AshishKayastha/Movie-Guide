@@ -96,14 +96,14 @@ fun TextView.setTitleAndYear(title: String?, releaseDate: String?) {
     text = if (yearOnly.isNotEmpty()) "$title ($yearOnly)" else "$title"
 }
 
-fun ImageView.loadPaletteBitmap(imageUrl: String, func: ((PaletteBitmap?) -> Unit)? = null) {
+inline fun ImageView.loadPaletteBitmap(imageUrl: String, crossinline action: ((PaletteBitmap?) -> Unit)) {
     Glide.with(context)
             .transcodePaletteBitmap(context)
             .load(imageUrl)
             .into(object : ImageViewTarget<PaletteBitmap>(this) {
                 override fun setResource(paletteBitmap: PaletteBitmap?) {
                     setImageBitmap(paletteBitmap?.bitmap)
-                    func?.invoke(paletteBitmap)
+                    action.invoke(paletteBitmap)
                 }
             })
 }

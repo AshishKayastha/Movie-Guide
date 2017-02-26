@@ -13,7 +13,8 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
 
     companion object {
 
-        @JvmStatic protected val INTERPOLATOR: Interpolator = LinearInterpolator()
+        @JvmStatic
+        protected val INTERPOLATOR: Interpolator = LinearInterpolator()
 
         protected val addAnimations = ArrayList<ViewHolder>()
         protected val removeAnimations = ArrayList<ViewHolder>()

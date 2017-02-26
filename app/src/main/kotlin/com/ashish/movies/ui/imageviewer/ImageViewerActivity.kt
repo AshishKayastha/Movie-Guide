@@ -33,7 +33,8 @@ class ImageViewerActivity : BaseActivity() {
         private const val EXTRA_TITLE = "title"
         private const val EXTRA_IMAGE_URL_LIST = "image_url_list"
 
-        @JvmStatic private val INTERPOLATOR = FastOutSlowInInterpolator()
+        @JvmStatic
+        private val INTERPOLATOR = FastOutSlowInInterpolator()
 
         fun createIntent(context: Context, title: String, startingPosition: Int,
                          imageUrlList: ArrayList<String>): Intent {

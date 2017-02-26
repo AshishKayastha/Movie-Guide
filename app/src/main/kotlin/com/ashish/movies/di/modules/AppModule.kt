@@ -28,7 +28,7 @@ import javax.inject.Singleton
  * Created by Ashish on Jan 02.
  */
 @Module
-class AppModule(val application: Application) {
+class AppModule(private val application: Application) {
 
     @Provides
     @ApplicationContext

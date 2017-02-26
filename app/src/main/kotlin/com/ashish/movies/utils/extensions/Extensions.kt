@@ -35,7 +35,9 @@ inline fun isMarshmallowOrAbove(func: () -> Unit) {
 
 fun <T> Collection<T>?.isNotNullOrEmpty() = this != null && size != 0
 
-fun runDelayed(delayMillis: Long, action: () -> Unit) = Handler().postDelayed(Runnable(action), delayMillis)
+fun runDelayed(delayMillis: Long, action: () -> Unit) {
+    Handler().postDelayed(Runnable(action), delayMillis)
+}
 
 fun Drawable?.tint(@ColorInt color: Int): Drawable? {
     if (this != null) {
@@ -44,4 +46,8 @@ fun Drawable?.tint(@ColorInt color: Int): Drawable? {
         return wrapped
     }
     return this
+}
+
+fun <T> MutableCollection<T>.addOrRemove(item: T) {
+    if (contains(item)) remove(item) else add(item)
 }

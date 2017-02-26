@@ -20,7 +20,8 @@ class MoviePresenter @Inject constructor(
 ) : BaseRecyclerViewPresenter<Movie, BaseRecyclerViewMvpView<Movie>>(schedulerProvider) {
 
     companion object {
-        @JvmStatic private val MOVIE_TYPES = arrayOf(NOW_PLAYING, POPULAR, TOP_RATED, UPCOMING)
+        @JvmStatic
+        private val MOVIE_TYPES = arrayOf(NOW_PLAYING, POPULAR, TOP_RATED, UPCOMING)
     }
 
     override fun getType(type: Int?) = MOVIE_TYPES[type ?: 0]
