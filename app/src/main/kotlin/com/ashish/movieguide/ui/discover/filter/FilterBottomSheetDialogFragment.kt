@@ -71,11 +71,11 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private var endDatePickerDialog: DatePickerDialog? = null
     private var startDatePickerDialog: DatePickerDialog? = null
 
-    private val startDateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+    private val startDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         setFormattedDate(year, month, dayOfMonth, true)
     }
 
-    private val endDateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+    private val endDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         setFormattedDate(year, month, dayOfMonth, false)
     }
 

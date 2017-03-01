@@ -143,7 +143,7 @@ class ImageViewerFragment : BaseFragment() {
                 }
             })
 
-            imageView.setOnTouchListener { view, event -> detector.onTouchEvent(event) }
+            imageView.setOnTouchListener { _, event -> detector.onTouchEvent(event) }
         }
     }
 

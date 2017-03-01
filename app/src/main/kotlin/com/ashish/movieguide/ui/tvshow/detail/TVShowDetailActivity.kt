@@ -117,7 +117,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
         similarTVShowsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_TV_SHOW,
                 onSimilarTVShowItemClickLitener)
 
-        similarTVShowsViewStub.setOnInflateListener { viewStub, view ->
+        similarTVShowsViewStub.setOnInflateListener { _, view ->
             val textView = view.find<FontTextView>(R.id.similar_content_title)
             textView.setText(R.string.similar_tv_shows_title)
         }

@@ -95,7 +95,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
     fun withPositiveButton(positiveText: CharSequence?, positiveBtnClick: (() -> Unit)? = null): DialogUtils {
         checkMessageDialog()
 
-        messageDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, { dialogInterface, which ->
+        messageDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, { _, _ ->
             messageDialog?.dismiss()
             positiveBtnClick?.invoke()
         })
@@ -110,7 +110,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
     fun withNegativeButton(negativeText: CharSequence?, negativeBtnClick: (() -> Unit)? = null): DialogUtils {
         checkMessageDialog()
 
-        messageDialog?.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText, { dialogInterface, which ->
+        messageDialog?.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText, { _, _ ->
             messageDialog?.dismiss()
             negativeBtnClick?.invoke()
         })
