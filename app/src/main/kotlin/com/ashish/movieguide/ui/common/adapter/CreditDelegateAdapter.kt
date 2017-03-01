@@ -32,9 +32,10 @@ class CreditDelegateAdapter(
         override fun bindData(item: Credit) = with(item) {
             contentTitle.applyText(if (title.isNotNullOrEmpty()) title else name)
             contentSubtitle.applyText(if (job.isNotNullOrEmpty()) job else character)
-            itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }
+
+        override fun getItemClickListener() = onItemClickListener
 
         override fun getImageUrl(item: Credit): String? {
             with(item) {

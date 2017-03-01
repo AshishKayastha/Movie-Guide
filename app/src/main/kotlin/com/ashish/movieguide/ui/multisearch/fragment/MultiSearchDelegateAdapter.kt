@@ -12,7 +12,6 @@ import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.getYearOnly
-import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 
 /**
@@ -38,14 +37,7 @@ class MultiSearchDelegateAdapter(
         override fun bindData(item: MultiSearch) = with(item) {
             contentTitle.applyText(if (title.isNotNullOrEmpty()) title else name)
             contentSubtitle.applyText(getSubtitle(this))
-
-            if (voteAverage != null && voteAverage > 0.0) {
-                averageVoteText?.setLabelText(voteAverage.toString())
-            } else {
-                averageVoteText?.hide()
-            }
-
-            itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
+            averageVoteText?.setAverageVote(voteAverage)
             super.bindData(item)
         }
 
@@ -58,6 +50,8 @@ class MultiSearchDelegateAdapter(
                 }
             }
         }
+
+        override fun getItemClickListener() = onItemClickListener
 
         override fun getImageUrl(item: MultiSearch): String? {
             with(item) {

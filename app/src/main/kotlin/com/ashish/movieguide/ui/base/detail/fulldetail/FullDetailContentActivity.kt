@@ -17,7 +17,8 @@ import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.show
 
 /**
- * Created by Ashish on Jan 11.
+ * This is base class and extension of [BaseDetailActivity] which
+ * handles all the logic for showing different ratings of media content from OMDb api.
  */
 abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : FullDetailContentPresenter<I, V>>
     : BaseDetailActivity<I, V, P>(), FullDetailContentView<I> {

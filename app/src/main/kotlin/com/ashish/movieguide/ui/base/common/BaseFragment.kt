@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ashish.movieguide.app.MovieGuideApp
+import com.ashish.movieguide.utils.extensions.getExtrasOrRestore
 import com.ashish.movieguide.utils.extensions.inflate
 import icepick.Icepick
 
@@ -22,10 +23,8 @@ abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
+        savedInstanceState.getExtrasOrRestore(this) {
             getFragmentArguments(arguments)
-        } else {
-            Icepick.restoreInstanceState(this, savedInstanceState)
         }
     }
 

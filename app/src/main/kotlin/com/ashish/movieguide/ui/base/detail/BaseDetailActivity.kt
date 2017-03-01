@@ -9,7 +9,6 @@ import android.support.annotation.IdRes
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.TabLayout
 import android.support.v4.app.SharedElementCallback
 import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
@@ -61,6 +60,7 @@ import com.ashish.movieguide.utils.extensions.changeMenuFont
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
+import com.ashish.movieguide.utils.extensions.getStringArray
 import com.ashish.movieguide.utils.extensions.getSwatchWithMostPixels
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isDark
@@ -80,7 +80,8 @@ import com.ashish.movieguide.utils.extensions.tint
 import java.util.ArrayList
 
 /**
- * Created by Ashish on Jan 03.
+ * This is a base class which handles common logic for showing
+ * detail contents provided by TMDb.
  */
 abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresenter<I, V>>
     : MvpActivity<V, P>(), BaseDetailView<I>, AppBarLayout.OnOffsetChangedListener {
@@ -92,7 +93,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
 
-    private val tabLayout: TabLayout by bindView(R.id.tab_layout)
     private val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
     private val progressBar: ProgressBar by bindView(R.id.progress_bar)
     private val detailContainer: View by bindView(R.id.detail_container)
@@ -124,6 +124,11 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
                 val currentPosition = reenterState!!.getInt(EXTRA_CURRENT_POSITION)
                 val startingPosition = reenterState!!.getInt(EXTRA_STARTING_POSITION)
 
+                /*
+                  If startingPosition != currentPosition the user must have swiped to a
+                  different page in the ImageViewerActivity. We must update the shared element
+                  so that the correct one falls into place.
+                 */
                 if (startingPosition != currentPosition) {
                     val newSharedElement = imagesRecyclerView?.layoutManager?.findViewByPosition(currentPosition)
                     if (newSharedElement != null) {
@@ -163,6 +168,12 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /*
+          Postpone shared element transition in onCreate
+          as the poster image is not loaded fully here.
+          It will be resumed when the poster image is loaded.
+         */
         postponeEnterTransition()
         setExitSharedElementCallback(callback)
 
@@ -191,18 +202,25 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         }
     }
 
-    abstract fun loadDetailContent(): Unit
+    abstract fun loadDetailContent()
 
     protected fun showBackdropImage(backdropPath: String) {
         if (backdropPath.isNotEmpty()) {
-            backdropImage.loadPaletteBitmap(backdropPath) {
+            backdropImage.loadPaletteBitmap(backdropPath) { paletteBitmap ->
                 revealBackdropImage()
-                setTopBarColorAndAnimate(it)
+                setTopBarColorAndAnimate(paletteBitmap)
             }
         }
     }
 
     private fun revealBackdropImage() {
+        /*
+          Circular Reveal animation values:
+          x coordinate - center of backdrop image
+          y coordinate - top of title text view
+          start radius - 0
+          end radius - maximum value between backdrop image width and height
+         */
         val cx = (backdropImage.left + backdropImage.right) / 2
         val cy = backdropImage.bottom - titleText.height
         val endRadius = Math.max(backdropImage.width, backdropImage.height).toFloat()
@@ -224,20 +242,16 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
             val isDark = paletteBitmap.bitmap.isDark(palette)
 
             if (!isDark) {
-                window.decorView.setLightStatusBar()
-                val primaryBlack = getColorCompat(R.color.primary_text_dark)
-
-                val backButton = toolbar?.getChildAt(0) as ImageButton?
-                backButton?.setColorFilter(primaryBlack)
-
-                menu?.tint(primaryBlack)
-                setOverflowMenuColor(primaryBlack)
-                collapsingToolbar.setCollapsedTitleTextColor(primaryBlack)
+                changeStatusbarAndToolbarToBlack()
             }
 
             statusBarColor = window.statusBarColor
             val rgbColor = palette.getSwatchWithMostPixels()?.rgb
 
+            /*
+              Animate status bar color change between previous status bar color
+              and the color extracted from bitmap through palette.
+             */
             if (rgbColor != null) {
                 statusBarColor = rgbColor.scrimify(isDark)
                 collapsingToolbar.setContentScrimColor(rgbColor)
@@ -249,9 +263,26 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         }
     }
 
+    /**
+     * Change status bar to light color for API 23+ devices which turns status bar icons to black
+     * and also tint toolbar icons and text to black for better visibility in light image.
+     */
+    private fun changeStatusbarAndToolbarToBlack() {
+        window.decorView.setLightStatusBar()
+        val primaryBlack = getColorCompat(R.color.primary_text_dark)
+
+        val backButton = toolbar?.getChildAt(0) as ImageButton?
+        backButton?.setColorFilter(primaryBlack)
+
+        menu?.tint(primaryBlack)
+        setOverflowMenuColor(primaryBlack)
+        collapsingToolbar.setCollapsedTitleTextColor(primaryBlack)
+    }
+
     private fun showPosterImage(posterImagePath: String) {
         if (posterImagePath.isNotEmpty()) {
             posterImage.loadPaletteBitmap(posterImagePath) {
+                // When the poster image is loaded then resume postponed shared element transition
                 startPostponedEnterTransition()
 
                 it.setPaletteColor { swatch ->
@@ -291,7 +322,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
             setHasFixedSize(true)
             isNestedScrollingEnabled = false
             layoutManager = LinearLayoutManager(this@BaseDetailActivity)
-            adapter = DetailContentAdapter(resources.getStringArray(contentTitleId), contentList)
+            adapter = DetailContentAdapter(getStringArray(contentTitleId), contentList)
         }
     }
 
@@ -365,6 +396,10 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
         playTrailerFAB?.apply {
+            /*
+              Show or hide FAB when the toolbar depending upon
+              whether appbar is collapsing or expanding
+             */
             val isCollapsing = collapsingToolbar.height + verticalOffset <
                     2.4 * ViewCompat.getMinimumHeight(collapsingToolbar)
             setVisibility(!isCollapsing)
@@ -394,19 +429,36 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         super.onActivityReenter(resultCode, data)
 
         if (data != null) {
+            // Get extras passed to this activity from ImageViewerActivity
             reenterState = data.extras
             val currentPosition = reenterState?.getInt(EXTRA_CURRENT_POSITION)
             val startingPosition = reenterState?.getInt(EXTRA_STARTING_POSITION)
 
+            /*
+              If startingPosition and currentPosition are not same
+              then scroll images recyclerview to currentPosition
+             */
             if (startingPosition != currentPosition) {
                 imagesRecyclerView?.smoothScrollToPosition(currentPosition!!)
             }
 
+            /*
+              Postpone reenter transition as the image recyclerview
+              may not have been drawn by this time so we want to delay the
+              transition until view is drawn.
+             */
             postponeEnterTransition()
             imagesRecyclerView?.viewTreeObserver?.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
                     imagesRecyclerView?.viewTreeObserver?.removeOnPreDrawListener(this)
+
+                    // Fix required for smooth transition
                     imagesRecyclerView?.requestLayout()
+
+                    /*
+                      Start postponed shared element transiton when we know
+                      that recyclerview is now drawn.
+                     */
                     startPostponedEnterTransition()
                     return true
                 }
@@ -437,6 +489,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     override fun finishAfterTransition() {
+        // Hide FAB when exiting this Activity for nice FAB animation
         playTrailerFAB?.hide()
         super.finishAfterTransition()
     }

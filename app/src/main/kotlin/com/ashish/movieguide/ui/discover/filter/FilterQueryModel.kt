@@ -14,7 +14,7 @@ class FilterQueryModel @Inject constructor() {
 
     private val filterQuerySubject = PublishSubject.create<FilterQuery>()
 
-    fun setFilterQuery(filterQuery: FilterQuery) = filterQuerySubject.onNext(filterQuery)
-
     fun getFilterQuery(): Observable<FilterQuery> = filterQuerySubject
+
+    fun setFilterQuery(filterQuery: FilterQuery) = filterQuerySubject.onNext(filterQuery)
 }

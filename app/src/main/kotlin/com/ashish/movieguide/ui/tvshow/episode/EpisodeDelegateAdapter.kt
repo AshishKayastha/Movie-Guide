@@ -36,9 +36,10 @@ class EpisodeDelegateAdapter(
             val context = itemView.context
             contentTitle.applyText(name)
             contentSubtitle.applyText(String.format(context.getString(R.string.episode_number_format), episodeNumber))
-            itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }
+
+        override fun getItemClickListener() = onItemClickListener
 
         override fun getImageUrl(item: Episode) = item.stillPath.getOriginalImageUrl()
     }

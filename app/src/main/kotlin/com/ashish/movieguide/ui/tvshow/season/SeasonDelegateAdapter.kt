@@ -36,9 +36,10 @@ class SeasonDelegateAdapter(
             val context = itemView.context
             contentTitle.applyText(String.format(context.getString(R.string.season_number_format), seasonNumber))
             contentSubtitle.applyText(String.format(context.getString(R.string.episode_count_format), episodeCount))
-            itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }
+
+        override fun getItemClickListener() = onItemClickListener
 
         override fun getImageUrl(item: Season) = item.posterPath.getPosterUrl()
     }

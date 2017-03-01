@@ -35,10 +35,11 @@ class TVShowDelegateAdapter(
         override fun bindData(item: TVShow) = with(item) {
             contentTitle.applyText(name)
             contentSubtitle.applyText(firstAirDate.getYearOnly())
-            averageVoteText?.setLabelText(voteAverage.toString())
-            itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
+            averageVoteText?.setAverageVote(voteAverage)
             super.bindData(item)
         }
+
+        override fun getItemClickListener() = onItemClickListener
 
         override fun getImageUrl(item: TVShow) = item.posterPath.getPosterUrl()
     }

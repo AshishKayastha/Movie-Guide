@@ -35,10 +35,11 @@ class MovieDelegateAdapter(
         override fun bindData(item: Movie) = with(item) {
             contentTitle.applyText(title)
             contentSubtitle.applyText(releaseDate.getYearOnly())
-            averageVoteText?.setLabelText(voteAverage.toString())
-            itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
+            averageVoteText?.setAverageVote(voteAverage)
             super.bindData(item)
         }
+
+        override fun getItemClickListener() = onItemClickListener
 
         override fun getImageUrl(item: Movie) = item.posterPath.getPosterUrl()
     }

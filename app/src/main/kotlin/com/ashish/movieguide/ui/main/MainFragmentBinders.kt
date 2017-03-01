@@ -16,6 +16,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
+/**
+ * This will bind all the Fragment's subcomponents that are part of MainActivity
+ * into a map using multibindings.
+ */
 @Module(subcomponents = arrayOf(
         MovieComponent::class,
         TVShowComponent::class,

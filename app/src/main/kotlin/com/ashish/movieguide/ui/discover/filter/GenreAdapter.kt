@@ -67,9 +67,9 @@ class GenreAdapter(
                 isSelected = selectedGenreIdList.contains(genreId)
             }
 
-            genreText.setOnClickListener {
-                it.isSelected = !it.isSelected
-                val clickedGenreId = it.tag.toString()
+            genreText.setOnClickListener { view ->
+                view.isSelected = !view.isSelected
+                val clickedGenreId = view.tag.toString()
                 selectedGenreIdList.addOrRemove(clickedGenreId)
             }
         }

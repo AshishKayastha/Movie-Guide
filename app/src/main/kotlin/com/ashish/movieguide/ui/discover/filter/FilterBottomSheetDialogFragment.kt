@@ -24,6 +24,7 @@ import com.ashish.movieguide.utils.Constants.SORT_BY_MOVIE
 import com.ashish.movieguide.utils.Constants.SORT_BY_TV_SHOW
 import com.ashish.movieguide.utils.extensions.convertToDate
 import com.ashish.movieguide.utils.extensions.dpToPx
+import com.ashish.movieguide.utils.extensions.getExtrasOrRestore
 import com.ashish.movieguide.utils.extensions.getFormattedDate
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isValidDate
@@ -65,6 +66,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private val sortByRadioGroup: RadioGroup by bindView(R.id.sort_radio_group)
     private val genreRecyclerView: RecyclerView by bindView(R.id.genre_recycler_view)
 
+    private val calendar = Calendar.getInstance()
     private lateinit var genreAdapter: GenreAdapter
     private var endDatePickerDialog: DatePickerDialog? = null
     private var startDatePickerDialog: DatePickerDialog? = null
@@ -79,12 +81,10 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (targetFragment is FragmentComponentBuilderHost) {
-            (targetFragment as FragmentComponentBuilderHost)
-                    .getFragmentComponentBuilder(FilterBottomSheetDialogFragment::class.java, FilterComponent.Builder::class.java)
-                    .build()
-                    .inject(this)
-        }
+        (targetFragment as FragmentComponentBuilderHost)
+                .getFragmentComponentBuilder(FilterBottomSheetDialogFragment::class.java, FilterComponent.Builder::class.java)
+                .build()
+                .inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -93,10 +93,8 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
+        savedInstanceState.getExtrasOrRestore(this) {
             getFragmentArguments()
-        } else {
-            Icepick.restoreInstanceState(this, savedInstanceState)
         }
 
         if (isMovie) {
@@ -115,11 +113,13 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         val sortByIndex: Int
         if (isMovie) {
-            sortByIndex = SORT_BY_MOVIE.indexOf(filterQuery?.sortBy ?: 0)
+            sortByIndex = SORT_BY_MOVIE.indexOf(filterQuery?.sortBy)
+
         } else {
+            // Hide sort by title RadioButton for TV Shows
             sortByRadioGroup.weightSum = 3f
             sortByRadioGroup.getChildAt(2)?.hide()
-            sortByIndex = SORT_BY_TV_SHOW.indexOf(filterQuery?.sortBy ?: 0)
+            sortByIndex = SORT_BY_TV_SHOW.indexOf(filterQuery?.sortBy)
         }
 
         (sortByRadioGroup.getChildAt(sortByIndex) as RadioButton?)?.isChecked = true
@@ -134,9 +134,8 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             }
         }
 
-        val calendar = Calendar.getInstance()
-        setFormattedDate(calendar, filterQuery?.minDate.convertToDate(), true)
-        setFormattedDate(calendar, filterQuery?.maxDate.convertToDate(), false)
+        initDatePicker(filterQuery?.minDate.convertToDate(), true)
+        initDatePicker(filterQuery?.maxDate.convertToDate(), false)
 
         startDateText.setOnClickListener { startDatePickerDialog?.show() }
 
@@ -150,7 +149,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun setFormattedDate(calendar: Calendar, date: Date?, isStartDate: Boolean) {
+    private fun initDatePicker(date: Date?, isStartDate: Boolean) {
         if (date != null) calendar.time = date
 
         val year = calendar.get(Calendar.YEAR)
@@ -163,7 +162,9 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             endDatePickerDialog = DatePickerDialog(activity, endDateSetListener, year, month, dayOfMonth)
         }
 
-        if (date != null) setFormattedDate(year, month, dayOfMonth, isStartDate)
+        if (date != null) {
+            setFormattedDate(year, month, dayOfMonth, isStartDate)
+        }
     }
 
     private fun setFormattedDate(year: Int, month: Int, dayOfMonth: Int, isStartDate: Boolean) {
@@ -183,9 +184,14 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     private fun updateFilterQuery() {
         val radioButton = sortByRadioGroup.findViewById(sortByRadioGroup.checkedRadioButtonId)
-        val index = sortByRadioGroup.indexOfChild(radioButton)
+        val sortByIndex = sortByRadioGroup.indexOfChild(radioButton)
 
-        filterQuery?.sortBy = SORT_BY_MOVIE[index]
+        if (isMovie) {
+            filterQuery?.sortBy = SORT_BY_MOVIE[sortByIndex]
+        } else {
+            filterQuery?.sortBy = SORT_BY_TV_SHOW[sortByIndex]
+        }
+
         filterQuery?.genreIds = genreAdapter.getSelectedGenreIds()
     }
 

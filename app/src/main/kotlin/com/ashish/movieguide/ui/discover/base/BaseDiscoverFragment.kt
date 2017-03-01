@@ -33,6 +33,7 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
     companion object {
         const val DISCOVER_MOVIE = 0
         const val DISCOVER_TV_SHOW = 1
+        private const val RC_FILTER_FRAGMENT = 1001
     }
 
     @Inject
@@ -93,7 +94,7 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
 
     override fun showFilterBottomSheetDialog(filterQuery: FilterQuery) {
         val filterBottomSheetFragment = FilterBottomSheetDialogFragment.newInstance(isMovie(), filterQuery)
-        filterBottomSheetFragment.setTargetFragment(this, 1001)
+        filterBottomSheetFragment.setTargetFragment(this, RC_FILTER_FRAGMENT)
         filterBottomSheetFragment.show(childFragmentManager, filterBottomSheetFragment.tag)
     }
 

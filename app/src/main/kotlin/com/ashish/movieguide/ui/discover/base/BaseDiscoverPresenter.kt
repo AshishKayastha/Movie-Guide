@@ -22,23 +22,30 @@ abstract class BaseDiscoverPresenter<I : ViewType> constructor(
 
     fun filterContents() {
         addDisposable(filterQueryModel.getFilterQuery()
-                .filter {
-                    it.genreIds.isNotNullOrEmpty() || it.minDate.isNotNullOrEmpty()
-                            || it.maxDate.isNotNullOrEmpty()
-                }
-                .subscribe {
-                    this.sortBy = it.sortBy
-                    this.minDate = it.minDate
-                    this.maxDate = it.maxDate
-                    this.genreIds = it.genreIds
+                .filter { isValidFilterQuery(it) }
+                .subscribe { filterQuery ->
+                    with(filterQuery) {
+                        this.sortBy = sortBy
+                        this.minDate = minDate
+                        this.maxDate = maxDate
+                        this.genreIds = genreIds
+                    }
+
                     getView()?.clearFilteredData()
                     loadFreshData(null, true)
                 })
     }
 
+    private fun isValidFilterQuery(filterQuery: FilterQuery): Boolean {
+        return filterQuery.genreIds.isNotNullOrEmpty()
+                || filterQuery.minDate.isNotNullOrEmpty()
+                || filterQuery.maxDate.isNotNullOrEmpty()
+    }
+
     override fun getType(type: Int?) = null
 
     fun onFilterMenuItemClick() {
-        getView()?.showFilterBottomSheetDialog(FilterQuery(sortBy, genreIds, minDate, maxDate))
+        val filterQuery = FilterQuery(sortBy, genreIds, minDate, maxDate)
+        getView()?.showFilterBottomSheetDialog(filterQuery)
     }
 }

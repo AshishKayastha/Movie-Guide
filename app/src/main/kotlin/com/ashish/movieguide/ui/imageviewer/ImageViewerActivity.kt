@@ -73,9 +73,20 @@ class ImageViewerActivity : BaseActivity() {
             if (isReturning) {
                 val sharedElement = imageViewerAdapter.getRegisteredFragment(currentPosition)?.getImageView()
                 if (sharedElement == null) {
+
+                    /*
+                      If shared element is null, then it has been scrolled off screen and
+                      no longer visible. In this case we cancel the shared element transition by
+                      removing the shared element from the shared elements map.
+                     */
                     names.clear()
                     sharedElements.clear()
                 } else if (startingPosition != currentPosition) {
+                    /*
+                      If the user has swiped to a different ViewPager page, then we need to
+                      remove the old shared element and replace it with the new shared element
+                      that should be transitioned instead.
+                     */
                     names.clear()
                     sharedElements.clear()
                     names.add(sharedElement.transitionName)

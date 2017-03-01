@@ -8,12 +8,12 @@ import android.graphics.Path
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.support.annotation.ColorInt
 import android.support.v7.widget.TintTypedArray
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.ashish.movieguide.R
 import com.ashish.movieguide.utils.FontUtils
+import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.spToPx
 
@@ -101,20 +101,18 @@ class LabelLayout @JvmOverloads constructor(
         canvas.drawTextOnPath(labelText, bisectorPath, offsets[0], offsets[1], textPaint)
     }
 
-    fun setLabelBackground(labelBackground: Drawable) {
-        this.labelBackground = labelBackground
-        invalidate()
-    }
-
     fun setLabelText(labelText: String) {
         show()
         this.labelText = labelText
         invalidate()
     }
 
-    fun setLabelTextColor(@ColorInt labelTextColor: Int) {
-        this.labelTextColor = labelTextColor
-        invalidate()
+    fun setAverageVote(avgVote: Double?) {
+        if (avgVote != null && avgVote > 0.0) {
+            setLabelText(avgVote.toString())
+        } else {
+            hide()
+        }
     }
 
     // Calculate the absolute position of point intersecting between canvas edge and bisector

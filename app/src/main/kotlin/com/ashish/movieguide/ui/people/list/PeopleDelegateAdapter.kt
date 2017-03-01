@@ -34,9 +34,10 @@ class PeopleDelegateAdapter(
         override fun bindData(item: Person) = with(item) {
             contentTitle.text = name
             contentSubtitle.hide()
-            itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition, it) }
             super.bindData(item)
         }
+
+        override fun getItemClickListener() = onItemClickListener
 
         override fun getImageUrl(item: Person) = item.profilePath.getOriginalImageUrl()
     }

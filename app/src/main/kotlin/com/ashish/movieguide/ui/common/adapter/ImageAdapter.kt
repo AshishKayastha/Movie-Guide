@@ -43,6 +43,12 @@ class ImageAdapter(
 
         val imageView: ImageView by bindView(R.id.detail_content_image)
 
+        init {
+            itemView.setOnClickListener { view ->
+                onItemClickListener?.onItemClick(adapterPosition, view)
+            }
+        }
+
         fun bindData(imageUrl: String, position: Int) {
             Glide.with(imageView.context)
                     .load(imageUrl)
@@ -53,7 +59,6 @@ class ImageAdapter(
                     .into(imageView)
 
             imageView.transitionName = "image_$position"
-            itemView.setOnClickListener { onItemClickListener?.onItemClick(position, it) }
         }
     }
 }

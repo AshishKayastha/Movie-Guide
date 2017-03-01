@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.ColorInt
 import android.support.v4.graphics.drawable.DrawableCompat
@@ -12,6 +13,7 @@ import com.ashish.movieguide.ui.common.palette.PaletteBitmapTranscoder
 import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import icepick.Icepick
 
 /**
  * Created by Ashish on Dec 31.
@@ -48,6 +50,31 @@ fun Drawable?.tint(@ColorInt color: Int): Drawable? {
     return this
 }
 
+/**
+ * An extension function to either add or remove an item from [MutableCollection].
+ * It will remove given item if the item is already in the collection else it will
+ * add it to the collection.
+ * @param item any item that should be added or removed from [MutableCollection]
+ */
 fun <T> MutableCollection<T>.addOrRemove(item: T) {
     if (contains(item)) remove(item) else add(item)
+}
+
+/**
+ * An extension function which will either get extras from the [Bundle] passed
+ * through [android.content.Intent] or as an arguments for [android.support.v4.app.Fragment]
+ * or restore the saved data from the given [Bundle] using [Icepick] depending upon
+ * whether the savedInstanceState is null or not.
+ *
+ * @param target type of object to restore data from; most likely [android.app.Activity]
+ * or [android.support.v4.app.Fragment]
+ * @param getExtras a function to handle getting data passed through [android.content.Intent]
+ * or as an arguments for [android.support.v4.app.Fragment]
+ */
+inline fun <T> Bundle?.getExtrasOrRestore(target: T, getExtras: () -> Unit) {
+    if (this == null) {
+        getExtras()
+    } else {
+        Icepick.restoreInstanceState(target, this)
+    }
 }

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import butterknife.bindOptionalView
 import butterknife.bindView
 import com.ashish.movieguide.R
+import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.common.palette.PaletteBitmap
 import com.ashish.movieguide.ui.common.palette.PaletteImageViewTarget
@@ -37,6 +38,12 @@ abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup, layoutId: I
     val requestBuilder: BitmapRequestBuilder<String, PaletteBitmap> = Glide.with(itemView.context)
             .transcodePaletteBitmap(itemView.context)
 
+    init {
+        itemView.setOnClickListener { view ->
+            getItemClickListener()?.onItemClick(adapterPosition, view)
+        }
+    }
+
     open fun bindData(item: I) = loadImage(item)
 
     private fun loadImage(item: I) {
@@ -49,6 +56,8 @@ abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup, layoutId: I
             Glide.clear(posterImage)
         }
     }
+
+    abstract fun getItemClickListener(): OnItemClickListener?
 
     abstract fun getImageUrl(item: I): String?
 }

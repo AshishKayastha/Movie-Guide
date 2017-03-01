@@ -115,10 +115,17 @@ class ImageViewerFragment : BaseFragment() {
         fullBitmap?.preload()
     }
 
+    /**
+     * Returns the shared element that should be transitioned back to the
+     * previous Activity, or null if the view is not visible on the screen.
+     */
     fun getImageView(): ImageView? {
         return if (isViewInBounds(activity.window.decorView, imageView)) imageView else null
     }
 
+    /**
+     * Returns true if {@param view} is contained within {@param container}'s bounds.
+     */
     private fun isViewInBounds(container: View, view: View): Boolean {
         val containerBounds = Rect()
         container.getHitRect(containerBounds)

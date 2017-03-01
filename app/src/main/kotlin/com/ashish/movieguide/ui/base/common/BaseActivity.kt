@@ -7,6 +7,7 @@ import android.view.MenuItem
 import butterknife.bindOptionalView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
+import com.ashish.movieguide.utils.extensions.getExtrasOrRestore
 import icepick.Icepick
 
 /**
@@ -22,10 +23,8 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(getLayoutId())
         setSupportActionBar(toolbar)
 
-        if (savedInstanceState == null) {
+        savedInstanceState.getExtrasOrRestore(this) {
             getIntentExtras(intent.extras)
-        } else {
-            Icepick.restoreInstanceState(this, savedInstanceState)
         }
     }
 
