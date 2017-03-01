@@ -87,8 +87,4 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
     private fun isValidRating(rating: String?): Boolean {
         return rating.isNotNullOrEmpty() && rating != "N/A" && rating != "0"
     }
-
-    fun markAsFavorite(mediaId: Long?, mediaType: String) {
-//        val favorite = Favorite(true, mediaId, mediaType)
-    }
 }

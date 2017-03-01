@@ -82,7 +82,8 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (targetFragment as FragmentComponentBuilderHost)
-                .getFragmentComponentBuilder(FilterBottomSheetDialogFragment::class.java, FilterComponent.Builder::class.java)
+                .getFragmentComponentBuilder(FilterBottomSheetDialogFragment::class.java,
+                        FilterComponent.Builder::class.java)
                 .build()
                 .inject(this)
     }

@@ -138,9 +138,11 @@ class CircleImageView @JvmOverloads constructor(
         try {
             val bitmap: Bitmap
             if (drawable is ColorDrawable) {
-                bitmap = Bitmap.createBitmap(COLOR_DRAWABLE_DIMENSION, COLOR_DRAWABLE_DIMENSION, Bitmap.Config.ARGB_8888)
+                bitmap = Bitmap.createBitmap(COLOR_DRAWABLE_DIMENSION, COLOR_DRAWABLE_DIMENSION,
+                        Bitmap.Config.ARGB_8888)
             } else {
-                bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+                bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight,
+                        Bitmap.Config.ARGB_8888)
             }
 
             val canvas = Canvas(bitmap)

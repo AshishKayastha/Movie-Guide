@@ -67,7 +67,8 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
     }
 
     override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(TVShowDetailActivity::class.java, TVShowDetailComponent.Builder::class.java)
+        builderHost.getActivityComponentBuilder(TVShowDetailActivity::class.java,
+                TVShowDetailComponent.Builder::class.java)
                 .withModule(ActivityModule(this))
                 .build()
                 .inject(this)

@@ -68,7 +68,8 @@ class MultiSearchActivity : BaseActivity(), FragmentComponentBuilderHost {
     }
 
     override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(MultiSearchActivity::class.java, MultiSearchComponent.Builder::class.java)
+        builderHost.getActivityComponentBuilder(MultiSearchActivity::class.java,
+                MultiSearchComponent.Builder::class.java)
                 .withModule(ActivityModule(this))
                 .build()
                 .inject(this)

@@ -104,7 +104,6 @@ abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : Fu
             val mediaType = getMediaType()
             if (mediaType.isNotNullOrEmpty()) {
                 item.setIcon(R.drawable.ic_favorite_white_24dp)
-                presenter?.markAsFavorite(0, mediaType!!)
             }
         }
 

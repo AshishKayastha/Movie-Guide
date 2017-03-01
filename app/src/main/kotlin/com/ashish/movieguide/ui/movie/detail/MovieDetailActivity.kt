@@ -52,7 +52,8 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
     }
 
     override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(MovieDetailActivity::class.java, MovieDetailComponent.Builder::class.java)
+        builderHost.getActivityComponentBuilder(MovieDetailActivity::class.java,
+                MovieDetailComponent.Builder::class.java)
                 .withModule(ActivityModule(this))
                 .build()
                 .inject(this)

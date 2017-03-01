@@ -163,7 +163,8 @@ class LabelLayout @JvmOverloads constructor(
         val offsets = FloatArray(2)
         paint.getTextBounds(text, 0, text.length, textBounds)
 
-        offsets[0] = (calculateBisectorIntersectAbsolutePosition(distance, height) / Math.sqrt(2.0) - textBounds.width() / 2.0).toFloat()
+        offsets[0] = (calculateBisectorIntersectAbsolutePosition(distance, height)
+                / Math.sqrt(2.0) - textBounds.width() / 2.0).toFloat()
 
         if (distance >= height) {
             offsets[1] = textBounds.height() * 0.5f
