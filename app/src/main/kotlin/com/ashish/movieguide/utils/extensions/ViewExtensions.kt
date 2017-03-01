@@ -77,12 +77,14 @@ fun TextView.animateTextColorChange(startColor: Int, endColor: Int) {
 
 inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 800L,
                               crossinline onAnimationUpdate: (color: Int) -> Unit) {
-    val colorAnimator = ValueAnimator.ofArgb(startColor, endColor)
-    colorAnimator.apply {
-        this.duration = duration
-        interpolator = FastOutSlowInInterpolator()
-        addUpdateListener { animation -> onAnimationUpdate(animation.animatedValue as Int) }
-        start()
+    if (startColor != endColor) {
+        val colorAnimator = ValueAnimator.ofArgb(startColor, endColor)
+        colorAnimator.apply {
+            this.duration = duration
+            interpolator = FastOutSlowInInterpolator()
+            addUpdateListener { animation -> onAnimationUpdate(animation.animatedValue as Int) }
+            start()
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 ext.versions = [
         //Plugins
-        kotlinVersion        : '1.0.6',
+        kotlinVersion        : '1.1.0',
         dexCountPluginVersion: '0.6.2',
 
         // Libraries

@@ -255,17 +255,17 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
             if (rgbColor != null) {
                 statusBarColor = rgbColor.scrimify(isDark)
                 collapsingToolbar.setContentScrimColor(rgbColor)
-
-                if (statusBarColor != window.statusBarColor) {
-                    animateColorChange(window.statusBarColor, statusBarColor, 500L) { window.statusBarColor = it }
+                animateColorChange(window.statusBarColor, statusBarColor, 500L) { color ->
+                    window.statusBarColor = color
                 }
             }
         }
     }
 
     /**
-     * Change status bar to light color for API 23+ devices which turns status bar icons to black
-     * and also tint toolbar icons and text to black for better visibility in light image.
+     * Change status bar to light color for API 23+ devices which turns
+     * status bar icons to black and also tint toolbar icons and text
+     * to black for better visibility in light image.
      */
     private fun changeStatusbarAndToolbarToBlack() {
         window.decorView.setLightStatusBar()
