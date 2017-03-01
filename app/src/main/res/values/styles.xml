@@ -7,7 +7,7 @@
 
         <item name="android:windowBackground">@drawable/bg_primary_gradient</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowEnterTransition">@transition/enter_transition</item>
+        <item name="android:windowEnterTransition">@transition/fade_transition</item>
 
         <!-- Action Mode styles -->
         <item name="actionModeStyle">@style/Custom.Widget.ActionMode</item>
