@@ -423,8 +423,7 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
 
     /**
      * Check the state of currently pending and running animations. If there are none
-     * pending/running, call #dispatchAnimationsFinished() to notify any
-     * listeners.
+     * pending/running, call #dispatchAnimationsFinished() to notify any listeners.
      */
     private fun dispatchFinishedWhenDone() {
         if (!isRunning) dispatchAnimationsFinished()
@@ -529,11 +528,22 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
         }
     }
 
-    private class MoveInfo constructor(var holder: ViewHolder, var fromX: Int, var fromY: Int, var toX: Int,
-                                       var toY: Int)
+    private class MoveInfo constructor(
+            var holder: ViewHolder,
+            var fromX: Int,
+            var fromY: Int,
+            var toX: Int,
+            var toY: Int
+    )
 
-    private class ChangeInfo constructor(var oldHolder: ViewHolder?, var newHolder: ViewHolder?, val fromX: Int,
-                                         val fromY: Int, val toX: Int, val toY: Int) {
+    private class ChangeInfo constructor(
+            var oldHolder: ViewHolder?,
+            var newHolder: ViewHolder?,
+            val fromX: Int,
+            val fromY: Int,
+            val toX: Int,
+            val toY: Int
+    ) {
 
         override fun toString() = "ChangeInfo{" +
                 "oldHolder=" + oldHolder +

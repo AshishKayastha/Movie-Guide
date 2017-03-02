@@ -22,59 +22,27 @@
             android:orientation="horizontal"
             android:padding="@dimen/spacing_large">
 
-            <LinearLayout
+            <com.ashish.movieguide.ui.widget.RatingView
                 android:id="@+id/imdb_rating_view"
                 style="@style/RatingView"
                 android:layout_marginStart="0dp"
-                tools:visibility="visible">
+                android:src="@drawable/ic_imdb"
+                tools:text="8.6"
+                tools:visibility="visible" />
 
-                <ImageView
-                    style="@style/RatingImage"
-                    android:src="@drawable/ic_imdb"
-                    tools:ignore="ContentDescription" />
-
-                <com.ashish.movieguide.ui.widget.FontTextView
-                    android:id="@+id/imdb_rating_text"
-                    style="@style/RatingText"
-                    tools:text="8.6" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <com.ashish.movieguide.ui.widget.RatingView
                 android:id="@+id/tomato_rating_view"
                 style="@style/RatingView"
-                tools:visibility="visible">
+                android:src="@drawable/ic_rt_certified"
+                tools:text="95%"
+                tools:visibility="visible" />
 
-                <ImageView
-                    android:id="@+id/tomato_rating_image"
-                    style="@style/RatingImage"
-                    android:src="@drawable/ic_rt_certified"
-                    tools:ignore="ContentDescription" />
-
-                <com.ashish.movieguide.ui.widget.FontTextView
-                    android:id="@+id/tomato_rating_text"
-                    style="@style/RatingText"
-                    tools:text="95%" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <com.ashish.movieguide.ui.widget.RatingView
                 android:id="@+id/audience_score_view"
                 style="@style/RatingView"
-                tools:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/audience_score_image"
-                    style="@style/RatingImage"
-                    android:src="@drawable/ic_audience_score_good"
-                    tools:ignore="ContentDescription" />
-
-                <com.ashish.movieguide.ui.widget.FontTextView
-                    android:id="@+id/audience_score_text"
-                    style="@style/RatingText"
-                    tools:text="90%" />
-
-            </LinearLayout>
+                android:src="@drawable/ic_audience_score_good"
+                tools:text="90%"
+                tools:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/metascore_view"
@@ -97,22 +65,12 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <com.ashish.movieguide.ui.widget.RatingView
                 android:id="@+id/tmdb_rating_view"
                 style="@style/RatingView"
-                tools:visibility="visible">
-
-                <ImageView
-                    style="@style/RatingImage"
-                    android:src="@drawable/ic_tmdb"
-                    tools:ignore="ContentDescription" />
-
-                <com.ashish.movieguide.ui.widget.FontTextView
-                    android:id="@+id/tmdb_rating_text"
-                    style="@style/RatingText"
-                    tools:text="7.1" />
-
-            </LinearLayout>
+                android:src="@drawable/ic_tmdb"
+                tools:text="7.1"
+                tools:visibility="visible" />
 
         </LinearLayout>
 

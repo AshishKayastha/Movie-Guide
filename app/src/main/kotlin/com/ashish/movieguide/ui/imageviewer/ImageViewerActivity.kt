@@ -96,6 +96,7 @@ class ImageViewerActivity : BaseActivity() {
         }
     }
 
+    // Show or hide app bar depending upon whether SystemUI is currently visible or not
     private val visibilityChangeListener = object : SystemUiHelper.OnVisibilityChangeListener {
         override fun onVisibilityChange(visible: Boolean) {
             wrapperLayout.animate()

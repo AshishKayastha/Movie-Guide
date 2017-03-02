@@ -14,11 +14,7 @@ import com.bumptech.glide.load.resource.transcode.ResourceTranscoder
  */
 class PaletteBitmapTranscoder(context: Context) : ResourceTranscoder<Bitmap, PaletteBitmap> {
 
-    private val bitmapPool: BitmapPool
-
-    init {
-        this.bitmapPool = Glide.get(context).bitmapPool
-    }
+    private val bitmapPool: BitmapPool = Glide.get(context).bitmapPool
 
     override fun transcode(toTranscode: Resource<Bitmap>): Resource<PaletteBitmap> {
         val bitmap = toTranscode.get()

@@ -77,6 +77,7 @@ import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
 import com.ashish.movieguide.utils.extensions.startCircularRevealAnimation
 import com.ashish.movieguide.utils.extensions.tint
+import com.bumptech.glide.Glide
 import java.util.ArrayList
 
 /**
@@ -242,7 +243,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
             val isDark = paletteBitmap.bitmap.isDark(palette)
 
             if (!isDark) {
-                changeStatusbarAndToolbarToBlack()
+                tintTopBarIconsToBlack()
             }
 
             statusBarColor = window.statusBarColor
@@ -267,7 +268,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
      * status bar icons to black and also tint toolbar icons and text
      * to black for better visibility in light image.
      */
-    private fun changeStatusbarAndToolbarToBlack() {
+    private fun tintTopBarIconsToBlack() {
         window.decorView.setLightStatusBar()
         val primaryBlack = getColorCompat(R.color.primary_text_dark)
 
@@ -282,7 +283,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     private fun showPosterImage(posterImagePath: String) {
         if (posterImagePath.isNotEmpty()) {
             posterImage.loadPaletteBitmap(posterImagePath) {
-                // When the poster image is loaded then resume postponed shared element transition
+                // When the poster image is loaded then start postponed shared element transition
                 startPostponedEnterTransition()
 
                 it.setPaletteColor { swatch ->
@@ -299,6 +300,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun hideProgress() = progressBar.hide()
 
+    @CallSuper
     override fun showDetailContent(detailContent: I) {
         detailContainer.show()
         showOrHideMenu(R.id.action_imdb, imdbId)
@@ -397,7 +399,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
         playTrailerFAB?.apply {
             /*
-              Show or hide FAB when the toolbar depending upon
+              Show or hide FAB depending upon
               whether appbar is collapsing or expanding
              */
             val isCollapsing = collapsingToolbar.height + verticalOffset <
@@ -473,19 +475,25 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_imdb -> performAction {
+        R.id.action_imdb -> viewInIMDbSite()
+        R.id.action_rotten_tomatoes -> viewInRottenTomatotesSite()
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun viewInIMDbSite(): Boolean {
+        return performAction {
             if (imdbId.isNotNullOrEmpty()) {
                 openUrl(IMDB_BASE_URL + imdbId)
             }
         }
+    }
 
-        R.id.action_rotten_tomatoes -> performAction {
+    private fun viewInRottenTomatotesSite(): Boolean {
+        return performAction {
             if (rottenTomatoesUrl.isNotNullOrEmpty()) {
                 openUrl(rottenTomatoesUrl!!)
             }
         }
-
-        else -> super.onOptionsItemSelected(item)
     }
 
     override fun finishAfterTransition() {
@@ -500,6 +508,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     protected open fun performCleanup() {
+        Glide.clear(posterImage)
+        Glide.clear(backdropImage)
         castAdapter?.removeListener()
         crewAdapter?.removeListener()
         imageAdapter?.removeListener()

@@ -1,7 +1,7 @@
 <resources>
     <!-- General -->
     <string name="error_no_internet">No Internet Connection</string>
-    <string name="error_load_data">An error occurred while trying to fetch data</string>
+    <string name="error_load_data">An error occurred while trying to fetch data!</string>
 
     <!-- Movie -->
     <string name="title_movies">Movies</string>
@@ -38,6 +38,7 @@
     <string name="crew_credits_title">Crew Credits</string>
 
     <!-- Detail Menu -->
+    <string name="mark_as_favorite">Mark as favorite</string>
     <string name="view_in_imdb">View in IMDb</string>
     <string name="view_in_rotten_tomatoes">View in Rotten Tomatoes</string>
 
@@ -136,6 +137,7 @@
     <string name="genre_reality">Reality</string>
     <string name="genre_war_politics">War &amp; Politics</string>
 
+    <!-- TV Show Genres Id -->
     <string name="genre_action_adventure_id">10759</string>
     <string name="genre_scifi_fantasy_id">10765</string>
     <string name="genre_reality_id">10764</string>
@@ -169,9 +171,4 @@
     <string name="error_tmdb_login">Failed to login</string>
     <string name="success_tmdb_login">Successfully logged in as %s!</string>
     <string name="login_with_tmdb">Login with TMDb</string>
-    <string name="mark_as_favorite">Mark as favorite</string>
-
-    <string name="sort_order_txt">Sort Order</string>
-    <string name="asc_order">Asc</string>
-    <string name="desc_order">Desc</string>
 </resources>

@@ -23,8 +23,10 @@ import com.bumptech.glide.request.target.Target
 /**
  * Created by Ashish on Dec 30.
  */
-abstract class BaseContentHolder<in I : ViewType>(parent: ViewGroup, layoutId: Int = R.layout.list_item_content)
-    : RecyclerView.ViewHolder(parent.inflate(layoutId)) {
+abstract class BaseContentHolder<in I : ViewType>(
+        parent: ViewGroup,
+        layoutId: Int = R.layout.list_item_content
+) : RecyclerView.ViewHolder(parent.inflate(layoutId)) {
 
     val contentView: View by bindView(R.id.content_view)
     val contentTitle: FontTextView by bindView(R.id.content_title)

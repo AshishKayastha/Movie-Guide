@@ -56,7 +56,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         initViews()
     }
 
-    protected open fun initViews() {
+    private fun initViews() {
         recyclerViewAdapter = RecyclerViewAdapter(R.layout.list_item_content, getAdapterType(), this)
 
         recyclerView.apply {

@@ -37,4 +37,9 @@
         <attr name="pageIndicatorColor" format="color" />
         <attr name="currentPageIndicatorColor" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="RatingView">
+        <attr name="android:text" />
+        <attr name="android:src" />
+    </declare-styleable>
 </resources>

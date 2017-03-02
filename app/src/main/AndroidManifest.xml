@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.ashish.movieguide.app.MovieGuideApp"
+        android:name=".app.MovieGuideApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,7 +15,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.ashish.movieguide.ui.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.Placeholder">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,27 +24,27 @@
         </activity>
 
         <activity
-            android:name="com.ashish.movieguide.ui.movie.detail.MovieDetailActivity"
+            android:name=".ui.movie.detail.MovieDetailActivity"
             android:label="" />
 
         <activity
-            android:name="com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity"
+            android:name=".ui.tvshow.detail.TVShowDetailActivity"
             android:label="" />
 
         <activity
-            android:name="com.ashish.movieguide.ui.tvshow.season.SeasonDetailActivity"
+            android:name=".ui.tvshow.season.SeasonDetailActivity"
             android:label="" />
 
         <activity
-            android:name="com.ashish.movieguide.ui.tvshow.episode.EpisodeDetailActivity"
+            android:name=".ui.tvshow.episode.EpisodeDetailActivity"
             android:label="" />
 
         <activity
-            android:name="com.ashish.movieguide.ui.people.detail.PersonDetailActivity"
+            android:name=".ui.people.detail.PersonDetailActivity"
             android:label="" />
 
         <activity
-            android:name="com.ashish.movieguide.ui.multisearch.activity.MultiSearchActivity"
+            android:name=".ui.multisearch.activity.MultiSearchActivity"
             android:label=""
             android:theme="@style/AppTheme.MultiSearch"
             android:windowSoftInputMode="adjustNothing|stateHidden">
@@ -59,7 +59,7 @@
         </activity>
 
         <activity
-            android:name="com.ashish.movieguide.ui.imageviewer.ImageViewerActivity"
+            android:name=".ui.imageviewer.ImageViewerActivity"
             android:label=""
             android:theme="@style/ImageViewerTheme" />
 

@@ -164,8 +164,8 @@
     </style>
 
     <style name="RatingView" parent="Wrap">
-        <item name="android:layout_marginStart">@dimen/spacing_medium</item>
-        <item name="android:layout_marginEnd">@dimen/spacing_medium</item>
+        <item name="android:layout_marginStart">@dimen/spacing_large</item>
+        <item name="android:layout_marginEnd">@dimen/spacing_large</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:visibility">gone</item>
     </style>

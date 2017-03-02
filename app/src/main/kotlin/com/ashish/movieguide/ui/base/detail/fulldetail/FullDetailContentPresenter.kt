@@ -29,9 +29,9 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
     }
 
     protected fun setTMDbRating(voteAverage: Double?) {
-        getView()?.apply {
-            val tmdbRating = voteAverage.toString()
-            if (isValidRating(tmdbRating)) {
+        val tmdbRating = voteAverage.toString()
+        if (isValidRating(tmdbRating)) {
+            getView()?.apply {
                 showRatingCard()
                 showTmdbRating(tmdbRating)
             }
@@ -43,8 +43,8 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
     }
 
     private fun setTomatoRating(tomatoRating: String?, tomatoImage: String?) {
-        getView()?.apply {
-            if (isValidRating(tomatoRating)) {
+        if (isValidRating(tomatoRating)) {
+            getView()?.apply {
                 if (tomatoImage == "certified") {
                     showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_certified)
                 } else if (tomatoImage == "fresh") {
@@ -57,8 +57,8 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
     }
 
     private fun setAudienceScore(tomatoUserRating: String?, tomatoUserMeter: String?) {
-        getView()?.apply {
-            if (isValidRating(tomatoUserRating)) {
+        if (isValidRating(tomatoUserRating)) {
+            getView()?.apply {
                 val flixterScore = tomatoUserRating!!.toFloat()
                 if (flixterScore >= 3.5) {
                     showAudienceScore(tomatoUserMeter!!, R.drawable.ic_audience_score_good)
@@ -70,12 +70,12 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
     }
 
     private fun setMetaScore(metaScore: String?) {
-        getView()?.apply {
-            if (isValidRating(metaScore)) {
+        if (isValidRating(metaScore)) {
+            getView()?.apply {
                 val metaScoreInt = metaScore!!.toInt()
                 if (metaScoreInt > 60) {
                     showMetaScore(metaScore, 0xFF66CC33.toInt())
-                } else if (metaScoreInt > 40 && metaScoreInt < 61) {
+                } else if (metaScoreInt in 41..60) {
                     showMetaScore(metaScore, 0xFFFFCC33.toInt())
                 } else {
                     showMetaScore(metaScore, 0xFFFF0000.toInt())

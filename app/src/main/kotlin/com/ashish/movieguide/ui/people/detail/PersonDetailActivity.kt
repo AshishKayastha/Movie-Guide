@@ -9,6 +9,7 @@ import com.ashish.movieguide.data.models.Credit
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.Person
 import com.ashish.movieguide.data.models.PersonDetail
+import com.ashish.movieguide.data.models.ProfileImages
 import com.ashish.movieguide.data.models.TVShow
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
@@ -97,19 +98,22 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
         detailContent.apply {
             titleText.text = name
             this@PersonDetailActivity.imdbId = imdbId
-
-            val profileImages = detailContent.images?.profiles
-            if (profileImages.isNotNullOrEmpty()) {
-                val backdropPath = profileImages!![profileImages.size - 1].filePath
-                if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
-                    showBackdropImage(backdropPath.getOriginalImageUrl())
-                }
-            } else {
-                showBackdropImage(getPosterPath())
-            }
+            showProfileBackdropImage(detailContent.images)
         }
 
         super.showDetailContent(detailContent)
+    }
+
+    private fun showProfileBackdropImage(images: ProfileImages?) {
+        val profileImages = images?.profiles
+        if (profileImages.isNotNullOrEmpty()) {
+            val backdropPath = profileImages!![profileImages.size - 1].filePath
+            if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
+                showBackdropImage(backdropPath.getOriginalImageUrl())
+            }
+        } else {
+            showBackdropImage(getPosterPath())
+        }
     }
 
     override fun getDetailContentType() = ADAPTER_TYPE_PERSON

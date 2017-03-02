@@ -39,7 +39,7 @@
     <dimen name="detail_backdrop_height">360dp</dimen>
     <dimen name="detail_poster_image_height">156dp</dimen>
 
-    <dimen name="rating_image_size">38dp</dimen>
+    <dimen name="rating_image_size">36dp</dimen>
 
     <dimen name="stroke_size">1dp</dimen>
     <dimen name="corner_radius">2dp</dimen>

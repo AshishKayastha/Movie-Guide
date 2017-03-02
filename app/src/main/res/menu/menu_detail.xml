@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_favorite_border_white_24dp"
         android:title="@string/mark_as_favorite"
         android:visible="false"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_imdb"
