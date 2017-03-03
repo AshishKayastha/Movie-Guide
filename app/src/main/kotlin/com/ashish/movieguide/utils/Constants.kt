@@ -58,6 +58,9 @@ object Constants {
             "vote_average.desc"
     )
 
-    @JvmStatic
-    val THUMBNAIL_SIZE = 180f.dpToPx().toInt()
+    @JvmStatic val THUMBNAIL_SIZE = 180f.dpToPx().toInt()
+
+    @JvmStatic val THUMBNAIL_WIDTH = 200f.dpToPx().toInt()
+
+    @JvmStatic val THUMBNAIL_HEIGHT = 260f.dpToPx().toInt()
 }

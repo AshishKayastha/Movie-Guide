@@ -13,6 +13,8 @@ import com.ashish.movieguide.ui.common.palette.PaletteImageViewTarget
 import com.ashish.movieguide.ui.widget.AspectRatioImageView
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.LabelLayout
+import com.ashish.movieguide.utils.Constants.THUMBNAIL_HEIGHT
+import com.ashish.movieguide.utils.Constants.THUMBNAIL_WIDTH
 import com.ashish.movieguide.utils.extensions.inflate
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.transcodePaletteBitmap
@@ -53,6 +55,7 @@ abstract class BaseContentHolder<in I : ViewType>(
         if (imageUrl.isNotNullOrEmpty()) {
             requestBuilder.load(imageUrl)
                     .animate(R.anim.fade_in)
+                    .override(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT)
                     .into(target)
         } else {
             Glide.clear(posterImage)

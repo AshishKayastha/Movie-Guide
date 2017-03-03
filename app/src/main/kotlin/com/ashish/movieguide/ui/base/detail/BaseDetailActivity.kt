@@ -9,7 +9,6 @@ import android.support.annotation.IdRes
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.SharedElementCallback
 import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -47,6 +46,8 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_PERSON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movieguide.utils.Constants.IMDB_BASE_URL
+import com.ashish.movieguide.utils.Constants.THUMBNAIL_HEIGHT
+import com.ashish.movieguide.utils.Constants.THUMBNAIL_WIDTH
 import com.ashish.movieguide.utils.Constants.YOUTUBE_BASE_URL
 import com.ashish.movieguide.utils.CustomTypefaceSpan
 import com.ashish.movieguide.utils.FontUtils
@@ -77,6 +78,7 @@ import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
 import com.ashish.movieguide.utils.extensions.startCircularRevealAnimation
 import com.ashish.movieguide.utils.extensions.tint
+import com.ashish.movieguide.utils.transition.LeakFreeSupportSharedElementCallback
 import com.bumptech.glide.Glide
 import java.util.ArrayList
 
@@ -117,7 +119,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     private var imagesRecyclerView: RecyclerView? = null
     private var sharedElementEnterTransition: Transition? = null
 
-    private val callback = object : SharedElementCallback() {
+    private val callback = object : LeakFreeSupportSharedElementCallback() {
         override fun onMapSharedElements(names: MutableList<String>?, sharedElements: MutableMap<String, View>?) {
             super.onMapSharedElements(names, sharedElements)
 
@@ -206,11 +208,9 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     abstract fun loadDetailContent()
 
     protected fun showBackdropImage(backdropPath: String) {
-        if (backdropPath.isNotEmpty()) {
-            backdropImage.loadPaletteBitmap(backdropPath) { paletteBitmap ->
-                revealBackdropImage()
-                setTopBarColorAndAnimate(paletteBitmap)
-            }
+        backdropImage.loadPaletteBitmap(backdropPath) { paletteBitmap ->
+            revealBackdropImage()
+            setTopBarColorAndAnimate(paletteBitmap)
         }
     }
 
@@ -281,15 +281,14 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     private fun showPosterImage(posterImagePath: String) {
-        if (posterImagePath.isNotEmpty()) {
-            posterImage.loadPaletteBitmap(posterImagePath) {
-                // When the poster image is loaded then start postponed shared element transition
-                startPostponedEnterTransition()
+        posterImage.loadPaletteBitmap(posterImagePath, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT) { paletteBitmap ->
+            // When the poster image is loaded then
+            // start postponed shared element transition
+            startPostponedEnterTransition()
 
-                it.setPaletteColor { swatch ->
-                    titleText.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
-                    titleText.animateTextColorChange(getColorCompat(R.color.primary_text_light), swatch.bodyTextColor)
-                }
+            paletteBitmap.setPaletteColor { swatch ->
+                titleText.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
+                titleText.animateTextColorChange(getColorCompat(R.color.primary_text_light), swatch.bodyTextColor)
             }
         }
     }

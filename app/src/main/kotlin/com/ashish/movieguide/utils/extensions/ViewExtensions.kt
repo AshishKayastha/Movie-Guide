@@ -15,6 +15,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
@@ -98,16 +99,26 @@ fun TextView.setTitleAndYear(title: String?, releaseDate: String?) {
     text = if (yearOnly.isNotEmpty()) "$title ($yearOnly)" else "$title"
 }
 
-inline fun ImageView.loadPaletteBitmap(imageUrl: String, crossinline action: ((PaletteBitmap?) -> Unit)) {
-    Glide.with(context)
-            .transcodePaletteBitmap(context)
-            .load(imageUrl)
-            .into(object : ImageViewTarget<PaletteBitmap>(this) {
-                override fun setResource(paletteBitmap: PaletteBitmap?) {
-                    setImageBitmap(paletteBitmap?.bitmap)
-                    action.invoke(paletteBitmap)
-                }
-            })
+inline fun ImageView.loadPaletteBitmap(imageUrl: String?, width: Int = 0, height: Int = 0,
+                                       crossinline action: ((PaletteBitmap?) -> Unit)) {
+    if (imageUrl.isNotNullOrEmpty()) {
+        val builder = Glide.with(context)
+                .transcodePaletteBitmap(context)
+                .load(imageUrl)
+
+        if (width > 0 && height > 0) {
+            builder.override(width, height)
+        }
+
+        builder.into(object : ImageViewTarget<PaletteBitmap>(this) {
+            override fun setResource(paletteBitmap: PaletteBitmap?) {
+                setImageBitmap(paletteBitmap?.bitmap)
+                action.invoke(paletteBitmap)
+            }
+        })
+    } else {
+        Glide.clear(this)
+    }
 }
 
 fun TextView.applyText(text: String?, viewGone: Boolean = true) {
@@ -178,4 +189,13 @@ inline fun View.startCircularRevealAnimation(cx: Int, cy: Int, startRadius: Floa
 
     show()
     animator.start()
+}
+
+fun View.onLayoutLaid(action: () -> Unit) {
+    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            viewTreeObserver.removeOnGlobalLayoutListener(this)
+            action.invoke()
+        }
+    })
 }

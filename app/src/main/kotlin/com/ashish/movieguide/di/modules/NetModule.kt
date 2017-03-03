@@ -19,6 +19,7 @@ import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import timber.log.Timber
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Named
 import javax.inject.Singleton
@@ -33,7 +34,9 @@ object NetModule {
     @Singleton
     @JvmStatic
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor()
+        val loggingInterceptor = HttpLoggingInterceptor { message ->
+            Timber.tag("OkHttp").d(message)
+        }
         loggingInterceptor.level = if (BuildConfig.DEBUG) BODY else NONE
         return loggingInterceptor
     }

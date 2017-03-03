@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import com.ashish.movieguide.R
 import java.util.ArrayList
@@ -31,19 +30,14 @@ fun MenuItem?.tint(@ColorInt color: Int) = this?.icon.tint(color)
 @SuppressLint("PrivateResource")
 fun Activity.setOverflowMenuColor(color: Int) {
     val decorView = window.decorView as ViewGroup
-    val viewTreeObserver = decorView.viewTreeObserver
     val overflowDescription = getString(R.string.abc_action_menu_overflow_description)
 
-    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            viewTreeObserver.removeOnGlobalLayoutListener(this)
+    decorView.onLayoutLaid {
+        val views = ArrayList<View>()
+        decorView.findViewsWithText(views, overflowDescription, View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION)
+        if (views.isEmpty()) return@onLayoutLaid
 
-            val views = ArrayList<View>()
-            decorView.findViewsWithText(views, overflowDescription, View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION)
-            if (views.isEmpty()) return
-
-            val overflow = views[0] as ImageView
-            overflow.setColorFilter(color)
-        }
-    })
+        val overflow = views[0] as ImageView
+        overflow.setColorFilter(color)
+    }
 }

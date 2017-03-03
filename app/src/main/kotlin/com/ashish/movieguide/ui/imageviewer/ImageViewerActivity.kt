@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.SharedElementCallback
 import android.support.v4.view.ViewPager
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.view.View
@@ -17,6 +16,7 @@ import com.ashish.movieguide.ui.widget.DepthPageTransformer
 import com.ashish.movieguide.ui.widget.InkPageIndicator
 import com.ashish.movieguide.utils.SystemUiHelper
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
+import com.ashish.movieguide.utils.transition.LeakFreeSupportSharedElementCallback
 import icepick.State
 import java.util.ArrayList
 
@@ -60,7 +60,7 @@ class ImageViewerActivity : BaseActivity() {
     private var isReturning: Boolean = false
     private lateinit var imageViewerAdapter: ImageViewerAdapter
 
-    private val callback = object : SharedElementCallback() {
+    private val callback = object : LeakFreeSupportSharedElementCallback() {
         override fun onSharedElementStart(sharedElementNames: MutableList<String>?, sharedElements: MutableList<View>?,
                                           sharedElementSnapshots: MutableList<View>?) {
             super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)

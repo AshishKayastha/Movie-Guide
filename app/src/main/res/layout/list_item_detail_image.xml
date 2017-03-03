@@ -9,7 +9,7 @@
         android:id="@+id/detail_content_image"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:scaleType="center"
+        android:scaleType="centerCrop"
         tools:ignore="ContentDescription"
         tools:src="@drawable/bg_drawer_header" />
 

@@ -10,7 +10,6 @@ import android.support.v7.widget.SearchView
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import android.widget.TextView
 import butterknife.bindView
@@ -27,6 +26,7 @@ import com.ashish.movieguide.utils.extensions.changeTypeface
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.hideKeyboard
+import com.ashish.movieguide.utils.extensions.onLayoutLaid
 import com.ashish.movieguide.utils.extensions.showKeyboard
 import com.ashish.movieguide.utils.extensions.startCircularRevealAnimation
 import com.ashish.movieguide.utils.keyboardwatcher.KeyboardWatcher
@@ -83,17 +83,13 @@ class MultiSearchActivity : BaseActivity(), FragmentComponentBuilderHost {
     override fun getLayoutId() = R.layout.activity_multi_search
 
     private fun performRevealAnimation() {
-        rootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                rootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-
-                val right = rootView.right
-                endRadius = Math.hypot(right.toDouble(), rootView.bottom.toDouble()).toFloat()
-                rootView.startCircularRevealAnimation(right, 0, 0f, endRadius, 650L) {
-                    searchView.showKeyboard()
-                }
+        rootView.onLayoutLaid {
+            val right = rootView.right
+            endRadius = Math.hypot(right.toDouble(), rootView.bottom.toDouble()).toFloat()
+            rootView.startCircularRevealAnimation(right, 0, 0f, endRadius, 650L) {
+                searchView.showKeyboard()
             }
-        })
+        }
     }
 
     private fun setupSearchView() {

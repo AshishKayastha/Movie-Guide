@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ListItemCard">
 
-    <RelativeLayout
-        android:id="@+id/item_content_view"
-        style="@style/Match.Width">
+    <RelativeLayout style="@style/Match.Width">
 
         <com.ashish.movieguide.ui.widget.AspectRatioImageView
             android:id="@+id/poster_image"
