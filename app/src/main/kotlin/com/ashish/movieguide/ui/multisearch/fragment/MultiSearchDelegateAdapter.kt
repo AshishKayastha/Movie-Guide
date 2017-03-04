@@ -9,8 +9,8 @@ import com.ashish.movieguide.ui.common.adapter.RemoveListener
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movieguide.utils.extensions.applyText
-import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
+import com.ashish.movieguide.utils.extensions.getProfileUrl
 import com.ashish.movieguide.utils.extensions.getYearOnly
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 
@@ -56,7 +56,7 @@ class MultiSearchDelegateAdapter(
         override fun getImageUrl(item: MultiSearch): String? {
             with(item) {
                 if (profilePath.isNotNullOrEmpty()) {
-                    return profilePath.getOriginalImageUrl()
+                    return profilePath.getProfileUrl()
                 } else {
                     return posterPath.getPosterUrl()
                 }

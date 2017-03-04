@@ -74,7 +74,6 @@ import com.ashish.movieguide.utils.extensions.startActivityWithTransition
 import com.ashish.movieguide.utils.extensions.startCircularRevealAnimation
 import com.ashish.movieguide.utils.extensions.tint
 import com.ashish.movieguide.utils.transition.LeakFreeSupportSharedElementCallback
-import com.bumptech.glide.Glide
 import java.util.ArrayList
 
 /**
@@ -479,8 +478,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     protected open fun performCleanup() {
-        Glide.clear(posterImage)
-        Glide.clear(backdropImage)
         castAdapter?.removeListener()
         crewAdapter?.removeListener()
         imageAdapter?.removeListener()

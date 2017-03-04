@@ -164,7 +164,6 @@ class ImageViewerFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        Glide.clear(imageView)
         imageView.setOnTouchListener(null)
         sharedElementEnterTransition?.removeListener(transitionListener)
         super.onDestroyView()

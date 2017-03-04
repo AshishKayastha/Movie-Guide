@@ -3,9 +3,11 @@ package com.ashish.movieguide.utils.extensions
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TypefaceSpan
-import com.ashish.movieguide.utils.Constants.BACKDROP_W1280_URL_PREFIX
+import com.ashish.movieguide.utils.Constants.BACKDROP_URL_PREFIX
 import com.ashish.movieguide.utils.Constants.ORIGINAL_IMAGE_URL_PREFIX
-import com.ashish.movieguide.utils.Constants.POSTER_W500_URL_PREFIX
+import com.ashish.movieguide.utils.Constants.POSTER_URL_PREFIX
+import com.ashish.movieguide.utils.Constants.PROFILE_URL_PREFIX
+import com.ashish.movieguide.utils.Constants.STILL_URL_PREFIX
 import java.text.NumberFormat
 
 /**
@@ -49,9 +51,13 @@ inline fun <T> List<T>?.convertListToCommaSeparatedText(crossinline func: (T) ->
     return formattedGenre
 }
 
-fun String?.getBackdropUrl() = getImageUrl(BACKDROP_W1280_URL_PREFIX)
+fun String?.getBackdropUrl() = getImageUrl(BACKDROP_URL_PREFIX)
 
-fun String?.getPosterUrl() = getImageUrl(POSTER_W500_URL_PREFIX)
+fun String?.getPosterUrl() = getImageUrl(POSTER_URL_PREFIX)
+
+fun String?.getProfileUrl() = getImageUrl(PROFILE_URL_PREFIX)
+
+fun String?.getStillImageUrl() = getImageUrl(STILL_URL_PREFIX)
 
 fun String?.getOriginalImageUrl() = getImageUrl(ORIGINAL_IMAGE_URL_PREFIX)
 

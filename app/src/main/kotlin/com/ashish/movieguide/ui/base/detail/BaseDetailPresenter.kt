@@ -80,10 +80,11 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
         }
     }
 
-    private fun addImages(urlList: ArrayList<String>, imageItemList: List<ImageItem>?, getImage: (String?) -> String?) {
+    private fun addImages(urlList: ArrayList<String>, imageItemList: List<ImageItem>?,
+                          getImageUrl: (String?) -> String?) {
         if (imageItemList.isNotNullOrEmpty()) {
             val posterImageUrlList = imageItemList!!
-                    .map { getImage(it.filePath) }
+                    .map { getImageUrl(it.filePath) }
                     .filterNotNull()
                     .toList()
             urlList.addAll(posterImageUrlList)

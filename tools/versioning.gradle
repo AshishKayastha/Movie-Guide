@@ -17,7 +17,8 @@ ext.versions = [
         storioVersion        : '1.12.3',
         supportLibVersion    : '25.2.0',
         glideVersion         : '3.8.0-SNAPSHOT',
-        kotterKnifeVersion   : '0.1.0-SNAPSHOT'
+        kotterKnifeVersion   : '0.1.0-SNAPSHOT',
+        glideOkHttp3Version  : '1.5.0-SNAPSHOT@aar'
 ]
 
 ext {

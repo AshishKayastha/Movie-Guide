@@ -8,13 +8,17 @@ import com.ashish.movieguide.utils.extensions.dpToPx
  */
 object Constants {
 
+    const val IMDB_BASE_URL = "http://www.imdb.com/title/"
     const val OMDB_API_BASE_URL = "http://www.omdbapi.com/"
     const val TMDB_API_BASE_URL = "https://api.themoviedb.org/3/"
     const val TMDB_BASE_IMAGE_URL = "https://image.tmdb.org/t/p/"
     const val VALIDATE_TMDB_REQUEST_TOKEN_URL = "https://www.themoviedb.org/authenticate/"
 
-    const val POSTER_W500_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w500"
-    const val BACKDROP_W1280_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w1280"
+    // Image Url Configurations
+    const val STILL_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w300"
+    const val POSTER_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w342"
+    const val PROFILE_URL_PREFIX = TMDB_BASE_IMAGE_URL + "h632"
+    const val BACKDROP_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w780"
     const val ORIGINAL_IMAGE_URL_PREFIX = TMDB_BASE_IMAGE_URL + "original"
 
     const val API_KEY = "api_key"
@@ -30,8 +34,6 @@ object Constants {
     const val DATE_PICKER_FORMAT = "%d-%d-%d"
     const val DEFAULT_DATE_PATTERN = "yyyy-MM-dd"
     const val MONTH_DAY_YEAR_PATTERN = "MMM dd, yyyy"
-
-    const val IMDB_BASE_URL = "http://www.imdb.com/title/"
 
     const val ADAPTER_TYPE_MOVIE = 0
     const val ADAPTER_TYPE_TV_SHOW = 1

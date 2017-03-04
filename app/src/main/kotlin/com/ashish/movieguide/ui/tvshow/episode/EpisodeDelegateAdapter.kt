@@ -10,7 +10,7 @@ import com.ashish.movieguide.ui.common.adapter.RemoveListener
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movieguide.utils.extensions.applyText
-import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
+import com.ashish.movieguide.utils.extensions.getStillImageUrl
 
 /**
  * Created by Ashish on Jan 08.
@@ -41,6 +41,6 @@ class EpisodeDelegateAdapter(
 
         override fun getItemClickListener() = onItemClickListener
 
-        override fun getImageUrl(item: Episode) = item.stillPath.getOriginalImageUrl()
+        override fun getImageUrl(item: Episode) = item.stillPath.getStillImageUrl()
     }
 }

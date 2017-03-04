@@ -8,7 +8,7 @@ import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RemoveListener
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.common.adapter.ViewTypeDelegateAdapter
-import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
+import com.ashish.movieguide.utils.extensions.getProfileUrl
 import com.ashish.movieguide.utils.extensions.hide
 
 /**
@@ -39,6 +39,6 @@ class PeopleDelegateAdapter(
 
         override fun getItemClickListener() = onItemClickListener
 
-        override fun getImageUrl(item: Person) = item.profilePath.getOriginalImageUrl()
+        override fun getImageUrl(item: Person) = item.profilePath.getProfileUrl()
     }
 }

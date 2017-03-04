@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import com.ashish.movieguide.data.models.Credit
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movieguide.utils.extensions.applyText
-import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
+import com.ashish.movieguide.utils.extensions.getProfileUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 
 /**
@@ -40,7 +40,7 @@ class CreditDelegateAdapter(
         override fun getImageUrl(item: Credit): String? {
             with(item) {
                 if (profilePath.isNotNullOrEmpty()) {
-                    return profilePath.getOriginalImageUrl()
+                    return profilePath.getProfileUrl()
                 } else {
                     return posterPath.getPosterUrl()
                 }

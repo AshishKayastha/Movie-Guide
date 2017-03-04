@@ -12,6 +12,7 @@ import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentView
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
+import com.ashish.movieguide.utils.extensions.getStillImageUrl
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import icepick.State
 
@@ -59,7 +60,7 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
 
     override fun getBackdropPath() = episode?.stillPath.getOriginalImageUrl()
 
-    override fun getPosterPath() = getBackdropPath()
+    override fun getPosterPath() = episode?.stillPath.getStillImageUrl()
 
     override fun showDetailContent(detailContent: EpisodeDetail) {
         detailContent.apply {

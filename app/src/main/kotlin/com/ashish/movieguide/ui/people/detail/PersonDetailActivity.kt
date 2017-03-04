@@ -23,6 +23,7 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_PERSON
 import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_MOVIE
 import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_TV
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
+import com.ashish.movieguide.utils.extensions.getProfileUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import icepick.State
 
@@ -92,7 +93,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
 
     override fun getBackdropPath() = ""
 
-    override fun getPosterPath() = person?.profilePath.getOriginalImageUrl()
+    override fun getPosterPath() = person?.profilePath.getProfileUrl()
 
     override fun showDetailContent(detailContent: PersonDetail) {
         detailContent.apply {
