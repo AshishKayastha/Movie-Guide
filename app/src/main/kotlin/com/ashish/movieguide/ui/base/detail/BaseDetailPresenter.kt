@@ -4,7 +4,6 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.CreditResults
 import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.ImageItem
-import com.ashish.movieguide.data.models.Videos
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.Utils
@@ -25,7 +24,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
 
     protected var fullDetailContent: FullDetailContent<I>? = null
 
-    open fun loadDetailContent(id: Long?) {
+    fun loadDetailContent(id: Long?) {
         if (fullDetailContent != null) {
             showDetailContent(fullDetailContent!!)
         } else {
@@ -62,7 +61,6 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
                 showDetailContent(detailContent)
                 showAllImages(detailContent)
                 showCredits(getCredits(detailContent))
-                showYouTubeTrailer(detailContent)
             }
 
             val omdbDetail = fullDetailContent.omdbDetail
@@ -92,39 +90,22 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
         }
     }
 
-    private fun showYouTubeTrailer(detailContent: I) {
-        val videoResults = getVideos(detailContent)?.results
-        if (videoResults.isNotNullOrEmpty()) {
-            var youtubeTrailerUrl = videoResults!!
-                    .firstOrNull { it.site == "YouTube" && it.type == "Trailer" }
-                    ?.key
-
-            if (youtubeTrailerUrl.isNullOrEmpty()) {
-                youtubeTrailerUrl = videoResults[0].key
-            }
-
-            getView()?.showTrailerFAB(youtubeTrailerUrl!!)
-        }
-    }
-
     abstract fun getContentList(fullDetailContent: FullDetailContent<I>): List<String>
 
     abstract fun getBackdropImages(detailContent: I): List<ImageItem>?
 
     abstract fun getPosterImages(detailContent: I): List<ImageItem>?
 
-    abstract fun getVideos(detailContent: I): Videos?
-
     abstract fun getCredits(detailContent: I): CreditResults?
 
-    protected fun showCredits(creditResults: CreditResults?) {
+    private fun showCredits(creditResults: CreditResults?) {
         getView()?.apply {
             showItemList(creditResults?.cast) { showCastList(it) }
             showItemList(creditResults?.crew) { showCrewList(it) }
         }
     }
 
-    protected fun onLoadDetailError(t: Throwable, messageId: Int) {
+    private fun onLoadDetailError(t: Throwable, messageId: Int) {
         Logger.e(t)
         getView()?.apply {
             showErrorToast(t, messageId)
@@ -134,7 +115,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
 
     abstract fun getErrorMessageId(): Int
 
-    protected fun showErrorToast(t: Throwable, messageId: Int) {
+    private fun showErrorToast(t: Throwable, messageId: Int) {
         getView()?.apply {
             if (t is IOException) {
                 showToastMessage(R.string.error_no_internet)

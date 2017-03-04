@@ -2,6 +2,9 @@ package com.ashish.movieguide.ui.base.detail.fulldetail
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.FullDetailContent
+import com.ashish.movieguide.data.models.VideoItem
+import com.ashish.movieguide.data.models.Videos
+import com.ashish.movieguide.data.models.YouTubeVideo
 import com.ashish.movieguide.ui.base.detail.BaseDetailPresenter
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
@@ -12,6 +15,12 @@ import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
         schedulerProvider: BaseSchedulerProvider
 ) : BaseDetailPresenter<I, V>(schedulerProvider) {
+
+    companion object {
+        private const val YOUTUBE_SITE = "YouTube"
+        private const val YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
+        private const val YOUTUBE_THUMB_URL = "https://img.youtube.com/vi/{id}/hqdefault.jpg"
+    }
 
     override fun showDetailContent(fullDetailContent: FullDetailContent<I>) {
         fullDetailContent.omdbDetail?.apply {
@@ -25,6 +34,7 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
             }
         }
 
+        fullDetailContent.detailContent?.let { handleVideoContents(it) }
         super.showDetailContent(fullDetailContent)
     }
 
@@ -87,4 +97,34 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
     private fun isValidRating(rating: String?): Boolean {
         return rating.isNotNullOrEmpty() && rating != "N/A" && rating != "0"
     }
+
+    private fun handleVideoContents(detailContent: I) {
+        val videoResults = getVideos(detailContent)?.results
+        if (videoResults.isNotNullOrEmpty()) {
+            showYouTubeTrailer(videoResults)
+            showYouTubeVideos(videoResults)
+        }
+    }
+
+    private fun showYouTubeTrailer(videoResults: List<VideoItem>?) {
+        val youtubeTrailerUrl = videoResults!!.firstOrNull { it.site == YOUTUBE_SITE }?.key
+        if (youtubeTrailerUrl.isNullOrEmpty()) {
+            getView()?.showTrailerFAB(YOUTUBE_BASE_URL + youtubeTrailerUrl!!)
+        }
+    }
+
+    private fun showYouTubeVideos(videoResults: List<VideoItem>?) {
+        val youTubeVideos = ArrayList<YouTubeVideo>()
+
+        videoResults!!.filter { (_, _, site, _, key) ->
+            site == YOUTUBE_SITE && key.isNotNullOrEmpty()
+        }.forEach { (_, name, _, _, key) ->
+            val imageUrl = YOUTUBE_THUMB_URL.replace("{id}", key!!)
+            youTubeVideos.add(YouTubeVideo(name, YOUTUBE_BASE_URL + key, imageUrl))
+        }
+
+        getView()?.showYouTubeVideos(youTubeVideos)
+    }
+
+    abstract fun getVideos(detailContent: I): Videos?
 }

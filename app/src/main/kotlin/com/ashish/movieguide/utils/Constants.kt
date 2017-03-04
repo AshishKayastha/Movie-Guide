@@ -14,7 +14,6 @@ object Constants {
     const val VALIDATE_TMDB_REQUEST_TOKEN_URL = "https://www.themoviedb.org/authenticate/"
 
     const val POSTER_W500_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w500"
-    const val PROFILE_W185_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w185"
     const val BACKDROP_W1280_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w1280"
     const val ORIGINAL_IMAGE_URL_PREFIX = TMDB_BASE_IMAGE_URL + "original"
 
@@ -33,7 +32,6 @@ object Constants {
     const val MONTH_DAY_YEAR_PATTERN = "MMM dd, yyyy"
 
     const val IMDB_BASE_URL = "http://www.imdb.com/title/"
-    const val YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
 
     const val ADAPTER_TYPE_MOVIE = 0
     const val ADAPTER_TYPE_TV_SHOW = 1

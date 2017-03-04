@@ -5,10 +5,10 @@
     android:foreground="?selectableItemBackground"
     android:stateListAnimator="@animator/elevation_animator">
 
-    <com.ashish.movieguide.ui.widget.AspectRatioImageView
+    <ImageView
         android:id="@+id/detail_content_image"
         android:layout_width="180dp"
-        android:layout_height="wrap_content"
+        android:layout_height="180dp"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription"
         tools:src="@drawable/bg_drawer_header" />

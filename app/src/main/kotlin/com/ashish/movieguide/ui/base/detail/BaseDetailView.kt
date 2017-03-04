@@ -16,8 +16,6 @@ interface BaseDetailView<in I> : ProgressView {
 
     fun showImageList(imageUrlList: ArrayList<String>)
 
-    fun showTrailerFAB(trailerUrl: String)
-
     fun showOMDbDetail(omDbDetail: OMDbDetail)
 
     fun showCastList(castList: List<Credit>)

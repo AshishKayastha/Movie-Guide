@@ -44,8 +44,6 @@ class PersonDetailPresenter @Inject constructor(
 
     override fun getPosterImages(detailContent: PersonDetail) = null
 
-    override fun getVideos(detailContent: PersonDetail) = null
-
     override fun getCredits(detailContent: PersonDetail) = detailContent.combinedCredits
 
     override fun getErrorMessageId() = R.string.error_load_person_detail

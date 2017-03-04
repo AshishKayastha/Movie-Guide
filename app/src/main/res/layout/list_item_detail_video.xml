@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="180dp"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground"
+    android:stateListAnimator="@animator/elevation_animator">
+
+    <ImageView
+        android:id="@+id/detail_content_video"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/bg_drawer_header" />
+
+    <com.ashish.movieguide.ui.widget.FontTextView
+        android:id="@+id/video_name_text"
+        style="@style/PrimaryText"
+        android:layout_gravity="bottom"
+        android:background="#96212121"
+        android:gravity="center"
+        android:maxLines="2"
+        android:padding="@dimen/spacing_micro"
+        android:textSize="@dimen/text_size_normal"
+        tools:text="Video Name" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_play_circle_outline_white_60dp"
+        tools:ignore="ContentDescription" />
+
+</FrameLayout>

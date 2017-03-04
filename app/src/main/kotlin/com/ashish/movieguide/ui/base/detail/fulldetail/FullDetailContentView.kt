@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.base.detail.fulldetail
 
+import com.ashish.movieguide.data.models.YouTubeVideo
 import com.ashish.movieguide.ui.base.detail.BaseDetailView
 
 /**
@@ -18,6 +19,10 @@ interface FullDetailContentView<in I> : BaseDetailView<I> {
     fun showMetaScore(metaScore: String, color: Int)
 
     fun showTmdbRating(tmdbRating: String)
+
+    fun showTrailerFAB(trailerUrl: String)
+
+    fun showYouTubeVideos(youTubeVideos: List<YouTubeVideo>)
 
     fun handleMarkAsFavoriteError(isFavorite: Boolean)
 }

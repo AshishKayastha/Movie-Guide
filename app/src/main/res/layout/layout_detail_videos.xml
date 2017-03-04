@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Match.Width"
+    android:paddingBottom="@dimen/spacing_medium">
+
+    <com.ashish.movieguide.ui.widget.FontTextView
+        style="@style/DetailTitle"
+        android:text="@string/videos_title" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/detail_videos_recycler_view"
+        style="@style/DetailRecyclerView"
+        android:paddingEnd="@dimen/spacing_medium"
+        android:paddingStart="@dimen/spacing_medium" />
+
+</LinearLayout>

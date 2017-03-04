@@ -28,16 +28,18 @@
 
                 <include layout="@layout/layout_detail_content_recycler_view" />
 
-                <include layout="@layout/layout_detail_images_view_stub" />
+                <include layout="@layout/layout_detail_images_stub" />
+
+                <include layout="@layout/layout_detail_videos_stub" />
 
                 <ViewStub
                     android:id="@+id/episodes_view_stub"
                     style="@style/Match.Width"
                     android:layout="@layout/layout_detail_episodes" />
 
-                <include layout="@layout/layout_detail_cast_credits_view_stub" />
+                <include layout="@layout/layout_detail_cast_credits_stub" />
 
-                <include layout="@layout/layout_detail_crew_credits_view_stub" />
+                <include layout="@layout/layout_detail_crew_credits_stub" />
 
             </LinearLayout>
 

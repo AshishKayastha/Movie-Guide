@@ -28,13 +28,15 @@
 
                 <include layout="@layout/layout_detail_content_recycler_view" />
 
-                <include layout="@layout/layout_detail_images_view_stub" />
+                <include layout="@layout/layout_detail_images_stub" />
 
-                <include layout="@layout/layout_detail_cast_credits_view_stub" />
+                <include layout="@layout/layout_detail_videos_stub" />
 
-                <include layout="@layout/layout_detail_crew_credits_view_stub" />
+                <include layout="@layout/layout_detail_cast_credits_stub" />
 
-                <include layout="@layout/layout_detail_similar_content_view_stub" />
+                <include layout="@layout/layout_detail_crew_credits_stub" />
+
+                <include layout="@layout/layout_detail_similar_content_stub" />
 
             </LinearLayout>
 

@@ -8,9 +8,7 @@ import android.support.annotation.CallSuper
 import android.support.annotation.IdRes
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.util.Pair
-import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Transition
@@ -22,7 +20,6 @@ import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
-import butterknife.bindOptionalView
 import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Credit
@@ -48,7 +45,6 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movieguide.utils.Constants.IMDB_BASE_URL
 import com.ashish.movieguide.utils.Constants.THUMBNAIL_HEIGHT
 import com.ashish.movieguide.utils.Constants.THUMBNAIL_WIDTH
-import com.ashish.movieguide.utils.Constants.YOUTUBE_BASE_URL
 import com.ashish.movieguide.utils.CustomTypefaceSpan
 import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.StartSnapHelper
@@ -73,7 +69,6 @@ import com.ashish.movieguide.utils.extensions.setLightStatusBar
 import com.ashish.movieguide.utils.extensions.setOverflowMenuColor
 import com.ashish.movieguide.utils.extensions.setPaletteColor
 import com.ashish.movieguide.utils.extensions.setTransitionName
-import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
 import com.ashish.movieguide.utils.extensions.startCircularRevealAnimation
@@ -95,14 +90,13 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     protected var crewAdapter: RecyclerViewAdapter<Credit>? = null
 
     protected val titleText: FontTextView by bindView(R.id.content_title_text)
+    protected val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
 
     private val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
     private val progressBar: ProgressBar by bindView(R.id.progress_bar)
     private val detailContainer: View by bindView(R.id.detail_container)
     private val backdropImage: ImageView by bindView(R.id.backdrop_image)
     private val posterImage: ImageView by bindView(R.id.detail_poster_image)
-    private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
-    private val playTrailerFAB: FloatingActionButton? by bindOptionalView(R.id.play_trailer_fab)
 
     private val castViewStub: ViewStub by bindView(R.id.cast_view_stub)
     private val crewViewStub: ViewStub by bindView(R.id.crew_view_stub)
@@ -333,13 +327,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
                 imageAdapter!!)
     }
 
-    override fun showTrailerFAB(trailerUrl: String) {
-        playTrailerFAB?.apply {
-            postDelayed({ animate().alpha(1f).scaleX(1f).scaleY(1f).start() }, 80L)
-            setOnClickListener { openUrl(YOUTUBE_BASE_URL + trailerUrl) }
-        }
-    }
-
     @CallSuper
     override fun showOMDbDetail(omDbDetail: OMDbDetail) {
         rottenTomatoesUrl = omDbDetail.tomatoURL
@@ -370,8 +357,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     abstract fun getCrewItemClickListener(): OnItemClickListener?
 
-    private fun inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
-                                            adapter: RecyclerView.Adapter<*>): RecyclerView {
+    protected fun inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
+                                              adapter: RecyclerView.Adapter<*>): RecyclerView {
         val inflatedView = viewStub.inflate()
         val recyclerView = inflatedView.find<RecyclerView>(viewId)
 
@@ -395,17 +382,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         return recyclerView
     }
 
+    @CallSuper
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-        playTrailerFAB?.apply {
-            /*
-              Show or hide FAB depending upon
-              whether appbar is collapsing or expanding
-             */
-            val isCollapsing = collapsingToolbar.height + verticalOffset <
-                    2.4 * ViewCompat.getMinimumHeight(collapsingToolbar)
-            setVisibility(!isCollapsing)
-        }
-
         if (appBarLayout.totalScrollRange + verticalOffset == 0) {
             collapsingToolbar.title = getItemTitle()
         } else {
@@ -493,12 +471,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
                 openUrl(rottenTomatoesUrl!!)
             }
         }
-    }
-
-    override fun finishAfterTransition() {
-        // Hide FAB when exiting this Activity for nice FAB animation
-        playTrailerFAB?.hide()
-        super.finishAfterTransition()
     }
 
     override fun onDestroy() {
