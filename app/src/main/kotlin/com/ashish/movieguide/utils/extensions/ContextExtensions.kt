@@ -3,12 +3,14 @@ package com.ashish.movieguide.utils.extensions
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.preference.PreferenceManager
 import android.support.annotation.ArrayRes
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
+import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -18,6 +20,10 @@ import android.widget.Toast
  */
 @ColorInt
 fun Context.getColorCompat(@ColorRes colorResId: Int) = ContextCompat.getColor(this, colorResId)
+
+fun Context.getDrawableCompat(@DrawableRes drawableResId: Int): Drawable {
+    return ContextCompat.getDrawable(this, drawableResId)
+}
 
 fun Context.showToast(messageId: Int, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(this, messageId, duration).show()

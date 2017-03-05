@@ -3,6 +3,7 @@ package com.ashish.movieguide.ui.movie.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewStub
@@ -17,11 +18,12 @@ import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
-import com.ashish.movieguide.utils.extensions.changeFavoriteIcon
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
+import com.ashish.movieguide.utils.extensions.setFavoriteIcon
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
+import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
 import icepick.State
 import javax.inject.Inject
 
@@ -94,7 +96,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
 
         // Show favorite menu item only if user is logged in
         if (preferenceHelper.getId() > 0) {
-            menu?.changeFavoriteIcon(detailContent.movieRatings?.favorite)
+            menu?.setFavoriteIcon(detailContent.movieRatings?.favorite)
         }
 
         super.showDetailContent(detailContent)
@@ -116,7 +118,10 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
     }
 
     override fun changeFavoriteIcon(isFavorite: Boolean) {
-        menu?.changeFavoriteIcon(isFavorite)
+        val view = toolbar?.findViewById(R.id.action_favorite)
+        if (view is ActionMenuItemView) {
+            view.startFavoriteAnimation(isFavorite)
+        }
     }
 
     override fun performCleanup() {

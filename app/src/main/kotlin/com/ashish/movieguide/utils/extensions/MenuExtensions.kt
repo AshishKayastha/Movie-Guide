@@ -1,13 +1,20 @@
 package com.ashish.movieguide.utils.extensions
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.support.annotation.ColorInt
+import android.support.v7.view.menu.ActionMenuItemView
 import android.text.style.TypefaceSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import com.ashish.movieguide.R
 import java.util.ArrayList
@@ -42,7 +49,7 @@ fun Activity.setOverflowMenuColor(color: Int) {
     }
 }
 
-fun Menu.changeFavoriteIcon(isFavorite: Boolean?) {
+fun Menu.setFavoriteIcon(isFavorite: Boolean?) {
     val favItem = findItem(R.id.action_favorite)
     if (!favItem.isVisible) favItem.isVisible = true
 
@@ -51,4 +58,35 @@ fun Menu.changeFavoriteIcon(isFavorite: Boolean?) {
     } else {
         favItem?.setIcon(R.drawable.ic_favorite_border_white_24dp)
     }
+}
+
+fun ActionMenuItemView.startFavoriteAnimation(isFavorite: Boolean) {
+    val animatorSet = AnimatorSet()
+    val animDuration = 350L
+    val overshootInterpolator = OvershootInterpolator()
+
+    val rotationAnim = ObjectAnimator.ofFloat(this, "rotation", 0f, 360f)
+    rotationAnim.duration = animDuration
+    rotationAnim.interpolator = AccelerateInterpolator()
+
+    val bounceAnimX = ObjectAnimator.ofFloat(this, "scaleX", 0.3f, 1f)
+    bounceAnimX.duration = animDuration
+    bounceAnimX.interpolator = overshootInterpolator
+
+    val bounceAnimY = ObjectAnimator.ofFloat(this, "scaleY", 0.3f, 1f)
+    bounceAnimY.duration = animDuration
+    bounceAnimY.interpolator = overshootInterpolator
+    bounceAnimY.addListener(object : AnimatorListenerAdapter() {
+        override fun onAnimationStart(animator: Animator) {
+            if (isFavorite) {
+                setIcon(context.getDrawableCompat(R.drawable.ic_favorite_white_24dp))
+            } else {
+                setIcon(context.getDrawableCompat(R.drawable.ic_favorite_border_white_24dp))
+            }
+        }
+    })
+
+    animatorSet.play(rotationAnim)
+    animatorSet.play(bounceAnimX).with(bounceAnimY).after(rotationAnim)
+    animatorSet.start()
 }

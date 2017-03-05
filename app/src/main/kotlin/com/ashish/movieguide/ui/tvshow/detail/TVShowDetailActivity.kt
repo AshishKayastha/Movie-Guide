@@ -3,6 +3,7 @@ package com.ashish.movieguide.ui.tvshow.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewStub
@@ -21,12 +22,13 @@ import com.ashish.movieguide.ui.tvshow.season.SeasonDetailActivity
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
-import com.ashish.movieguide.utils.extensions.changeFavoriteIcon
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
+import com.ashish.movieguide.utils.extensions.setFavoriteIcon
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
+import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
 import icepick.State
 import javax.inject.Inject
 
@@ -107,7 +109,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
 
         // Show favorite menu item only if user is logged in
         if (preferenceHelper.getId() > 0) {
-            menu?.changeFavoriteIcon(detailContent.tvRatings?.favorite)
+            menu?.setFavoriteIcon(detailContent.tvRatings?.favorite)
         }
 
         super.showDetailContent(detailContent)
@@ -143,7 +145,10 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
     }
 
     override fun changeFavoriteIcon(isFavorite: Boolean) {
-        menu?.changeFavoriteIcon(isFavorite)
+        val view = toolbar?.findViewById(R.id.action_favorite)
+        if (view is ActionMenuItemView) {
+            view.startFavoriteAnimation(isFavorite)
+        }
     }
 
     override fun performCleanup() {
