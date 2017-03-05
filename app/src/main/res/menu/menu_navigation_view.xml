@@ -35,7 +35,7 @@
 
         <item
             android:id="@+id/action_watchlist"
-            android:icon="@drawable/ic_favorite_white_24dp"
+            android:icon="@drawable/ic_watchlist_white_24dp"
             android:title="@string/title_watchlist"
             app:showAsAction="ifRoom" />
     </group>
