@@ -11,5 +11,7 @@ interface MovieDetailView : FullDetailContentView<MovieDetail> {
 
     fun showSimilarMoviesList(similarMoviesList: List<Movie>)
 
-    fun changeFavoriteIcon(isFavorite: Boolean)
+    fun setFavoriteIcon(isFavorite: Boolean)
+
+    fun animateFavoriteIcon(isFavorite: Boolean)
 }

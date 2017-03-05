@@ -77,7 +77,7 @@ fun ActionMenuItemView.startFavoriteAnimation(isFavorite: Boolean) {
     bounceAnimY.duration = animDuration
     bounceAnimY.interpolator = overshootInterpolator
     bounceAnimY.addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationStart(animator: Animator) {
+        override fun onAnimationEnd(animator: Animator) {
             if (isFavorite) {
                 setIcon(context.getDrawableCompat(R.drawable.ic_favorite_white_24dp))
             } else {

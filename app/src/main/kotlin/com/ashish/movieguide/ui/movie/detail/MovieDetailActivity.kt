@@ -11,7 +11,6 @@ import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.MovieDetail
-import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
@@ -25,7 +24,6 @@ import com.ashish.movieguide.utils.extensions.setFavoriteIcon
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
 import icepick.State
-import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 31.
@@ -41,8 +39,6 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
                     .putExtra(EXTRA_MOVIE, movie)
         }
     }
-
-    @Inject lateinit var preferenceHelper: PreferenceHelper
 
     @JvmField @State var movie: Movie? = null
 
@@ -94,11 +90,6 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
             titleText.setTitleAndYear(title, releaseDate)
         }
 
-        // Show favorite menu item only if user is logged in
-        if (preferenceHelper.getId() > 0) {
-            menu?.setFavoriteIcon(detailContent.movieRatings?.favorite)
-        }
-
         super.showDetailContent(detailContent)
     }
 
@@ -117,7 +108,11 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
         else -> super.onOptionsItemSelected(item)
     }
 
-    override fun changeFavoriteIcon(isFavorite: Boolean) {
+    override fun setFavoriteIcon(isFavorite: Boolean) {
+        menu?.setFavoriteIcon(isFavorite)
+    }
+
+    override fun animateFavoriteIcon(isFavorite: Boolean) {
         val view = toolbar?.findViewById(R.id.action_favorite)
         if (view is ActionMenuItemView) {
             view.startFavoriteAnimation(isFavorite)

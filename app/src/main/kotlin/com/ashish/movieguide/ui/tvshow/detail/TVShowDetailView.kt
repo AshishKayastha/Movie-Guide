@@ -14,5 +14,7 @@ interface TVShowDetailView : FullDetailContentView<TVShowDetail> {
 
     fun showSimilarTVShowList(similarTVShowList: List<TVShow>)
 
-    fun changeFavoriteIcon(isFavorite: Boolean)
+    fun setFavoriteIcon(isFavorite: Boolean)
+
+    fun animateFavoriteIcon(isFavorite: Boolean)
 }

@@ -6,6 +6,7 @@ import com.ashish.movieguide.data.interactors.MovieInteractor
 import com.ashish.movieguide.data.models.Favorite
 import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.MovieDetail
+import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.utils.Logger
@@ -24,6 +25,7 @@ import javax.inject.Inject
 class MovieDetailPresenter @Inject constructor(
         private val movieInteractor: MovieInteractor,
         private val authInteractor: AuthInteractor,
+        private val preferenceHelper: PreferenceHelper,
         schedulerProvider: BaseSchedulerProvider
 ) : FullDetailContentPresenter<MovieDetail, MovieDetailView>(schedulerProvider) {
 
@@ -36,7 +38,12 @@ class MovieDetailPresenter @Inject constructor(
         getView()?.apply {
             hideProgress()
             val movieDetail = fullDetailContent.detailContent
-            isFavorite = movieDetail?.movieRatings?.favorite ?: false
+
+            // Show favorite menu item only if user is logged in
+            if (preferenceHelper.getId() > 0) {
+                isFavorite = movieDetail?.movieRatings?.favorite ?: false
+                setFavoriteIcon(isFavorite)
+            }
 
             setTMDbRating(movieDetail?.voteAverage)
             showItemList(movieDetail?.similarMovieResults?.results) { showSimilarMoviesList(it) }
@@ -81,7 +88,7 @@ class MovieDetailPresenter @Inject constructor(
         val movieId = fullDetailContent?.detailContent?.id
         if (movieId != null) {
             isFavorite = !isFavorite
-            getView()?.changeFavoriteIcon(isFavorite)
+            getView()?.animateFavoriteIcon(isFavorite)
 
             val favorite = Favorite(isFavorite, movieId, "movie")
             addDisposable(authInteractor.markAsFavorite(favorite)
@@ -100,8 +107,8 @@ class MovieDetailPresenter @Inject constructor(
         Logger.e(t)
         isFavorite = !isFavorite
         getView()?.apply {
+            setFavoriteIcon(isFavorite)
             showMessage(R.string.error_mark_favorite)
-            changeFavoriteIcon(isFavorite)
         }
     }
 }

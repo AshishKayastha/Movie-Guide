@@ -30,7 +30,6 @@ abstract class MvpActivity<V : MvpView, P : RxPresenter<V>> : BaseActivity(), Mv
     protected val rootView: View? by bindOptionalView(R.id.content_layout)
 
     protected var presenter: P? = null
-    protected var isFirstStart: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

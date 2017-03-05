@@ -12,7 +12,6 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Season
 import com.ashish.movieguide.data.models.TVShow
 import com.ashish.movieguide.data.models.TVShowDetail
-import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
@@ -30,7 +29,6 @@ import com.ashish.movieguide.utils.extensions.setFavoriteIcon
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
 import icepick.State
-import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 03.
@@ -46,8 +44,6 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
                     .putExtra(EXTRA_TV_SHOW, tvShow)
         }
     }
-
-    @Inject lateinit var preferenceHelper: PreferenceHelper
 
     @JvmField @State var tvShow: TVShow? = null
 
@@ -107,11 +103,6 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
             titleText.setTitleAndYear(name, firstAirDate)
         }
 
-        // Show favorite menu item only if user is logged in
-        if (preferenceHelper.getId() > 0) {
-            menu?.setFavoriteIcon(detailContent.tvRatings?.favorite)
-        }
-
         super.showDetailContent(detailContent)
     }
 
@@ -144,7 +135,11 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
         else -> super.onOptionsItemSelected(item)
     }
 
-    override fun changeFavoriteIcon(isFavorite: Boolean) {
+    override fun setFavoriteIcon(isFavorite: Boolean) {
+        menu?.setFavoriteIcon(isFavorite)
+    }
+
+    override fun animateFavoriteIcon(isFavorite: Boolean) {
         val view = toolbar?.findViewById(R.id.action_favorite)
         if (view is ActionMenuItemView) {
             view.startFavoriteAnimation(isFavorite)
