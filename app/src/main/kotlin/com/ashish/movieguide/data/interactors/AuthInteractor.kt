@@ -3,9 +3,14 @@ package com.ashish.movieguide.data.interactors
 import com.ashish.movieguide.data.api.AuthApi
 import com.ashish.movieguide.data.models.Account
 import com.ashish.movieguide.data.models.Favorite
+import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.RequestToken
+import com.ashish.movieguide.data.models.Results
+import com.ashish.movieguide.data.models.Status
+import com.ashish.movieguide.data.models.TVShow
+import com.ashish.movieguide.data.models.Watchlist
 import com.ashish.movieguide.data.preferences.PreferenceHelper
-import io.reactivex.Completable
+import com.ashish.movieguide.utils.AuthException
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -42,7 +47,36 @@ class AuthInteractor @Inject constructor(
         }
     }
 
-    fun markAsFavorite(favorite: Favorite): Completable {
-        return authApi.markAsFavorite(preferenceHelper.getId(), favorite)
+    fun markAsFavorite(favorite: Favorite): Observable<Status> {
+        return callApiIfLoggedIn { accountId ->
+            authApi.markAsFavorite(accountId, favorite)
+        }
+    }
+
+    fun addToWatchlist(watchlist: Watchlist): Observable<Status> {
+        return callApiIfLoggedIn { accountId ->
+            authApi.addToWatchlist(accountId, watchlist)
+        }
+    }
+
+    fun getPersonalMoviesByType(type: String, page: Int): Observable<Results<Movie>> {
+        return callApiIfLoggedIn { accountId ->
+            authApi.getPersonalMoviesByType(type, accountId, page)
+        }
+    }
+
+    fun getPersonalTVShowsByType(type: String, page: Int): Observable<Results<TVShow>> {
+        return callApiIfLoggedIn { accountId ->
+            authApi.getPersonalTVShowsByType(type, accountId, page)
+        }
+    }
+
+    private fun <T> callApiIfLoggedIn(actionIfLoggedIn: (accountId: Long) -> Observable<T>): Observable<T> {
+        val accountId = preferenceHelper.getId()
+        if (accountId > 0) {
+            return actionIfLoggedIn(accountId)
+        } else {
+            return Observable.error(AuthException())
+        }
     }
 }

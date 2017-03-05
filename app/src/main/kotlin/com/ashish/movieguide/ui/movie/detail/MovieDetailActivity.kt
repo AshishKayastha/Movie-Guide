@@ -3,24 +3,27 @@ package com.ashish.movieguide.ui.movie.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewStub
 import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.MovieDetail
+import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
-import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_MOVIE
+import com.ashish.movieguide.utils.extensions.changeFavoriteIcon
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import icepick.State
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 31.
@@ -36,6 +39,8 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
                     .putExtra(EXTRA_MOVIE, movie)
         }
     }
+
+    @Inject lateinit var preferenceHelper: PreferenceHelper
 
     @JvmField @State var movie: Movie? = null
 
@@ -86,6 +91,12 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
             this@MovieDetailActivity.imdbId = imdbId
             titleText.setTitleAndYear(title, releaseDate)
         }
+
+        // Show favorite menu item only if user is logged in
+        if (preferenceHelper.getId() > 0) {
+            menu?.changeFavoriteIcon(detailContent.movieRatings?.favorite)
+        }
+
         super.showDetailContent(detailContent)
     }
 
@@ -99,7 +110,14 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
                 similarMoviesAdapter!!, similarMoviesList)
     }
 
-    override fun getMediaType() = MEDIA_TYPE_MOVIE
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_favorite -> performAction { presenter?.markAsFavorite() }
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun changeFavoriteIcon(isFavorite: Boolean) {
+        menu?.changeFavoriteIcon(isFavorite)
+    }
 
     override fun performCleanup() {
         similarMoviesAdapter?.removeListener()

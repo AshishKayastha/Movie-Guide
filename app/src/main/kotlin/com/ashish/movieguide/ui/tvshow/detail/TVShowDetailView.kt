@@ -13,4 +13,6 @@ interface TVShowDetailView : FullDetailContentView<TVShowDetail> {
     fun showSeasonsList(seasonsList: List<Season>)
 
     fun showSimilarTVShowList(similarTVShowList: List<TVShow>)
+
+    fun changeFavoriteIcon(isFavorite: Boolean)
 }

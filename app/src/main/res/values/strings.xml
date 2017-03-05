@@ -172,4 +172,19 @@
     <string name="error_tmdb_login">Failed to login</string>
     <string name="success_tmdb_login">Successfully logged in as %s!</string>
     <string name="login_with_tmdb">Login with TMDb</string>
+
+    <!-- Favorite -->
+    <string name="title_favorites">Favorites</string>
+    <string name="success_mark_favorite">Successfully changed favorite status</string>
+    <string name="error_mark_favorite">Failed to change favorite status</string>
+
+    <string name="no_fav_movies_available">Your favorite movies appear here!</string>
+    <string name="no_fav_tv_shows_available">Your favorite TV shows appear here!</string>
+
+    <!-- Watchlist -->
+    <string name="title_watchlist">Watchlist</string>
+    <string name="no_movies_watchlist_available">Your movie watchlist appear here!</string>
+    <string name="no_tv_shows_watchlist_available">Your TV show watchlist appear here!</string>
+
+    <string name="error_not_logged_in">You are not logged into TMDb. Please log in to access this feature.</string>
 </resources>

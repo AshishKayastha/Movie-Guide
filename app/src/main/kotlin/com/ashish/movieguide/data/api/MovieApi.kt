@@ -2,10 +2,15 @@ package com.ashish.movieguide.data.api
 
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.MovieDetail
+import com.ashish.movieguide.data.models.Rating
 import com.ashish.movieguide.data.models.Results
+import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Observable
+import io.reactivex.Single
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -32,6 +37,9 @@ interface MovieApi {
             @Path("movieId") movieId: Long,
             @Query("append_to_response") appendedResponse: String
     ): Observable<MovieDetail>
+
+    @POST("movie/{movieId}/rating")
+    fun rateMovie(@Path("movieId") movieId: Long, @Body rating: Rating): Single<Status>
 
     @GET("discover/movie")
     fun discoverMovie(

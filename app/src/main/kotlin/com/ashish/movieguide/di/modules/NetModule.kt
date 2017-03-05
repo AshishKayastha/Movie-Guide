@@ -57,7 +57,7 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideApiKeyInterceptor(): Interceptor = ApiKeyInterceptor()
+    fun provideApiKeyInterceptor(apiKeyInterceptor: ApiKeyInterceptor): Interceptor = apiKeyInterceptor
 
     @Provides
     @Singleton

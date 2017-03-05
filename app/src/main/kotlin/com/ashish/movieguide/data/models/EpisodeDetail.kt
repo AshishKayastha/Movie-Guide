@@ -15,5 +15,6 @@ data class EpisodeDetail(
         @Json(name = "season_number") val seasonNumber: Int? = null,
         @Json(name = "vote_average") val voteAverage: Double? = null,
         @Json(name = "episode_number") val episodeNumber: Int? = null,
-        @Json(name = "external_ids") val externalIds: ExternalIds? = null
+        @Json(name = "external_ids") val externalIds: ExternalIds? = null,
+        @Json(name = "account_states") val episodeRatings: AccountState? = null
 )

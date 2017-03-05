@@ -22,9 +22,11 @@ import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilder
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_DISCOVER
+import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_FAVORITES
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_PEOPLE
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
+import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_WATCHLIST
 import com.ashish.movieguide.ui.multisearch.activity.MultiSearchActivity
 import com.ashish.movieguide.ui.widget.CircleImageView
 import com.ashish.movieguide.ui.widget.FontTextView
@@ -162,7 +164,9 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
             offscreenPageLimit = tabPagerAdapter.count - 1
         }
 
-        if (contentType == CONTENT_TYPE_DISCOVER) {
+        if (contentType == CONTENT_TYPE_DISCOVER
+                || contentType == CONTENT_TYPE_FAVORITES
+                || contentType == CONTENT_TYPE_WATCHLIST) {
             tabLayout.tabMode = TabLayout.MODE_FIXED
         } else {
             tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
@@ -190,6 +194,8 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
                 R.id.action_tv_shows -> showViewPagerFragment(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
                 R.id.action_people -> showViewPagerFragment(CONTENT_TYPE_PEOPLE, peopleTabTitles)
                 R.id.action_discover -> showViewPagerFragment(CONTENT_TYPE_DISCOVER, discoverTabTitles)
+                R.id.action_favorites -> showViewPagerFragment(CONTENT_TYPE_FAVORITES, discoverTabTitles)
+                R.id.action_watchlist -> showViewPagerFragment(CONTENT_TYPE_WATCHLIST, discoverTabTitles)
             }
 
             changeTabFont()

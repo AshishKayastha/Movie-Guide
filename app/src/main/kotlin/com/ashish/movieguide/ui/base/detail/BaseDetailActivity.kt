@@ -292,7 +292,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun hideProgress() = progressBar.hide()
 
-    @CallSuper
     override fun showDetailContent(detailContent: I) {
         detailContainer.show()
         showOrHideMenu(R.id.action_imdb, imdbId)

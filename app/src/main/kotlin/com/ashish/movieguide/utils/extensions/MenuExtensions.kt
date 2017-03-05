@@ -41,3 +41,14 @@ fun Activity.setOverflowMenuColor(color: Int) {
         overflow.setColorFilter(color)
     }
 }
+
+fun Menu.changeFavoriteIcon(isFavorite: Boolean?) {
+    val favItem = findItem(R.id.action_favorite)
+    if (!favItem.isVisible) favItem.isVisible = true
+
+    if (isFavorite == true) {
+        favItem?.setIcon(R.drawable.ic_favorite_white_24dp)
+    } else {
+        favItem?.setIcon(R.drawable.ic_favorite_border_white_24dp)
+    }
+}

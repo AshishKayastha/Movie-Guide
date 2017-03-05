@@ -108,7 +108,7 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
 
     private fun showYouTubeTrailer(videoResults: List<VideoItem>?) {
         val youtubeTrailerUrl = videoResults!!.firstOrNull { it.site == YOUTUBE_SITE }?.key
-        if (youtubeTrailerUrl.isNullOrEmpty()) {
+        if (youtubeTrailerUrl.isNotNullOrEmpty()) {
             getView()?.showTrailerFAB(YOUTUBE_BASE_URL + youtubeTrailerUrl!!)
         }
     }

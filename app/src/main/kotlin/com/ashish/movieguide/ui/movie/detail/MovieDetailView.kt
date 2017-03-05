@@ -10,4 +10,6 @@ import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentView
 interface MovieDetailView : FullDetailContentView<MovieDetail> {
 
     fun showSimilarMoviesList(similarMoviesList: List<Movie>)
+
+    fun changeFavoriteIcon(isFavorite: Boolean)
 }

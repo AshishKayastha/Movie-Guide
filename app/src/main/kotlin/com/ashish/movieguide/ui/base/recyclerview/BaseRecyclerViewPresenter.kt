@@ -4,6 +4,7 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Results
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
@@ -45,10 +46,8 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
                     .doFinally { getView()?.hideProgress() }
                     .subscribe({ showResults(it) }, { showErrorMessage(it) }))
         } else {
-            getView()?.apply {
-                hideProgress()
-                showMessage(R.string.error_no_internet)
-            }
+            getView()?.hideProgress()
+            showNoInternetMessage()
         }
     }
 
@@ -78,10 +77,8 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
                         .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))
             }
         } else {
-            getView()?.apply {
-                resetLoading()
-                showMessage(R.string.error_no_internet)
-            }
+            getView()?.resetLoading()
+            showNoInternetMessage()
         }
     }
 
@@ -110,10 +107,16 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         Logger.e(t)
         getView()?.apply {
             if (t is IOException) {
-                showMessage(R.string.error_no_internet)
+                showNoInternetMessage()
+            } else if (t is AuthException) {
+                showMessage(R.string.error_not_logged_in)
             } else {
                 showMessage(R.string.error_load_data)
             }
         }
+    }
+
+    protected fun showNoInternetMessage() {
+        getView()?.showMessage(R.string.error_no_internet)
     }
 }

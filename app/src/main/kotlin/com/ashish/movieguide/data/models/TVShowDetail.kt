@@ -28,5 +28,6 @@ data class TVShowDetail(
         @Json(name = "episode_run_time") val episodeRunTime: List<Int>? = null,
         @Json(name = "external_ids") val externalIds: ExternalIds? = null,
         @Json(name = "credits") val creditsResults: CreditResults? = null,
+        @Json(name = "account_states") val tvRatings: AccountState? = null,
         @Json(name = "similar") val similarTVShowResults: Results<TVShow>? = null
 )

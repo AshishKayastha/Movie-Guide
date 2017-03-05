@@ -1,11 +1,14 @@
 package com.ashish.movieguide.ui.movie.detail
 
 import com.ashish.movieguide.R
+import com.ashish.movieguide.data.interactors.AuthInteractor
 import com.ashish.movieguide.data.interactors.MovieInteractor
+import com.ashish.movieguide.data.models.Favorite
 import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.MovieDetail
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
+import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.extensions.getFormattedNumber
@@ -20,8 +23,11 @@ import javax.inject.Inject
 @ActivityScope
 class MovieDetailPresenter @Inject constructor(
         private val movieInteractor: MovieInteractor,
+        private val authInteractor: AuthInteractor,
         schedulerProvider: BaseSchedulerProvider
 ) : FullDetailContentPresenter<MovieDetail, MovieDetailView>(schedulerProvider) {
+
+    private var isFavorite: Boolean = false
 
     override fun getDetailContent(id: Long) = movieInteractor.getFullMovieDetail(id)
 
@@ -30,6 +36,8 @@ class MovieDetailPresenter @Inject constructor(
         getView()?.apply {
             hideProgress()
             val movieDetail = fullDetailContent.detailContent
+            isFavorite = movieDetail?.movieRatings?.favorite ?: false
+
             setTMDbRating(movieDetail?.voteAverage)
             showItemList(movieDetail?.similarMovieResults?.results) { showSimilarMoviesList(it) }
         }
@@ -68,4 +76,32 @@ class MovieDetailPresenter @Inject constructor(
     override fun getCredits(detailContent: MovieDetail) = detailContent.creditsResults
 
     override fun getErrorMessageId() = R.string.error_load_movie_detail
+
+    fun markAsFavorite() {
+        val movieId = fullDetailContent?.detailContent?.id
+        if (movieId != null) {
+            isFavorite = !isFavorite
+            getView()?.changeFavoriteIcon(isFavorite)
+
+            val favorite = Favorite(isFavorite, movieId, "movie")
+            addDisposable(authInteractor.markAsFavorite(favorite)
+                    .subscribe({ (_, statusCode) -> onMarkAsFavoriteActionSuccess(statusCode) },
+                            { t -> onMarkAsFavoriteActionError(t) }))
+        }
+    }
+
+    private fun onMarkAsFavoriteActionSuccess(statusCode: Int?) {
+        if (statusCode == 1) {
+            getView()?.showMessage(R.string.success_mark_favorite)
+        }
+    }
+
+    private fun onMarkAsFavoriteActionError(t: Throwable) {
+        Logger.e(t)
+        isFavorite = !isFavorite
+        getView()?.apply {
+            showMessage(R.string.error_mark_favorite)
+            changeFavoriteIcon(isFavorite)
+        }
+    }
 }

@@ -10,6 +10,10 @@ import com.ashish.movieguide.ui.movie.list.MovieComponent
 import com.ashish.movieguide.ui.movie.list.MovieFragment
 import com.ashish.movieguide.ui.people.list.PeopleComponent
 import com.ashish.movieguide.ui.people.list.PeopleFragment
+import com.ashish.movieguide.ui.personal.movie.PersonalMovieComponent
+import com.ashish.movieguide.ui.personal.movie.PersonalMovieFragment
+import com.ashish.movieguide.ui.personal.tvshow.PersonalTVShowComponent
+import com.ashish.movieguide.ui.personal.tvshow.PersonalTVShowFragment
 import com.ashish.movieguide.ui.tvshow.list.TVShowComponent
 import com.ashish.movieguide.ui.tvshow.list.TVShowFragment
 import dagger.Binds
@@ -25,7 +29,9 @@ import dagger.multibindings.IntoMap
         TVShowComponent::class,
         PeopleComponent::class,
         DiscoverMovieComponent::class,
-        DiscoverTVShowComponent::class
+        DiscoverTVShowComponent::class,
+        PersonalMovieComponent::class,
+        PersonalTVShowComponent::class
 ))
 abstract class MainFragmentBinders {
 
@@ -54,4 +60,15 @@ abstract class MainFragmentBinders {
     @FragmentKey(DiscoverTVShowFragment::class)
     abstract fun discoverTVShowComponentBuilder(
             builder: DiscoverTVShowComponent.Builder): FragmentComponentBuilder<*, *>
+
+    @Binds
+    @IntoMap
+    @FragmentKey(PersonalMovieFragment::class)
+    abstract fun favoriteMovieComponentBuilder(builder: PersonalMovieComponent.Builder): FragmentComponentBuilder<*, *>
+
+    @Binds
+    @IntoMap
+    @FragmentKey(PersonalTVShowFragment::class)
+    abstract fun favoriteTVShowComponentBuilder(
+            builder: PersonalTVShowComponent.Builder): FragmentComponentBuilder<*, *>
 }

@@ -1,13 +1,18 @@
 package com.ashish.movieguide.data.api
 
 import com.ashish.movieguide.data.models.EpisodeDetail
+import com.ashish.movieguide.data.models.Rating
 import com.ashish.movieguide.data.models.Results
 import com.ashish.movieguide.data.models.SeasonDetail
+import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.data.models.TVShow
 import com.ashish.movieguide.data.models.TVShowDetail
 import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Observable
+import io.reactivex.Single
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -23,6 +28,8 @@ interface TVShowApi {
         const val AIRING_TODAY = "airing_today"
     }
 
+    /* TV Shows */
+
     @GET("tv/{tvShowType}")
     fun getTVShows(
             @Path("tvShowType") tvShowType: String?,
@@ -35,12 +42,21 @@ interface TVShowApi {
             @Query("append_to_response") appendedResponse: String
     ): Observable<TVShowDetail>
 
+    @POST("tv/{tvId}/rating")
+    fun rateTVShow(@Path("tvId") tvId: Long, @Body rating: Rating): Single<Status>
+
+
+    /* Season */
+
     @GET("tv/{tvId}/season/{seasonNumber}" + INCLUDE_IMAGE_LANGUAGE)
     fun getSeasonDetail(
             @Path("tvId") tvId: Long,
             @Path("seasonNumber") seasonNumber: Int,
             @Query("append_to_response") appendedResponse: String
     ): Observable<SeasonDetail>
+
+
+    /* Episode */
 
     @GET("tv/{tvId}/season/{seasonNumber}/episode/{episodeNumber}" + INCLUDE_IMAGE_LANGUAGE)
     fun getEpisodeDetail(
@@ -49,6 +65,15 @@ interface TVShowApi {
             @Path("episodeNumber") episodeNumber: Int,
             @Query("append_to_response") appendedResponse: String
     ): Observable<EpisodeDetail>
+
+    @POST("tv/{tvId}/season/{seasonNumber}/episode/{episodeNumber}/rating")
+    fun rateEpisode(
+            @Path("tvId") tvId: Long,
+            @Path("seasonNumber") seasonNumber: Int,
+            @Path("episodeNumber") episodeNumber: Int,
+            @Body rating: Rating
+    ): Single<Status>
+
 
     @GET("discover/tv")
     fun discoverTVShow(

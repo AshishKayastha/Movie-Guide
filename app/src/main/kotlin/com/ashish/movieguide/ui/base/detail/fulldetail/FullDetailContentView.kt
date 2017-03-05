@@ -23,6 +23,4 @@ interface FullDetailContentView<in I> : BaseDetailView<I> {
     fun showTrailerFAB(trailerUrl: String)
 
     fun showYouTubeVideos(youTubeVideos: List<YouTubeVideo>)
-
-    fun handleMarkAsFavoriteError(isFavorite: Boolean)
 }

@@ -5,6 +5,7 @@ import com.ashish.movieguide.data.models.CreditResults
 import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.ImageItem
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
+import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
@@ -120,6 +121,8 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
         getView()?.apply {
             if (t is IOException) {
                 showToastMessage(R.string.error_no_internet)
+            } else if (t is AuthException) {
+                showToastMessage(R.string.error_not_logged_in)
             } else {
                 showToastMessage(messageId)
             }

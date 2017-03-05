@@ -1,11 +1,14 @@
 package com.ashish.movieguide.ui.tvshow.detail
 
 import com.ashish.movieguide.R
+import com.ashish.movieguide.data.interactors.AuthInteractor
 import com.ashish.movieguide.data.interactors.TVShowInteractor
+import com.ashish.movieguide.data.models.Favorite
 import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.TVShowDetail
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
+import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
@@ -18,8 +21,11 @@ import javax.inject.Inject
 @ActivityScope
 class TVShowDetailPresenter @Inject constructor(
         private val tvShowInteractor: TVShowInteractor,
+        private val authInteractor: AuthInteractor,
         schedulerProvider: BaseSchedulerProvider
 ) : FullDetailContentPresenter<TVShowDetail, TVShowDetailView>(schedulerProvider) {
+
+    private var isFavorite: Boolean = false
 
     override fun getDetailContent(id: Long) = tvShowInteractor.getFullTVShowDetail(id)
 
@@ -28,6 +34,8 @@ class TVShowDetailPresenter @Inject constructor(
         getView()?.apply {
             hideProgress()
             val tvShowDetail = fullDetailContent.detailContent
+            isFavorite = tvShowDetail?.tvRatings?.favorite ?: false
+
             setTMDbRating(tvShowDetail?.voteAverage)
             showItemList(tvShowDetail?.seasons) { showSeasonsList(it) }
             showItemList(tvShowDetail?.similarTVShowResults?.results) { showSimilarTVShowList(it) }
@@ -67,4 +75,32 @@ class TVShowDetailPresenter @Inject constructor(
     override fun getCredits(detailContent: TVShowDetail) = detailContent.creditsResults
 
     override fun getErrorMessageId() = R.string.error_load_tv_detail
+
+    fun markAsFavorite() {
+        val tvId = fullDetailContent?.detailContent?.id
+        if (tvId != null) {
+            isFavorite = !isFavorite
+            getView()?.changeFavoriteIcon(isFavorite)
+
+            val favorite = Favorite(isFavorite, tvId, "tv")
+            addDisposable(authInteractor.markAsFavorite(favorite)
+                    .subscribe({ (_, statusCode) -> onMarkAsFavoriteActionSuccess(statusCode) },
+                            { t -> onMarkAsFavoriteActionError(t) }))
+        }
+    }
+
+    private fun onMarkAsFavoriteActionSuccess(statusCode: Int?) {
+        if (statusCode == 1) {
+            getView()?.showMessage(R.string.success_mark_favorite)
+        }
+    }
+
+    private fun onMarkAsFavoriteActionError(t: Throwable) {
+        Logger.e(t)
+        isFavorite = !isFavorite
+        getView()?.apply {
+            showMessage(R.string.error_mark_favorite)
+            changeFavoriteIcon(isFavorite)
+        }
+    }
 }

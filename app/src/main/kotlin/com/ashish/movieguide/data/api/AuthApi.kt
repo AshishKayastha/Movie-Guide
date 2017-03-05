@@ -2,9 +2,13 @@ package com.ashish.movieguide.data.api
 
 import com.ashish.movieguide.data.models.Account
 import com.ashish.movieguide.data.models.Favorite
+import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.RequestToken
+import com.ashish.movieguide.data.models.Results
 import com.ashish.movieguide.data.models.Session
-import io.reactivex.Completable
+import com.ashish.movieguide.data.models.Status
+import com.ashish.movieguide.data.models.TVShow
+import com.ashish.movieguide.data.models.Watchlist
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -30,5 +34,25 @@ interface AuthApi {
     fun markAsFavorite(
             @Path("accountId") accountId: Long,
             @Body favorite: Favorite
-    ): Completable
+    ): Observable<Status>
+
+    @POST("/account/{accountId}/watchlist")
+    fun addToWatchlist(
+            @Path("accountId") accountId: Long,
+            @Body watchlist: Watchlist
+    ): Observable<Status>
+
+    @GET("/account/{accountId}/{type}/movies")
+    fun getPersonalMoviesByType(
+            @Path("type") type: String,
+            @Path("accountId") accountId: Long,
+            @Query("page") page: Int = 1
+    ): Observable<Results<Movie>>
+
+    @GET("/account/{accountId}/{type}/tv")
+    fun getPersonalTVShowsByType(
+            @Path("type") type: String,
+            @Path("accountId") accountId: Long,
+            @Query("page") page: Int = 1
+    ): Observable<Results<TVShow>>
 }

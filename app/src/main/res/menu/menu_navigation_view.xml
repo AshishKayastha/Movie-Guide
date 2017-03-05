@@ -26,5 +26,17 @@
             android:icon="@drawable/ic_discover_white_24dp"
             android:title="@string/title_discover"
             app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/action_favorites"
+            android:icon="@drawable/ic_favorite_white_24dp"
+            android:title="@string/title_favorites"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/action_watchlist"
+            android:icon="@drawable/ic_favorite_white_24dp"
+            android:title="@string/title_watchlist"
+            app:showAsAction="ifRoom" />
     </group>
 </menu>

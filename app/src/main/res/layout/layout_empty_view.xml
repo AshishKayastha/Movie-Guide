@@ -22,6 +22,7 @@
         <com.ashish.movieguide.ui.widget.FontTextView
             android:id="@+id/empty_text"
             style="@style/PrimaryText"
+            android:layout_marginTop="@dimen/spacing_normal"
             android:gravity="center"
             android:text="@string/no_movies_available" />
 

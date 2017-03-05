@@ -4,7 +4,6 @@ import android.support.design.widget.AppBarLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.CardView
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewStub
 import butterknife.bindView
@@ -19,7 +18,6 @@ import com.ashish.movieguide.ui.common.adapter.VideoAdapter
 import com.ashish.movieguide.ui.people.detail.PersonDetailActivity
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.RatingView
-import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.openUrl
 import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.show
@@ -69,11 +67,6 @@ abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : Fu
         val person = Person(credit?.id, credit?.name, profilePath = credit?.profilePath)
         val intent = PersonDetailActivity.createIntent(this, person)
         startNewActivityWithTransition(view, R.string.transition_person_profile, intent)
-    }
-
-    override fun showDetailContent(detailContent: I) {
-        super.showDetailContent(detailContent)
-        showOrHideMenu(R.id.action_favorite, getMediaType())
     }
 
     override fun showRatingCard() = ratingCardView.show()
@@ -127,30 +120,6 @@ abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : Fu
         }
 
         super.onOffsetChanged(appBarLayout, verticalOffset)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_favorite -> handleFavoriteAction(item)
-        else -> super.onOptionsItemSelected(item)
-    }
-
-    private fun handleFavoriteAction(item: MenuItem): Boolean {
-        return performAction {
-            if (getMediaType().isNotNullOrEmpty()) {
-                item.setIcon(R.drawable.ic_favorite_white_24dp)
-            }
-        }
-    }
-
-    protected open fun getMediaType(): String? = null
-
-    override fun handleMarkAsFavoriteError(isFavorite: Boolean) {
-        val favItem = menu?.findItem(R.id.action_favorite)
-        if (isFavorite) {
-            favItem?.setIcon(R.drawable.ic_favorite_white_24dp)
-        } else {
-            favItem?.setIcon(R.drawable.ic_favorite_border_white_24dp)
-        }
     }
 
     override fun finishAfterTransition() {
