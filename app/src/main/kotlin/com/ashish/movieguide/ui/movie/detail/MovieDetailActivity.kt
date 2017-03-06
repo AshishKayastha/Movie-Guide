@@ -17,7 +17,7 @@ import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movieguide.utils.extensions.bindView
-import com.ashish.movieguide.utils.extensions.changeMenuItemTitle
+import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
@@ -122,8 +122,8 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
         }
     }
 
-    override fun changeWatchlistMenuTitle(titleId: Int) {
-        menu?.changeMenuItemTitle(R.id.action_watchlist, titleId)
+    override fun changeWatchlistMenuItem(isInWatchlist: Boolean) {
+        menu?.changeWatchlistMenuItem(isInWatchlist)
     }
 
     override fun performCleanup() {

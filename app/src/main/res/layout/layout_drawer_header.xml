@@ -38,13 +38,13 @@
             android:id="@+id/name_text"
             style="@style/DrawerHeaderText"
             android:layout_marginBottom="@dimen/spacing_micro"
-            app:fontName="@string/font_montserrat_medium"
-            tools:text="@string/login_with_tmdb" />
+            android:text="@string/login_with_tmdb"
+            app:fontName="@string/font_montserrat_medium" />
 
         <com.ashish.movieguide.ui.widget.FontTextView
             android:id="@+id/user_name_text"
             style="@style/DrawerHeaderText"
-            tools:text="ashish_kayastha" />
+            tools:text="user_name" />
 
     </LinearLayout>
 

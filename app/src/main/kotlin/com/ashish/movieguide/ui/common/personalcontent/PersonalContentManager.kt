@@ -41,7 +41,7 @@ class PersonalContentManager @Inject constructor(
             view?.setFavoriteIcon(isFavorite)
 
             isInWatchlist = accountState?.watchlist ?: false
-            changeWatchlistMenuTitle()
+            view?.changeWatchlistMenuItem(isInWatchlist)
         }
     }
 
@@ -74,7 +74,7 @@ class PersonalContentManager @Inject constructor(
     fun addToWatchlist(mediaId: Long?, mediaType: String) {
         if (mediaId != null) {
             isInWatchlist = !isInWatchlist
-            changeWatchlistMenuTitle()
+            view?.changeWatchlistMenuItem(isInWatchlist)
 
             val watchlist = Watchlist(isInWatchlist, mediaId, mediaType)
             compositeDisposable.add(authInteractor.addToWatchlist(watchlist)
@@ -98,7 +98,7 @@ class PersonalContentManager @Inject constructor(
         }
 
         isInWatchlist = !isInWatchlist
-        changeWatchlistMenuTitle()
+        view?.changeWatchlistMenuItem(isInWatchlist)
     }
 
     private fun showWatchlistMessage(addMessage: Int, removeMessage: Int) {
@@ -107,16 +107,6 @@ class PersonalContentManager @Inject constructor(
                 showMessage(addMessage)
             } else {
                 showMessage(removeMessage)
-            }
-        }
-    }
-
-    private fun changeWatchlistMenuTitle() {
-        view?.apply {
-            if (isInWatchlist) {
-                changeWatchlistMenuTitle(R.string.remove_watchlist)
-            } else {
-                changeWatchlistMenuTitle(R.string.add_to_watchlist)
             }
         }
     }

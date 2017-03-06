@@ -8,5 +8,5 @@ interface PersonalContentView : MvpView {
 
     fun animateFavoriteIcon(isFavorite: Boolean)
 
-    fun changeWatchlistMenuTitle(titleId: Int)
+    fun changeWatchlistMenuItem(isInWatchlist: Boolean)
 }

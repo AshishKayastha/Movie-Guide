@@ -5,7 +5,6 @@ import com.ashish.movieguide.data.interactors.AuthInteractor
 import com.ashish.movieguide.data.models.RequestToken
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
-import com.ashish.movieguide.utils.Constants.VALIDATE_TMDB_REQUEST_TOKEN_URL
 import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
@@ -20,6 +19,10 @@ class MainPresenter @Inject constructor(
         schedulerProvider: BaseSchedulerProvider
 ) : RxPresenter<MainView>(schedulerProvider) {
 
+    companion object {
+        private const val VALIDATE_TMDB_REQUEST_TOKEN_URL = "https://www.themoviedb.org/authenticate/"
+    }
+
     private var tmdbRequestToken: String? = null
 
     fun createRequestToken() {
@@ -27,10 +30,10 @@ class MainPresenter @Inject constructor(
                 .doOnNext { tmdbRequestToken = it.requestToken }
                 .observeOn(schedulerProvider.ui())
                 .doOnSubscribe { getView()?.showProgressDialog(R.string.logging_in) }
-                .subscribe({ onRequestTokenSuccess(it) }, { t -> onRequestTokenError(t) }))
+                .subscribe({ handleRequestTokenResult(it) }, { onRequestTokenError(it) }))
     }
 
-    private fun onRequestTokenSuccess(requestToken: RequestToken) {
+    private fun handleRequestTokenResult(requestToken: RequestToken) {
         if (requestToken.success && tmdbRequestToken.isNotNullOrEmpty()) {
             getView()?.validateRequestToken(VALIDATE_TMDB_REQUEST_TOKEN_URL + tmdbRequestToken)
         } else {
@@ -50,22 +53,14 @@ class MainPresenter @Inject constructor(
         if (tmdbRequestToken.isNotNullOrEmpty()) {
             addDisposable(authInteractor.createUserSession(tmdbRequestToken!!)
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ onCreateSessionSuccess() }, { t -> onCreateSessionError(t) }))
-        }
-    }
-
-    private fun onCreateSessionSuccess() {
-        getView()?.apply {
-            hideProgressDialog()
-            onLoginSuccess()
+                    .doOnSubscribe { getView()?.showProgressDialog(R.string.creating_session) }
+                    .doFinally { getView()?.hideProgressDialog() }
+                    .subscribe({ getView()?.onLoginSuccess() }, { onCreateSessionError(it) }))
         }
     }
 
     private fun onCreateSessionError(t: Throwable) {
         Logger.e(t)
-        getView()?.apply {
-            hideProgressDialog()
-            showMessage(R.string.error_tmdb_login)
-        }
+        getView()?.showMessage(R.string.error_tmdb_login)
     }
 }

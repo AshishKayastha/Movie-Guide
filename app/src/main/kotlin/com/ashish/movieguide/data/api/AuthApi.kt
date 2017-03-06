@@ -36,20 +36,20 @@ interface AuthApi {
             @Body favorite: Favorite
     ): Observable<Status>
 
-    @POST("/account/{accountId}/watchlist")
+    @POST("account/{accountId}/watchlist")
     fun addToWatchlist(
             @Path("accountId") accountId: Long,
             @Body watchlist: Watchlist
     ): Observable<Status>
 
-    @GET("/account/{accountId}/{type}/movies")
+    @GET("account/{accountId}/{type}/movies")
     fun getPersonalMoviesByType(
             @Path("type") type: String,
             @Path("accountId") accountId: Long,
             @Query("page") page: Int = 1
     ): Observable<Results<Movie>>
 
-    @GET("/account/{accountId}/{type}/tv")
+    @GET("account/{accountId}/{type}/tv")
     fun getPersonalTVShowsByType(
             @Path("type") type: String,
             @Path("accountId") accountId: Long,

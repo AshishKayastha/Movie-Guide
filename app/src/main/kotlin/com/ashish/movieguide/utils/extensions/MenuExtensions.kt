@@ -78,7 +78,7 @@ fun ActionMenuItemView.startFavoriteAnimation(isFavorite: Boolean) {
     bounceAnimY.duration = animDuration
     bounceAnimY.interpolator = overshootInterpolator
     bounceAnimY.addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationEnd(animator: Animator) {
+        override fun onAnimationStart(animator: Animator) {
             if (isFavorite) {
                 setIcon(context.getDrawableCompat(R.drawable.ic_favorite_white_24dp))
             } else {
@@ -92,10 +92,16 @@ fun ActionMenuItemView.startFavoriteAnimation(isFavorite: Boolean) {
     animatorSet.start()
 }
 
-fun Menu.changeMenuItemTitle(menuItemId: Int, titleId: Int) {
-    val menuItem = findItem(menuItemId)
-    menuItem?.apply {
+fun Menu.changeWatchlistMenuItem(isInWatchlist: Boolean) {
+    val favItem = findItem(R.id.action_watchlist)
+    favItem.apply {
         isVisible = true
-        setTitle(titleId)
+        if (isInWatchlist) {
+            setTitle(R.string.remove_from_watchlist)
+            setIcon(R.drawable.ic_watchlist_white_24dp)
+        } else {
+            setTitle(R.string.add_to_watchlist)
+            setIcon(R.drawable.ic_watchlist_border_white_24dp)
+        }
     }
 }

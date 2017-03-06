@@ -21,7 +21,7 @@ import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movieguide.utils.extensions.bindView
-import com.ashish.movieguide.utils.extensions.changeMenuItemTitle
+import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
@@ -149,8 +149,8 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
         }
     }
 
-    override fun changeWatchlistMenuTitle(titleId: Int) {
-        menu?.changeMenuItemTitle(R.id.action_watchlist, titleId)
+    override fun changeWatchlistMenuItem(isInWatchlist: Boolean) {
+        menu?.changeWatchlistMenuItem(isInWatchlist)
     }
 
     override fun performCleanup() {

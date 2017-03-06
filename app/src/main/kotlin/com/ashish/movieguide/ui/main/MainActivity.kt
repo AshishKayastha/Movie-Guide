@@ -127,20 +127,14 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
 
     private fun showUserProfile() {
         preferenceHelper.apply {
-            val name = getName()
-            if (name.isNotNullOrEmpty()) {
-                nameText?.applyText(name)
-            } else {
-                nameText?.setText(R.string.login_with_tmdb)
-            }
+            if (getId() > 0L) {
+                nameText?.applyText(getName())
+                userNameText?.applyText(getUserName())
 
-            val userName = getUserName()
-            userNameText?.applyText(userName)
-            userImage?.isClickable = userName.isNullOrEmpty()
-
-            val gravatarHash = getGravatarHash()
-            if (gravatarHash.isNotNullOrEmpty()) {
-                userImage?.loadImageUrl("https://www.gravatar.com/avatar/$gravatarHash.jpg?s=90")
+                val gravatarHash = getGravatarHash()
+                if (gravatarHash.isNotNullOrEmpty()) {
+                    userImage?.loadImageUrl("https://www.gravatar.com/avatar/$gravatarHash.jpg?s=90")
+                }
             }
         }
     }

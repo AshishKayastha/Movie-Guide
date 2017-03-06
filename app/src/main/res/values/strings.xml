@@ -165,14 +165,16 @@
     <string name="error_choose_valid_date">Please choose valid date</string>
 
     <!-- TMDB Login -->
+    <string name="login_btn">Login</string>
     <string name="title_tmdb_login">TMDb Login</string>
     <string name="content_tmdb_login">Do you want to login with your TMDb account?</string>
-    <string name="login_btn">Login</string>
 
     <string name="logging_in">Logging into TMDb account…</string>
     <string name="error_tmdb_login">Failed to login</string>
     <string name="success_tmdb_login">Successfully logged in as %s!</string>
     <string name="login_with_tmdb">Login with TMDb</string>
+
+    <string name="creating_session">Creating user session…</string>
 
     <!-- Favorite -->
     <string name="title_favorites">Favorites</string>
@@ -187,7 +189,7 @@
     <string name="no_tv_shows_watchlist_available">Your TV show watchlist appear here</string>
 
     <string name="add_to_watchlist">Add to Watchlist</string>
-    <string name="remove_watchlist">Remove from Watchlist</string>
+    <string name="remove_from_watchlist">Remove from Watchlist</string>
 
     <string name="success_add_to_watchlist">Successfully added to watchlist</string>
     <string name="error_add_to_watchlist">Failed to add to watchlist</string>
