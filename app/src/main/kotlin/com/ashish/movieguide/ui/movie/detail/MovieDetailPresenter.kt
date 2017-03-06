@@ -9,6 +9,8 @@ import com.ashish.movieguide.data.models.MovieDetail
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
+import com.ashish.movieguide.utils.AuthException
+import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_MOVIE
 import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
@@ -90,17 +92,16 @@ class MovieDetailPresenter @Inject constructor(
             isFavorite = !isFavorite
             getView()?.animateFavoriteIcon(isFavorite)
 
-            val favorite = Favorite(isFavorite, movieId, "movie")
+            val favorite = Favorite(isFavorite, movieId, MEDIA_TYPE_MOVIE)
             addDisposable(authInteractor.markAsFavorite(favorite)
-                    .subscribe({ (_, statusCode) -> onMarkAsFavoriteActionSuccess(statusCode) },
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe({ onMarkAsFavoriteActionSuccess() },
                             { t -> onMarkAsFavoriteActionError(t) }))
         }
     }
 
-    private fun onMarkAsFavoriteActionSuccess(statusCode: Int?) {
-        if (statusCode == 1) {
-            getView()?.showMessage(R.string.success_mark_favorite)
-        }
+    private fun onMarkAsFavoriteActionSuccess() {
+        getView()?.showMessage(R.string.success_mark_favorite)
     }
 
     private fun onMarkAsFavoriteActionError(t: Throwable) {
@@ -108,7 +109,11 @@ class MovieDetailPresenter @Inject constructor(
         isFavorite = !isFavorite
         getView()?.apply {
             setFavoriteIcon(isFavorite)
-            showMessage(R.string.error_mark_favorite)
+            if (t is AuthException) {
+                showMessage(R.string.error_not_logged_in)
+            } else {
+                showMessage(R.string.error_mark_favorite)
+            }
         }
     }
 }

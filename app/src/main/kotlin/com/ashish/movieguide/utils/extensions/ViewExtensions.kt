@@ -42,7 +42,7 @@ fun View.show() {
 }
 
 fun View.hide(viewGone: Boolean = true) {
-    if (visibility != GONE) visibility = if (viewGone) GONE else INVISIBLE
+    visibility = if (viewGone) GONE else INVISIBLE
 }
 
 fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View? {

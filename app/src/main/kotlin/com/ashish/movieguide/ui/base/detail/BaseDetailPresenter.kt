@@ -64,9 +64,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
                 showCredits(getCredits(detailContent))
             }
 
-            val omdbDetail = fullDetailContent.omdbDetail
-            if (omdbDetail != null) showOMDbDetail(omdbDetail)
-
+            fullDetailContent.omdbDetail?.let { showOMDbDetail(it) }
             hideProgress()
         }
     }
