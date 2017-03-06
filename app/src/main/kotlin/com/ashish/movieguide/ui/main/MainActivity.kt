@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
@@ -26,7 +27,6 @@ import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_PEOP
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_WATCHLIST
 import com.ashish.movieguide.ui.multisearch.activity.MultiSearchActivity
-import com.ashish.movieguide.ui.widget.CircleImageView
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.CustomTabsHelper
 import com.ashish.movieguide.utils.CustomTypefaceSpan
@@ -39,8 +39,7 @@ import com.ashish.movieguide.utils.extensions.changeTabFont
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getStringArray
-import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
-import com.ashish.movieguide.utils.extensions.loadImageUrl
+import com.ashish.movieguide.utils.extensions.loadGravatarImage
 import com.ashish.movieguide.utils.extensions.runDelayed
 import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.showToast
@@ -61,9 +60,9 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
     private val drawerLayout: DrawerLayout by bindView(R.id.drawer_layout)
     private val navigationView: NavigationView by bindView(R.id.navigation_view)
 
-    private var nameText: FontTextView? = null
-    private var userImage: CircleImageView? = null
-    private var userNameText: FontTextView? = null
+    private lateinit var userImage: ImageView
+    private lateinit var nameText: FontTextView
+    private lateinit var userNameText: FontTextView
 
     private lateinit var toolbarTitles: Array<String>
     private lateinit var movieTabTitles: Array<String>
@@ -114,12 +113,12 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
     private fun initDrawerHeader() {
         navigationView.getHeaderView(0).apply {
             nameText = find<FontTextView>(R.id.name_text)
-            userImage = find<CircleImageView>(R.id.user_image)
+            userImage = find<ImageView>(R.id.user_image)
             userNameText = find<FontTextView>(R.id.user_name_text)
         }
 
         showUserProfile()
-        userImage?.setOnClickListener {
+        userImage.setOnClickListener {
             drawerLayout.closeDrawers()
             runDelayed(200L) { showTmdbLoginDialog() }
         }
@@ -128,13 +127,9 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
     private fun showUserProfile() {
         preferenceHelper.apply {
             if (getId() > 0L) {
-                nameText?.applyText(getName())
-                userNameText?.applyText(getUserName())
-
-                val gravatarHash = getGravatarHash()
-                if (gravatarHash.isNotNullOrEmpty()) {
-                    userImage?.loadImageUrl("https://www.gravatar.com/avatar/$gravatarHash.jpg?s=90")
-                }
+                nameText.applyText(getName())
+                userNameText.applyText(getUserName())
+                userImage.loadGravatarImage(getGravatarHash())
             }
         }
     }

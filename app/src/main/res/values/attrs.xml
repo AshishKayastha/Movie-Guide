@@ -25,11 +25,6 @@
         <attr name="android:textSize" />
     </declare-styleable>
 
-    <declare-styleable name="CircleImageView">
-        <attr name="civ_borderColor" format="color|reference" />
-        <attr name="civ_borderWidth" format="dimension|reference" />
-    </declare-styleable>
-
     <declare-styleable name="InkPageIndicator">
         <attr name="dotDiameter" format="dimension" />
         <attr name="dotGap" format="dimension" />

@@ -12,7 +12,7 @@
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
-    <com.ashish.movieguide.ui.widget.CircleImageView
+    <ImageView
         android:id="@+id/user_image"
         android:layout_width="@dimen/drawer_user_image_size"
         android:layout_height="@dimen/drawer_user_image_size"
@@ -22,8 +22,6 @@
         android:background="@drawable/selector_drawer_user_image"
         android:clickable="true"
         android:elevation="@dimen/padding_2dp"
-        app:civ_borderColor="@android:color/white"
-        app:civ_borderWidth="@dimen/drawer_user_image_border_width"
         tools:ignore="ContentDescription" />
 
     <LinearLayout

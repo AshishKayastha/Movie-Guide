@@ -5,6 +5,7 @@ import com.ashish.movieguide.di.qualifiers.BaseOkHttp
 import com.ashish.movieguide.utils.ApiKeyInterceptor
 import com.ashish.movieguide.utils.Constants.OMDB_API_BASE_URL
 import com.ashish.movieguide.utils.Constants.TMDB_API_BASE_URL
+import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import com.ashish.movieguide.utils.schedulers.SchedulerProvider
 import dagger.Module
@@ -19,7 +20,6 @@ import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
-import timber.log.Timber
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Named
 import javax.inject.Singleton
@@ -35,7 +35,7 @@ object NetModule {
     @JvmStatic
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor { message ->
-            Timber.tag("OkHttp").d(message)
+            Logger.tag("OkHttp").d(message)
         }
         loggingInterceptor.level = if (BuildConfig.DEBUG) BODY else NONE
         return loggingInterceptor

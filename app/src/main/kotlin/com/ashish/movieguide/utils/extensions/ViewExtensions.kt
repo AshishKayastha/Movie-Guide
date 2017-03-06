@@ -5,36 +5,23 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
-import android.support.design.widget.TabLayout
 import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewAnimationUtils
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.TextView
 import com.ashish.movieguide.R
-import com.ashish.movieguide.ui.common.palette.PaletteBitmap
-import com.ashish.movieguide.utils.FontUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.ImageViewTarget
 
 /**
  * Created by Ashish on Dec 27.
  */
 inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
-
-operator fun ViewGroup?.get(position: Int): View? = this?.getChildAt(position)
-
-val ViewGroup.views: List<View>
-    get() = (0 until childCount).map { getChildAt(it) }
 
 fun View.setVisibility(visible: Boolean) {
     if (visible) show() else hide()
@@ -46,10 +33,6 @@ fun View.show() {
 
 fun View.hide(viewGone: Boolean = true) {
     visibility = if (viewGone) GONE else INVISIBLE
-}
-
-fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View? {
-    return LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 }
 
 fun View.showSnackBar(messageId: Int, duration: Int = Snackbar.LENGTH_LONG,
@@ -67,16 +50,8 @@ fun View.showSnackBar(messageId: Int, duration: Int = Snackbar.LENGTH_LONG,
 
 fun Snackbar.changeSnackBarFont(viewId: Int) = view.find<TextView>(viewId).changeTypeface()
 
-fun TextView.changeTypeface() {
-    typeface = FontUtils.getTypeface(context, FontUtils.MONTSERRAT_REGULAR)
-}
-
 fun View.animateBackgroundColorChange(startColor: Int, endColor: Int) {
     animateColorChange(startColor, endColor, onAnimationUpdate = { setBackgroundColor(it) })
-}
-
-fun TextView.animateTextColorChange(startColor: Int, endColor: Int) {
-    animateColorChange(startColor, endColor, onAnimationUpdate = { setTextColor(it) })
 }
 
 inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 800L,
@@ -97,42 +72,6 @@ fun View.getPosterImagePair(@StringRes transitionNameId: Int): Pair<View, String
     return if (posterImageView != null) Pair.create(posterImageView, context.getString(transitionNameId)) else null
 }
 
-fun TextView.setTitleAndYear(title: String?, releaseDate: String?) {
-    val yearOnly = releaseDate.getYearOnly()
-    text = if (yearOnly.isNotEmpty()) "$title ($yearOnly)" else "$title"
-}
-
-inline fun ImageView.loadPaletteBitmap(imageUrl: String?, width: Int = 0, height: Int = 0,
-                                       crossinline action: ((PaletteBitmap?) -> Unit)) {
-    if (imageUrl.isNotNullOrEmpty()) {
-        val builder = Glide.with(context)
-                .transcodePaletteBitmap(context)
-                .load(imageUrl)
-
-        if (width > 0 && height > 0) {
-            builder.override(width, height)
-        }
-
-        builder.into(object : ImageViewTarget<PaletteBitmap>(this) {
-            override fun setResource(paletteBitmap: PaletteBitmap?) {
-                setImageBitmap(paletteBitmap?.bitmap)
-                action.invoke(paletteBitmap)
-            }
-        })
-    } else {
-        Glide.clear(this)
-    }
-}
-
-fun TextView.applyText(text: String?, viewGone: Boolean = true) {
-    if (text.isNotNullOrEmpty()) {
-        show()
-        this.text = text
-    } else {
-        hide(viewGone)
-    }
-}
-
 @SuppressLint("InlinedApi")
 fun View.setLightStatusBar() {
     isMarshmallowOrAbove {
@@ -146,10 +85,6 @@ fun View.setTransitionName(@StringRes transitionNameId: Int) {
     ViewCompat.setTransitionName(this, context.getString(transitionNameId))
 }
 
-fun ViewGroup.changeViewGroupTextFont() {
-    views.filterIsInstance<TextView>().forEach(TextView::changeTypeface)
-}
-
 fun View?.showKeyboard() {
     if (this == null) return
 
@@ -161,18 +96,6 @@ fun View?.showKeyboard() {
 
     if (!imm.isActive(this)) {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
-    }
-}
-
-fun ImageView.loadImageUrl(imageUrl: String?, placeHolder: Int = R.drawable.ic_person_white_80dp) {
-    if (imageUrl.isNotNullOrEmpty()) {
-        Glide.with(context)
-                .load(imageUrl)
-                .placeholder(placeHolder)
-                .error(placeHolder)
-                .into(this)
-    } else {
-        Glide.clear(this)
     }
 }
 
@@ -201,11 +124,4 @@ inline fun View.onLayoutLaid(crossinline action: () -> Unit) {
             action.invoke()
         }
     })
-}
-
-fun TabLayout.changeTabFont() {
-    val viewGroup = this[0] as ViewGroup
-    (0 until viewGroup.childCount)
-            .map { viewGroup[it] as ViewGroup }
-            .forEach { it.changeViewGroupTextFont() }
 }

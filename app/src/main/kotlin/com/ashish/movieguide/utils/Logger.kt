@@ -20,6 +20,11 @@ object Logger {
         }
     }
 
+    fun tag(tag: String): Logger {
+        Timber.tag(tag)
+        return this
+    }
+
     fun v(msg: String, vararg objects: Any) = Timber.v(msg, *objects)
 
     fun d(msg: String, vararg objects: Any) = Timber.d(msg, *objects)
