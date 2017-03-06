@@ -10,7 +10,7 @@ import com.ashish.movieguide.ui.discover.base.BaseDiscoverFragment
 class DiscoverMovieFragment : BaseDiscoverFragment<Movie, DiscoverMoviePresenter>() {
 
     companion object {
-        fun newInstance() = DiscoverMovieFragment()
+        @JvmStatic fun newInstance() = DiscoverMovieFragment()
     }
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {

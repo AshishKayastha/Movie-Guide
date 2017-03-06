@@ -20,6 +20,7 @@ class MovieFragment : BaseRecyclerViewFragment<Movie, BaseRecyclerViewMvpView<Mo
     companion object {
         private const val ARG_MOVIE_TYPE = "movie_type"
 
+        @JvmStatic
         fun newInstance(movieType: Int): MovieFragment {
             val extras = Bundle()
             extras.putInt(ARG_MOVIE_TYPE, movieType)

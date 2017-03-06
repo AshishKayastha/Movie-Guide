@@ -27,6 +27,7 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
     companion object {
         private const val ARG_PERSONAL_TV_SHOW_TYPE = "personal_tv_show_type"
 
+        @JvmStatic
         fun newInstance(tvShowType: Int): PersonalTVShowFragment {
             val extras = Bundle()
             extras.putInt(ARG_PERSONAL_TV_SHOW_TYPE, tvShowType)

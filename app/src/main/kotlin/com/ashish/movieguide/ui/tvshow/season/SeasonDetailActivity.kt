@@ -35,6 +35,7 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
         private const val EXTRA_SEASON = "season"
         private const val EXTRA_TV_SHOW_ID = "tv_show_id"
 
+        @JvmStatic
         fun createIntent(context: Context, tvShowId: Long?, season: Season?): Intent {
             return Intent(context, SeasonDetailActivity::class.java)
                     .putExtra(EXTRA_TV_SHOW_ID, tvShowId)

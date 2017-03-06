@@ -18,7 +18,7 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_PERSON
 class PeopleFragment : BaseRecyclerViewFragment<Person, BaseRecyclerViewMvpView<Person>, PeoplePresenter>() {
 
     companion object {
-        fun newInstance() = PeopleFragment()
+        @JvmStatic fun newInstance() = PeopleFragment()
     }
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {

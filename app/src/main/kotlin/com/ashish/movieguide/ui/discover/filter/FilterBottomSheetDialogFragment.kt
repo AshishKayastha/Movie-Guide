@@ -46,6 +46,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         private const val ARG_IS_MOVIE = "is_movie"
         private const val ARG_FILTER_QUERY = "filter_query"
 
+        @JvmStatic
         fun newInstance(isMovie: Boolean, filterQuery: FilterQuery): FilterBottomSheetDialogFragment {
             val args = Bundle()
             args.putBoolean(ARG_IS_MOVIE, isMovie)

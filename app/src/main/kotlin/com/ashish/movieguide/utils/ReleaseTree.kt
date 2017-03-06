@@ -13,6 +13,7 @@ class ReleaseTree : Timber.Tree() {
 
         private const val MAX_LOG_LENGTH = 4000
 
+        @JvmStatic
         private fun logMessage(priority: Int, tag: String, message: String) {
             if (priority == Log.ASSERT) {
                 Log.wtf(tag, message)

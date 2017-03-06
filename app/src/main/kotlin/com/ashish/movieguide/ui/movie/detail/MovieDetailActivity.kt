@@ -35,6 +35,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
     companion object {
         private const val EXTRA_MOVIE = "movie"
 
+        @JvmStatic
         fun createIntent(context: Context, movie: Movie?): Intent {
             return Intent(context, MovieDetailActivity::class.java)
                     .putExtra(EXTRA_MOVIE, movie)

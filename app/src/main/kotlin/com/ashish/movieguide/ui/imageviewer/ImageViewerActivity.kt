@@ -36,6 +36,7 @@ class ImageViewerActivity : BaseActivity() {
         @JvmStatic
         private val INTERPOLATOR = FastOutSlowInInterpolator()
 
+        @JvmStatic
         fun createIntent(context: Context, title: String, startingPosition: Int,
                          imageUrlList: ArrayList<String>): Intent {
             return Intent(context, ImageViewerActivity::class.java)

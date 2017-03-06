@@ -35,6 +35,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<Per
     companion object {
         private const val EXTRA_PERSON = "person"
 
+        @JvmStatic
         fun createIntent(context: Context, person: Person?): Intent {
             return Intent(context, PersonDetailActivity::class.java)
                     .putExtra(EXTRA_PERSON, person)

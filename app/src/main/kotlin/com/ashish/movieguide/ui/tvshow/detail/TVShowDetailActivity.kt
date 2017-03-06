@@ -40,6 +40,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
     companion object {
         private const val EXTRA_TV_SHOW = "tv_show"
 
+        @JvmStatic
         fun createIntent(context: Context, tvShow: TVShow?): Intent {
             return Intent(context, TVShowDetailActivity::class.java)
                     .putExtra(EXTRA_TV_SHOW, tvShow)

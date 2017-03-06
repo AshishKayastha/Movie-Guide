@@ -27,7 +27,7 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
         BaseRecyclerViewMvpView<MultiSearch>, MultiSearchPresenter>() {
 
     companion object {
-        fun newInstance() = MultiSearchFragment()
+        @JvmStatic fun newInstance() = MultiSearchFragment()
     }
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {

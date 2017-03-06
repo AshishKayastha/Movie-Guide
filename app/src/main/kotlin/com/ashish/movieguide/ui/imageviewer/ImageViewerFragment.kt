@@ -35,6 +35,7 @@ class ImageViewerFragment : BaseFragment() {
         private const val ARG_POSITION = "position"
         private const val ARG_IMAGE_URL = "image_url"
 
+        @JvmStatic
         fun newInstance(position: Int, imageUrl: String?): ImageViewerFragment {
             val args = Bundle()
             args.putInt(ARG_POSITION, position)
