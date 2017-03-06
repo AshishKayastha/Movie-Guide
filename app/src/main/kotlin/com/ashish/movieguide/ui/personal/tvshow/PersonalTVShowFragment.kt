@@ -9,12 +9,16 @@ import com.ashish.movieguide.di.modules.FragmentModule
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
+import com.ashish.movieguide.ui.common.personalcontent.PersonalContentStatusObserver
 import com.ashish.movieguide.ui.personal.movie.PersonalMovieFragment.Companion.newInstance
 import com.ashish.movieguide.ui.personal.tvshow.PersonalTVShowFragment.Companion.newInstance
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movieguide.utils.Constants.FAVORITES
 import com.ashish.movieguide.utils.Constants.WATCHLIST
+import icepick.State
+import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
 /**
  * This class will show personal tv show lists like favorites and watchlist.
@@ -37,6 +41,12 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
         }
     }
 
+    @Inject lateinit var statusObserver: PersonalContentStatusObserver
+
+    @JvmField @State var clickedItemPosition: Int = -1
+
+    private var disposable: Disposable? = null
+
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
         builderHost.getFragmentComponentBuilder(PersonalTVShowFragment::class.java,
                 PersonalTVShowComponent.Builder::class.java)
@@ -55,6 +65,7 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
         }
 
         emptyImageView.setImageResource(R.drawable.ic_tv_white_100dp)
+        observePersonalContentStatusChange()
     }
 
     override fun getFragmentArguments(arguments: Bundle?) {
@@ -66,7 +77,25 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
     override fun getTransitionNameId(position: Int) = R.string.transition_tv_poster
 
     override fun getDetailIntent(position: Int): Intent? {
+        clickedItemPosition = position
         val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
         return TVShowDetailActivity.createIntent(activity, tvShow)
+    }
+
+    private fun observePersonalContentStatusChange() {
+        disposable = statusObserver.getContentStatusObservable()
+                .filter { clickedItemPosition > -1 }
+                .filter { tvId ->
+                    // Filter tv show that has same id as that of currently removed
+                    // tv show item to avoid wrong data to be removed from list.
+                    val tvShow = recyclerViewAdapter.getItem<TVShow>(clickedItemPosition)
+                    return@filter tvShow.id == tvId
+                }
+                .subscribe { recyclerViewAdapter.removeItem(clickedItemPosition) }
+    }
+
+    override fun onDestroyView() {
+        disposable?.dispose()
+        super.onDestroyView()
     }
 }

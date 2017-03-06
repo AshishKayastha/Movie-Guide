@@ -21,7 +21,8 @@ import javax.inject.Inject
 class PersonalContentManager @Inject constructor(
         private val authInteractor: AuthInteractor,
         private val preferenceHelper: PreferenceHelper,
-        private val schedulerProvider: BaseSchedulerProvider
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val contentStatusObserver: PersonalContentStatusObserver
 ) {
 
     private var isFavorite = false
@@ -53,7 +54,14 @@ class PersonalContentManager @Inject constructor(
             val favorite = Favorite(isFavorite, mediaId, mediaType)
             compositeDisposable.add(authInteractor.markAsFavorite(favorite)
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ }, { onMarkAsFavoriteError(it) }))
+                    .subscribe({ onMarkAsFavoriteSuccesss(mediaId) }, { onMarkAsFavoriteError(it) }))
+        }
+    }
+
+    private fun onMarkAsFavoriteSuccesss(mediaId: Long) {
+        // Notify subscriber if the content is removed from favorites
+        if (!isFavorite) {
+            contentStatusObserver.notifyContentRemoved(mediaId)
         }
     }
 
@@ -79,12 +87,17 @@ class PersonalContentManager @Inject constructor(
             val watchlist = Watchlist(isInWatchlist, mediaId, mediaType)
             compositeDisposable.add(authInteractor.addToWatchlist(watchlist)
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ onAddToWatchlistSuccess() }, { onAddToWatchlistError(it) }))
+                    .subscribe({ onAddToWatchlistSuccess(mediaId) }, { onAddToWatchlistError(it) }))
         }
     }
 
-    private fun onAddToWatchlistSuccess() {
+    private fun onAddToWatchlistSuccess(mediaId: Long) {
         showWatchlistMessage(R.string.success_add_to_watchlist, R.string.success_remove_watchlist)
+
+        // Notify subscriber if the content is removed from watchlist
+        if (!isInWatchlist) {
+            contentStatusObserver.notifyContentRemoved(mediaId)
+        }
     }
 
     private fun onAddToWatchlistError(t: Throwable) {

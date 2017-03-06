@@ -79,6 +79,14 @@ class RecyclerViewAdapter<in I : ViewType>(
         return loadingItemPosition
     }
 
+    fun removeItem(position: Int) {
+        if (position > -1) {
+            itemList.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
+        }
+    }
+
     fun clearAll() {
         val oldSize = itemCount
         if (oldSize > 0) {
