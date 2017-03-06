@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewStub
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Episode
 import com.ashish.movieguide.data.models.Season
@@ -19,6 +18,7 @@ import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.tvshow.episode.EpisodeDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.setTitleAndYear

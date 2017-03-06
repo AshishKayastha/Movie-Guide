@@ -12,7 +12,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.AbstractComponent
@@ -22,6 +21,7 @@ import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderH
 import com.ashish.movieguide.ui.base.common.BaseActivity
 import com.ashish.movieguide.ui.multisearch.fragment.MultiSearchFragment
 import com.ashish.movieguide.utils.Utils
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeTypeface
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.hide

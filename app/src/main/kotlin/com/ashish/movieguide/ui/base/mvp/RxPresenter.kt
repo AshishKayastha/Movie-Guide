@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable
 abstract class RxPresenter<V : MvpView>(protected val schedulerProvider: BaseSchedulerProvider) {
 
     private var view: V? = null
-    private var compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     @CallSuper
     open fun attachView(view: V) {

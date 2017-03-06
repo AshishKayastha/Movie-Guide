@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.app.MovieGuideApp
 import com.ashish.movieguide.data.models.FilterQuery
@@ -22,8 +21,10 @@ import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.Constants.DATE_PICKER_FORMAT
 import com.ashish.movieguide.utils.Constants.SORT_BY_MOVIE
 import com.ashish.movieguide.utils.Constants.SORT_BY_TV_SHOW
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.convertToDate
 import com.ashish.movieguide.utils.extensions.dpToPx
+import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getExtrasOrRestore
 import com.ashish.movieguide.utils.extensions.getFormattedDate
 import com.ashish.movieguide.utils.extensions.hide
@@ -119,11 +120,11 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         } else {
             // Hide sort by title RadioButton for TV Shows
             sortByRadioGroup.weightSum = 3f
-            sortByRadioGroup.getChildAt(2)?.hide()
+            sortByRadioGroup[2]?.hide()
             sortByIndex = SORT_BY_TV_SHOW.indexOf(filterQuery?.sortBy)
         }
 
-        (sortByRadioGroup.getChildAt(sortByIndex) as RadioButton?)?.isChecked = true
+        (sortByRadioGroup[sortByIndex] as RadioButton?)?.isChecked = true
 
         applyFilterBtn.setOnClickListener {
             if (isValidDate(filterQuery?.minDate, filterQuery?.maxDate)) {

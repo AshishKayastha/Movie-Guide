@@ -44,6 +44,8 @@ val Context.defaultSharedPreferences: SharedPreferences
 
 fun Context.getStringArray(@ArrayRes arrayId: Int): Array<String> = resources.getStringArray(arrayId)
 
-fun Context.openUrl(url: String) {
-    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+fun Context.openUrl(url: String?) {
+    if (url.isNotNullOrEmpty()) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
 }

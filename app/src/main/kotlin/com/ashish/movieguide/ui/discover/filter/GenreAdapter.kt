@@ -5,10 +5,10 @@ import android.support.annotation.ArrayRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.extensions.addOrRemove
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import java.util.ArrayList

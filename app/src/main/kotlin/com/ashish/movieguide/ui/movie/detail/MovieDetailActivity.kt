@@ -7,7 +7,6 @@ import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewStub
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.MovieDetail
@@ -17,6 +16,8 @@ import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
+import com.ashish.movieguide.utils.extensions.bindView
+import com.ashish.movieguide.utils.extensions.changeMenuItemTitle
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
@@ -105,6 +106,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_favorite -> performAction { presenter?.markAsFavorite() }
+        R.id.action_watchlist -> performAction { presenter?.addToWatchlist() }
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -117,6 +119,10 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
         if (view is ActionMenuItemView) {
             view.startFavoriteAnimation(isFavorite)
         }
+    }
+
+    override fun changeWatchlistMenuTitle(titleId: Int) {
+        menu?.changeMenuItemTitle(R.id.action_watchlist, titleId)
     }
 
     override fun performCleanup() {

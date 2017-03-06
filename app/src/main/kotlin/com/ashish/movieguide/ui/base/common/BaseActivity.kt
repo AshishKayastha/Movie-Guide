@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import butterknife.bindOptionalView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
+import com.ashish.movieguide.utils.extensions.bindOptionalView
 import com.ashish.movieguide.utils.extensions.getExtrasOrRestore
 import icepick.Icepick
 

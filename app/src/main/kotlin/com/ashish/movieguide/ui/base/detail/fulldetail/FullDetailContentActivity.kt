@@ -6,7 +6,6 @@ import android.support.v4.view.ViewCompat
 import android.support.v7.widget.CardView
 import android.view.View
 import android.view.ViewStub
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Credit
 import com.ashish.movieguide.data.models.Person
@@ -18,6 +17,7 @@ import com.ashish.movieguide.ui.common.adapter.VideoAdapter
 import com.ashish.movieguide.ui.people.detail.PersonDetailActivity
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.RatingView
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.openUrl
 import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.show

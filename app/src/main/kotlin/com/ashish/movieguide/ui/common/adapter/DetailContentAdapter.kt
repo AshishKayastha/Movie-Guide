@@ -3,9 +3,9 @@ package com.ashish.movieguide.ui.common.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.widget.FontTextView
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.setVisibility

@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
 import android.view.View
-import butterknife.bindOptionalView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.common.BaseActivity
+import com.ashish.movieguide.utils.extensions.bindOptionalView
 import com.ashish.movieguide.utils.extensions.showSnackBar
 import com.ashish.movieguide.utils.extensions.showToast
 import javax.inject.Inject

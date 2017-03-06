@@ -107,7 +107,6 @@ dexcount {
 
 repositories {
     maven { url "https://clojars.org/repo/" }
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
@@ -119,9 +118,6 @@ dependencies {
 
     // Timber for logging
     compile "com.jakewharton.timber:timber:$versions.timberVersion"
-
-    // KotterKnife
-    compile "com.jakewharton:kotterknife:$versions.kotterKnifeVersion"
 
     // Glide (Image Loading)
     compile "com.github.bumptech.glide:glide:$versions.glideVersion"

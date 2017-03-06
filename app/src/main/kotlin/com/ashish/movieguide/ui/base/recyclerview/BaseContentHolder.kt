@@ -3,8 +3,6 @@ package com.ashish.movieguide.ui.base.recyclerview
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import butterknife.bindOptionalView
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.ViewType
@@ -15,6 +13,8 @@ import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.LabelLayout
 import com.ashish.movieguide.utils.Constants.THUMBNAIL_HEIGHT
 import com.ashish.movieguide.utils.Constants.THUMBNAIL_WIDTH
+import com.ashish.movieguide.utils.extensions.bindOptionalView
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.transcodePaletteBitmap

@@ -16,9 +16,8 @@ ext.versions = [
         paperParcelVersion   : '2.0.0',
         storioVersion        : '1.12.3',
         supportLibVersion    : '25.2.0',
-        glideVersion         : '3.8.0-SNAPSHOT',
-        kotterKnifeVersion   : '0.1.0-SNAPSHOT',
-        glideOkHttp3Version  : '1.5.0-SNAPSHOT@aar'
+        glideVersion         : '3.7.0',
+        glideOkHttp3Version  : '1.4.0@aar',
 ]
 
 ext {

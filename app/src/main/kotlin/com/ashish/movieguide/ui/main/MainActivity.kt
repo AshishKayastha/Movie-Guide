@@ -11,8 +11,6 @@ import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
@@ -35,7 +33,9 @@ import com.ashish.movieguide.utils.CustomTypefaceSpan
 import com.ashish.movieguide.utils.DialogUtils
 import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.extensions.applyText
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeMenuFont
+import com.ashish.movieguide.utils.extensions.changeTabFont
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getStringArray
@@ -92,7 +92,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
         showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
         tabLayout.setupWithViewPager(viewPager)
 
-        changeTabFont()
+        tabLayout.changeTabFont()
         toolbar?.changeViewGroupTextFont()
         setupNavigationView()
     }
@@ -173,13 +173,6 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
         }
     }
 
-    private fun changeTabFont() {
-        val vg = tabLayout.getChildAt(0) as ViewGroup
-        (0 until vg.childCount)
-                .map { vg.getChildAt(it) as ViewGroup }
-                .forEach { it.changeViewGroupTextFont() }
-    }
-
     private fun setupNavigationView() {
         val typeface = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
         val customTypefaceSpan = CustomTypefaceSpan(typeface)
@@ -198,7 +191,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
                 R.id.action_watchlist -> showViewPagerFragment(CONTENT_TYPE_WATCHLIST, discoverTabTitles)
             }
 
-            changeTabFont()
+            tabLayout.changeTabFont()
             true
         }
     }

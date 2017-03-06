@@ -1,17 +1,13 @@
 package com.ashish.movieguide.ui.movie.detail
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.interactors.AuthInteractor
 import com.ashish.movieguide.data.interactors.MovieInteractor
-import com.ashish.movieguide.data.models.Favorite
 import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.MovieDetail
-import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
-import com.ashish.movieguide.utils.AuthException
+import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
 import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_MOVIE
-import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.extensions.getFormattedNumber
@@ -26,12 +22,14 @@ import javax.inject.Inject
 @ActivityScope
 class MovieDetailPresenter @Inject constructor(
         private val movieInteractor: MovieInteractor,
-        private val authInteractor: AuthInteractor,
-        private val preferenceHelper: PreferenceHelper,
+        private val personalContentManager: PersonalContentManager,
         schedulerProvider: BaseSchedulerProvider
 ) : FullDetailContentPresenter<MovieDetail, MovieDetailView>(schedulerProvider) {
 
-    private var isFavorite: Boolean = false
+    override fun attachView(view: MovieDetailView) {
+        super.attachView(view)
+        personalContentManager.setView(view)
+    }
 
     override fun getDetailContent(id: Long) = movieInteractor.getFullMovieDetail(id)
 
@@ -40,12 +38,7 @@ class MovieDetailPresenter @Inject constructor(
         getView()?.apply {
             hideProgress()
             val movieDetail = fullDetailContent.detailContent
-
-            // Show favorite menu item only if user is logged in
-            if (preferenceHelper.getId() > 0) {
-                isFavorite = movieDetail?.movieRatings?.favorite ?: false
-                setFavoriteIcon(isFavorite)
-            }
+            personalContentManager.setAccountState(movieDetail?.movieRatings)
 
             setTMDbRating(movieDetail?.voteAverage)
             showItemList(movieDetail?.similarMovieResults?.results) { showSimilarMoviesList(it) }
@@ -88,32 +81,21 @@ class MovieDetailPresenter @Inject constructor(
 
     fun markAsFavorite() {
         val movieId = fullDetailContent?.detailContent?.id
-        if (movieId != null) {
-            isFavorite = !isFavorite
-            getView()?.animateFavoriteIcon(isFavorite)
-
-            val favorite = Favorite(isFavorite, movieId, MEDIA_TYPE_MOVIE)
-            addDisposable(authInteractor.markAsFavorite(favorite)
-                    .observeOn(schedulerProvider.ui())
-                    .subscribe({ onMarkAsFavoriteActionSuccess() },
-                            { t -> onMarkAsFavoriteActionError(t) }))
-        }
+        personalContentManager.markAsFavorite(movieId, MEDIA_TYPE_MOVIE)
     }
 
-    private fun onMarkAsFavoriteActionSuccess() {
-        getView()?.showMessage(R.string.success_mark_favorite)
+    fun addToWatchlist() {
+        val movieId = fullDetailContent?.detailContent?.id
+        personalContentManager.addToWatchlist(movieId, MEDIA_TYPE_MOVIE)
     }
 
-    private fun onMarkAsFavoriteActionError(t: Throwable) {
-        Logger.e(t)
-        isFavorite = !isFavorite
-        getView()?.apply {
-            setFavoriteIcon(isFavorite)
-            if (t is AuthException) {
-                showMessage(R.string.error_not_logged_in)
-            } else {
-                showMessage(R.string.error_mark_favorite)
-            }
-        }
+    override fun detachView() {
+        super.detachView()
+        personalContentManager.setView(null)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        personalContentManager.unsubscribe()
     }
 }

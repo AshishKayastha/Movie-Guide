@@ -9,6 +9,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/action_watchlist"
+        android:icon="@drawable/ic_watchlist_white_24dp"
+        android:title="@string/add_to_watchlist"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_imdb"
         android:title="@string/view_in_imdb"
         android:visible="false"

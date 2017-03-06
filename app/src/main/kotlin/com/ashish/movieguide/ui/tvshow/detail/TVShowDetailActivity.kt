@@ -7,7 +7,6 @@ import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewStub
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Season
 import com.ashish.movieguide.data.models.TVShow
@@ -21,6 +20,8 @@ import com.ashish.movieguide.ui.tvshow.season.SeasonDetailActivity
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
+import com.ashish.movieguide.utils.extensions.bindView
+import com.ashish.movieguide.utils.extensions.changeMenuItemTitle
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
@@ -132,6 +133,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_favorite -> performAction { presenter?.markAsFavorite() }
+        R.id.action_watchlist -> performAction { presenter?.addToWatchlist() }
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -144,6 +146,10 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetai
         if (view is ActionMenuItemView) {
             view.startFavoriteAnimation(isFavorite)
         }
+    }
+
+    override fun changeWatchlistMenuTitle(titleId: Int) {
+        menu?.changeMenuItemTitle(R.id.action_watchlist, titleId)
     }
 
     override fun performCleanup() {

@@ -20,7 +20,6 @@ import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Credit
 import com.ashish.movieguide.data.models.OMDbDetail
@@ -53,8 +52,10 @@ import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.extensions.animateBackgroundColorChange
 import com.ashish.movieguide.utils.extensions.animateColorChange
 import com.ashish.movieguide.utils.extensions.animateTextColorChange
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeMenuFont
 import com.ashish.movieguide.utils.extensions.find
+import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
 import com.ashish.movieguide.utils.extensions.getStringArray
@@ -265,7 +266,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         window.decorView.setLightStatusBar()
         val primaryBlack = getColorCompat(R.color.primary_text_dark)
 
-        val backButton = toolbar?.getChildAt(0) as ImageButton?
+        val backButton = toolbar[0] as ImageButton?
         backButton?.setColorFilter(primaryBlack)
 
         menu?.tint(primaryBlack)
@@ -451,7 +452,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_imdb -> viewInIMDbSite()
-        R.id.action_rotten_tomatoes -> viewInRottenTomatotesSite()
+        R.id.action_rotten_tomatoes -> performAction { openUrl(rottenTomatoesUrl) }
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -459,14 +460,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         return performAction {
             if (imdbId.isNotNullOrEmpty()) {
                 openUrl(IMDB_BASE_URL + imdbId)
-            }
-        }
-    }
-
-    private fun viewInRottenTomatotesSite(): Boolean {
-        return performAction {
-            if (rottenTomatoesUrl.isNotNullOrEmpty()) {
-                openUrl(rottenTomatoesUrl!!)
             }
         }
     }

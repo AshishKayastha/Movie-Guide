@@ -7,7 +7,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.animation.SlideInUpAnimator
 import com.ashish.movieguide.ui.base.mvp.MvpFragment
@@ -20,6 +19,7 @@ import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movieguide.ui.widget.StaggeredGridRecyclerView
 import com.ashish.movieguide.utils.Utils
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.setVisibility

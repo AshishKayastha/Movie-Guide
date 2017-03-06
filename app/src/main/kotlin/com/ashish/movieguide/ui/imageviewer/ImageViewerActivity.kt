@@ -9,12 +9,12 @@ import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.common.BaseActivity
 import com.ashish.movieguide.ui.widget.DepthPageTransformer
 import com.ashish.movieguide.ui.widget.InkPageIndicator
 import com.ashish.movieguide.utils.SystemUiHelper
+import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.transition.LeakFreeSupportSharedElementCallback
 import icepick.State

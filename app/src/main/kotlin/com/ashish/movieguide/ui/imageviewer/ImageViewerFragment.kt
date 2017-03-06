@@ -10,13 +10,13 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
-import butterknife.bindView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.common.BaseFragment
 import com.ashish.movieguide.ui.widget.TouchImageView
 import com.ashish.movieguide.utils.Constants.THUMBNAIL_SIZE
 import com.ashish.movieguide.utils.SystemUiHelper
 import com.ashish.movieguide.utils.TransitionListenerAdapter
+import com.ashish.movieguide.utils.extensions.bindView
 import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority

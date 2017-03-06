@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
+import android.support.design.widget.TabLayout
 import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
@@ -29,6 +30,8 @@ import com.bumptech.glide.request.target.ImageViewTarget
  * Created by Ashish on Dec 27.
  */
 inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
+
+operator fun ViewGroup?.get(position: Int): View? = this?.getChildAt(position)
 
 val ViewGroup.views: List<View>
     get() = (0 until childCount).map { getChildAt(it) }
@@ -191,11 +194,18 @@ inline fun View.startCircularRevealAnimation(cx: Int, cy: Int, startRadius: Floa
     animator.start()
 }
 
-fun View.onLayoutLaid(action: () -> Unit) {
+inline fun View.onLayoutLaid(crossinline action: () -> Unit) {
     viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
         override fun onGlobalLayout() {
             viewTreeObserver.removeOnGlobalLayoutListener(this)
             action.invoke()
         }
     })
+}
+
+fun TabLayout.changeTabFont() {
+    val viewGroup = this[0] as ViewGroup
+    (0 until viewGroup.childCount)
+            .map { viewGroup[it] as ViewGroup }
+            .forEach { it.changeViewGroupTextFont() }
 }
