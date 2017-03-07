@@ -27,7 +27,7 @@ class RatedEpisodeFragment : BaseRecyclerViewFragment<Episode,
 
     override fun getAdapterType() = ADAPTER_TYPE_EPISODE
 
-    override fun getEmptyTextId() = R.string.no_episodes_available
+    override fun getEmptyTextId() = R.string.no_rated_episodes_available
 
     override fun getEmptyImageId() = R.drawable.ic_tv_white_100dp
 

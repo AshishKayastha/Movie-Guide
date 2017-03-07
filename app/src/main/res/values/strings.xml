@@ -4,6 +4,9 @@
     <string name="error_load_data">An error occurred while trying to fetch data!</string>
     <string name="error_not_logged_in">You are not logged into TMDb. Please log in to access this feature.</string>
 
+    <!-- Drawer -->
+    <string name="menu_your_lists">Your Lists</string>
+
     <!-- Movie -->
     <string name="title_movies">Movies</string>
     <string name="no_movies_available">No Movies Available</string>
@@ -185,8 +188,8 @@
 
     <!-- Watchlist -->
     <string name="title_watchlist">Watchlist</string>
-    <string name="no_movies_watchlist_available">Your movie watchlist appear here</string>
-    <string name="no_tv_shows_watchlist_available">Your TV show watchlist appear here</string>
+    <string name="no_movies_watchlist_available">Your movies watchlist appear here</string>
+    <string name="no_tv_shows_watchlist_available">Your TV shows watchlist appear here</string>
 
     <string name="add_to_watchlist">Add to Watchlist</string>
     <string name="remove_from_watchlist">Remove from Watchlist</string>
@@ -200,14 +203,16 @@
     <!-- Rating -->
     <string name="rate_btn">Rate</string>
     <string name="remove_btn">Remove</string>
-    <string name="error_save_rating">Failed to save your rating!</string>
-    <string name="error_delete_rating">Failed to delete rating!</string>
+    <string name="error_save_rating">Failed to save your rating</string>
+    <string name="error_delete_rating">Failed to delete rating</string>
 
     <string name="title_rated">Rated</string>
     <string name="title_episodes">Episodes</string>
     <string name="title_rate_movie">Rate this Movie</string>
     <string name="title_rate_tv_show">Rate this TV Show</string>
     <string name="title_rate_episode">Rate this Episode</string>
-    <string name="menu_your_lists">Your Lists</string>
-    <string name="no_episodes_available">No Episodes Available</string>
+
+    <string name="no_rated_movies_available">Your rated movies appear here</string>
+    <string name="no_rated_tv_shows_available">Your rated TV shows appear here</string>
+    <string name="no_rated_episodes_available">Your rated episodes appear here</string>
 </resources>

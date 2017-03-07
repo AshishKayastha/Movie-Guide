@@ -27,7 +27,7 @@ class RatedMovieFragment : BaseRecyclerViewFragment<Movie,
 
     override fun getAdapterType() = ADAPTER_TYPE_MOVIE
 
-    override fun getEmptyTextId() = R.string.no_movies_available
+    override fun getEmptyTextId() = R.string.no_rated_movies_available
 
     override fun getEmptyImageId() = R.drawable.ic_movie_white_100dp
 
