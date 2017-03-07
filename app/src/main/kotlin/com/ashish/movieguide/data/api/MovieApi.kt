@@ -7,8 +7,8 @@ import com.ashish.movieguide.data.models.Results
 import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Observable
-import io.reactivex.Single
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -39,7 +39,10 @@ interface MovieApi {
     ): Observable<MovieDetail>
 
     @POST("movie/{movieId}/rating")
-    fun rateMovie(@Path("movieId") movieId: Long, @Body rating: Rating): Single<Status>
+    fun rateMovie(@Path("movieId") movieId: Long, @Body rating: Rating): Observable<Status>
+
+    @DELETE("movie/{movieId}/rating")
+    fun deleteMovieRating(@Path("movieId") movieId: Long): Observable<Status>
 
     @GET("discover/movie")
     fun discoverMovie(

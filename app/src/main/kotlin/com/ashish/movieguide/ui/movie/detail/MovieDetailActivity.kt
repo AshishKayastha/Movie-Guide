@@ -2,6 +2,7 @@ package com.ashish.movieguide.ui.movie.detail
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
@@ -15,6 +16,7 @@ import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderH
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
+import com.ashish.movieguide.ui.common.rating.RatingDialog
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
@@ -22,15 +24,17 @@ import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.setFavoriteIcon
+import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
 import icepick.State
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 31.
  */
 class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailView, MovieDetailPresenter>(),
-        MovieDetailView {
+        MovieDetailView, RatingDialog.UpdateRatingListener {
 
     companion object {
         private const val EXTRA_MOVIE = "movie"
@@ -41,6 +45,8 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
                     .putExtra(EXTRA_MOVIE, movie)
         }
     }
+
+    @Inject lateinit var ratingDialog: RatingDialog
 
     @JvmField @State var movie: Movie? = null
 
@@ -92,6 +98,8 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
             titleText.setTitleAndYear(title, releaseDate)
         }
 
+        ratingDialog.setRatingListener(this)
+        menu?.setRatingItemTitle(R.string.title_rate_movie)
         super.showDetailContent(detailContent)
     }
 
@@ -108,6 +116,11 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_favorite -> performAction { presenter?.markAsFavorite() }
         R.id.action_watchlist -> performAction { presenter?.addToWatchlist() }
+
+        R.id.action_rating -> performAction {
+            ratingDialog.showRatingDialog(ratingLabelLayout.getRating())
+        }
+
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -126,7 +139,30 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailVi
         menu?.changeWatchlistMenuItem(isInWatchlist)
     }
 
+    override fun showSavedRating(rating: Double?) {
+        ratingLabelLayout.setRating(rating)
+    }
+
+    override fun saveRating(rating: Double) {
+        presenter?.saveRating(rating)
+    }
+
+    override fun deleteRating() {
+        presenter?.deleteRating()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        ratingDialog.dismissDialog()
+        super.onConfigurationChanged(newConfig)
+    }
+
+    override fun onStop() {
+        ratingDialog.dismissDialog()
+        super.onStop()
+    }
+
     override fun performCleanup() {
+        ratingDialog.setRatingListener(null)
         similarMoviesAdapter?.removeListener()
         super.performCleanup()
     }

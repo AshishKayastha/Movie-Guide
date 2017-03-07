@@ -35,7 +35,7 @@ class MovieDelegateAdapter(
         override fun bindData(item: Movie) = with(item) {
             contentTitle.applyText(title)
             contentSubtitle.applyText(releaseDate.getYearOnly())
-            averageVoteText?.setAverageVote(voteAverage)
+            averageVoteText?.setRating(voteAverage)
             super.bindData(item)
         }
 

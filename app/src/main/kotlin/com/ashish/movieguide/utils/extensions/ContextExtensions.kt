@@ -11,7 +11,10 @@ import android.support.annotation.ArrayRes
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
+import android.support.annotation.LayoutRes
 import android.support.v4.content.ContextCompat
+import android.view.LayoutInflater
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 
@@ -48,4 +51,8 @@ fun Context.openUrl(url: String?) {
     if (url.isNotNullOrEmpty()) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
+}
+
+fun Context.inflateLayout(@LayoutRes layoutId: Int): View {
+    return LayoutInflater.from(this).inflate(layoutId, null)
 }

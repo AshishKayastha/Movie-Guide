@@ -7,11 +7,13 @@ import com.ashish.movieguide.data.models.MovieDetail
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
+import com.ashish.movieguide.ui.common.rating.RatingManager
 import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_MOVIE
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.extensions.getFormattedNumber
 import com.ashish.movieguide.utils.extensions.getFormattedRuntime
+import com.ashish.movieguide.utils.extensions.getRatingValue
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import java.util.ArrayList
 import javax.inject.Inject
@@ -23,11 +25,13 @@ import javax.inject.Inject
 class MovieDetailPresenter @Inject constructor(
         private val movieInteractor: MovieInteractor,
         private val personalContentManager: PersonalContentManager,
+        private val ratingManager: RatingManager,
         schedulerProvider: BaseSchedulerProvider
 ) : FullDetailContentPresenter<MovieDetail, MovieDetailView>(schedulerProvider) {
 
     override fun attachView(view: MovieDetailView) {
         super.attachView(view)
+        ratingManager.setView(view)
         personalContentManager.setView(view)
     }
 
@@ -38,8 +42,10 @@ class MovieDetailPresenter @Inject constructor(
         getView()?.apply {
             hideProgress()
             val movieDetail = fullDetailContent.detailContent
-            personalContentManager.setAccountState(movieDetail?.movieRatings)
+            val accountState = movieDetail?.movieRatings
+            personalContentManager.setAccountState(accountState)
 
+            showSavedRating(accountState?.getRatingValue())
             setTMDbRating(movieDetail?.voteAverage)
             showItemList(movieDetail?.similarMovieResults?.results) { showSimilarMoviesList(it) }
         }
@@ -80,22 +86,32 @@ class MovieDetailPresenter @Inject constructor(
     override fun getErrorMessageId() = R.string.error_load_movie_detail
 
     fun markAsFavorite() {
-        val movieId = fullDetailContent?.detailContent?.id
-        personalContentManager.markAsFavorite(movieId, MEDIA_TYPE_MOVIE)
+        personalContentManager.markAsFavorite(getMovieId(), MEDIA_TYPE_MOVIE)
     }
 
     fun addToWatchlist() {
-        val movieId = fullDetailContent?.detailContent?.id
-        personalContentManager.addToWatchlist(movieId, MEDIA_TYPE_MOVIE)
+        personalContentManager.addToWatchlist(getMovieId(), MEDIA_TYPE_MOVIE)
     }
+
+    fun saveRating(rating: Double) {
+        ratingManager.saveRating(movieInteractor.rateMovie(getMovieId()!!, rating), rating)
+    }
+
+    fun deleteRating() {
+        ratingManager.deleteRating(movieInteractor.deleteMovieRating(getMovieId()!!))
+    }
+
+    private fun getMovieId() = fullDetailContent?.detailContent?.id
 
     override fun detachView() {
         super.detachView()
+        ratingManager.setView(null)
         personalContentManager.setView(null)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        ratingManager.unsubscribe()
         personalContentManager.unsubscribe()
     }
 }

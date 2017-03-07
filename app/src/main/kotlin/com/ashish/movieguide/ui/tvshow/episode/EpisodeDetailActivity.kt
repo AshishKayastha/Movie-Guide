@@ -2,25 +2,29 @@ package com.ashish.movieguide.ui.tvshow.episode
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.view.MenuItem
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Episode
 import com.ashish.movieguide.data.models.EpisodeDetail
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
-import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentView
+import com.ashish.movieguide.ui.common.rating.RatingDialog
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getStillImageUrl
+import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import icepick.State
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 08.
  */
-class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
-        FullDetailContentView<EpisodeDetail>, EpisodeDetailPresenter>() {
+class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, EpisodeDetailView,
+        EpisodeDetailPresenter>(), EpisodeDetailView, RatingDialog.UpdateRatingListener {
 
     companion object {
         private const val EXTRA_EPISODE = "episode"
@@ -33,6 +37,8 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
                     .putExtra(EXTRA_EPISODE, episode)
         }
     }
+
+    @Inject lateinit var ratingDialog: RatingDialog
 
     @JvmField @State var tvShowId: Long? = null
     @JvmField @State var episode: Episode? = null
@@ -68,10 +74,48 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
             titleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
         }
+
+        ratingDialog.setRatingListener(this)
+        menu?.setRatingItemTitle(R.string.title_rate_episode)
         super.showDetailContent(detailContent)
     }
 
     override fun getDetailContentType() = ADAPTER_TYPE_EPISODE
 
     override fun getItemTitle() = episode?.name ?: ""
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_rating -> performAction {
+            ratingDialog.showRatingDialog(ratingLabelLayout.getRating())
+        }
+
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun showSavedRating(rating: Double?) {
+        ratingLabelLayout.setRating(rating)
+    }
+
+    override fun saveRating(rating: Double) {
+        presenter?.saveRating(rating)
+    }
+
+    override fun deleteRating() {
+        presenter?.deleteRating()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        ratingDialog.dismissDialog()
+        super.onConfigurationChanged(newConfig)
+    }
+
+    override fun onStop() {
+        ratingDialog.dismissDialog()
+        super.onStop()
+    }
+
+    override fun performCleanup() {
+        ratingDialog.setRatingListener(null)
+        super.performCleanup()
+    }
 }

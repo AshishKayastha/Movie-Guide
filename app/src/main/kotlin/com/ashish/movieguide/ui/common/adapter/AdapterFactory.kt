@@ -2,7 +2,7 @@ package com.ashish.movieguide.ui.common.adapter
 
 import com.ashish.movieguide.ui.movie.list.MovieDelegateAdapter
 import com.ashish.movieguide.ui.multisearch.fragment.MultiSearchDelegateAdapter
-import com.ashish.movieguide.ui.people.list.PeopleDelegateAdapter
+import com.ashish.movieguide.ui.people.list.PersonDelegateAdapter
 import com.ashish.movieguide.ui.tvshow.episode.EpisodeDelegateAdapter
 import com.ashish.movieguide.ui.tvshow.list.TVShowDelegateAdapter
 import com.ashish.movieguide.ui.tvshow.season.SeasonDelegateAdapter
@@ -23,7 +23,7 @@ object AdapterFactory {
             : ViewTypeDelegateAdapter = when (adapterType) {
         ADAPTER_TYPE_MOVIE -> MovieDelegateAdapter(layoutId, onItemClickListener)
         ADAPTER_TYPE_TV_SHOW -> TVShowDelegateAdapter(layoutId, onItemClickListener)
-        ADAPTER_TYPE_PERSON -> PeopleDelegateAdapter(layoutId, onItemClickListener)
+        ADAPTER_TYPE_PERSON -> PersonDelegateAdapter(layoutId, onItemClickListener)
         ADAPTER_TYPE_CREDIT -> CreditDelegateAdapter(layoutId, onItemClickListener)
         ADAPTER_TYPE_SEASON -> SeasonDelegateAdapter(layoutId, onItemClickListener)
         ADAPTER_TYPE_EPISODE -> EpisodeDelegateAdapter(layoutId, onItemClickListener)

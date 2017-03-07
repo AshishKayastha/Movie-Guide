@@ -9,8 +9,8 @@ import com.ashish.movieguide.data.models.TVShow
 import com.ashish.movieguide.data.models.TVShowDetail
 import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Observable
-import io.reactivex.Single
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -43,7 +43,10 @@ interface TVShowApi {
     ): Observable<TVShowDetail>
 
     @POST("tv/{tvId}/rating")
-    fun rateTVShow(@Path("tvId") tvId: Long, @Body rating: Rating): Single<Status>
+    fun rateTVShow(@Path("tvId") tvId: Long, @Body rating: Rating): Observable<Status>
+
+    @DELETE("tv/{tvId}/rating")
+    fun deleteTVRating(@Path("tvId") tvId: Long): Observable<Status>
 
 
     /* Season */
@@ -72,7 +75,13 @@ interface TVShowApi {
             @Path("seasonNumber") seasonNumber: Int,
             @Path("episodeNumber") episodeNumber: Int,
             @Body rating: Rating
-    ): Single<Status>
+    ): Observable<Status>
+
+    @DELETE("tv/{tvId}/season/{seasonNumber}/episode/{episodeNumber}/rating")
+    fun deleteEpisodeRating(@Path("tvId") tvId: Long,
+                            @Path("seasonNumber") seasonNumber: Int,
+                            @Path("episodeNumber") episodeNumber: Int
+    ): Observable<Status>
 
 
     @GET("discover/tv")

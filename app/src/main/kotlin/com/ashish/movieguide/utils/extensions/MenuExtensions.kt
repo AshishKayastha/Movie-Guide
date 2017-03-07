@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.support.annotation.ColorInt
+import android.support.annotation.StringRes
 import android.support.v7.view.menu.ActionMenuItemView
 import android.text.style.TypefaceSpan
 import android.view.Menu
@@ -103,5 +104,13 @@ fun Menu.changeWatchlistMenuItem(isInWatchlist: Boolean) {
             setTitle(R.string.add_to_watchlist)
             setIcon(R.drawable.ic_watchlist_border_white_24dp)
         }
+    }
+}
+
+fun Menu.setRatingItemTitle(@StringRes titleId: Int) {
+    val menuItem = findItem(R.id.action_rating)
+    menuItem.apply {
+        isVisible = true
+        setTitle(titleId)
     }
 }

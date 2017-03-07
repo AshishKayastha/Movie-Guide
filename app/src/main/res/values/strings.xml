@@ -196,4 +196,14 @@
 
     <string name="success_remove_watchlist">Successfully removed from watchlist</string>
     <string name="error_remove_watchlist">Failed to remove from watchlist</string>
+
+    <!-- Rating -->
+    <string name="rate_btn">Rate</string>
+    <string name="remove_btn">Remove</string>
+    <string name="error_save_rating">Failed to save your rating!</string>
+    <string name="error_delete_rating">Failed to delete rating!</string>
+
+    <string name="title_rate_movie">Rate this Movie</string>
+    <string name="title_rate_tv_show">Rate this TV Show</string>
+    <string name="title_rate_episode">Rate this Episode</string>
 </resources>

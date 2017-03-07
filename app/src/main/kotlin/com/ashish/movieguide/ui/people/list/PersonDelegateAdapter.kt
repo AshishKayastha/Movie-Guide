@@ -14,22 +14,22 @@ import com.ashish.movieguide.utils.extensions.hide
 /**
  * Created by Ashish on Dec 31.
  */
-class PeopleDelegateAdapter(
+class PersonDelegateAdapter(
         private val layoutId: Int,
         private var onItemClickListener: OnItemClickListener?
 ) : ViewTypeDelegateAdapter, RemoveListener {
 
-    override fun onCreateViewHolder(parent: ViewGroup) = PeopleHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup) = PersonHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
-        (holder as PeopleHolder).bindData(item as Person)
+        (holder as PersonHolder).bindData(item as Person)
     }
 
     override fun removeListener() {
         onItemClickListener = null
     }
 
-    inner class PeopleHolder(parent: ViewGroup) : BaseContentHolder<Person>(parent, layoutId) {
+    inner class PersonHolder(parent: ViewGroup) : BaseContentHolder<Person>(parent, layoutId) {
 
         override fun bindData(item: Person) = with(item) {
             contentTitle.text = name

@@ -1,13 +1,11 @@
 package com.ashish.movieguide.utils
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
 import android.text.style.TypefaceSpan
-import android.view.LayoutInflater
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.di.scopes.ActivityScope
@@ -15,9 +13,10 @@ import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.FontUtils.MONTSERRAT_MEDIUM
 import com.ashish.movieguide.utils.FontUtils.MONTSERRAT_REGULAR
 import com.ashish.movieguide.utils.FontUtils.getTypeface
-import com.ashish.movieguide.utils.extensions.changeTypeface
+import com.ashish.movieguide.utils.extensions.changeDialogButtonTypeface
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getTextWithCustomTypeface
+import com.ashish.movieguide.utils.extensions.inflateLayout
 import javax.inject.Inject
 
 /**
@@ -27,7 +26,7 @@ import javax.inject.Inject
 class DialogUtils @Inject constructor(private val context: Context) {
 
     @SuppressLint("InflateParams")
-    private val contentView: View = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null)
+    private val contentView: View = context.inflateLayout(R.layout.dialog_loading)
 
     private val mediumTypefaceSpan: TypefaceSpan = CustomTypefaceSpan(getTypeface(context, MONTSERRAT_MEDIUM))
     private val regularTypefaceSpan: TypefaceSpan = CustomTypefaceSpan(getTypeface(context, MONTSERRAT_REGULAR))
@@ -57,13 +56,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
                     .setCancelable(false)
                     .create()
 
-            messageDialog?.setOnShowListener {
-                val btnPositive = messageDialog?.getButton(Dialog.BUTTON_POSITIVE)
-                btnPositive?.changeTypeface()
-
-                val btnNegative = messageDialog?.getButton(Dialog.BUTTON_NEGATIVE)
-                btnNegative?.changeTypeface()
-            }
+            messageDialog?.changeDialogButtonTypeface()
         }
 
         withTitle(null)
