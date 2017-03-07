@@ -1,4 +1,4 @@
-package com.ashish.movieguide.ui.tvshow.episode
+package com.ashish.movieguide.ui.episode
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
@@ -35,7 +35,9 @@ class EpisodeDelegateAdapter(
         override fun bindData(item: Episode) = with(item) {
             val context = itemView.context
             contentTitle.applyText(name)
-            contentSubtitle.applyText(String.format(context.getString(R.string.episode_number_format), episodeNumber))
+            ratingLabel?.setRating(rating)
+            contentSubtitle.applyText(String.format(context.getString(R.string.episode_number_format),
+                    episodeNumber))
             super.bindData(item)
         }
 

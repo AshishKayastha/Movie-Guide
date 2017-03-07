@@ -1,7 +1,6 @@
-package com.ashish.movieguide.ui.movie.list
+package com.ashish.movieguide.ui.rated.movie
 
 import android.content.Intent
-import android.os.Bundle
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.di.modules.FragmentModule
@@ -11,34 +10,19 @@ import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 
-/**
- * Created by Ashish on Dec 26.
- */
-class MovieFragment : BaseRecyclerViewFragment<Movie,
-        BaseRecyclerViewMvpView<Movie>, MoviePresenter>() {
+class RatedMovieFragment : BaseRecyclerViewFragment<Movie,
+        BaseRecyclerViewMvpView<Movie>, RatedMoviePresenter>() {
 
     companion object {
-        private const val ARG_MOVIE_TYPE = "movie_type"
-
-        @JvmStatic
-        fun newInstance(movieType: Int): MovieFragment {
-            val extras = Bundle()
-            extras.putInt(ARG_MOVIE_TYPE, movieType)
-            val fragment = MovieFragment()
-            fragment.arguments = extras
-            return fragment
-        }
+        @JvmStatic fun newInstance() = RatedMovieFragment()
     }
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(MovieFragment::class.java, MovieComponent.Builder::class.java)
+        builderHost.getFragmentComponentBuilder(RatedMovieFragment::class.java,
+                RatedMovieComponent.Builder::class.java)
                 .withModule(FragmentModule(activity))
                 .build()
                 .inject(this)
-    }
-
-    override fun getFragmentArguments(arguments: Bundle?) {
-        type = arguments?.getInt(ARG_MOVIE_TYPE)
     }
 
     override fun getAdapterType() = ADAPTER_TYPE_MOVIE

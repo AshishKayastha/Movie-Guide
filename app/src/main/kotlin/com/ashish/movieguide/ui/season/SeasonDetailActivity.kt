@@ -1,4 +1,4 @@
-package com.ashish.movieguide.ui.tvshow.season
+package com.ashish.movieguide.ui.season
 
 import android.content.Context
 import android.content.Intent
@@ -15,7 +15,7 @@ import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
-import com.ashish.movieguide.ui.tvshow.episode.EpisodeDetailActivity
+import com.ashish.movieguide.ui.episode.EpisodeDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.extensions.bindView

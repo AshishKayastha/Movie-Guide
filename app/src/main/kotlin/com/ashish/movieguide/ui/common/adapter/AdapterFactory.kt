@@ -1,11 +1,11 @@
 package com.ashish.movieguide.ui.common.adapter
 
+import com.ashish.movieguide.ui.episode.EpisodeDelegateAdapter
 import com.ashish.movieguide.ui.movie.list.MovieDelegateAdapter
 import com.ashish.movieguide.ui.multisearch.fragment.MultiSearchDelegateAdapter
 import com.ashish.movieguide.ui.people.list.PersonDelegateAdapter
-import com.ashish.movieguide.ui.tvshow.episode.EpisodeDelegateAdapter
+import com.ashish.movieguide.ui.season.SeasonDelegateAdapter
 import com.ashish.movieguide.ui.tvshow.list.TVShowDelegateAdapter
-import com.ashish.movieguide.ui.tvshow.season.SeasonDelegateAdapter
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_CREDIT
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE

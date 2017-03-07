@@ -30,7 +30,8 @@ import icepick.State
 /**
  * Created by Ashish on Jan 04.
  */
-class PersonDetailActivity : BaseDetailActivity<PersonDetail, BaseDetailView<PersonDetail>, PersonDetailPresenter>() {
+class PersonDetailActivity : BaseDetailActivity<PersonDetail,
+        BaseDetailView<PersonDetail>, PersonDetailPresenter>() {
 
     companion object {
         private const val EXTRA_PERSON = "person"

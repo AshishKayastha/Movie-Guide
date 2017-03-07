@@ -1,4 +1,4 @@
-package com.ashish.movieguide.ui.tvshow.episode
+package com.ashish.movieguide.ui.episode
 
 import android.content.Context
 import android.content.Intent
@@ -23,8 +23,9 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 08.
  */
-class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, EpisodeDetailView,
-        EpisodeDetailPresenter>(), EpisodeDetailView, RatingDialog.UpdateRatingListener {
+class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
+        EpisodeDetailView, EpisodeDetailPresenter>(),
+        EpisodeDetailView, RatingDialog.UpdateRatingListener {
 
     companion object {
         private const val EXTRA_EPISODE = "episode"

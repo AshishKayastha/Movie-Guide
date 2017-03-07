@@ -1,7 +1,6 @@
-package com.ashish.movieguide.ui.tvshow.list
+package com.ashish.movieguide.ui.rated.tvshow
 
 import android.content.Intent
-import android.os.Bundle
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.TVShow
 import com.ashish.movieguide.di.modules.FragmentModule
@@ -11,34 +10,19 @@ import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 
-/**
- * Created by Ashish on Dec 29.
- */
-class TVShowFragment : BaseRecyclerViewFragment<TVShow,
-        BaseRecyclerViewMvpView<TVShow>, TVShowPresenter>() {
+class RatedTVShowFragment : BaseRecyclerViewFragment<TVShow,
+        BaseRecyclerViewMvpView<TVShow>, RatedTVShowPresenter>() {
 
     companion object {
-        private const val ARG_TV_SHOW_TYPE = "tv_show_type"
-
-        @JvmStatic
-        fun newInstance(tvShowType: Int): TVShowFragment {
-            val extras = Bundle()
-            extras.putInt(ARG_TV_SHOW_TYPE, tvShowType)
-            val fragment = TVShowFragment()
-            fragment.arguments = extras
-            return fragment
-        }
+        @JvmStatic fun newInstance() = RatedTVShowFragment()
     }
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(TVShowFragment::class.java, TVShowComponent.Builder::class.java)
+        builderHost.getFragmentComponentBuilder(RatedTVShowFragment::class.java,
+                RatedTVShowComponent.Builder::class.java)
                 .withModule(FragmentModule(activity))
                 .build()
                 .inject(this)
-    }
-
-    override fun getFragmentArguments(arguments: Bundle?) {
-        type = arguments?.getInt(ARG_TV_SHOW_TYPE)
     }
 
     override fun getAdapterType() = ADAPTER_TYPE_TV_SHOW

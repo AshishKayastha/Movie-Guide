@@ -35,7 +35,7 @@ class TVShowDelegateAdapter(
         override fun bindData(item: TVShow) = with(item) {
             contentTitle.applyText(name)
             contentSubtitle.applyText(firstAirDate.getYearOnly())
-            averageVoteText?.setRating(voteAverage)
+            ratingLabel?.setRating(if (rating != null && rating > 0) rating else voteAverage)
             super.bindData(item)
         }
 

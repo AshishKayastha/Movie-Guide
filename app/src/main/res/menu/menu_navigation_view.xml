@@ -3,40 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/action_movies"
+            android:id="@+id/drawer_movies"
             android:checked="true"
             android:icon="@drawable/ic_movie_white_24dp"
             android:title="@string/title_movies"
             app:showAsAction="ifRoom" />
 
         <item
-            android:id="@+id/action_tv_shows"
+            android:id="@+id/drawer_tv_shows"
             android:icon="@drawable/ic_tv_white_24dp"
             android:title="@string/title_tv_shows"
             app:showAsAction="ifRoom" />
 
         <item
-            android:id="@+id/action_people"
+            android:id="@+id/drawer_people"
             android:icon="@drawable/ic_people_white_24dp"
             android:title="@string/title_people"
             app:showAsAction="ifRoom" />
 
         <item
-            android:id="@+id/action_discover"
+            android:id="@+id/drawer_discover"
             android:icon="@drawable/ic_discover_white_24dp"
             android:title="@string/title_discover"
             app:showAsAction="ifRoom" />
-
-        <item
-            android:id="@+id/action_favorites"
-            android:icon="@drawable/ic_favorite_white_24dp"
-            android:title="@string/title_favorites"
-            app:showAsAction="ifRoom" />
-
-        <item
-            android:id="@+id/action_watchlist"
-            android:icon="@drawable/ic_watchlist_white_24dp"
-            android:title="@string/title_watchlist"
-            app:showAsAction="ifRoom" />
     </group>
+
+    <item android:title="@string/menu_your_lists">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/drawer_favorites"
+                    android:icon="@drawable/ic_favorite_white_24dp"
+                    android:title="@string/title_favorites"
+                    app:showAsAction="ifRoom" />
+
+                <item
+                    android:id="@+id/drawer_watchlist"
+                    android:icon="@drawable/ic_watchlist_white_24dp"
+                    android:title="@string/title_watchlist"
+                    app:showAsAction="ifRoom" />
+
+                <item
+                    android:id="@+id/drawer_rated"
+                    android:icon="@drawable/ic_star_white_24dp"
+                    android:title="@string/title_rated"
+                    app:showAsAction="ifRoom" />
+            </group>
+        </menu>
+    </item>
 </menu>

@@ -53,7 +53,7 @@ import com.ashish.movieguide.utils.extensions.animateBackgroundColorChange
 import com.ashish.movieguide.utils.extensions.animateColorChange
 import com.ashish.movieguide.utils.extensions.animateTextColorChange
 import com.ashish.movieguide.utils.extensions.bindView
-import com.ashish.movieguide.utils.extensions.changeMenuFont
+import com.ashish.movieguide.utils.extensions.changeMenuAndSubMenuFont
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getColorCompat
@@ -330,7 +330,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     override fun showOMDbDetail(omDbDetail: OMDbDetail) {
         rottenTomatoesUrl = omDbDetail.tomatoURL
         showOrHideMenu(R.id.action_rotten_tomatoes, rottenTomatoesUrl)
-        menu?.changeMenuFont(CustomTypefaceSpan(regularFont))
+        menu?.changeMenuAndSubMenuFont(CustomTypefaceSpan(regularFont))
     }
 
     protected fun showOrHideMenu(menuItemId: Int, text: String?) {

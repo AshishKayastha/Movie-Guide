@@ -1,8 +1,6 @@
 package com.ashish.movieguide.ui.people.list
 
 import android.content.Intent
-import android.os.Bundle
-import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Person
 import com.ashish.movieguide.di.modules.FragmentModule
@@ -15,7 +13,8 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_PERSON
 /**
  * Created by Ashish on Dec 31.
  */
-class PeopleFragment : BaseRecyclerViewFragment<Person, BaseRecyclerViewMvpView<Person>, PeoplePresenter>() {
+class PeopleFragment : BaseRecyclerViewFragment<Person,
+        BaseRecyclerViewMvpView<Person>, PeoplePresenter>() {
 
     companion object {
         @JvmStatic fun newInstance() = PeopleFragment()
@@ -28,14 +27,11 @@ class PeopleFragment : BaseRecyclerViewFragment<Person, BaseRecyclerViewMvpView<
                 .inject(this)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        emptyTextView.setText(R.string.no_people_available)
-        emptyImageView.setImageResource(R.drawable.ic_people_white_100dp)
-    }
-
     override fun getAdapterType() = ADAPTER_TYPE_PERSON
+
+    override fun getEmptyTextId() = R.string.no_people_available
+
+    override fun getEmptyImageId() = R.drawable.ic_people_white_100dp
 
     override fun getTransitionNameId(position: Int) = R.string.transition_person_profile
 

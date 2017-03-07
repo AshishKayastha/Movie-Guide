@@ -33,7 +33,8 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 31.
  */
-class MovieDetailActivity : FullDetailContentActivity<MovieDetail, MovieDetailView, MovieDetailPresenter>(),
+class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
+        MovieDetailView, MovieDetailPresenter>(),
         MovieDetailView, RatingDialog.UpdateRatingListener {
 
     companion object {

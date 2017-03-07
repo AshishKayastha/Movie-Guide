@@ -37,7 +37,7 @@ class MultiSearchDelegateAdapter(
         override fun bindData(item: MultiSearch) = with(item) {
             contentTitle.applyText(if (title.isNotNullOrEmpty()) title else name)
             contentSubtitle.applyText(getSubtitle(this))
-            averageVoteText?.setRating(voteAverage)
+            ratingLabel?.setRating(voteAverage)
             super.bindData(item)
         }
 

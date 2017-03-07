@@ -14,6 +14,12 @@ import com.ashish.movieguide.ui.personal.movie.PersonalMovieComponent
 import com.ashish.movieguide.ui.personal.movie.PersonalMovieFragment
 import com.ashish.movieguide.ui.personal.tvshow.PersonalTVShowComponent
 import com.ashish.movieguide.ui.personal.tvshow.PersonalTVShowFragment
+import com.ashish.movieguide.ui.rated.episode.RatedEpisodeComponent
+import com.ashish.movieguide.ui.rated.episode.RatedEpisodeFragment
+import com.ashish.movieguide.ui.rated.movie.RatedMovieComponent
+import com.ashish.movieguide.ui.rated.movie.RatedMovieFragment
+import com.ashish.movieguide.ui.rated.tvshow.RatedTVShowComponent
+import com.ashish.movieguide.ui.rated.tvshow.RatedTVShowFragment
 import com.ashish.movieguide.ui.tvshow.list.TVShowComponent
 import com.ashish.movieguide.ui.tvshow.list.TVShowFragment
 import dagger.Binds
@@ -31,7 +37,10 @@ import dagger.multibindings.IntoMap
         DiscoverMovieComponent::class,
         DiscoverTVShowComponent::class,
         PersonalMovieComponent::class,
-        PersonalTVShowComponent::class
+        PersonalTVShowComponent::class,
+        RatedMovieComponent::class,
+        RatedTVShowComponent::class,
+        RatedEpisodeComponent::class
 ))
 abstract class MainFragmentBinders {
 
@@ -64,11 +73,26 @@ abstract class MainFragmentBinders {
     @Binds
     @IntoMap
     @FragmentKey(PersonalMovieFragment::class)
-    abstract fun favoriteMovieComponentBuilder(builder: PersonalMovieComponent.Builder): FragmentComponentBuilder<*, *>
+    abstract fun personalMovieComponentBuilder(builder: PersonalMovieComponent.Builder): FragmentComponentBuilder<*, *>
 
     @Binds
     @IntoMap
     @FragmentKey(PersonalTVShowFragment::class)
-    abstract fun favoriteTVShowComponentBuilder(
+    abstract fun personalTVShowComponentBuilder(
             builder: PersonalTVShowComponent.Builder): FragmentComponentBuilder<*, *>
+
+    @Binds
+    @IntoMap
+    @FragmentKey(RatedMovieFragment::class)
+    abstract fun ratedMovieComponentBuilder(builder: RatedMovieComponent.Builder): FragmentComponentBuilder<*, *>
+
+    @Binds
+    @IntoMap
+    @FragmentKey(RatedTVShowFragment::class)
+    abstract fun ratedTVShowComponentBuilder(builder: RatedTVShowComponent.Builder): FragmentComponentBuilder<*, *>
+
+    @Binds
+    @IntoMap
+    @FragmentKey(RatedEpisodeFragment::class)
+    abstract fun ratedEpisodeComponentBuilder(builder: RatedEpisodeComponent.Builder): FragmentComponentBuilder<*, *>
 }

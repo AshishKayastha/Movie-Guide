@@ -15,6 +15,7 @@ data class Movie(
         val id: Long? = null,
         val title: String? = null,
         val overview: String? = null,
+        val rating: Double? = null,
         @Json(name = "vote_count") val voteCount: Int? = null,
         @Json(name = "poster_path") val posterPath: String? = null,
         @Json(name = "release_date") val releaseDate: String? = null,

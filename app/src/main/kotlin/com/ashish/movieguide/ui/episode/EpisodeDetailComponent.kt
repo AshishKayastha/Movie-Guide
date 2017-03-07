@@ -1,4 +1,4 @@
-package com.ashish.movieguide.ui.tvshow.episode
+package com.ashish.movieguide.ui.episode
 
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.AbstractComponent

@@ -1,4 +1,4 @@
-package com.ashish.movieguide.ui.tvshow.season
+package com.ashish.movieguide.ui.season
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup

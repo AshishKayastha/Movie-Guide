@@ -2,6 +2,7 @@ package com.ashish.movieguide.data.interactors
 
 import com.ashish.movieguide.data.api.AuthApi
 import com.ashish.movieguide.data.models.Account
+import com.ashish.movieguide.data.models.Episode
 import com.ashish.movieguide.data.models.Favorite
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.RequestToken
@@ -69,6 +70,18 @@ class AuthInteractor @Inject constructor(
         return callApiIfLoggedIn { accountId ->
             authApi.getPersonalTVShowsByType(type, accountId, page)
         }
+    }
+
+    fun getRatedMovies(page: Int): Observable<Results<Movie>> {
+        return callApiIfLoggedIn { accountId -> authApi.getRatedMovies(accountId, page) }
+    }
+
+    fun getRatedTVShows(page: Int): Observable<Results<TVShow>> {
+        return callApiIfLoggedIn { accountId -> authApi.getRatedTVShows(accountId, page) }
+    }
+
+    fun getRatedEpisodes(page: Int): Observable<Results<Episode>> {
+        return callApiIfLoggedIn { accountId -> authApi.getRatedEpisodes(accountId, page) }
     }
 
     private fun <T> callApiIfLoggedIn(actionIfLoggedIn: (accountId: Long) -> Observable<T>): Observable<T> {

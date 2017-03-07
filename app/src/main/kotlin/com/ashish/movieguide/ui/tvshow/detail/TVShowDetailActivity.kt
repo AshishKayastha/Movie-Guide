@@ -18,7 +18,7 @@ import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.common.rating.RatingDialog
-import com.ashish.movieguide.ui.tvshow.season.SeasonDetailActivity
+import com.ashish.movieguide.ui.season.SeasonDetailActivity
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
@@ -38,7 +38,8 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 03.
  */
-class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TVShowDetailView, TVShowDetailPresenter>(),
+class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
+        TVShowDetailView, TVShowDetailPresenter>(),
         TVShowDetailView, RatingDialog.UpdateRatingListener {
 
     companion object {
