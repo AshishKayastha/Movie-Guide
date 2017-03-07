@@ -12,7 +12,6 @@ import com.ashish.movieguide.data.models.TVShow
 import com.ashish.movieguide.data.models.TVShowDetail
 import com.ashish.movieguide.utils.extensions.convertToFullDetailContent
 import io.reactivex.Observable
-import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,6 +23,7 @@ class TVShowInteractor @Inject constructor(
         private val tvShowApi: TVShowApi,
         private val omDbApi: OMDbApi
 ) {
+
     companion object {
         private const val APPENDED_RESPONSE = "credits,external_ids,images,videos"
     }
@@ -37,9 +37,12 @@ class TVShowInteractor @Inject constructor(
                 .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
     }
 
-    fun rateTVShow(movieId: Long, value: Float): Single<Status> {
-        val rating = Rating(value)
-        return tvShowApi.rateTVShow(movieId, rating)
+    fun rateTVShow(movieId: Long, value: Double): Observable<Status> {
+        return tvShowApi.rateTVShow(movieId, Rating(value))
+    }
+
+    fun deleteTVRating(tvId: Long): Observable<Status> {
+        return tvShowApi.deleteTVRating(tvId)
     }
 
     fun getFullSeasonDetail(tvId: Long, seasonNumber: Int): Observable<FullDetailContent<SeasonDetail>> {
@@ -53,9 +56,13 @@ class TVShowInteractor @Inject constructor(
                 .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
     }
 
-    fun rateEpisode(tvId: Long, seasonNumber: Int, episodeNumber: Int, value: Float): Single<Status> {
+    fun rateEpisode(tvId: Long, seasonNumber: Int, episodeNumber: Int, value: Double): Observable<Status> {
         val rating = Rating(value)
         return tvShowApi.rateEpisode(tvId, seasonNumber, episodeNumber, rating)
+    }
+
+    fun deleteEpisodeRating(tvId: Long, seasonNumber: Int, episodeNumber: Int): Observable<Status> {
+        return tvShowApi.deleteEpisodeRating(tvId, seasonNumber, episodeNumber)
     }
 
     fun discoverTVShow(sortBy: String, minAirDate: String?, maxAirDate: String?, genreIds: String?,

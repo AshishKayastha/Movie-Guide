@@ -16,10 +16,10 @@ import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.common.adapter.VideoAdapter
 import com.ashish.movieguide.ui.people.detail.PersonDetailActivity
 import com.ashish.movieguide.ui.widget.FontTextView
+import com.ashish.movieguide.ui.widget.LabelLayout
 import com.ashish.movieguide.ui.widget.RatingView
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.openUrl
-import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.show
 
 /**
@@ -28,6 +28,8 @@ import com.ashish.movieguide.utils.extensions.show
  */
 abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : FullDetailContentPresenter<I, V>>
     : BaseDetailActivity<I, V, P>(), FullDetailContentView<I> {
+
+    protected val ratingLabelLayout: LabelLayout by bindView(R.id.my_rating_label)
 
     private val ratingCardView: CardView by bindView(R.id.rating_card_view)
 
@@ -112,14 +114,14 @@ abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : Fu
     override fun getCrewItemClickListener() = onCrewItemClickListener
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+        super.onOffsetChanged(appBarLayout, verticalOffset)
+
         // Show or hide FAB depending upon whether appbar is collapsing or expanding
         playTrailerFAB.apply {
             val isCollapsing = collapsingToolbar.height + verticalOffset <
                     2.4 * ViewCompat.getMinimumHeight(collapsingToolbar)
-            setVisibility(!isCollapsing)
+            if (isCollapsing) hide() else show()
         }
-
-        super.onOffsetChanged(appBarLayout, verticalOffset)
     }
 
     override fun finishAfterTransition() {

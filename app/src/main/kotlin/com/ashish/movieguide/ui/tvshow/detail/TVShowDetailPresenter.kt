@@ -7,9 +7,11 @@ import com.ashish.movieguide.data.models.TVShowDetail
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
+import com.ashish.movieguide.ui.common.rating.RatingManager
 import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_TV
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
+import com.ashish.movieguide.utils.extensions.getRatingValue
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import java.util.ArrayList
 import javax.inject.Inject
@@ -21,11 +23,13 @@ import javax.inject.Inject
 class TVShowDetailPresenter @Inject constructor(
         private val tvShowInteractor: TVShowInteractor,
         private val personalContentManager: PersonalContentManager,
+        private val ratingManager: RatingManager,
         schedulerProvider: BaseSchedulerProvider
 ) : FullDetailContentPresenter<TVShowDetail, TVShowDetailView>(schedulerProvider) {
 
     override fun attachView(view: TVShowDetailView) {
         super.attachView(view)
+        ratingManager.setView(view)
         personalContentManager.setView(view)
     }
 
@@ -36,8 +40,10 @@ class TVShowDetailPresenter @Inject constructor(
         getView()?.apply {
             hideProgress()
             val tvShowDetail = fullDetailContent.detailContent
-            personalContentManager.setAccountState(tvShowDetail?.tvRatings)
+            val accountState = tvShowDetail?.tvRatings
+            personalContentManager.setAccountState(accountState)
 
+            showSavedRating(accountState?.getRatingValue())
             setTMDbRating(tvShowDetail?.voteAverage)
             showItemList(tvShowDetail?.seasons) { showSeasonsList(it) }
             showItemList(tvShowDetail?.similarTVShowResults?.results) { showSimilarTVShowList(it) }
@@ -79,22 +85,34 @@ class TVShowDetailPresenter @Inject constructor(
     override fun getErrorMessageId() = R.string.error_load_tv_detail
 
     fun markAsFavorite() {
-        val tvId = fullDetailContent?.detailContent?.id
-        personalContentManager.markAsFavorite(tvId, MEDIA_TYPE_TV)
+        personalContentManager.markAsFavorite(getTvId(), MEDIA_TYPE_TV)
     }
 
     fun addToWatchlist() {
-        val tvId = fullDetailContent?.detailContent?.id
-        personalContentManager.addToWatchlist(tvId, MEDIA_TYPE_TV)
+        personalContentManager.addToWatchlist(getTvId(), MEDIA_TYPE_TV)
     }
+
+    fun saveRating(rating: Double) {
+        val tvId = getTvId()
+        ratingManager.saveRating(tvShowInteractor.rateTVShow(tvId, rating), tvId, rating)
+    }
+
+    fun deleteRating() {
+        val tvId = getTvId()
+        ratingManager.deleteRating(tvShowInteractor.deleteTVRating(tvId), tvId)
+    }
+
+    private fun getTvId() = fullDetailContent?.detailContent?.id!!
 
     override fun detachView() {
         super.detachView()
+        ratingManager.setView(null)
         personalContentManager.setView(null)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        ratingManager.unsubscribe()
         personalContentManager.unsubscribe()
     }
 }

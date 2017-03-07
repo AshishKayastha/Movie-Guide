@@ -12,6 +12,8 @@ data class Episode(
         val id: Long? = null,
         val name: String? = null,
         val overview: String? = null,
+        val rating: Double? = null,
+        @Json(name = "show_id") val tvShowId: Long? = null,
         @Json(name = "air_date") val airDate: String? = null,
         @Json(name = "vote_count") val voteCount: Int? = null,
         @Json(name = "still_path") val stillPath: String? = null,

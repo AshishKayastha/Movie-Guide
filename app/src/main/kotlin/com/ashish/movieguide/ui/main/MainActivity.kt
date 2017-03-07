@@ -24,6 +24,7 @@ import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_DISC
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_FAVORITES
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_PEOPLE
+import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_RATED
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
 import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_WATCHLIST
 import com.ashish.movieguide.ui.multisearch.activity.MultiSearchActivity
@@ -34,7 +35,7 @@ import com.ashish.movieguide.utils.DialogUtils
 import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.bindView
-import com.ashish.movieguide.utils.extensions.changeMenuFont
+import com.ashish.movieguide.utils.extensions.changeMenuAndSubMenuFont
 import com.ashish.movieguide.utils.extensions.changeTabFont
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.extensions.find
@@ -69,6 +70,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
     private lateinit var tvShowTabTitles: Array<String>
     private lateinit var peopleTabTitles: Array<String>
     private lateinit var discoverTabTitles: Array<String>
+    private lateinit var ratedTabTitles: Array<String>
 
     private lateinit var tabPagerAdapter: TabPagerAdapter
 
@@ -86,6 +88,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
         movieTabTitles = getStringArray(R.array.movie_list_type_array)
         tvShowTabTitles = getStringArray(R.array.tv_show_list_type_array)
         discoverTabTitles = getStringArray(R.array.discover_type_array)
+        ratedTabTitles = getStringArray(R.array.rated_type_array)
 
         initDrawerHeader()
         showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
@@ -153,9 +156,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
             offscreenPageLimit = tabPagerAdapter.count - 1
         }
 
-        if (contentType == CONTENT_TYPE_DISCOVER
-                || contentType == CONTENT_TYPE_FAVORITES
-                || contentType == CONTENT_TYPE_WATCHLIST) {
+        if (titleArray.size <= 3) {
             tabLayout.tabMode = TabLayout.MODE_FIXED
         } else {
             tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
@@ -165,19 +166,20 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
     private fun setupNavigationView() {
         val typeface = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
         val customTypefaceSpan = CustomTypefaceSpan(typeface)
-        navigationView.menu.changeMenuFont(customTypefaceSpan)
+        navigationView.menu.changeMenuAndSubMenuFont(customTypefaceSpan)
 
         navigationView.setNavigationItemSelectedListener { item ->
             item.isChecked = true
             drawerLayout.closeDrawers()
 
             when (item.itemId) {
-                R.id.action_movies -> showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
-                R.id.action_tv_shows -> showViewPagerFragment(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
-                R.id.action_people -> showViewPagerFragment(CONTENT_TYPE_PEOPLE, peopleTabTitles)
-                R.id.action_discover -> showViewPagerFragment(CONTENT_TYPE_DISCOVER, discoverTabTitles)
-                R.id.action_favorites -> showViewPagerFragment(CONTENT_TYPE_FAVORITES, discoverTabTitles)
-                R.id.action_watchlist -> showViewPagerFragment(CONTENT_TYPE_WATCHLIST, discoverTabTitles)
+                R.id.drawer_movies -> showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
+                R.id.drawer_tv_shows -> showViewPagerFragment(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
+                R.id.drawer_people -> showViewPagerFragment(CONTENT_TYPE_PEOPLE, peopleTabTitles)
+                R.id.drawer_discover -> showViewPagerFragment(CONTENT_TYPE_DISCOVER, discoverTabTitles)
+                R.id.drawer_favorites -> showViewPagerFragment(CONTENT_TYPE_FAVORITES, discoverTabTitles)
+                R.id.drawer_watchlist -> showViewPagerFragment(CONTENT_TYPE_WATCHLIST, discoverTabTitles)
+                R.id.drawer_rated -> showViewPagerFragment(CONTENT_TYPE_RATED, ratedTabTitles)
             }
 
             tabLayout.changeTabFont()

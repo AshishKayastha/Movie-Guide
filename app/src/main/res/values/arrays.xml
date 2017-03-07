@@ -21,11 +21,18 @@
         <item>@string/title_discover</item>
         <item>@string/title_favorites</item>
         <item>@string/title_watchlist</item>
+        <item>@string/title_rated</item>
     </string-array>
 
     <string-array name="discover_type_array">
         <item>@string/title_movies</item>
         <item>@string/title_tv_shows</item>
+    </string-array>
+
+    <string-array name="rated_type_array">
+        <item>@string/title_movies</item>
+        <item>@string/title_tv_shows</item>
+        <item>@string/title_episodes</item>
     </string-array>
 
     <string-array name="movie_detail_content_title">

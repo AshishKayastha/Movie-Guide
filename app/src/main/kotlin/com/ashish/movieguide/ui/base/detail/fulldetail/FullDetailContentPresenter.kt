@@ -95,7 +95,7 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
     }
 
     private fun isValidRating(rating: String?): Boolean {
-        return rating.isNotNullOrEmpty() && rating != "N/A" && rating != "0"
+        return rating.isNotNullOrEmpty() && rating != "N/A" && rating != "0" && rating != "NA"
     }
 
     private fun handleVideoContents(detailContent: I) {

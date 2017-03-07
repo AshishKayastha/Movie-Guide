@@ -13,9 +13,9 @@ import javax.inject.Singleton
 @Singleton
 class PersonalContentStatusObserver @Inject constructor() {
 
-    private val contentStatusChangeSuject = PublishSubject.create<Long>()
+    private val contentStatusChangeSubject = PublishSubject.create<Long>()
 
-    fun getContentStatusObservable(): Observable<Long> = contentStatusChangeSuject.hide()
+    fun getContentStatusObservable(): Observable<Long> = contentStatusChangeSubject.hide()
 
-    fun notifyContentRemoved(mediaId: Long) = contentStatusChangeSuject.onNext(mediaId)
+    fun notifyContentRemoved(mediaId: Long) = contentStatusChangeSubject.onNext(mediaId)
 }

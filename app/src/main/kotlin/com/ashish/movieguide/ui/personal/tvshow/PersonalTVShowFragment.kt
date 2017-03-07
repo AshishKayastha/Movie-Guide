@@ -57,14 +57,6 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (type == FAVORITES) {
-            emptyTextView.setText(R.string.no_fav_tv_shows_available)
-        } else {
-            emptyTextView.setText(R.string.no_tv_shows_watchlist_available)
-        }
-
-        emptyImageView.setImageResource(R.drawable.ic_tv_white_100dp)
         observePersonalContentStatusChange()
     }
 
@@ -73,6 +65,14 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
     }
 
     override fun getAdapterType() = ADAPTER_TYPE_TV_SHOW
+
+    override fun getEmptyTextId() = if (type == FAVORITES) {
+        R.string.no_fav_tv_shows_available
+    } else {
+        R.string.no_tv_shows_watchlist_available
+    }
+
+    override fun getEmptyImageId() = R.drawable.ic_tv_white_100dp
 
     override fun getTransitionNameId(position: Int) = R.string.transition_tv_poster
 

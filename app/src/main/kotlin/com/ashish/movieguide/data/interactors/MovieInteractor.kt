@@ -10,7 +10,6 @@ import com.ashish.movieguide.data.models.Results
 import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.utils.extensions.convertToFullDetailContent
 import io.reactivex.Observable
-import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,9 +31,12 @@ class MovieInteractor @Inject constructor(
                 .flatMap { omDbApi.convertToFullDetailContent(it.imdbId, it) }
     }
 
-    fun rateMovie(movieId: Long, value: Float): Single<Status> {
-        val rating = Rating(value)
-        return movieApi.rateMovie(movieId, rating)
+    fun rateMovie(movieId: Long, value: Double): Observable<Status> {
+        return movieApi.rateMovie(movieId, Rating(value))
+    }
+
+    fun deleteMovieRating(movieId: Long): Observable<Status> {
+        return movieApi.deleteMovieRating(movieId)
     }
 
     fun discoverMovie(sortBy: String, minReleaseDate: String?, maxReleaseDate: String?, genreIds: String?,

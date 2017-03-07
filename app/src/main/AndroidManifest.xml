@@ -32,11 +32,11 @@
             android:label="" />
 
         <activity
-            android:name=".ui.tvshow.season.SeasonDetailActivity"
+            android:name=".ui.season.SeasonDetailActivity"
             android:label="" />
 
         <activity
-            android:name=".ui.tvshow.episode.EpisodeDetailActivity"
+            android:name=".ui.episode.EpisodeDetailActivity"
             android:label="" />
 
         <activity

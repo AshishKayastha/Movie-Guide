@@ -1,6 +1,7 @@
 package com.ashish.movieguide.data.api
 
 import com.ashish.movieguide.data.models.Account
+import com.ashish.movieguide.data.models.Episode
 import com.ashish.movieguide.data.models.Favorite
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.RequestToken
@@ -55,4 +56,22 @@ interface AuthApi {
             @Path("accountId") accountId: Long,
             @Query("page") page: Int = 1
     ): Observable<Results<TVShow>>
+
+    @GET("account/{accountId}/rated/movies")
+    fun getRatedMovies(
+            @Path("accountId") accountId: Long,
+            @Query("page") page: Int = 1
+    ): Observable<Results<Movie>>
+
+    @GET("account/{accountId}/rated/tv")
+    fun getRatedTVShows(
+            @Path("accountId") accountId: Long,
+            @Query("page") page: Int = 1
+    ): Observable<Results<TVShow>>
+
+    @GET("account/{accountId}/rated/tv/episodes")
+    fun getRatedEpisodes(
+            @Path("accountId") accountId: Long,
+            @Query("page") page: Int = 1
+    ): Observable<Results<Episode>>
 }

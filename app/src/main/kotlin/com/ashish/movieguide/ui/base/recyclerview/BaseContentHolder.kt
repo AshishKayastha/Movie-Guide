@@ -34,7 +34,7 @@ abstract class BaseContentHolder<in I : ViewType>(
     val contentTitle: FontTextView by bindView(R.id.content_title)
     val contentSubtitle: FontTextView by bindView(R.id.content_subtitle)
     val posterImage: AspectRatioImageView by bindView(R.id.poster_image)
-    val averageVoteText: LabelLayout? by bindOptionalView(R.id.avg_vote_text)
+    val ratingLabel: LabelLayout? by bindOptionalView(R.id.rating_label)
 
     @Suppress("LeakingThis")
     val target: Target<PaletteBitmap> = PaletteImageViewTarget(this)

@@ -107,13 +107,15 @@ class LabelLayout @JvmOverloads constructor(
         invalidate()
     }
 
-    fun setAverageVote(avgVote: Double?) {
-        if (avgVote != null && avgVote > 0.0) {
-            setLabelText(avgVote.toString())
+    fun setRating(rating: Double?) {
+        if (rating != null && rating > 0.0) {
+            setLabelText(rating.toString())
         } else {
             hide()
         }
     }
+
+    fun getRating() = labelText.toDoubleOrNull()
 
     // Calculate the absolute position of point intersecting between canvas edge and bisector
     private fun calculateBisectorIntersectAbsolutePosition(distance: Int, height: Int)

@@ -14,10 +14,10 @@
             tools:ignore="ContentDescription" />
 
         <com.ashish.movieguide.ui.widget.LabelLayout
-            android:id="@+id/avg_vote_text"
+            android:id="@+id/rating_label"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="2016"
+            android:text="0"
             android:textSize="@dimen/text_size_large"
             android:visibility="gone"
             app:labelBackground="#D50000"

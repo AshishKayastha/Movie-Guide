@@ -40,13 +40,12 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         swipeRefreshLayout.isEnabled = false
-        emptyTextView.setText(R.string.no_results_available)
-        emptyImageView.setImageResource(R.drawable.ic_search_white_100dp)
     }
 
-    override fun loadData() {}
+    override fun loadData() {
+        // no-op
+    }
 
     fun searchQuery(query: String) {
         recyclerViewAdapter.clearAll()
@@ -55,6 +54,10 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
     }
 
     override fun getAdapterType() = ADAPTER_TYPE_MULTI_SEARCH
+
+    override fun getEmptyTextId() = R.string.no_results_available
+
+    override fun getEmptyImageId() = R.drawable.ic_search_white_100dp
 
     override fun getTransitionNameId(position: Int): Int {
         val multiSearch = recyclerViewAdapter.getItem<MultiSearch>(position)

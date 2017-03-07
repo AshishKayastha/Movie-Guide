@@ -43,14 +43,6 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         swipeRefreshLayout.isEnabled = false
-
-        if (isMovie()) {
-            emptyTextView.setText(R.string.no_movies_available)
-            emptyImageView.setImageResource(R.drawable.ic_movie_white_100dp)
-        } else {
-            emptyTextView.setText(R.string.no_tv_shows_available)
-            emptyImageView.setImageResource(R.drawable.ic_tv_white_100dp)
-        }
     }
 
     override fun <F : Fragment, B : FragmentComponentBuilder<F, AbstractComponent<F>>>
@@ -66,6 +58,18 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         } else {
             return ADAPTER_TYPE_TV_SHOW
         }
+    }
+
+    override fun getEmptyTextId() = if (isMovie()) {
+        R.string.no_movies_available
+    } else {
+        R.string.no_tv_shows_available
+    }
+
+    override fun getEmptyImageId() = if (isMovie()) {
+        R.drawable.ic_movie_white_100dp
+    } else {
+        R.drawable.ic_tv_white_100dp
     }
 
     override fun getTransitionNameId(position: Int): Int {

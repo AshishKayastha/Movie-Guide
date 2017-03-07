@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Match.Width"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/spacing_large">
+
+    <com.ashish.movieguide.ui.widget.FontTextView
+        android:id="@+id/rating_value_text"
+        style="@style/PrimaryText.Title"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:background="@drawable/bg_accent_circle"
+        android:gravity="center"
+        android:padding="@dimen/spacing_large"
+        tools:text="10" />
+
+    <RatingBar
+        android:id="@+id/rating_bar"
+        style="@style/RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="10"
+        android:stepSize="1" />
+
+</LinearLayout>
