@@ -203,7 +203,11 @@
     <!-- Rating -->
     <string name="rate_btn">Rate</string>
     <string name="remove_btn">Remove</string>
+
+    <string name="success_save_rating">Your rating has been saved successfully</string>
     <string name="error_save_rating">Failed to save your rating</string>
+
+    <string name="success_delete_rating">Your rating has been deleted successfully</string>
     <string name="error_delete_rating">Failed to delete rating</string>
 
     <string name="title_rated">Rated</string>

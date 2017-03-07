@@ -81,12 +81,15 @@ class EpisodeDetailPresenter @Inject constructor(
 
     fun saveRating(rating: Double) {
         ratingManager.saveRating(tvShowInteractor.rateEpisode(tvId, seasonNumber,
-                episodeNumber, rating), rating)
+                episodeNumber, rating), getEpisodeId(), rating)
     }
 
     fun deleteRating() {
-        ratingManager.deleteRating(tvShowInteractor.deleteEpisodeRating(tvId, seasonNumber, episodeNumber))
+        ratingManager.deleteRating(tvShowInteractor.deleteEpisodeRating(tvId, seasonNumber, episodeNumber),
+                getEpisodeId())
     }
+
+    private fun getEpisodeId() = fullDetailContent?.detailContent?.id!!
 
     override fun detachView() {
         super.detachView()

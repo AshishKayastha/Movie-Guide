@@ -94,14 +94,16 @@ class MovieDetailPresenter @Inject constructor(
     }
 
     fun saveRating(rating: Double) {
-        ratingManager.saveRating(movieInteractor.rateMovie(getMovieId()!!, rating), rating)
+        val movieId = getMovieId()
+        ratingManager.saveRating(movieInteractor.rateMovie(movieId, rating), movieId, rating)
     }
 
     fun deleteRating() {
-        ratingManager.deleteRating(movieInteractor.deleteMovieRating(getMovieId()!!))
+        val movieId = getMovieId()
+        ratingManager.deleteRating(movieInteractor.deleteMovieRating(movieId), movieId)
     }
 
-    private fun getMovieId() = fullDetailContent?.detailContent?.id
+    private fun getMovieId() = fullDetailContent?.detailContent?.id!!
 
     override fun detachView() {
         super.detachView()

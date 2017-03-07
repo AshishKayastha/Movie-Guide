@@ -93,14 +93,16 @@ class TVShowDetailPresenter @Inject constructor(
     }
 
     fun saveRating(rating: Double) {
-        ratingManager.saveRating(tvShowInteractor.rateTVShow(getTvId()!!, rating), rating)
+        val tvId = getTvId()
+        ratingManager.saveRating(tvShowInteractor.rateTVShow(tvId, rating), tvId, rating)
     }
 
     fun deleteRating() {
-        ratingManager.deleteRating(tvShowInteractor.deleteTVRating(getTvId()!!))
+        val tvId = getTvId()
+        ratingManager.deleteRating(tvShowInteractor.deleteTVRating(tvId), tvId)
     }
 
-    private fun getTvId() = fullDetailContent?.detailContent?.id
+    private fun getTvId() = fullDetailContent?.detailContent?.id!!
 
     override fun detachView() {
         super.detachView()

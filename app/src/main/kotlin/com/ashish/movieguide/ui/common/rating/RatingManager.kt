@@ -11,7 +11,10 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 @ActivityScope
-class RatingManager @Inject constructor(private val schedulerProvider: BaseSchedulerProvider) {
+class RatingManager @Inject constructor(
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val ratingChangeObserver: RatingChangeObserver
+) {
 
     private var view: ContentRatingView? = null
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -20,12 +23,21 @@ class RatingManager @Inject constructor(private val schedulerProvider: BaseSched
         this.view = view
     }
 
-    fun saveRating(saveRatingObservable: Observable<Status>, rating: Double) {
+    fun saveRating(saveRatingObservable: Observable<Status>, mediaId: Long, rating: Double) {
         performActionIfOnline {
             compositeDisposable.add(saveRatingObservable
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ view?.showSavedRating(rating) }, { onSaveRatingFailed(it) }))
+                    .subscribe({ onSaveRatingSuccess(mediaId, rating) }, { onSaveRatingFailed(it) }))
         }
+    }
+
+    private fun onSaveRatingSuccess(mediaId: Long, rating: Double) {
+        view?.apply {
+            showSavedRating(rating)
+            showToastMessage(R.string.success_save_rating)
+        }
+
+        ratingChangeObserver.notifyRatingChanged(mediaId, rating)
     }
 
     private fun onSaveRatingFailed(t: Throwable) {
@@ -33,12 +45,21 @@ class RatingManager @Inject constructor(private val schedulerProvider: BaseSched
         view?.showMessage(R.string.error_save_rating)
     }
 
-    fun deleteRating(deleteRatingObservable: Observable<Status>) {
+    fun deleteRating(deleteRatingObservable: Observable<Status>, mediaId: Long) {
         performActionIfOnline {
             compositeDisposable.add(deleteRatingObservable
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ view?.showSavedRating(0.0) }, { onDeleteRatingFailed(it) }))
+                    .subscribe({ onDeleteRatingSuccess(mediaId) }, { onDeleteRatingFailed(it) }))
         }
+    }
+
+    private fun onDeleteRatingSuccess(mediaId: Long) {
+        view?.apply {
+            showSavedRating(0.0)
+            showToastMessage(R.string.success_delete_rating)
+        }
+
+        ratingChangeObserver.notifyRatingChanged(mediaId, 0.0)
     }
 
     private fun performActionIfOnline(onlineAction: () -> Unit) {
