@@ -16,6 +16,7 @@ import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.spToPx
+import java.text.DecimalFormat
 
 /**
  * LabelLayout provides a label at the corner to display text
@@ -109,7 +110,7 @@ class LabelLayout @JvmOverloads constructor(
 
     fun setRating(rating: Double?) {
         if (rating != null && rating > 0.0) {
-            setLabelText(rating.toString())
+            setLabelText(DecimalFormat("0.#").format(rating))
         } else {
             hide()
         }

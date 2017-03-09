@@ -30,7 +30,8 @@ interface MovieApi {
     @GET("movie/{movieType}")
     fun getMovies(
             @Path("movieType") movieType: String?,
-            @Query("page") page: Int = 1
+            @Query("page") page: Int = 1,
+            @Query("region") region: String = "US"
     ): Observable<Results<Movie>>
 
     @GET("movie/{movieId}" + INCLUDE_IMAGE_LANGUAGE)
@@ -57,6 +58,8 @@ interface MovieApi {
             @Query("release_date.gte") minReleaseDate: String? = null,
             @Query("release_date.lte") maxReleaseDate: String? = null,
             @Query("with_genres") genreIds: String? = null,
-            @Query("page") page: Int = 1
+            @Query("page") page: Int = 1,
+            @Query("region") region: String = "US",
+            @Query("with_release_type") releaseType: String = "2|3"
     ): Observable<Results<Movie>>
 }
