@@ -70,6 +70,7 @@
     <string name="error_load_tv_detail">An error occurred while trying to load tv show detail</string>
 
     <!-- Season -->
+    <string name="season_specials">Specials</string>
     <string name="season_title">Season:</string>
     <string name="air_date_title">Air Date:</string>
     <string name="season_number_format">Season %d</string>
