@@ -17,6 +17,7 @@ import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.common.rating.RatingDialog
+import com.ashish.movieguide.ui.review.ReviewActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
@@ -51,6 +52,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
 
     @JvmField @State var movie: Movie? = null
 
+    private val readReviewsView: View by bindView(R.id.read_reviews_view)
     private val similarMoviesViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
@@ -60,6 +62,14 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
             val movie = similarMoviesAdapter?.getItem<Movie>(position)
             val intent = createIntent(this@MovieDetailActivity, movie)
             startNewActivityWithTransition(view, R.string.transition_movie_poster, intent)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        readReviewsView.setOnClickListener {
+            startActivity(ReviewActivity.createIntent(this, movie?.id))
         }
     }
 

@@ -35,6 +35,7 @@ object Constants {
     const val ADAPTER_TYPE_SEASON = 4
     const val ADAPTER_TYPE_EPISODE = 5
     const val ADAPTER_TYPE_MULTI_SEARCH = 6
+    const val ADAPTER_TYPE_REVIEW = 7
 
     // Personal list types
     const val FAVORITES = 0

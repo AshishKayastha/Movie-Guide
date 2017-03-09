@@ -7,6 +7,7 @@ import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.MovieDetail
 import com.ashish.movieguide.data.models.Rating
 import com.ashish.movieguide.data.models.Results
+import com.ashish.movieguide.data.models.Review
 import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.utils.extensions.convertToFullDetailContent
 import io.reactivex.Observable
@@ -37,6 +38,10 @@ class MovieInteractor @Inject constructor(
 
     fun deleteMovieRating(movieId: Long): Observable<Status> {
         return movieApi.deleteMovieRating(movieId)
+    }
+
+    fun getMovieReviews(movieId: Long, page: Int): Observable<Results<Review>> {
+        return movieApi.getMovieReviews(movieId, page)
     }
 
     fun discoverMovie(sortBy: String, minReleaseDate: String?, maxReleaseDate: String?, genreIds: String?,

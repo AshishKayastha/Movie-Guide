@@ -219,4 +219,9 @@
     <string name="no_rated_movies_available">Your rated movies appear here</string>
     <string name="no_rated_tv_shows_available">Your rated TV shows appear here</string>
     <string name="no_rated_episodes_available">Your rated episodes appear here</string>
+
+    <!-- Reviews -->
+    <string name="read_reviews">Read Reviews</string>
+    <string name="title_movie_reviews">Movie Reviews</string>
+    <string name="no_reviews_available">No Reviews Available</string>
 </resources>

@@ -4,6 +4,7 @@ import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.MovieDetail
 import com.ashish.movieguide.data.models.Rating
 import com.ashish.movieguide.data.models.Results
+import com.ashish.movieguide.data.models.Review
 import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Observable
@@ -43,6 +44,12 @@ interface MovieApi {
 
     @DELETE("movie/{movieId}/rating")
     fun deleteMovieRating(@Path("movieId") movieId: Long): Observable<Status>
+
+    @GET("movie/{movieId}/reviews")
+    fun getMovieReviews(
+            @Path("movieId") movieId: Long,
+            @Query("page") page: Int = 1
+    ): Observable<Results<Review>>
 
     @GET("discover/movie")
     fun discoverMovie(
