@@ -229,4 +229,6 @@
     <string name="read_reviews">Read Reviews</string>
     <string name="title_movie_reviews">Movie Reviews</string>
     <string name="no_reviews_available">No Reviews Available</string>
+
+    <string name="menu_share">Share</string>
 </resources>

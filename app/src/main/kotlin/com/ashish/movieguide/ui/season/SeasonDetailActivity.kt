@@ -17,6 +17,7 @@ import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.episode.EpisodeDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
+import com.ashish.movieguide.utils.Constants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
@@ -106,6 +107,10 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
                 onEpisodeItemClickLitener)
 
         inflateViewStubRecyclerView(episodesViewStub, R.id.episodes_recycler_view, episodesAdapter!!, episodeList)
+    }
+
+    override fun getShareText(): CharSequence {
+        return TMDB_URL + "tv/" + tvShowId + "season/" + season!!.seasonNumber
     }
 
     override fun performCleanup() {

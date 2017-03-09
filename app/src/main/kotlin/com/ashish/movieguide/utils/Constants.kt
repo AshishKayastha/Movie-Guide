@@ -7,6 +7,7 @@ import com.ashish.movieguide.utils.extensions.dpToPx
  */
 object Constants {
 
+    const val TMDB_URL = "https://www.themoviedb.org/"
     const val IMDB_BASE_URL = "http://www.imdb.com/title/"
     const val OMDB_API_BASE_URL = "http://www.omdbapi.com/"
     const val TMDB_API_BASE_URL = "https://api.themoviedb.org/3/"

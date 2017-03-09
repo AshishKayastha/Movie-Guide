@@ -19,6 +19,7 @@ import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.common.rating.RatingDialog
 import com.ashish.movieguide.ui.review.ReviewActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
+import com.ashish.movieguide.utils.Constants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
@@ -133,6 +134,10 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
         }
 
         else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun getShareText(): CharSequence {
+        return movie!!.title + "\n\n" + TMDB_URL + "movie/" + movie!!.id
     }
 
     override fun setFavoriteIcon(isFavorite: Boolean) {
