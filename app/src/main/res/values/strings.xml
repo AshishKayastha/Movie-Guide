@@ -179,6 +179,10 @@
 
     <string name="creating_session">Creating user session…</string>
 
+    <!-- Log Out -->
+    <string name="title_log_out">Log Out</string>
+    <string name="content_log_out">Are you sure you want to log out from currently logged in account?</string>
+
     <!-- Favorite -->
     <string name="title_favorites">Favorites</string>
     <string name="error_mark_favorite">Failed to change favorite status</string>
@@ -212,9 +216,9 @@
 
     <string name="title_rated">Rated</string>
     <string name="title_episodes">Episodes</string>
-    <string name="title_rate_movie">Rate this Movie</string>
-    <string name="title_rate_tv_show">Rate this TV Show</string>
-    <string name="title_rate_episode">Rate this Episode</string>
+    <string name="title_rate_movie">Rate this movie</string>
+    <string name="title_rate_tv_show">Rate this TV show</string>
+    <string name="title_rate_episode">Rate this episode</string>
 
     <string name="no_rated_movies_available">Your rated movies appear here</string>
     <string name="no_rated_tv_shows_available">Your rated TV shows appear here</string>
