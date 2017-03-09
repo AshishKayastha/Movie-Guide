@@ -9,6 +9,7 @@ import android.os.Binder
 import android.support.customtabs.CustomTabsIntent
 import com.ashish.movieguide.R
 import com.ashish.movieguide.utils.extensions.getColorCompat
+import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 
 /**
  * Created by Ashish on Jan 30.
@@ -18,7 +19,24 @@ object CustomTabsHelper {
     const val RC_TMDB_LOGIN = 1001
     private const val EXTRA_CUSTOM_TABS_KEEP_ALIVE = "android.support.customtabs.extra.KEEP_ALIVE"
 
-    fun launchUrlForResult(activity: Activity, url: String, requestCode: Int = RC_TMDB_LOGIN) {
+    fun launchUrl(activity: Activity, url: String?) {
+        if (url.isNotNullOrEmpty()) {
+            val intent = buildCustomTabsIntent(activity)
+            intent.data = Uri.parse(url)
+            activity.startActivity(intent)
+        }
+    }
+
+    fun launchUrlForResult(activity: Activity, url: String?, requestCode: Int = RC_TMDB_LOGIN) {
+        if (url.isNotNullOrEmpty()) {
+            val intent = buildCustomTabsIntent(activity)
+            addKeepAliveExtra(activity, intent)
+            intent.data = Uri.parse(url)
+            activity.startActivityForResult(intent, requestCode)
+        }
+    }
+
+    fun buildCustomTabsIntent(activity: Activity): Intent {
         val customTabsIntent = CustomTabsIntent.Builder()
                 .setShowTitle(true)
                 .setToolbarColor(activity.getColorCompat(R.color.colorPrimary))
@@ -26,11 +44,7 @@ object CustomTabsHelper {
                 .setExitAnimations(activity, R.anim.slide_in_left, R.anim.slide_out_right)
                 .build()
 
-        val intent = customTabsIntent.intent
-
-        addKeepAliveExtra(activity, intent)
-        intent.data = Uri.parse(url)
-        activity.startActivityForResult(intent, requestCode)
+        return customTabsIntent.intent
     }
 
     fun addKeepAliveExtra(context: Context, intent: Intent) {

@@ -22,10 +22,10 @@ import com.ashish.movieguide.ui.widget.EmptyRecyclerView
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_REVIEW
+import com.ashish.movieguide.utils.CustomTabsHelper
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.extensions.hide
-import com.ashish.movieguide.utils.extensions.openUrl
 import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.show
 import icepick.State
@@ -59,7 +59,9 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        overridePendingTransition(R.anim.slide_in_right, R.anim.hold_anim)
         super.onCreate(savedInstanceState)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar?.changeViewGroupTextFont()
 
@@ -138,7 +140,12 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
 
     override fun onItemClick(position: Int, view: View) {
         val review = reviewAdapter.getItem<Review>(position)
-        openUrl(review.url)
+        CustomTabsHelper.launchUrl(this, review.url)
+    }
+
+    override fun finishAfterTransition() {
+        super.finishAfterTransition()
+        overridePendingTransition(R.anim.hold_anim, R.anim.slide_out_right)
     }
 
     override fun onDestroy() {
