@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ListItemCard"
+    android:layout_marginBottom="@dimen/spacing_normal"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="@dimen/padding_2dp">
+
+    <LinearLayout
+        style="@style/MaterialKeylinePadding"
+        android:paddingBottom="@dimen/spacing_medium"
+        android:paddingTop="@dimen/spacing_medium">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/review_author_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="@dimen/spacing_large"
+                tools:ignore="ContentDescription" />
+
+            <com.ashish.movieguide.ui.widget.FontTextView
+                android:id="@+id/review_author"
+                style="@style/PrimaryText"
+                android:textSize="20sp"
+                app:fontName="@string/font_montserrat_medium"
+                tools:text="Author Name" />
+
+        </LinearLayout>
+
+        <com.ashish.movieguide.ui.widget.FontTextView
+            android:id="@+id/review_content"
+            style="@style/PrimaryText"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:lineSpacingExtra="@dimen/line_spacing"
+            tools:text="This is a randow review." />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

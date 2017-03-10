@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_layout"
+    style="@style/Match">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        style="@style/Match.Width"
+        android:animateLayoutChanges="true"
+        android:elevation="@dimen/toolbar_elevation">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/Toolbar"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        style="@style/Match"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout style="@style/Match">
+
+            <include layout="@layout/layout_empty_view" />
+
+            <com.ashish.movieguide.ui.widget.EmptyRecyclerView
+                android:id="@+id/recycler_view"
+                style="@style/Match"
+                android:clipToPadding="false" />
+
+            <include layout="@layout/layout_progress_bar" />
+
+        </FrameLayout>
+
+    </com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -34,7 +34,12 @@ class SeasonDelegateAdapter(
 
         override fun bindData(item: Season) = with(item) {
             val context = itemView.context
-            contentTitle.applyText(String.format(context.getString(R.string.season_number_format), seasonNumber))
+            if (seasonNumber != null && seasonNumber > 0) {
+                contentTitle.applyText(String.format(context.getString(R.string.season_number_format), seasonNumber))
+            } else {
+                contentTitle.setText(R.string.season_specials)
+            }
+
             contentSubtitle.applyText(String.format(context.getString(R.string.episode_count_format), episodeCount))
             super.bindData(item)
         }

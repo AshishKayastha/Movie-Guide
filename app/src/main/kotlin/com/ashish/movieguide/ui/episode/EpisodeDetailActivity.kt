@@ -13,6 +13,7 @@ import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderH
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.rating.RatingDialog
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
+import com.ashish.movieguide.utils.Constants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getStillImageUrl
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle
@@ -91,6 +92,11 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
         }
 
         else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun getShareText(): CharSequence {
+        return TMDB_URL + "tv/" + tvShowId + "season/" + episode!!.seasonNumber +
+                "episode/" + episode!!.episodeNumber
     }
 
     override fun showSavedRating(rating: Double?) {

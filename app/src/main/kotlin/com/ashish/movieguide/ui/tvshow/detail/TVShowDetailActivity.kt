@@ -22,6 +22,7 @@ import com.ashish.movieguide.ui.season.SeasonDetailActivity
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
+import com.ashish.movieguide.utils.Constants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
 import com.ashish.movieguide.utils.extensions.find
@@ -150,6 +151,10 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
         }
 
         else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun getShareText(): CharSequence {
+        return tvShow!!.name + "\n\n" + TMDB_URL + "tv/" + tvShow!!.id
     }
 
     override fun setFavoriteIcon(isFavorite: Boolean) {

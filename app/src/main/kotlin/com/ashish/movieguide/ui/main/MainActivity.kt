@@ -123,17 +123,26 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
         showUserProfile()
         userImage.setOnClickListener {
             drawerLayout.closeDrawers()
-            runDelayed(200L) { showTmdbLoginDialog() }
+            runDelayed(200L) {
+                if (preferenceHelper.getId() > 0) {
+                    showLogOutDialog()
+                } else {
+                    showTmdbLoginDialog()
+                }
+            }
         }
     }
 
     private fun showUserProfile() {
         preferenceHelper.apply {
-            if (getId() > 0L) {
+            if (getId() > 0) {
                 nameText.applyText(getName())
-                userNameText.applyText(getUserName())
-                userImage.loadGravatarImage(getGravatarHash())
+            } else {
+                nameText.setText(R.string.login_with_tmdb)
             }
+
+            userNameText.applyText(getUserName())
+            userImage.loadGravatarImage(getGravatarHash())
         }
     }
 
@@ -143,6 +152,18 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
                 .withContent(R.string.content_tmdb_login)
                 .withNegativeButton(android.R.string.cancel)
                 .withPositiveButton(R.string.login_btn, { presenter?.createRequestToken() })
+                .show()
+    }
+
+    private fun showLogOutDialog() {
+        dialogUtils.get().buildDialog()
+                .withTitle(R.string.title_log_out)
+                .withContent(R.string.content_log_out)
+                .withNegativeButton(android.R.string.cancel)
+                .withPositiveButton(R.string.title_log_out, {
+                    preferenceHelper.clearUserData()
+                    showUserProfile()
+                })
                 .show()
     }
 

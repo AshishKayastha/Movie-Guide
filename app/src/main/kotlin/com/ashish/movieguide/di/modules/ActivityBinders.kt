@@ -12,6 +12,8 @@ import com.ashish.movieguide.ui.multisearch.activity.MultiSearchActivity
 import com.ashish.movieguide.ui.multisearch.activity.MultiSearchComponent
 import com.ashish.movieguide.ui.people.detail.PersonDetailActivity
 import com.ashish.movieguide.ui.people.detail.PersonDetailComponent
+import com.ashish.movieguide.ui.review.ReviewActivity
+import com.ashish.movieguide.ui.review.ReviewComponent
 import com.ashish.movieguide.ui.season.SeasonDetailActivity
 import com.ashish.movieguide.ui.season.SeasonDetailComponent
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
@@ -30,7 +32,8 @@ import dagger.multibindings.IntoMap
         SeasonDetailComponent::class,
         EpisodeDetailComponent::class,
         PersonDetailComponent::class,
-        MultiSearchComponent::class
+        MultiSearchComponent::class,
+        ReviewComponent::class
 ))
 abstract class ActivityBinders {
 
@@ -68,4 +71,9 @@ abstract class ActivityBinders {
     @IntoMap
     @ActivityKey(MultiSearchActivity::class)
     abstract fun multiSearchComponentBuilder(builder: MultiSearchComponent.Builder): ActivityComponentBuilder<*, *>
+
+    @Binds
+    @IntoMap
+    @ActivityKey(ReviewActivity::class)
+    abstract fun reviewComponentBuilder(builder: ReviewComponent.Builder): ActivityComponentBuilder<*, *>
 }

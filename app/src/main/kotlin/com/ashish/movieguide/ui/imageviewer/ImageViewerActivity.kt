@@ -12,7 +12,6 @@ import android.widget.LinearLayout
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.common.BaseActivity
 import com.ashish.movieguide.ui.widget.DepthPageTransformer
-import com.ashish.movieguide.ui.widget.InkPageIndicator
 import com.ashish.movieguide.utils.SystemUiHelper
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
@@ -55,7 +54,6 @@ class ImageViewerActivity : BaseActivity() {
 
     private val viewPager: ViewPager by bindView(R.id.view_pager)
     private val appbarLayout: FrameLayout by bindView(R.id.app_bar)
-    private val pageIndicator: InkPageIndicator by bindView(R.id.indicator)
     private val wrapperLayout: LinearLayout by bindView(R.id.appbar_wrapper)
 
     private var isReturning: Boolean = false
@@ -132,7 +130,6 @@ class ImageViewerActivity : BaseActivity() {
             setPageTransformer(true, DepthPageTransformer())
         }
 
-        pageIndicator.setViewPager(viewPager)
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
                 currentPosition = position

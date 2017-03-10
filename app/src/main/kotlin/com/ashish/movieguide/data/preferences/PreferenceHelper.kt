@@ -41,4 +41,10 @@ class PreferenceHelper @Inject constructor(private val sharedPrefs: SharedPrefer
     private fun getString(key: String, defaultValue: String = ""): String? = sharedPrefs.getString(key, defaultValue)
 
     private fun putString(key: String, value: String?) = sharedPrefs.edit().putString(key, value).apply()
+
+    fun clearUserData() {
+        sharedPrefs.all.entries
+                .map { it.key }
+                .forEach { sharedPrefs.edit().remove(it).apply() }
+    }
 }

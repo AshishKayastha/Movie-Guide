@@ -11,13 +11,13 @@ import com.ashish.movieguide.data.models.Season
 import com.ashish.movieguide.data.models.SeasonDetail
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
-import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.episode.EpisodeDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
+import com.ashish.movieguide.utils.Constants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
@@ -27,7 +27,6 @@ import icepick.State
 /**
  * Created by Ashish on Jan 07.
  */
-@ActivityScope
 class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetailView, SeasonDetailPresenter>(),
         SeasonDetailView {
 
@@ -93,7 +92,12 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
     }
 
     override fun getItemTitle(): String {
-        return String.format(getString(R.string.season_number_format), season?.seasonNumber)
+        val seasonNumber = season?.seasonNumber ?: 0
+        return if (seasonNumber > 0) {
+            String.format(getString(R.string.season_number_format), seasonNumber)
+        } else {
+            return getString(R.string.season_specials)
+        }
     }
 
     override fun getDetailContentType() = ADAPTER_TYPE_SEASON
@@ -103,6 +107,10 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
                 onEpisodeItemClickLitener)
 
         inflateViewStubRecyclerView(episodesViewStub, R.id.episodes_recycler_view, episodesAdapter!!, episodeList)
+    }
+
+    override fun getShareText(): CharSequence {
+        return TMDB_URL + "tv/" + tvShowId + "season/" + season!!.seasonNumber
     }
 
     override fun performCleanup() {

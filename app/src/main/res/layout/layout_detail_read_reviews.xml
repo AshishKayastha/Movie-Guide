@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/read_reviews_view"
+    style="@style/Match.Width"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/first_keyline">
+
+    <com.ashish.movieguide.ui.widget.FontTextView
+        style="@style/PrimaryText"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="@string/read_reviews"
+        android:textSize="@dimen/text_size_xlarge"
+        app:fontName="@string/font_montserrat_medium" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:srcCompat="@drawable/ic_arrow_right_white_24dp"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>

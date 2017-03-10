@@ -8,6 +8,7 @@ import android.support.annotation.CallSuper
 import android.support.annotation.IdRes
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.v4.app.ShareCompat
 import android.support.v4.util.Pair
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -295,8 +296,9 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun showDetailContent(detailContent: I) {
         detailContainer.show()
-        showOrHideMenu(R.id.action_imdb, imdbId)
         appBarLayout.addOnOffsetChangedListener(this)
+        showOrHideMenu(R.id.action_imdb, imdbId)
+        menu?.findItem(R.id.action_share)?.isVisible = true
     }
 
     override fun showDetailContentList(contentList: List<String>) {
@@ -451,10 +453,26 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_share -> shareContent()
         R.id.action_imdb -> viewInIMDbSite()
         R.id.action_rotten_tomatoes -> performAction { openUrl(rottenTomatoesUrl) }
         else -> super.onOptionsItemSelected(item)
     }
+
+    private fun shareContent(): Boolean {
+        return performAction {
+            val shareIntent = ShareCompat.IntentBuilder.from(this)
+                    .setType("text/plain")
+                    .setText(getShareText())
+                    .intent
+
+            if (shareIntent.resolveActivity(packageManager) != null) {
+                startActivity(shareIntent)
+            }
+        }
+    }
+
+    abstract fun getShareText(): CharSequence
 
     private fun viewInIMDbSite(): Boolean {
         return performAction {

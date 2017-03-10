@@ -4,6 +4,7 @@ import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.MovieDetail
 import com.ashish.movieguide.data.models.Rating
 import com.ashish.movieguide.data.models.Results
+import com.ashish.movieguide.data.models.Review
 import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Observable
@@ -29,7 +30,8 @@ interface MovieApi {
     @GET("movie/{movieType}")
     fun getMovies(
             @Path("movieType") movieType: String?,
-            @Query("page") page: Int = 1
+            @Query("page") page: Int = 1,
+            @Query("region") region: String = "US"
     ): Observable<Results<Movie>>
 
     @GET("movie/{movieId}" + INCLUDE_IMAGE_LANGUAGE)
@@ -44,12 +46,20 @@ interface MovieApi {
     @DELETE("movie/{movieId}/rating")
     fun deleteMovieRating(@Path("movieId") movieId: Long): Observable<Status>
 
+    @GET("movie/{movieId}/reviews")
+    fun getMovieReviews(
+            @Path("movieId") movieId: Long,
+            @Query("page") page: Int = 1
+    ): Observable<Results<Review>>
+
     @GET("discover/movie")
     fun discoverMovie(
             @Query("sort_by") sortBy: String = "popularity.desc",
             @Query("release_date.gte") minReleaseDate: String? = null,
             @Query("release_date.lte") maxReleaseDate: String? = null,
             @Query("with_genres") genreIds: String? = null,
-            @Query("page") page: Int = 1
+            @Query("page") page: Int = 1,
+            @Query("region") region: String = "US",
+            @Query("with_release_type") releaseType: String = "2|3"
     ): Observable<Results<Movie>>
 }
