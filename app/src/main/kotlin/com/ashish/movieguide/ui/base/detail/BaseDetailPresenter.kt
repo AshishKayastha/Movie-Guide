@@ -12,7 +12,7 @@ import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
-import io.reactivex.Observable
+import io.reactivex.Single
 import java.io.IOException
 import java.util.ArrayList
 
@@ -38,7 +38,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
             if (id != null) {
                 getView()?.showProgress()
                 addDisposable(getDetailContent(id)
-                        .doOnNext { fullDetailContent = it }
+                        .doOnSuccess { fullDetailContent = it }
                         .observeOn(schedulerProvider.ui())
                         .subscribe({ showDetailContent(it) }, { onLoadDetailError(it, getErrorMessageId()) }))
             }
@@ -50,7 +50,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
         }
     }
 
-    abstract fun getDetailContent(id: Long): Observable<FullDetailContent<I>>
+    abstract fun getDetailContent(id: Long): Single<FullDetailContent<I>>
 
     protected open fun showDetailContent(fullDetailContent: FullDetailContent<I>) {
         getView()?.apply {

@@ -2,7 +2,7 @@ package com.ashish.movieguide.data.api
 
 import com.ashish.movieguide.data.models.MultiSearch
 import com.ashish.movieguide.data.models.Results
-import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -15,5 +15,5 @@ interface SearchApi {
     fun getMultiSearchResults(
             @Query("query") query: String,
             @Query("page") page: Int = 1
-    ): Observable<Results<MultiSearch>>
+    ): Single<Results<MultiSearch>>
 }

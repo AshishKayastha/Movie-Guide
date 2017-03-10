@@ -9,7 +9,7 @@ import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
-import io.reactivex.Observable
+import io.reactivex.Single
 import java.io.IOException
 import java.util.ArrayList
 
@@ -40,7 +40,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     fun loadFreshData(type: Int?, showProgress: Boolean = true) {
         if (Utils.isOnline()) {
             addDisposable(getResultsObservable(getType(type), 1)
-                    .doOnNext { totalPages = it.totalPages }
+                    .doOnSuccess { totalPages = it.totalPages }
                     .observeOn(schedulerProvider.ui())
                     .doOnSubscribe { if (showProgress) getView()?.showProgress() }
                     .doFinally { getView()?.hideProgress() }
@@ -53,7 +53,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     protected open fun getType(type: Int?): String? = null
 
-    protected abstract fun getResultsObservable(type: String?, page: Int): Observable<Results<I>>
+    protected abstract fun getResultsObservable(type: String?, page: Int): Single<Results<I>>
 
     protected fun showResults(data: Results<I>) {
         currentPage = data.page

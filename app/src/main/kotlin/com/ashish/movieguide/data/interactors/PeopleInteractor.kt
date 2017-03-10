@@ -5,7 +5,7 @@ import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.Person
 import com.ashish.movieguide.data.models.PersonDetail
 import com.ashish.movieguide.data.models.Results
-import io.reactivex.Observable
+import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,12 +15,12 @@ import javax.inject.Singleton
 @Singleton
 class PeopleInteractor @Inject constructor(private val peopleApi: PeopleApi) {
 
-    fun getPopularPeople(page: Int = 1): Observable<Results<Person>> {
+    fun getPopularPeople(page: Int = 1): Single<Results<Person>> {
         return peopleApi.getPopularPeople(page)
     }
 
-    fun getFullPersonDetail(personId: Long): Observable<FullDetailContent<PersonDetail>> {
+    fun getFullPersonDetail(personId: Long): Single<FullDetailContent<PersonDetail>> {
         return peopleApi.getPersonDetail(personId, "combined_credits,images")
-                .flatMap { Observable.just(FullDetailContent(it, null)) }
+                .flatMap { Single.just(FullDetailContent(it, null)) }
     }
 }

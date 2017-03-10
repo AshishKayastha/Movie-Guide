@@ -8,7 +8,7 @@ import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.data.models.TVShow
 import com.ashish.movieguide.data.models.TVShowDetail
 import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
-import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -34,19 +34,19 @@ interface TVShowApi {
     fun getTVShows(
             @Path("tvShowType") tvShowType: String?,
             @Query("page") page: Int = 1
-    ): Observable<Results<TVShow>>
+    ): Single<Results<TVShow>>
 
     @GET("tv/{tvId}" + INCLUDE_IMAGE_LANGUAGE)
     fun getTVShowDetail(
             @Path("tvId") tvId: Long,
             @Query("append_to_response") appendedResponse: String
-    ): Observable<TVShowDetail>
+    ): Single<TVShowDetail>
 
     @POST("tv/{tvId}/rating")
-    fun rateTVShow(@Path("tvId") tvId: Long, @Body rating: Rating): Observable<Status>
+    fun rateTVShow(@Path("tvId") tvId: Long, @Body rating: Rating): Single<Status>
 
     @DELETE("tv/{tvId}/rating")
-    fun deleteTVRating(@Path("tvId") tvId: Long): Observable<Status>
+    fun deleteTVRating(@Path("tvId") tvId: Long): Single<Status>
 
 
     /* Season */
@@ -56,7 +56,7 @@ interface TVShowApi {
             @Path("tvId") tvId: Long,
             @Path("seasonNumber") seasonNumber: Int,
             @Query("append_to_response") appendedResponse: String
-    ): Observable<SeasonDetail>
+    ): Single<SeasonDetail>
 
 
     /* Episode */
@@ -67,7 +67,7 @@ interface TVShowApi {
             @Path("seasonNumber") seasonNumber: Int,
             @Path("episodeNumber") episodeNumber: Int,
             @Query("append_to_response") appendedResponse: String
-    ): Observable<EpisodeDetail>
+    ): Single<EpisodeDetail>
 
     @POST("tv/{tvId}/season/{seasonNumber}/episode/{episodeNumber}/rating")
     fun rateEpisode(
@@ -75,13 +75,13 @@ interface TVShowApi {
             @Path("seasonNumber") seasonNumber: Int,
             @Path("episodeNumber") episodeNumber: Int,
             @Body rating: Rating
-    ): Observable<Status>
+    ): Single<Status>
 
     @DELETE("tv/{tvId}/season/{seasonNumber}/episode/{episodeNumber}/rating")
     fun deleteEpisodeRating(@Path("tvId") tvId: Long,
                             @Path("seasonNumber") seasonNumber: Int,
                             @Path("episodeNumber") episodeNumber: Int
-    ): Observable<Status>
+    ): Single<Status>
 
 
     @GET("discover/tv")
@@ -91,5 +91,5 @@ interface TVShowApi {
             @Query("air_date.lte") maxAirDate: String? = null,
             @Query("with_genres") genreIds: String? = null,
             @Query("page") page: Int = 1
-    ): Observable<Results<TVShow>>
+    ): Single<Results<TVShow>>
 }

@@ -27,7 +27,7 @@ class MainPresenter @Inject constructor(
 
     fun createRequestToken() {
         addDisposable(authInteractor.createRequestToken()
-                .doOnNext { tmdbRequestToken = it.requestToken }
+                .doOnSuccess { tmdbRequestToken = it.requestToken }
                 .observeOn(schedulerProvider.ui())
                 .doOnSubscribe { getView()?.showProgressDialog(R.string.logging_in) }
                 .subscribe({ handleRequestTokenResult(it) }, { onRequestTokenError(it) }))

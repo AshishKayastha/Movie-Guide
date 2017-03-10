@@ -10,7 +10,7 @@ import com.ashish.movieguide.ui.common.rating.RatingManager
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.extensions.getRatingValue
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
-import io.reactivex.Observable
+import io.reactivex.Single
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -38,7 +38,7 @@ class EpisodeDetailPresenter @Inject constructor(
         this.episodeNumber = episodeNumber
     }
 
-    override fun getDetailContent(id: Long): Observable<FullDetailContent<EpisodeDetail>> {
+    override fun getDetailContent(id: Long): Single<FullDetailContent<EpisodeDetail>> {
         tvId = id
         return tvShowInteractor.getFullEpisodeDetail(id, seasonNumber, episodeNumber)
     }

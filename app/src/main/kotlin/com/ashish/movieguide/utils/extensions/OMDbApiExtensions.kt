@@ -3,12 +3,12 @@ package com.ashish.movieguide.utils.extensions
 import com.ashish.movieguide.data.api.OMDbApi
 import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.OMDbDetail
-import io.reactivex.Observable
+import io.reactivex.Single
 
 /**
  * Created by Ashish on Jan 09.
  */
-fun <I> OMDbApi.convertToFullDetailContent(imdbId: String?, detailContent: I): Observable<FullDetailContent<I>> {
+fun <I> OMDbApi.convertToFullDetailContent(imdbId: String?, detailContent: I): Single<FullDetailContent<I>> {
     if (imdbId.isNotNullOrEmpty()) {
         return getDetailFromIMDbId(imdbId!!)
                 .flatMap({ getFullDetailContent(detailContent, it) })
@@ -18,6 +18,6 @@ fun <I> OMDbApi.convertToFullDetailContent(imdbId: String?, detailContent: I): O
     }
 }
 
-private fun <I> getFullDetailContent(detailContent: I, omdbDetail: OMDbDetail?): Observable<FullDetailContent<I>> {
-    return Observable.just(FullDetailContent(detailContent, omdbDetail))
+private fun <I> getFullDetailContent(detailContent: I, omdbDetail: OMDbDetail?): Single<FullDetailContent<I>> {
+    return Single.just(FullDetailContent(detailContent, omdbDetail))
 }

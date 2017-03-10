@@ -7,7 +7,7 @@ import com.ashish.movieguide.data.models.Results
 import com.ashish.movieguide.data.models.Review
 import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
-import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -32,25 +32,25 @@ interface MovieApi {
             @Path("movieType") movieType: String?,
             @Query("page") page: Int = 1,
             @Query("region") region: String = "US"
-    ): Observable<Results<Movie>>
+    ): Single<Results<Movie>>
 
     @GET("movie/{movieId}" + INCLUDE_IMAGE_LANGUAGE)
     fun getMovieDetail(
             @Path("movieId") movieId: Long,
             @Query("append_to_response") appendedResponse: String
-    ): Observable<MovieDetail>
+    ): Single<MovieDetail>
 
     @POST("movie/{movieId}/rating")
-    fun rateMovie(@Path("movieId") movieId: Long, @Body rating: Rating): Observable<Status>
+    fun rateMovie(@Path("movieId") movieId: Long, @Body rating: Rating): Single<Status>
 
     @DELETE("movie/{movieId}/rating")
-    fun deleteMovieRating(@Path("movieId") movieId: Long): Observable<Status>
+    fun deleteMovieRating(@Path("movieId") movieId: Long): Single<Status>
 
     @GET("movie/{movieId}/reviews")
     fun getMovieReviews(
             @Path("movieId") movieId: Long,
             @Query("page") page: Int = 1
-    ): Observable<Results<Review>>
+    ): Single<Results<Review>>
 
     @GET("discover/movie")
     fun discoverMovie(
@@ -61,5 +61,5 @@ interface MovieApi {
             @Query("page") page: Int = 1,
             @Query("region") region: String = "US",
             @Query("with_release_type") releaseType: String = "2|3"
-    ): Observable<Results<Movie>>
+    ): Single<Results<Movie>>
 }

@@ -6,7 +6,7 @@ import com.ashish.movieguide.data.models.TVShow
 import com.ashish.movieguide.ui.discover.base.BaseDiscoverPresenter
 import com.ashish.movieguide.ui.discover.filter.FilterQueryModel
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
-import io.reactivex.Observable
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -18,7 +18,7 @@ class DiscoverTVShowPresenter @Inject constructor(
         schedulerProvider: BaseSchedulerProvider
 ) : BaseDiscoverPresenter<TVShow>(filterQueryModel, schedulerProvider) {
 
-    override fun getResultsObservable(type: String?, page: Int): Observable<Results<TVShow>> {
+    override fun getResultsObservable(type: String?, page: Int): Single<Results<TVShow>> {
         return tvShowInteractor.discoverTVShow(sortBy, minDate, maxDate, genreIds, page)
     }
 }

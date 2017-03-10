@@ -11,7 +11,7 @@ import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.data.models.TVShow
 import com.ashish.movieguide.data.models.TVShowDetail
 import com.ashish.movieguide.utils.extensions.convertToFullDetailContent
-import io.reactivex.Observable
+import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,45 +28,45 @@ class TVShowInteractor @Inject constructor(
         private const val APPENDED_RESPONSE = "credits,external_ids,images,videos"
     }
 
-    fun getTVShowsByType(tvShowType: String?, page: Int = 1): Observable<Results<TVShow>> {
+    fun getTVShowsByType(tvShowType: String?, page: Int = 1): Single<Results<TVShow>> {
         return tvShowApi.getTVShows(tvShowType, page)
     }
 
-    fun getFullTVShowDetail(tvId: Long): Observable<FullDetailContent<TVShowDetail>> {
+    fun getFullTVShowDetail(tvId: Long): Single<FullDetailContent<TVShowDetail>> {
         return tvShowApi.getTVShowDetail(tvId, "similar,account_states," + APPENDED_RESPONSE)
                 .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
     }
 
-    fun rateTVShow(movieId: Long, value: Double): Observable<Status> {
+    fun rateTVShow(movieId: Long, value: Double): Single<Status> {
         return tvShowApi.rateTVShow(movieId, Rating(value))
     }
 
-    fun deleteTVRating(tvId: Long): Observable<Status> {
+    fun deleteTVRating(tvId: Long): Single<Status> {
         return tvShowApi.deleteTVRating(tvId)
     }
 
-    fun getFullSeasonDetail(tvId: Long, seasonNumber: Int): Observable<FullDetailContent<SeasonDetail>> {
+    fun getFullSeasonDetail(tvId: Long, seasonNumber: Int): Single<FullDetailContent<SeasonDetail>> {
         return tvShowApi.getSeasonDetail(tvId, seasonNumber, APPENDED_RESPONSE)
                 .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
     }
 
     fun getFullEpisodeDetail(tvId: Long, seasonNumber: Int, episodeNumber: Int)
-            : Observable<FullDetailContent<EpisodeDetail>> {
+            : Single<FullDetailContent<EpisodeDetail>> {
         return tvShowApi.getEpisodeDetail(tvId, seasonNumber, episodeNumber, "account_states" + APPENDED_RESPONSE)
                 .flatMap { omDbApi.convertToFullDetailContent(it.externalIds?.imdbId, it) }
     }
 
-    fun rateEpisode(tvId: Long, seasonNumber: Int, episodeNumber: Int, value: Double): Observable<Status> {
+    fun rateEpisode(tvId: Long, seasonNumber: Int, episodeNumber: Int, value: Double): Single<Status> {
         val rating = Rating(value)
         return tvShowApi.rateEpisode(tvId, seasonNumber, episodeNumber, rating)
     }
 
-    fun deleteEpisodeRating(tvId: Long, seasonNumber: Int, episodeNumber: Int): Observable<Status> {
+    fun deleteEpisodeRating(tvId: Long, seasonNumber: Int, episodeNumber: Int): Single<Status> {
         return tvShowApi.deleteEpisodeRating(tvId, seasonNumber, episodeNumber)
     }
 
     fun discoverTVShow(sortBy: String, minAirDate: String?, maxAirDate: String?, genreIds: String?,
-                       page: Int): Observable<Results<TVShow>> {
+                       page: Int): Single<Results<TVShow>> {
         return tvShowApi.discoverTVShow(sortBy, minAirDate, maxAirDate, genreIds, page)
     }
 }
