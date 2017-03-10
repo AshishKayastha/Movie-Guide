@@ -1,6 +1,6 @@
 package com.ashish.movieguide.data.interactors
 
-import com.ashish.movieguide.data.api.AuthApi
+import com.ashish.movieguide.data.api.tmdb.AuthApi
 import com.ashish.movieguide.data.models.Account
 import com.ashish.movieguide.data.models.Episode
 import com.ashish.movieguide.data.models.Favorite

@@ -1,7 +1,7 @@
 package com.ashish.movieguide.data.interactors
 
-import com.ashish.movieguide.data.api.OMDbApi
-import com.ashish.movieguide.data.api.TVShowApi
+import com.ashish.movieguide.data.api.tmdb.OMDbApi
+import com.ashish.movieguide.data.api.tmdb.TVShowApi
 import com.ashish.movieguide.data.models.EpisodeDetail
 import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.Rating

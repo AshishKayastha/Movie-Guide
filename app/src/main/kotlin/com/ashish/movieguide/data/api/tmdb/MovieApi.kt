@@ -1,4 +1,4 @@
-package com.ashish.movieguide.data.api
+package com.ashish.movieguide.data.api.tmdb
 
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.MovieDetail

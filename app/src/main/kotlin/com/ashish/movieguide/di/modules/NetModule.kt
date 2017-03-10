@@ -2,16 +2,18 @@ package com.ashish.movieguide.di.modules
 
 import com.ashish.movieguide.BuildConfig
 import com.ashish.movieguide.di.qualifiers.BaseOkHttp
+import com.ashish.movieguide.di.qualifiers.Trakt
 import com.ashish.movieguide.utils.ApiKeyInterceptor
 import com.ashish.movieguide.utils.Constants.OMDB_API_BASE_URL
 import com.ashish.movieguide.utils.Constants.TMDB_API_BASE_URL
+import com.ashish.movieguide.utils.Constants.TRAKT_BASE_API_URL
 import com.ashish.movieguide.utils.Logger
+import com.ashish.movieguide.utils.TraktApiInterceptor
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import com.ashish.movieguide.utils.schedulers.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
@@ -57,14 +59,20 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideApiKeyInterceptor(apiKeyInterceptor: ApiKeyInterceptor): Interceptor = apiKeyInterceptor
+    fun provideTMDbClient(@BaseOkHttp okHttpClient: OkHttpClient, apiKeyInterceptor: ApiKeyInterceptor): OkHttpClient {
+        return okHttpClient.newBuilder()
+                .addNetworkInterceptor(apiKeyInterceptor)
+                .build()
+    }
 
     @Provides
     @Singleton
     @JvmStatic
-    fun provideTMDbClient(@BaseOkHttp okHttpClient: OkHttpClient, apiKeyInterceptor: Interceptor): OkHttpClient {
+    @Trakt
+    fun provideTraktClient(@BaseOkHttp okHttpClient: OkHttpClient,
+                           traktApiInterceptor: TraktApiInterceptor): OkHttpClient {
         return okHttpClient.newBuilder()
-                .addNetworkInterceptor(apiKeyInterceptor)
+                .addNetworkInterceptor(traktApiInterceptor)
                 .build()
     }
 
@@ -82,10 +90,24 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
-                        callAdapterFactory: CallAdapter.Factory): Retrofit {
+    fun provideTMDbRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
+                            callAdapterFactory: CallAdapter.Factory): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(TMDB_API_BASE_URL)
+                .client(client)
+                .addConverterFactory(moshiConverterFactory)
+                .addCallAdapterFactory(callAdapterFactory)
+                .build()
+    }
+
+    @Provides
+    @Singleton
+    @JvmStatic
+    @Trakt
+    fun provideTraktRetrofit(@Trakt client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
+                             callAdapterFactory: CallAdapter.Factory): Retrofit {
+        return Retrofit.Builder()
+                .baseUrl(TRAKT_BASE_API_URL)
                 .client(client)
                 .addConverterFactory(moshiConverterFactory)
                 .addCallAdapterFactory(callAdapterFactory)

@@ -1,6 +1,6 @@
 package com.ashish.movieguide.data.interactors
 
-import com.ashish.movieguide.data.api.PeopleApi
+import com.ashish.movieguide.data.api.tmdb.PeopleApi
 import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.Person
 import com.ashish.movieguide.data.models.PersonDetail

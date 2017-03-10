@@ -1,5 +1,6 @@
 package com.ashish.movieguide.utils
 
+import com.ashish.movieguide.BuildConfig
 import com.ashish.movieguide.utils.extensions.dpToPx
 
 /**
@@ -12,6 +13,9 @@ object Constants {
     const val OMDB_API_BASE_URL = "http://www.omdbapi.com/"
     const val TMDB_API_BASE_URL = "https://api.themoviedb.org/3/"
     const val TMDB_BASE_IMAGE_URL = "https://image.tmdb.org/t/p/"
+
+    const val TRAKT_BASE_API_URL = "https://api.trakt.tv/"
+    const val TRAKT_CLIENT_ID = BuildConfig.TRAKT_CLIENT_ID
 
     // Image Url Configurations
     const val STILL_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w300"

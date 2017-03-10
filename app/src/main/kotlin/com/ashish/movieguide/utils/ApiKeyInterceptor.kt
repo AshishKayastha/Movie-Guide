@@ -7,10 +7,12 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by Ashish on Dec 28.
  */
+@Singleton
 class ApiKeyInterceptor @Inject constructor(
         private val preferenceHelper: PreferenceHelper
 ) : Interceptor {

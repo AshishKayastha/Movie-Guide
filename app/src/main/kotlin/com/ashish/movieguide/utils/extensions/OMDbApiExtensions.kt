@@ -1,6 +1,6 @@
 package com.ashish.movieguide.utils.extensions
 
-import com.ashish.movieguide.data.api.OMDbApi
+import com.ashish.movieguide.data.api.tmdb.OMDbApi
 import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.OMDbDetail
 import io.reactivex.Observable
