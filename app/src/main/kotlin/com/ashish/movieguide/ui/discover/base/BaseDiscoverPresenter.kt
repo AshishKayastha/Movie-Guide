@@ -23,13 +23,11 @@ abstract class BaseDiscoverPresenter<I : ViewType> constructor(
     fun filterContents() {
         addDisposable(filterQueryModel.getFilterQuery()
                 .filter { isValidFilterQuery(it) }
-                .subscribe { filterQuery ->
-                    with(filterQuery) {
-                        this.sortBy = sortBy
-                        this.minDate = minDate
-                        this.maxDate = maxDate
-                        this.genreIds = genreIds
-                    }
+                .subscribe { (sortBy, genreIds, minDate, maxDate) ->
+                    this.sortBy = sortBy
+                    this.minDate = minDate
+                    this.maxDate = maxDate
+                    this.genreIds = genreIds
 
                     getView()?.clearFilteredData()
                     loadFreshData(null, true)
