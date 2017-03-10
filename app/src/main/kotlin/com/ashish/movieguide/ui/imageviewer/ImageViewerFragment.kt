@@ -57,6 +57,7 @@ class ImageViewerFragment : BaseFragment() {
 
     private val transitionListener = object : TransitionListenerAdapter() {
         override fun onTransitionEnd(transition: Transition) = loadFullImage()
+        override fun onTransitionCancel(transition: Transition) = loadFullImage()
     }
 
     override fun getLayoutId() = R.layout.fragment_image_viewer

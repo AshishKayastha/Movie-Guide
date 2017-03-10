@@ -1,6 +1,11 @@
 -dontoptimize
 -dontobfuscate
 
+-dontnote android.net.http.*
+-dontnote org.apache.http.**
+
+-keep class com.ashish.movieguide.data.models.**
+
 -keep public class * extends android.view.View {
     public <init>(android.content.Context);
     public <init>(android.content.Context, android.util.AttributeSet);
