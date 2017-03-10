@@ -126,11 +126,6 @@ dependencies {
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlinVersion"
 
-    // StorIO
-    compile "com.pushtorefresh.storio:sqlite:$versions.storioVersion"
-    compile "com.pushtorefresh.storio:sqlite-annotations:$versions.storioVersion"
-    kapt "com.pushtorefresh.storio:sqlite-annotations-processor:$versions.storioVersion"
-
     // Retrofit 2
     compile "com.squareup.retrofit2:retrofit:$versions.retrofitVersion"
     compile "com.squareup.retrofit2:converter-moshi:$versions.retrofitVersion"
@@ -142,7 +137,6 @@ dependencies {
     // RxJava 2/RxAndroid 2
     compile "io.reactivex.rxjava2:rxjava:$versions.rxJava2Version"
     compile "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid2Version"
-    compile "com.github.akarnokd:rxjava2-interop:$versions.rxJava2InteropVersion"
 
     // Dagger 2
     compile "com.google.dagger:dagger:$versions.daggerVersion"

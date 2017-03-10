@@ -14,7 +14,6 @@ ext.versions = [
         rxAndroid2Version    : '2.0.1',
         rxJava2InteropVersion: '0.9.1',
         paperParcelVersion   : '2.0.0',
-        storioVersion        : '1.12.3',
         supportLibVersion    : '25.2.0',
         glideVersion         : '3.7.0',
         glideOkHttp3Version  : '1.4.0@aar',
