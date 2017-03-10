@@ -1,22 +1,5 @@
-# Enable optimizations
--optimizationpasses 5
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--dontpreverify
--verbose
--repackageclasses ''
--renamesourcefileattribute SourceFile
--allowaccessmodification
--optimizations !code/simplification/arithmetic
-
--dontnote android.net.http.*
--dontnote org.apache.http.**
-
--keepattributes Signature
--keepattributes *Annotation*
--keepattributes EnclosingMethod
--keepattributes SourceFile
--keepattributes LineNumberTable
+-dontoptimize
+-dontobfuscate
 
 -keep public class * extends android.view.View {
     public <init>(android.content.Context);
@@ -35,19 +18,28 @@
     <init>(android.content.Context);
 }
 
+# Kotlin
+-dontnote kotlin.**
+
 # Okio
 -dontwarn okio.**
+-dontnote okio.**
 
 # OkHttp
 -dontwarn okhttp3.**
+-dontnote okhttp3.**
 
 # Retrofit
 -dontwarn rx.**
 -dontwarn retrofit2.**
+-dontnote retrofit2.**
 -keep class retrofit2.** { *; }
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
 }
+
+# RxJava 2
+-dontnote io.reactivex.**
 
 # RxJava
 -dontwarn sun.misc.**
@@ -71,4 +63,11 @@
 -keep class **$$Icepick { *; }
 -keepclasseswithmembernames class * {
     @icepick.* <fields>;
+}
+
+# Glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
 }
