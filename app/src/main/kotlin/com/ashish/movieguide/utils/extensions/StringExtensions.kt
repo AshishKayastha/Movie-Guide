@@ -17,7 +17,7 @@ fun CharSequence?.isNotNullOrEmpty() = !this.isNullOrEmpty() && this != "null"
 
 fun String?.getYearOnly() = if (isNotNullOrEmpty()) this!!.slice(0..3) else ""
 
-fun Int?.getFormattedNumber(): String {
+fun Int?.getFormattedCurrency(): String {
     if (this != null && this > 0L) {
         return String.format("$%s", NumberFormat.getNumberInstance().format(this))
     }

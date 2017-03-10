@@ -10,8 +10,8 @@ import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
 import com.ashish.movieguide.ui.common.rating.RatingManager
 import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_MOVIE
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
+import com.ashish.movieguide.utils.extensions.getFormattedCurrency
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
-import com.ashish.movieguide.utils.extensions.getFormattedNumber
 import com.ashish.movieguide.utils.extensions.getFormattedRuntime
 import com.ashish.movieguide.utils.extensions.getRatingValue
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
@@ -67,8 +67,8 @@ class MovieDetailPresenter @Inject constructor(
                 add(omdbDetail?.Language ?: "")
                 add(releaseDate.getFormattedMediumDate())
                 add(runtime.getFormattedRuntime())
-                add(budget.getFormattedNumber())
-                add(revenue.getFormattedNumber())
+                add(budget.getFormattedCurrency())
+                add(revenue.getFormattedCurrency())
             }
         }
 
