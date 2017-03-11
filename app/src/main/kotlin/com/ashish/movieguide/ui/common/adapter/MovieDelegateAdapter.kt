@@ -1,13 +1,9 @@
-package com.ashish.movieguide.ui.movie.list
+package com.ashish.movieguide.ui.common.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
-import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
-import com.ashish.movieguide.ui.common.adapter.RemoveListener
-import com.ashish.movieguide.ui.common.adapter.ViewType
-import com.ashish.movieguide.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.getYearOnly

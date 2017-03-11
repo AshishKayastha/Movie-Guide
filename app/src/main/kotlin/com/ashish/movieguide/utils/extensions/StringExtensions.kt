@@ -4,6 +4,8 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TypefaceSpan
 import com.ashish.movieguide.utils.Constants.BACKDROP_URL_PREFIX
+import com.ashish.movieguide.utils.Constants.LARGE_BACKDROP_URL_PREFIX
+import com.ashish.movieguide.utils.Constants.LARGE_POSTER_URL_PREFIX
 import com.ashish.movieguide.utils.Constants.ORIGINAL_IMAGE_URL_PREFIX
 import com.ashish.movieguide.utils.Constants.POSTER_URL_PREFIX
 import com.ashish.movieguide.utils.Constants.PROFILE_URL_PREFIX
@@ -17,7 +19,7 @@ fun CharSequence?.isNotNullOrEmpty() = !this.isNullOrEmpty() && this != "null"
 
 fun String?.getYearOnly() = if (isNotNullOrEmpty()) this!!.slice(0..3) else ""
 
-fun Int?.getFormattedNumber(): String {
+fun Int?.getFormattedCurrency(): String {
     if (this != null && this > 0L) {
         return String.format("$%s", NumberFormat.getNumberInstance().format(this))
     }
@@ -60,6 +62,16 @@ fun String?.getProfileUrl() = getImageUrl(PROFILE_URL_PREFIX)
 fun String?.getStillImageUrl() = getImageUrl(STILL_URL_PREFIX)
 
 fun String?.getOriginalImageUrl() = getImageUrl(ORIGINAL_IMAGE_URL_PREFIX)
+
+fun String.getLargeImageUrl(): String {
+    if (contains(POSTER_URL_PREFIX)) {
+        return replace(POSTER_URL_PREFIX, LARGE_POSTER_URL_PREFIX)
+    } else if (contains(BACKDROP_URL_PREFIX)) {
+        return replace(BACKDROP_URL_PREFIX, LARGE_BACKDROP_URL_PREFIX)
+    } else {
+        return this
+    }
+}
 
 fun String?.getImageUrl(urlPrefix: String) = if (isNotNullOrEmpty()) urlPrefix + this else ""
 

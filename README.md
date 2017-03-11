@@ -14,22 +14,23 @@ Movie Guide is an open source Android application for [TMDb](https://www.themovi
 * Search and filter your favorite movies, tv shows and people.
 * View movie and tv show ratings from OMDb.
 
-## Libraries and tools included:
-* Support libraries
-* RecyclerView and CardView
-* Palette
-* Custom Tabs
-* [Kotlin](https://kotlinlang.org/)
-* [RxJava 2](https://github.com/ReactiveX/RxJava) and [RxAndroid 2](https://github.com/ReactiveX/RxAndroid) 
-* [Retrofit 2](http://square.github.io/retrofit/)
-* [Dagger 2](http://google.github.io/dagger/)
-* [StorIO](https://github.com/pushtorefresh/storio)
-* [KotterKnife](https://github.com/JakeWharton/kotterknife)
-* [Timber](https://github.com/JakeWharton/timber)
-* [Glide](https://github.com/bumptech/glide/)
-* [Paper Parcel](https://github.com/grandstaish/paperparcel)
-* [Ice Pick](https://github.com/frankiesardo/icepick)
-* [Leak Canary](https://github.com/square/leakcanary)
+## Movie Guide Implementations
+* Min SDK 21 with material design and animations
+* Fully written in [Kotlin](https://kotlinlang.org/) language
+* Follows MVP pattern for separation of concerns
+* [Retrofit 2](http://square.github.io/retrofit/) for performing network requests
+* [RxJava 2](https://github.com/ReactiveX/RxJava) and [RxAndroid 2](https://github.com/ReactiveX/RxAndroid) for asynchronous functionality
+* [Dagger 2](http://google.github.io/dagger/) for dependency injection with subcomponent multibindings
+* [KotterKnife](https://github.com/JakeWharton/kotterknife) for view bindings.
+* [Timber](https://github.com/JakeWharton/timber) for logging
+* [Glide](https://github.com/bumptech/glide/) for image loading
+* [Paper Parcel](https://github.com/grandstaish/paperparcel) for creating Parcelable objects
+* [Ice Pick](https://github.com/frankiesardo/icepick) for saving instance of objects
+* [Leak Canary](https://github.com/square/leakcanary) for detecting memory leaks
+* [StorIO](https://github.com/pushtorefresh/storio) for offline functionality(WIP)
+* Custom Tabs support library for TMDb login functionality 
+* Palette support library for extracting colors from image
+* Other support libraries - AppCompat, RecyclerView, CardView, Design
 
 ## Screenshots
 
@@ -52,7 +53,14 @@ TMDB_API_KEY="your_api_key"
 Now you can run the app by clicking *Run -> Run 'app'*.
 
 ## Contributing
-You can contribute to the project by either finding out bugs or by requesting new features. Any contributions are welcome!
+You can contribute to the project by either finding out bugs or by requesting new features. Besides that, if you are a developer then you can contribute by submitting pull requests. There is TODO list to get you started with.
+
+Any feedback or contributions are welcome!
+
+## TODO
+- [ ] Write unit and integration tests
+- [ ] Implement offline functionality using StorIO(WIP)
+- [ ] UI Improvements
 
 ## License
 

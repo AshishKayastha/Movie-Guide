@@ -12,6 +12,7 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Season
 import com.ashish.movieguide.data.models.TVShow
 import com.ashish.movieguide.data.models.TVShowDetail
+import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
@@ -33,6 +34,7 @@ import com.ashish.movieguide.utils.extensions.setFavoriteIcon
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
+import dagger.Lazy
 import icepick.State
 import javax.inject.Inject
 
@@ -53,7 +55,8 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
         }
     }
 
-    @Inject lateinit var ratingDialog: RatingDialog
+    @Inject lateinit var ratingDialog: Lazy<RatingDialog>
+    @Inject lateinit var preferenceHelper: PreferenceHelper
 
     @JvmField @State var tvShow: TVShow? = null
 
@@ -62,6 +65,10 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
 
     private var seasonsAdapter: RecyclerViewAdapter<Season>? = null
     private var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>? = null
+
+    private val isLoggedIn: Boolean by lazy {
+        preferenceHelper.getId() > 0
+    }
 
     private val onSeasonItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -113,8 +120,11 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
             titleText.setTitleAndYear(name, firstAirDate)
         }
 
-        ratingDialog.setRatingListener(this)
-        menu?.setRatingItemTitle(R.string.title_rate_tv_show)
+        if (isLoggedIn) {
+            ratingDialog.get().setRatingListener(this)
+            menu?.setRatingItemTitle(R.string.title_rate_tv_show)
+        }
+
         super.showDetailContent(detailContent)
     }
 
@@ -147,7 +157,9 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
         R.id.action_watchlist -> performAction { presenter?.addToWatchlist() }
 
         R.id.action_rating -> performAction {
-            ratingDialog.showRatingDialog(ratingLabelLayout.getRating())
+            if (isLoggedIn) {
+                ratingDialog.get().showRatingDialog(ratingLabelLayout.getRating())
+            }
         }
 
         else -> super.onOptionsItemSelected(item)
@@ -185,19 +197,19 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
-        ratingDialog.dismissDialog()
+        if (isLoggedIn) ratingDialog.get().dismissDialog()
         super.onConfigurationChanged(newConfig)
     }
 
     override fun onStop() {
-        ratingDialog.dismissDialog()
+        if (isLoggedIn) ratingDialog.get().dismissDialog()
         super.onStop()
     }
 
     override fun performCleanup() {
-        ratingDialog.setRatingListener(null)
+        super.performCleanup()
         seasonsAdapter?.removeListener()
         similarTVShowsAdapter?.removeListener()
-        super.performCleanup()
+        if (isLoggedIn) ratingDialog.get().setRatingListener(null)
     }
 }

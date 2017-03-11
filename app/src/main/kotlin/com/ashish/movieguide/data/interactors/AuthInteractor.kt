@@ -13,6 +13,7 @@ import com.ashish.movieguide.data.models.Watchlist
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.utils.AuthException
 import io.reactivex.Observable
+import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,7 +26,7 @@ class AuthInteractor @Inject constructor(
         private val preferenceHelper: PreferenceHelper
 ) {
 
-    fun createRequestToken(): Observable<RequestToken> {
+    fun createRequestToken(): Single<RequestToken> {
         return authApi.createRequestToken()
     }
 
@@ -48,48 +49,48 @@ class AuthInteractor @Inject constructor(
         }
     }
 
-    fun markAsFavorite(favorite: Favorite): Observable<Status> {
+    fun markAsFavorite(favorite: Favorite): Single<Status> {
         return callApiIfLoggedIn { accountId ->
             authApi.markAsFavorite(accountId, favorite)
         }
     }
 
-    fun addToWatchlist(watchlist: Watchlist): Observable<Status> {
+    fun addToWatchlist(watchlist: Watchlist): Single<Status> {
         return callApiIfLoggedIn { accountId ->
             authApi.addToWatchlist(accountId, watchlist)
         }
     }
 
-    fun getPersonalMoviesByType(type: String, page: Int): Observable<Results<Movie>> {
+    fun getPersonalMoviesByType(type: String, page: Int): Single<Results<Movie>> {
         return callApiIfLoggedIn { accountId ->
             authApi.getPersonalMoviesByType(type, accountId, page)
         }
     }
 
-    fun getPersonalTVShowsByType(type: String, page: Int): Observable<Results<TVShow>> {
+    fun getPersonalTVShowsByType(type: String, page: Int): Single<Results<TVShow>> {
         return callApiIfLoggedIn { accountId ->
             authApi.getPersonalTVShowsByType(type, accountId, page)
         }
     }
 
-    fun getRatedMovies(page: Int): Observable<Results<Movie>> {
+    fun getRatedMovies(page: Int): Single<Results<Movie>> {
         return callApiIfLoggedIn { accountId -> authApi.getRatedMovies(accountId, page) }
     }
 
-    fun getRatedTVShows(page: Int): Observable<Results<TVShow>> {
+    fun getRatedTVShows(page: Int): Single<Results<TVShow>> {
         return callApiIfLoggedIn { accountId -> authApi.getRatedTVShows(accountId, page) }
     }
 
-    fun getRatedEpisodes(page: Int): Observable<Results<Episode>> {
+    fun getRatedEpisodes(page: Int): Single<Results<Episode>> {
         return callApiIfLoggedIn { accountId -> authApi.getRatedEpisodes(accountId, page) }
     }
 
-    private fun <T> callApiIfLoggedIn(actionIfLoggedIn: (accountId: Long) -> Observable<T>): Observable<T> {
+    private fun <T> callApiIfLoggedIn(actionIfLoggedIn: (accountId: Long) -> Single<T>): Single<T> {
         val accountId = preferenceHelper.getId()
         if (accountId > 0) {
             return actionIfLoggedIn(accountId)
         } else {
-            return Observable.error(AuthException())
+            return Single.error(AuthException())
         }
     }
 }

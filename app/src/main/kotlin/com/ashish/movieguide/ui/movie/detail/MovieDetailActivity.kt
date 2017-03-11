@@ -11,6 +11,7 @@ import android.view.ViewStub
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Movie
 import com.ashish.movieguide.data.models.MovieDetail
+import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
@@ -29,6 +30,7 @@ import com.ashish.movieguide.utils.extensions.setFavoriteIcon
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
+import dagger.Lazy
 import icepick.State
 import javax.inject.Inject
 
@@ -49,7 +51,8 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
         }
     }
 
-    @Inject lateinit var ratingDialog: RatingDialog
+    @Inject lateinit var ratingDialog: Lazy<RatingDialog>
+    @Inject lateinit var preferenceHelper: PreferenceHelper
 
     @JvmField @State var movie: Movie? = null
 
@@ -57,6 +60,10 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
     private val similarMoviesViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
+
+    private val isLoggedIn: Boolean by lazy {
+        preferenceHelper.getId() > 0
+    }
 
     private val onSimilarMovieItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -110,8 +117,11 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
             titleText.setTitleAndYear(title, releaseDate)
         }
 
-        ratingDialog.setRatingListener(this)
-        menu?.setRatingItemTitle(R.string.title_rate_movie)
+        if (isLoggedIn) {
+            ratingDialog.get().setRatingListener(this)
+            menu?.setRatingItemTitle(R.string.title_rate_movie)
+        }
+
         super.showDetailContent(detailContent)
     }
 
@@ -130,7 +140,9 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
         R.id.action_watchlist -> performAction { presenter?.addToWatchlist() }
 
         R.id.action_rating -> performAction {
-            ratingDialog.showRatingDialog(ratingLabelLayout.getRating())
+            if (isLoggedIn) {
+                ratingDialog.get().showRatingDialog(ratingLabelLayout.getRating())
+            }
         }
 
         else -> super.onOptionsItemSelected(item)
@@ -168,18 +180,18 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
-        ratingDialog.dismissDialog()
+        if (isLoggedIn) ratingDialog.get().dismissDialog()
         super.onConfigurationChanged(newConfig)
     }
 
     override fun onStop() {
-        ratingDialog.dismissDialog()
+        if (isLoggedIn) ratingDialog.get().dismissDialog()
         super.onStop()
     }
 
     override fun performCleanup() {
-        ratingDialog.setRatingListener(null)
-        similarMoviesAdapter?.removeListener()
         super.performCleanup()
+        similarMoviesAdapter?.removeListener()
+        if (isLoggedIn) ratingDialog.get().setRatingListener(null)
     }
 }

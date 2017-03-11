@@ -8,6 +8,7 @@ import android.view.MenuItem
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Episode
 import com.ashish.movieguide.data.models.EpisodeDetail
+import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
@@ -18,6 +19,7 @@ import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getStillImageUrl
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
+import dagger.Lazy
 import icepick.State
 import javax.inject.Inject
 
@@ -40,10 +42,15 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
         }
     }
 
-    @Inject lateinit var ratingDialog: RatingDialog
+    @Inject lateinit var ratingDialog: Lazy<RatingDialog>
+    @Inject lateinit var preferenceHelper: PreferenceHelper
 
     @JvmField @State var tvShowId: Long? = null
     @JvmField @State var episode: Episode? = null
+
+    private val isLoggedIn: Boolean by lazy {
+        preferenceHelper.getId() > 0
+    }
 
     override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
         builderHost.getActivityComponentBuilder(EpisodeDetailActivity::class.java,
@@ -77,8 +84,11 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
             imdbId = detailContent.externalIds?.imdbId
         }
 
-        ratingDialog.setRatingListener(this)
-        menu?.setRatingItemTitle(R.string.title_rate_episode)
+        if (isLoggedIn) {
+            ratingDialog.get().setRatingListener(this)
+            menu?.setRatingItemTitle(R.string.title_rate_episode)
+        }
+
         super.showDetailContent(detailContent)
     }
 
@@ -88,7 +98,9 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_rating -> performAction {
-            ratingDialog.showRatingDialog(ratingLabelLayout.getRating())
+            if (isLoggedIn) {
+                ratingDialog.get().showRatingDialog(ratingLabelLayout.getRating())
+            }
         }
 
         else -> super.onOptionsItemSelected(item)
@@ -112,17 +124,17 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
-        ratingDialog.dismissDialog()
+        if (isLoggedIn) ratingDialog.get().dismissDialog()
         super.onConfigurationChanged(newConfig)
     }
 
     override fun onStop() {
-        ratingDialog.dismissDialog()
+        if (isLoggedIn) ratingDialog.get().dismissDialog()
         super.onStop()
     }
 
     override fun performCleanup() {
-        ratingDialog.setRatingListener(null)
         super.performCleanup()
+        if (isLoggedIn) ratingDialog.get().setRatingListener(null)
     }
 }

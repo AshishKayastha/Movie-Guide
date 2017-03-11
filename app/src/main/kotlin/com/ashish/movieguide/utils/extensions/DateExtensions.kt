@@ -1,9 +1,8 @@
 package com.ashish.movieguide.utils.extensions
 
-import android.annotation.SuppressLint
 import com.ashish.movieguide.utils.Constants.DEFAULT_DATE_PATTERN
 import com.ashish.movieguide.utils.Constants.MONTH_DAY_YEAR_PATTERN
-import com.ashish.movieguide.utils.Logger
+import com.ashish.movieguide.utils.logger.Logger
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -14,11 +13,10 @@ import java.util.TimeZone
 /**
  * Created by Ashish Kayastha on Jan 26.
  */
-@SuppressLint("SimpleDateFormat")
 fun String?.convertToDate(datePattern: String = DEFAULT_DATE_PATTERN): Date? {
     if (isNotNullOrEmpty()) {
         try {
-            val sdf = SimpleDateFormat(datePattern)
+            val sdf = SimpleDateFormat(datePattern, Locale.ENGLISH)
             return sdf.parse(this)
         } catch (e: ParseException) {
             Logger.e(e)
@@ -27,12 +25,11 @@ fun String?.convertToDate(datePattern: String = DEFAULT_DATE_PATTERN): Date? {
     return null
 }
 
-@SuppressLint("SimpleDateFormat")
 fun String?.getFormattedDate(inputDateFormat: String = DEFAULT_DATE_PATTERN,
                              outputDateFormat: String = MONTH_DAY_YEAR_PATTERN): String? {
     if (isNotNullOrEmpty()) {
         try {
-            val sdf = SimpleDateFormat(inputDateFormat)
+            val sdf = SimpleDateFormat(inputDateFormat, Locale.ENGLISH)
             val date = sdf.parse(this)
             sdf.applyPattern(outputDateFormat)
             return sdf.format(date)

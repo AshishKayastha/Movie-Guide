@@ -53,31 +53,19 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
     override fun loadData() = presenter?.filterContents()
 
     override fun getAdapterType(): Int {
-        if (isMovie()) {
-            return ADAPTER_TYPE_MOVIE
-        } else {
-            return ADAPTER_TYPE_TV_SHOW
-        }
+        return if (isMovie()) ADAPTER_TYPE_MOVIE else ADAPTER_TYPE_TV_SHOW
     }
 
-    override fun getEmptyTextId() = if (isMovie()) {
-        R.string.no_movies_available
-    } else {
-        R.string.no_tv_shows_available
+    override fun getEmptyTextId(): Int {
+        return if (isMovie()) R.string.no_movies_available else R.string.no_tv_shows_available
     }
 
-    override fun getEmptyImageId() = if (isMovie()) {
-        R.drawable.ic_movie_white_100dp
-    } else {
-        R.drawable.ic_tv_white_100dp
+    override fun getEmptyImageId(): Int {
+        return if (isMovie()) R.drawable.ic_movie_white_100dp else R.drawable.ic_tv_white_100dp
     }
 
     override fun getTransitionNameId(position: Int): Int {
-        if (isMovie()) {
-            return R.string.transition_movie_poster
-        } else {
-            return R.string.transition_tv_poster
-        }
+        return if (isMovie()) R.string.transition_movie_poster else R.string.transition_tv_poster
     }
 
     override fun getDetailIntent(position: Int): Intent? {

@@ -3,10 +3,10 @@ package com.ashish.movieguide.ui.common.rating
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.di.scopes.ActivityScope
-import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.Utils
+import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -16,14 +16,14 @@ class RatingManager @Inject constructor(
         private val ratingChangeObserver: RatingChangeObserver
 ) {
 
-    private var view: ContentRatingView? = null
+    private var view: RatingMvpView? = null
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    fun setView(view: ContentRatingView?) {
+    fun setView(view: RatingMvpView?) {
         this.view = view
     }
 
-    fun saveRating(saveRatingObservable: Observable<Status>, mediaId: Long, rating: Double) {
+    fun saveRating(saveRatingObservable: Single<Status>, mediaId: Long, rating: Double) {
         performActionIfOnline {
             compositeDisposable.add(saveRatingObservable
                     .observeOn(schedulerProvider.ui())
@@ -45,7 +45,7 @@ class RatingManager @Inject constructor(
         view?.showMessage(R.string.error_save_rating)
     }
 
-    fun deleteRating(deleteRatingObservable: Observable<Status>, mediaId: Long) {
+    fun deleteRating(deleteRatingObservable: Single<Status>, mediaId: Long) {
         performActionIfOnline {
             compositeDisposable.add(deleteRatingObservable
                     .observeOn(schedulerProvider.ui())

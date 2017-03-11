@@ -4,7 +4,7 @@ import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.common.palette.PaletteBitmap
 import com.ashish.movieguide.utils.CircularTransformation
-import com.ashish.movieguide.utils.Logger
+import com.ashish.movieguide.utils.logger.Logger
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.ImageViewTarget
 

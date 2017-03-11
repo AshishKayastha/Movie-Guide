@@ -15,6 +15,7 @@ import com.ashish.movieguide.ui.personal.tvshow.PersonalTVShowFragment.Companion
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movieguide.utils.Constants.FAVORITES
+import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_TV
 import com.ashish.movieguide.utils.Constants.WATCHLIST
 import icepick.State
 import io.reactivex.disposables.Disposable
@@ -84,8 +85,8 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
 
     private fun observePersonalContentStatusChange() {
         disposable = statusObserver.getContentStatusObservable()
-                .filter { clickedItemPosition > -1 }
-                .filter { tvId ->
+                .filter { (_, mediaType) -> mediaType == MEDIA_TYPE_TV && clickedItemPosition > -1 }
+                .filter { (tvId) ->
                     // Filter tv show that has same id as that of currently removed
                     // tv show item to avoid wrong data to be removed from list.
                     val tvShow = recyclerViewAdapter.getItem<TVShow>(clickedItemPosition)

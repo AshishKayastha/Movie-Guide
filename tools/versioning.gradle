@@ -1,23 +1,22 @@
 ext.versions = [
         //Plugins
-        kotlinVersion        : '1.1.0',
-        dexCountPluginVersion: '0.6.2',
+        kotlinVersion            : '1.1.0',
+        dexCountPluginVersion    : '0.6.2',
 
         // Libraries
-        daggerVersion        : '2.9',
-        leakCanaryVersion    : '1.5',
-        okHttpVersion        : '3.6.0',
-        timberVersion        : '4.5.1',
-        icepickVersion       : '3.2.0',
-        retrofitVersion      : '2.2.0',
-        rxJava2Version       : '2.0.6',
-        rxAndroid2Version    : '2.0.1',
-        rxJava2InteropVersion: '0.9.1',
-        paperParcelVersion   : '2.0.0',
-        storioVersion        : '1.12.3',
-        supportLibVersion    : '25.2.0',
-        glideVersion         : '3.7.0',
-        glideOkHttp3Version  : '1.4.0@aar',
+        daggerVersion            : '2.9',
+        leakCanaryVersion        : '1.5',
+        timberVersion            : '4.5.1',
+        icepickVersion           : '3.2.0',
+        retrofitVersion          : '2.2.0',
+        rxJava2Version           : '2.0.6',
+        rxAndroid2Version        : '2.0.1',
+        rxJava2InteropVersion    : '0.9.1',
+        paperParcelVersion       : '2.0.0',
+        supportLibVersion        : '25.2.0',
+        glideVersion             : '3.7.0',
+        loggingInterceptorVersion: '1.0.4',
+        glideOkHttp3Version      : '1.4.0@aar',
 ]
 
 ext {

@@ -8,7 +8,8 @@ import com.ashish.movieguide.data.models.Watchlist
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.utils.AuthException
-import com.ashish.movieguide.utils.Logger
+import com.ashish.movieguide.utils.Utils
+import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -47,21 +48,23 @@ class PersonalContentManager @Inject constructor(
     }
 
     fun markAsFavorite(mediaId: Long?, mediaType: String) {
-        if (mediaId != null) {
-            isFavorite = !isFavorite
-            view?.animateFavoriteIcon(isFavorite)
+        performActionIfOnline {
+            if (mediaId != null) {
+                isFavorite = !isFavorite
+                view?.animateFavoriteIcon(isFavorite)
 
-            val favorite = Favorite(isFavorite, mediaId, mediaType)
-            compositeDisposable.add(authInteractor.markAsFavorite(favorite)
-                    .observeOn(schedulerProvider.ui())
-                    .subscribe({ onMarkAsFavoriteSuccesss(mediaId) }, { onMarkAsFavoriteError(it) }))
+                val favorite = Favorite(isFavorite, mediaId, mediaType)
+                compositeDisposable.add(authInteractor.markAsFavorite(favorite)
+                        .observeOn(schedulerProvider.ui())
+                        .subscribe({ onMarkAsFavoriteSuccesss(mediaId, mediaType) }, { onMarkAsFavoriteError(it) }))
+            }
         }
     }
 
-    private fun onMarkAsFavoriteSuccesss(mediaId: Long) {
+    private fun onMarkAsFavoriteSuccesss(mediaId: Long, mediaType: String) {
         // Notify subscriber if the content is removed from favorites
         if (!isFavorite) {
-            contentStatusObserver.notifyContentRemoved(mediaId)
+            contentStatusObserver.notifyContentRemoved(mediaId, mediaType)
         }
     }
 
@@ -80,23 +83,25 @@ class PersonalContentManager @Inject constructor(
     }
 
     fun addToWatchlist(mediaId: Long?, mediaType: String) {
-        if (mediaId != null) {
-            isInWatchlist = !isInWatchlist
-            view?.changeWatchlistMenuItem(isInWatchlist)
+        performActionIfOnline {
+            if (mediaId != null) {
+                isInWatchlist = !isInWatchlist
+                view?.changeWatchlistMenuItem(isInWatchlist)
 
-            val watchlist = Watchlist(isInWatchlist, mediaId, mediaType)
-            compositeDisposable.add(authInteractor.addToWatchlist(watchlist)
-                    .observeOn(schedulerProvider.ui())
-                    .subscribe({ onAddToWatchlistSuccess(mediaId) }, { onAddToWatchlistError(it) }))
+                val watchlist = Watchlist(isInWatchlist, mediaId, mediaType)
+                compositeDisposable.add(authInteractor.addToWatchlist(watchlist)
+                        .observeOn(schedulerProvider.ui())
+                        .subscribe({ onAddToWatchlistSuccess(mediaId, mediaType) }, { onAddToWatchlistError(it) }))
+            }
         }
     }
 
-    private fun onAddToWatchlistSuccess(mediaId: Long) {
+    private fun onAddToWatchlistSuccess(mediaId: Long, mediaType: String) {
         showWatchlistMessage(R.string.success_add_to_watchlist, R.string.success_remove_watchlist)
 
         // Notify subscriber if the content is removed from watchlist
         if (!isInWatchlist) {
-            contentStatusObserver.notifyContentRemoved(mediaId)
+            contentStatusObserver.notifyContentRemoved(mediaId, mediaType)
         }
     }
 
@@ -121,6 +126,14 @@ class PersonalContentManager @Inject constructor(
             } else {
                 showMessage(removeMessage)
             }
+        }
+    }
+
+    private fun performActionIfOnline(onlineAction: () -> Unit) {
+        if (Utils.isOnline()) {
+            onlineAction.invoke()
+        } else {
+            view?.showMessage(R.string.error_no_internet)
         }
     }
 
