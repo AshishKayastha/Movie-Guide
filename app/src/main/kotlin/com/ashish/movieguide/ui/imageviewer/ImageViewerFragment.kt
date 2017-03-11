@@ -17,6 +17,7 @@ import com.ashish.movieguide.utils.Constants.THUMBNAIL_SIZE
 import com.ashish.movieguide.utils.SystemUiHelper
 import com.ashish.movieguide.utils.TransitionListenerAdapter
 import com.ashish.movieguide.utils.extensions.bindView
+import com.ashish.movieguide.utils.extensions.getLargeImageUrl
 import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
@@ -84,7 +85,7 @@ class ImageViewerFragment : BaseFragment() {
                 .override(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
 
         fullBitmap = Glide.with(this)
-                .load(imageUrl)
+                .load(imageUrl!!.getLargeImageUrl())
                 .asBitmap()
                 .dontAnimate()
                 .override(Resources.getSystem().displayMetrics.widthPixels, Target.SIZE_ORIGINAL)

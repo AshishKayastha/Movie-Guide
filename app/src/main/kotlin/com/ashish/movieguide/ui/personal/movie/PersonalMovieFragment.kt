@@ -14,6 +14,7 @@ import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.ui.personal.movie.PersonalMovieFragment.Companion.newInstance
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movieguide.utils.Constants.FAVORITES
+import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_MOVIE
 import com.ashish.movieguide.utils.Constants.WATCHLIST
 import icepick.State
 import io.reactivex.disposables.Disposable
@@ -83,8 +84,8 @@ class PersonalMovieFragment : BaseRecyclerViewFragment<Movie,
 
     private fun observePersonalContentStatusChange() {
         disposable = statusObserver.getContentStatusObservable()
-                .filter { clickedItemPosition > -1 }
-                .filter { movieId ->
+                .filter { (_, mediaType) -> mediaType == MEDIA_TYPE_MOVIE && clickedItemPosition > -1 }
+                .filter { (movieId) ->
                     // Filter movie that has same id as that of currently removed
                     // movie item to avoid wrong data to be removed from list.
                     val movie = recyclerViewAdapter.getItem<Movie>(clickedItemPosition)

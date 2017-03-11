@@ -16,10 +16,10 @@ class RatingManager @Inject constructor(
         private val ratingChangeObserver: RatingChangeObserver
 ) {
 
-    private var view: ContentRatingView? = null
+    private var view: RatingMvpView? = null
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    fun setView(view: ContentRatingView?) {
+    fun setView(view: RatingMvpView?) {
         this.view = view
     }
 

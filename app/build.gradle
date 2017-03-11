@@ -131,8 +131,8 @@ dependencies {
     compile "com.squareup.retrofit2:converter-moshi:$versions.retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofitVersion"
 
-    // OkHttp
-    compile "com.squareup.okhttp3:logging-interceptor:$versions.okHttpVersion"
+    // Network Logging Interceptor
+    compile "com.github.ihsanbal:LoggingInterceptor:$versions.loggingInterceptorVersion"
 
     // RxJava 2/RxAndroid 2
     compile "io.reactivex.rxjava2:rxjava:$versions.rxJava2Version"

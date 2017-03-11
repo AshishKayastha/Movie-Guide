@@ -54,14 +54,14 @@ class PersonalContentManager @Inject constructor(
             val favorite = Favorite(isFavorite, mediaId, mediaType)
             compositeDisposable.add(authInteractor.markAsFavorite(favorite)
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ onMarkAsFavoriteSuccesss(mediaId) }, { onMarkAsFavoriteError(it) }))
+                    .subscribe({ onMarkAsFavoriteSuccesss(mediaId, mediaType) }, { onMarkAsFavoriteError(it) }))
         }
     }
 
-    private fun onMarkAsFavoriteSuccesss(mediaId: Long) {
+    private fun onMarkAsFavoriteSuccesss(mediaId: Long, mediaType: String) {
         // Notify subscriber if the content is removed from favorites
         if (!isFavorite) {
-            contentStatusObserver.notifyContentRemoved(mediaId)
+            contentStatusObserver.notifyContentRemoved(mediaId, mediaType)
         }
     }
 
@@ -87,16 +87,16 @@ class PersonalContentManager @Inject constructor(
             val watchlist = Watchlist(isInWatchlist, mediaId, mediaType)
             compositeDisposable.add(authInteractor.addToWatchlist(watchlist)
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ onAddToWatchlistSuccess(mediaId) }, { onAddToWatchlistError(it) }))
+                    .subscribe({ onAddToWatchlistSuccess(mediaId, mediaType) }, { onAddToWatchlistError(it) }))
         }
     }
 
-    private fun onAddToWatchlistSuccess(mediaId: Long) {
+    private fun onAddToWatchlistSuccess(mediaId: Long, mediaType: String) {
         showWatchlistMessage(R.string.success_add_to_watchlist, R.string.success_remove_watchlist)
 
         // Notify subscriber if the content is removed from watchlist
         if (!isInWatchlist) {
-            contentStatusObserver.notifyContentRemoved(mediaId)
+            contentStatusObserver.notifyContentRemoved(mediaId, mediaType)
         }
     }
 

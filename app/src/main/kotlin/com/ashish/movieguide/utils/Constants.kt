@@ -20,6 +20,9 @@ object Constants {
     const val BACKDROP_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w780"
     const val ORIGINAL_IMAGE_URL_PREFIX = TMDB_BASE_IMAGE_URL + "original"
 
+    const val LARGE_POSTER_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w500"
+    const val LARGE_BACKDROP_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w1280"
+
     const val MEDIA_TYPE_TV = "tv"
     const val MEDIA_TYPE_MOVIE = "movie"
     const val MEDIA_TYPE_PERSON = "person"

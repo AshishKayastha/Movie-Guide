@@ -1,21 +1,20 @@
 package com.ashish.movieguide.di.modules
 
+import android.util.Log
 import com.ashish.movieguide.BuildConfig
 import com.ashish.movieguide.di.qualifiers.BaseOkHttp
 import com.ashish.movieguide.utils.ApiKeyInterceptor
 import com.ashish.movieguide.utils.Constants.OMDB_API_BASE_URL
 import com.ashish.movieguide.utils.Constants.TMDB_API_BASE_URL
-import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import com.ashish.movieguide.utils.schedulers.SchedulerProvider
+import com.ihsanbal.logging.Level
+import com.ihsanbal.logging.LoggingInterceptor
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
-import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -33,19 +32,21 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor { message ->
-            Logger.tag("OkHttp").d(message)
-        }
-        loggingInterceptor.level = if (BuildConfig.DEBUG) BODY else NONE
-        return loggingInterceptor
+    fun provideHttpLoggingInterceptor(): LoggingInterceptor {
+        return LoggingInterceptor.Builder()
+                .loggable(BuildConfig.DEBUG)
+                .setLevel(Level.BASIC)
+                .log(Log.DEBUG)
+                .request("Request")
+                .response("Response")
+                .build()
     }
 
     @Provides
     @Singleton
     @JvmStatic
     @BaseOkHttp
-    fun provideBaseOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideBaseOkHttpClient(loggingInterceptor: LoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
                 .connectTimeout(30, SECONDS)
                 .readTimeout(30, SECONDS)
