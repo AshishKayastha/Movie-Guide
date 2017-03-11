@@ -6,7 +6,6 @@ import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.ImageItem
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.AuthException
-import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
@@ -34,19 +33,12 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
     }
 
     private fun loadFreshData(id: Long?) {
-        if (Utils.isOnline()) {
-            if (id != null) {
-                getView()?.showProgress()
-                addDisposable(getDetailContent(id)
-                        .doOnSuccess { fullDetailContent = it }
-                        .observeOn(schedulerProvider.ui())
-                        .subscribe({ showDetailContent(it) }, { onLoadDetailError(it, getErrorMessageId()) }))
-            }
-        } else {
-            getView()?.apply {
-                showToastMessage(R.string.error_no_internet)
-                finishActivity()
-            }
+        if (id != null) {
+            getView()?.showProgress()
+            addDisposable(getDetailContent(id)
+                    .doOnSuccess { fullDetailContent = it }
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe({ showDetailContent(it) }, { onLoadDetailError(it, getErrorMessageId()) }))
         }
     }
 

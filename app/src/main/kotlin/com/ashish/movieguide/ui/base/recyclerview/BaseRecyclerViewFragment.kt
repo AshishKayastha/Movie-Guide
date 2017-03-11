@@ -20,7 +20,6 @@ import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movieguide.ui.widget.StaggeredGridRecyclerView
-import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
 import com.ashish.movieguide.utils.extensions.hide
@@ -133,14 +132,10 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     override fun resetLoading() = scrollListener.resetLoading()
 
     override fun onItemClick(position: Int, view: View) {
-        if (Utils.isOnline()) {
-            val intent = getDetailIntent(position)
-            if (intent != null) {
-                val posterImagePair = view.getPosterImagePair(getTransitionNameId(position))
-                activity?.startActivityWithTransition(posterImagePair, intent)
-            }
-        } else {
-            showMessage(R.string.error_no_internet)
+        val intent = getDetailIntent(position)
+        if (intent != null) {
+            val posterImagePair = view.getPosterImagePair(getTransitionNameId(position))
+            activity?.startActivityWithTransition(posterImagePair, intent)
         }
     }
 

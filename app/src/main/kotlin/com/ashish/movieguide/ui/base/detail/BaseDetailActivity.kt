@@ -49,7 +49,6 @@ import com.ashish.movieguide.utils.CustomTypefaceSpan
 import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.StartSnapHelper
 import com.ashish.movieguide.utils.TransitionListenerAdapter
-import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.extensions.animateBackgroundColorChange
 import com.ashish.movieguide.utils.extensions.animateColorChange
 import com.ashish.movieguide.utils.extensions.animateTextColorChange
@@ -395,12 +394,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     abstract fun getItemTitle(): String
 
     protected fun startNewActivityWithTransition(view: View, transitionNameId: Int, intent: Intent) {
-        if (Utils.isOnline()) {
-            val imagePair = view.getPosterImagePair(transitionNameId)
-            startActivityWithTransition(imagePair, intent)
-        } else {
-            showMessage(R.string.error_no_internet)
-        }
+        val imagePair = view.getPosterImagePair(transitionNameId)
+        startActivityWithTransition(imagePair, intent)
     }
 
     override fun finishActivity() = finishAfterTransition()

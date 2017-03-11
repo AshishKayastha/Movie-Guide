@@ -5,7 +5,6 @@ import com.ashish.movieguide.data.models.Results
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.utils.AuthException
-import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
@@ -38,17 +37,12 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     fun loadFreshData(type: Int?, showProgress: Boolean = true) {
-        if (Utils.isOnline()) {
-            addDisposable(getResultsObservable(getType(type), 1)
-                    .doOnSuccess { totalPages = it.totalPages }
-                    .observeOn(schedulerProvider.ui())
-                    .doOnSubscribe { if (showProgress) getView()?.showProgress() }
-                    .doFinally { getView()?.hideProgress() }
-                    .subscribe({ showResults(it) }, { showErrorMessage(it) }))
-        } else {
-            getView()?.hideProgress()
-            showNoInternetMessage()
-        }
+        addDisposable(getResultsObservable(getType(type), 1)
+                .doOnSuccess { totalPages = it.totalPages }
+                .observeOn(schedulerProvider.ui())
+                .doOnSubscribe { if (showProgress) getView()?.showProgress() }
+                .doFinally { getView()?.hideProgress() }
+                .subscribe({ showResults(it) }, { showErrorMessage(it) }))
     }
 
     protected open fun getType(type: Int?): String? = null
@@ -69,16 +63,11 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     fun loadMoreData(type: Int?, page: Int) {
-        if (Utils.isOnline()) {
-            if (page <= totalPages) {
-                getView()?.showLoadingItem()
-                addDisposable(getResultsObservable(getType(type), page)
-                        .observeOn(schedulerProvider.ui())
-                        .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))
-            }
-        } else {
-            getView()?.resetLoading()
-            showNoInternetMessage()
+        if (page <= totalPages) {
+            addDisposable(getResultsObservable(getType(type), page)
+                    .observeOn(schedulerProvider.ui())
+                    .doOnSubscribe { getView()?.showLoadingItem() }
+                    .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))
         }
     }
 

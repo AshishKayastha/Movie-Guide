@@ -1,11 +1,14 @@
 package com.ashish.movieguide.di.modules
 
+import android.content.Context
 import android.util.Log
 import com.ashish.movieguide.BuildConfig
+import com.ashish.movieguide.di.qualifiers.ApplicationContext
 import com.ashish.movieguide.di.qualifiers.BaseOkHttp
 import com.ashish.movieguide.utils.ApiKeyInterceptor
 import com.ashish.movieguide.utils.Constants.OMDB_API_BASE_URL
 import com.ashish.movieguide.utils.Constants.TMDB_API_BASE_URL
+import com.ashish.movieguide.utils.OfflineCacheInterceptor
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import com.ashish.movieguide.utils.schedulers.SchedulerProvider
 import com.ihsanbal.logging.Level
@@ -13,12 +16,14 @@ import com.ihsanbal.logging.LoggingInterceptor
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
+import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Named
 import javax.inject.Singleton
@@ -28,6 +33,9 @@ import javax.inject.Singleton
  */
 @Module
 object NetModule {
+
+    private const val CACHE_DIRECTORY = "http-cache"
+    private const val CACHE_SIZE = 20 * 1024 * 1024L // 20MB
 
     @Provides
     @Singleton
@@ -45,12 +53,22 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
+    fun provideCache(@ApplicationContext context: Context): Cache {
+        return Cache(File(context.cacheDir, CACHE_DIRECTORY), CACHE_SIZE)
+    }
+
+    @Provides
+    @Singleton
+    @JvmStatic
     @BaseOkHttp
-    fun provideBaseOkHttpClient(loggingInterceptor: LoggingInterceptor): OkHttpClient {
+    fun provideBaseOkHttpClient(cache: Cache, loggingInterceptor: LoggingInterceptor,
+                                offlineCacheInterceptor: OfflineCacheInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
                 .connectTimeout(30, SECONDS)
                 .readTimeout(30, SECONDS)
                 .writeTimeout(30, SECONDS)
+                .cache(cache)
+                .addInterceptor(offlineCacheInterceptor)
                 .addInterceptor(loggingInterceptor)
                 .build()
     }
