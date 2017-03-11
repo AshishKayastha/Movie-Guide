@@ -8,7 +8,7 @@ import com.ashish.movieguide.data.models.Watchlist
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.utils.AuthException
-import com.ashish.movieguide.utils.Logger
+import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject

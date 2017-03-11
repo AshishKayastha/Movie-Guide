@@ -5,9 +5,9 @@ import com.ashish.movieguide.data.models.Results
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.utils.AuthException
-import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
+import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
 import java.io.IOException

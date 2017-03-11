@@ -3,8 +3,8 @@ package com.ashish.movieguide.ui.common.rating
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.Status
 import com.ashish.movieguide.di.scopes.ActivityScope
-import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.Utils
+import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable

@@ -2,7 +2,7 @@ package com.ashish.movieguide.utils.extensions
 
 import com.ashish.movieguide.utils.Constants.DEFAULT_DATE_PATTERN
 import com.ashish.movieguide.utils.Constants.MONTH_DAY_YEAR_PATTERN
-import com.ashish.movieguide.utils.Logger
+import com.ashish.movieguide.utils.logger.Logger
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat

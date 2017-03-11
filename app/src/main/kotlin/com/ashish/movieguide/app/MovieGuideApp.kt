@@ -8,7 +8,7 @@ import com.ashish.movieguide.di.modules.AppModule
 import com.ashish.movieguide.di.multibindings.AbstractComponent
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilder
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
-import com.ashish.movieguide.utils.Logger
+import com.ashish.movieguide.utils.logger.Logger
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.ashish.movieguide.utils
+package com.ashish.movieguide.utils.logger
 
 import com.ashish.movieguide.BuildConfig
 import timber.log.Timber
@@ -10,19 +10,10 @@ object Logger {
 
     fun init() {
         if (BuildConfig.DEBUG) {
-            Timber.plant(object : Timber.DebugTree() {
-                override fun createStackElementTag(element: StackTraceElement): String {
-                    return super.createStackElementTag(element) + ":" + element.lineNumber
-                }
-            })
+            Timber.plant(DebugTree())
         } else {
             Timber.plant(ReleaseTree())
         }
-    }
-
-    fun tag(tag: String): Logger {
-        Timber.tag(tag)
-        return this
     }
 
     fun v(msg: String, vararg objects: Any) = Timber.v(msg, *objects)

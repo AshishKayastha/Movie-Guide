@@ -16,7 +16,7 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View? {
 }
 
 fun ViewGroup.changeViewGroupTextFont() {
-    views.filterIsInstance<TextView>().forEach(TextView::changeTypeface)
+    views.filterIsInstance<TextView>().forEach { it.changeTypeface() }
 }
 
 fun TabLayout.changeTabFont() {

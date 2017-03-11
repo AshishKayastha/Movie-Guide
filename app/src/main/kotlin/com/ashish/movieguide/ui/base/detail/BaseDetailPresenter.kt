@@ -6,11 +6,11 @@ import com.ashish.movieguide.data.models.FullDetailContent
 import com.ashish.movieguide.data.models.ImageItem
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.AuthException
-import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
+import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
 import java.io.IOException
@@ -71,8 +71,8 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
 
     private fun showAllImages(detailContent: I) {
         val imageUrlList = ArrayList<String>()
-        addImages(imageUrlList, getPosterImages(detailContent), String?::getPosterUrl)
-        addImages(imageUrlList, getBackdropImages(detailContent), String?::getBackdropUrl)
+        addImages(imageUrlList, getPosterImages(detailContent)) { it.getPosterUrl() }
+        addImages(imageUrlList, getBackdropImages(detailContent)) { it.getBackdropUrl() }
 
         if (imageUrlList.isNotEmpty()) {
             getView()?.showImageList(imageUrlList)

@@ -5,8 +5,8 @@ import com.ashish.movieguide.data.interactors.AuthInteractor
 import com.ashish.movieguide.data.models.RequestToken
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
-import com.ashish.movieguide.utils.Logger
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
+import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import javax.inject.Inject
 
