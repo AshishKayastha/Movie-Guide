@@ -5,8 +5,8 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.common.palette.PaletteBitmap
 import com.ashish.movieguide.utils.CircularTransformation
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.ImageViewTarget
-import timber.log.Timber
 
 inline fun ImageView.loadPaletteBitmap(imageUrl: String?, width: Int = 0, height: Int = 0,
                                        crossinline action: ((PaletteBitmap?) -> Unit)) {
@@ -30,12 +30,12 @@ inline fun ImageView.loadPaletteBitmap(imageUrl: String?, width: Int = 0, height
     }
 }
 
-fun ImageView.loadGravatarImage(gravatarHash: String?) {
-    if (gravatarHash.isNotNullOrEmpty()) {
-        Timber.v(gravatarHash!!)
+fun ImageView.loadCircularImage(imageUrl: String?) {
+    if (imageUrl.isNotNullOrEmpty()) {
         Glide.with(context)
-                .load("https://www.gravatar.com/avatar/$gravatarHash.jpg?s=90")
+                .load(imageUrl)
                 .bitmapTransform(CircularTransformation(Glide.get(context).bitmapPool))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.ic_person_white_80dp)
                 .error(R.drawable.ic_person_white_80dp)
                 .into(this)

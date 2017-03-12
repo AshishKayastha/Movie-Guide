@@ -1,16 +1,18 @@
 package com.ashish.movieguide.ui.main
 
+import android.app.Activity
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.util.Pair
 import android.support.v4.view.GravityCompat.START
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.preferences.PreferenceHelper
@@ -19,7 +21,7 @@ import com.ashish.movieguide.di.multibindings.AbstractComponent
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilder
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
-import com.ashish.movieguide.ui.base.mvp.MvpActivity
+import com.ashish.movieguide.ui.base.common.BaseActivity
 import com.ashish.movieguide.ui.login.LoginActivity
 import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_DISCOVER
 import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_FAVORITES
@@ -29,10 +31,9 @@ import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_RATED
 import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_TV_SHOW
 import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_WATCHLIST
 import com.ashish.movieguide.ui.multisearch.activity.MultiSearchActivity
+import com.ashish.movieguide.ui.profile.ProfileActivity
 import com.ashish.movieguide.ui.widget.FontTextView
-import com.ashish.movieguide.utils.CustomTabsHelper
 import com.ashish.movieguide.utils.CustomTypefaceSpan
-import com.ashish.movieguide.utils.DialogUtils
 import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.bindView
@@ -41,17 +42,20 @@ import com.ashish.movieguide.utils.extensions.changeTabFont
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getStringArray
-import com.ashish.movieguide.utils.extensions.loadGravatarImage
+import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
+import com.ashish.movieguide.utils.extensions.loadCircularImage
 import com.ashish.movieguide.utils.extensions.runDelayed
 import com.ashish.movieguide.utils.extensions.setVisibility
-import com.ashish.movieguide.utils.extensions.showToast
-import dagger.Lazy
+import com.ashish.movieguide.utils.extensions.startActivityWithTransition
 import javax.inject.Inject
 import javax.inject.Provider
 
-class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentComponentBuilderHost {
+class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
 
-    @Inject lateinit var dialogUtils: Lazy<DialogUtils>
+    companion object {
+        private const val RC_CONNECT_TRAKT = 99
+    }
+
     @Inject lateinit var preferenceHelper: PreferenceHelper
 
     @Inject
@@ -63,6 +67,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
     private val navigationView: NavigationView by bindView(R.id.navigation_view)
 
     private lateinit var userImage: ImageView
+    private lateinit var headerImage: ImageView
     private lateinit var nameText: FontTextView
     private lateinit var userNameText: FontTextView
 
@@ -118,55 +123,35 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
         navigationView.getHeaderView(0).apply {
             nameText = find<FontTextView>(R.id.name_text)
             userImage = find<ImageView>(R.id.user_image)
+            headerImage = find<ImageView>(R.id.header_bg_image)
             userNameText = find<FontTextView>(R.id.user_name_text)
         }
 
         showUserProfile()
         userImage.setOnClickListener {
-            drawerLayout.closeDrawers()
-            runDelayed(200L) {
-                startActivity(Intent(this, LoginActivity::class.java))
-                //                if (preferenceHelper.getId() > 0) {
-                //                    showLogOutDialog()
-                //                } else {
-                //                    showTmdbLoginDialog()
-                //                }
+            if (preferenceHelper.getSlug().isNotNullOrEmpty()) {
+                val viewPair = Pair.create(userImage as View, getString(R.string.transition_user_image))
+                startActivityWithTransition(viewPair, Intent(this, ProfileActivity::class.java))
+            } else {
+                drawerLayout.closeDrawers()
+                runDelayed(250L) {
+                    startActivityForResult(Intent(this, LoginActivity::class.java), RC_CONNECT_TRAKT)
+                }
             }
         }
     }
 
     private fun showUserProfile() {
         preferenceHelper.apply {
-            if (getId() > 0) {
+            if (getSlug().isNotNullOrEmpty()) {
                 nameText.applyText(getName())
             } else {
-                nameText.setText(R.string.login_with_tmdb)
+                nameText.setText(R.string.connect_to_trakt)
             }
 
             userNameText.applyText(getUserName())
-            userImage.loadGravatarImage(getGravatarHash())
+            userImage.loadCircularImage(getImageUrl())
         }
-    }
-
-    private fun showTmdbLoginDialog() {
-        dialogUtils.get().buildDialog()
-                .withTitle(R.string.title_tmdb_login)
-                .withContent(R.string.content_tmdb_login)
-                .withNegativeButton(android.R.string.cancel)
-                .withPositiveButton(R.string.login_btn, { presenter?.createRequestToken() })
-                .show()
-    }
-
-    private fun showLogOutDialog() {
-        dialogUtils.get().buildDialog()
-                .withTitle(R.string.title_log_out)
-                .withContent(R.string.content_log_out)
-                .withNegativeButton(android.R.string.cancel)
-                .withPositiveButton(R.string.title_log_out, {
-                    preferenceHelper.clearUserData()
-                    showUserProfile()
-                })
-                .show()
     }
 
     private fun showViewPagerFragment(contentType: Int, titleArray: Array<String>) {
@@ -212,36 +197,9 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CustomTabsHelper.RC_TMDB_LOGIN) {
-            presenter?.createSession()
+        if (requestCode == RC_CONNECT_TRAKT && resultCode == Activity.RESULT_OK) {
+            showUserProfile()
         }
-    }
-
-    override fun showProgressDialog(messageId: Int) {
-        dialogUtils.get().showProgressDialog(messageId)
-    }
-
-    override fun hideProgressDialog() {
-        dialogUtils.get().dismissProgressDialog()
-    }
-
-    override fun validateRequestToken(tokenValidationUrl: String) {
-        CustomTabsHelper.launchUrlForResult(this, tokenValidationUrl)
-    }
-
-    override fun onLoginSuccess() {
-        showUserProfile()
-        showToast(String.format(getString(R.string.success_tmdb_login), preferenceHelper.getName()))
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration?) {
-        dialogUtils.get().dismissAllDialogs()
-        super.onConfigurationChanged(newConfig)
-    }
-
-    override fun onStop() {
-        dialogUtils.get().dismissAllDialogs()
-        super.onStop()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

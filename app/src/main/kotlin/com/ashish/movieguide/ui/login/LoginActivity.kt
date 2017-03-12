@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.login
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -91,6 +92,7 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
     }
 
     override fun onLoginSuccess() {
+        setResult(Activity.RESULT_OK)
         showToastMessage(R.string.success_trakt_login)
         finish()
     }

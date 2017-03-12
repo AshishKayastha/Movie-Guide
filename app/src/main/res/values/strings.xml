@@ -238,4 +238,16 @@
     <string name="success_trakt_login">Successfully connected to your Trakt account</string>
     <string name="error_trakt_login">Something went wrong. Check your Trakt credentials and try again.</string>
     <string name="connect_to_trakt_desc">Connect Movie Guide to Trakt to keep track of TV shows and movies you watch.</string>
+
+    <!-- Profile -->
+    <string name="title_profile">Profile</string>
+
+    <string name="friend_count">%d Friend</string>
+    <string name="friends_count">%d Friends</string>
+
+    <string name="follower_count">%d Follower</string>
+    <string name="followers_count">%d Followers</string>
+
+    <string name="following_count">%d Following</string>
+    <string name="followings_count">%d Followings</string>
 </resources>

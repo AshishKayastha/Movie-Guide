@@ -14,6 +14,8 @@ import com.ashish.movieguide.ui.multisearch.activity.MultiSearchActivity
 import com.ashish.movieguide.ui.multisearch.activity.MultiSearchComponent
 import com.ashish.movieguide.ui.people.detail.PersonDetailActivity
 import com.ashish.movieguide.ui.people.detail.PersonDetailComponent
+import com.ashish.movieguide.ui.profile.ProfileActivity
+import com.ashish.movieguide.ui.profile.ProfileComponent
 import com.ashish.movieguide.ui.review.ReviewActivity
 import com.ashish.movieguide.ui.review.ReviewComponent
 import com.ashish.movieguide.ui.season.SeasonDetailActivity
@@ -29,6 +31,7 @@ import dagger.multibindings.IntoMap
  */
 @Module(subcomponents = arrayOf(
         LoginComponent::class,
+        ProfileComponent::class,
         MainComponent::class,
         MovieDetailComponent::class,
         TVShowDetailComponent::class,
@@ -44,6 +47,11 @@ abstract class ActivityBinders {
     @IntoMap
     @ActivityKey(LoginActivity::class)
     abstract fun loginComponentBuilder(builder: LoginComponent.Builder): ActivityComponentBuilder<*, *>
+
+    @Binds
+    @IntoMap
+    @ActivityKey(ProfileActivity::class)
+    abstract fun profileComponentBuilder(builder: ProfileComponent.Builder): ActivityComponentBuilder<*, *>
 
     @Binds
     @IntoMap

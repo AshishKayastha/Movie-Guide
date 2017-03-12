@@ -30,7 +30,6 @@ import com.ashish.movieguide.ui.common.adapter.ImageAdapter
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.common.adapter.ViewType
-import com.ashish.movieguide.ui.common.palette.PaletteBitmap
 import com.ashish.movieguide.ui.imageviewer.ImageViewerActivity
 import com.ashish.movieguide.ui.imageviewer.ImageViewerActivity.Companion.EXTRA_CURRENT_POSITION
 import com.ashish.movieguide.ui.imageviewer.ImageViewerActivity.Companion.EXTRA_STARTING_POSITION
@@ -50,7 +49,6 @@ import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.StartSnapHelper
 import com.ashish.movieguide.utils.TransitionListenerAdapter
 import com.ashish.movieguide.utils.extensions.animateBackgroundColorChange
-import com.ashish.movieguide.utils.extensions.animateColorChange
 import com.ashish.movieguide.utils.extensions.animateTextColorChange
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeMenuAndSubMenuFont
@@ -59,16 +57,13 @@ import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
 import com.ashish.movieguide.utils.extensions.getStringArray
-import com.ashish.movieguide.utils.extensions.getSwatchWithMostPixels
 import com.ashish.movieguide.utils.extensions.hide
-import com.ashish.movieguide.utils.extensions.isDark
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.loadPaletteBitmap
 import com.ashish.movieguide.utils.extensions.openUrl
-import com.ashish.movieguide.utils.extensions.scrimify
-import com.ashish.movieguide.utils.extensions.setLightStatusBar
 import com.ashish.movieguide.utils.extensions.setOverflowMenuColor
 import com.ashish.movieguide.utils.extensions.setPaletteColor
+import com.ashish.movieguide.utils.extensions.setTopBarColorAndAnimate
 import com.ashish.movieguide.utils.extensions.setTransitionName
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
@@ -103,7 +98,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     private val imagesViewStub: ViewStub by bindView(R.id.images_view_stub)
     private val detailContentRecyclerView: RecyclerView by bindView(R.id.detail_content_recycler_view)
 
-    private var statusBarColor: Int = 0
     private var loadContent: Boolean = true
     private lateinit var regularFont: Typeface
     private var rottenTomatoesUrl: String? = null
@@ -204,7 +198,9 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     protected fun showBackdropImage(backdropPath: String) {
         backdropImage.loadPaletteBitmap(backdropPath) { paletteBitmap ->
             revealBackdropImage()
-            setTopBarColorAndAnimate(paletteBitmap)
+            setTopBarColorAndAnimate(paletteBitmap, collapsingToolbar) {
+                tintTopBarIconsToBlack()
+            }
         }
     }
 
@@ -231,39 +227,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     abstract fun getBackdropPath(): String
 
-    private fun setTopBarColorAndAnimate(paletteBitmap: PaletteBitmap?) {
-        if (paletteBitmap != null) {
-            val palette = paletteBitmap.palette
-            val isDark = paletteBitmap.bitmap.isDark(palette)
-
-            if (!isDark) {
-                tintTopBarIconsToBlack()
-            }
-
-            statusBarColor = window.statusBarColor
-            val rgbColor = palette.getSwatchWithMostPixels()?.rgb
-
-            /*
-              Animate status bar color change between previous status bar color
-              and the color extracted from bitmap through palette.
-             */
-            if (rgbColor != null) {
-                statusBarColor = rgbColor.scrimify(isDark)
-                collapsingToolbar.setContentScrimColor(rgbColor)
-                animateColorChange(window.statusBarColor, statusBarColor, 500L) { color ->
-                    window.statusBarColor = color
-                }
-            }
-        }
-    }
-
-    /**
-     * Change status bar to light color for API 23+ devices which turns
-     * status bar icons to black and also tint toolbar icons and text
-     * to black for better visibility in light image.
-     */
     private fun tintTopBarIconsToBlack() {
-        window.decorView.setLightStatusBar()
         val primaryBlack = getColorCompat(R.color.primary_text_dark)
 
         val backButton = toolbar[0] as ImageButton?

@@ -11,4 +11,5 @@
     <string name="transition_person_profile">person_profile_image</string>
     <string name="transition_season_poster">season_poster_image</string>
     <string name="transition_episode_image">episode_still_image</string>
+    <string name="transition_user_image">user_image</string>
 </resources>

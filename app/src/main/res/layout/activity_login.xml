@@ -54,7 +54,11 @@
             android:theme="@style/ConnectButton"
             app:fontName="@string/font_montserrat_medium" />
 
-        <include layout="@layout/layout_progress_bar" />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/ProgressBar"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            tools:visibility="visible" />
 
         <com.ashish.movieguide.ui.widget.FontTextView
             android:id="@+id/status_text"

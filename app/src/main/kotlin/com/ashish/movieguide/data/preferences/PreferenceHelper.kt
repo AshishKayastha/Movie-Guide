@@ -83,7 +83,7 @@ class PreferenceHelper @Inject constructor(private val sharedPrefs: SharedPrefer
 
     fun isPrivate(): Boolean = getBoolean(PREF_IS_PRIVATE)
 
-    fun setIsPrivate(isPrivate: Boolean) = putBoolean(PREF_USER_JOINED_AT, isPrivate)
+    fun setIsPrivate(isPrivate: Boolean) = putBoolean(PREF_IS_PRIVATE, isPrivate)
 
     fun isVIP(): Boolean = getBoolean(PREF_IS_VIP)
 

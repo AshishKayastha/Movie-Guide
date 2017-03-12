@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="friends">
+        <item quantity="zero">@string/friend_count</item>
+        <item quantity="one">@string/friend_count</item>
+        <item quantity="other">@string/friends_count</item>
+    </plurals>
+
+    <plurals name="followers">
+        <item quantity="zero">@string/follower_count</item>
+        <item quantity="one">@string/follower_count</item>
+        <item quantity="other">@string/followers_count</item>
+    </plurals>
+
+    <plurals name="followings">
+        <item quantity="zero">@string/following_count</item>
+        <item quantity="one">@string/following_count</item>
+        <item quantity="other">@string/followings_count</item>
+    </plurals>
+</resources>

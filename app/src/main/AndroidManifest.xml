@@ -82,6 +82,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:label="@string/title_profile" />
+
     </application>
 
 </manifest>
