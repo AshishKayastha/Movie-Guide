@@ -18,7 +18,7 @@ class DiscoverTVShowPresenter @Inject constructor(
         schedulerProvider: BaseSchedulerProvider
 ) : BaseDiscoverPresenter<TVShow>(filterQueryModel, schedulerProvider) {
 
-    override fun getResultsObservable(type: String?, page: Int): Single<Results<TVShow>> {
+    override fun getResults(type: String?, page: Int): Single<Results<TVShow>> {
         return tvShowInteractor.discoverTVShow(sortBy, minDate, maxDate, genreIds, page)
     }
 }

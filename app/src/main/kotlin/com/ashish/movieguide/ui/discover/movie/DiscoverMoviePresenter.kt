@@ -18,7 +18,7 @@ class DiscoverMoviePresenter @Inject constructor(
         schedulerProvider: BaseSchedulerProvider
 ) : BaseDiscoverPresenter<Movie>(filterQueryModel, schedulerProvider) {
 
-    override fun getResultsObservable(type: String?, page: Int): Single<Results<Movie>> {
+    override fun getResults(type: String?, page: Int): Single<Results<Movie>> {
         return movieInteractor.discoverMovie(sortBy, minDate, maxDate, genreIds, page)
     }
 }

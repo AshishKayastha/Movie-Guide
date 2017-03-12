@@ -2,9 +2,11 @@ package com.ashish.movieguide.ui.people.list
 
 import com.ashish.movieguide.data.interactors.PeopleInteractor
 import com.ashish.movieguide.data.models.tmdb.Person
+import com.ashish.movieguide.data.models.tmdb.Results
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -15,5 +17,6 @@ class PeoplePresenter @Inject constructor(
         schedulerProvider: BaseSchedulerProvider
 ) : BaseRecyclerViewPresenter<Person, BaseRecyclerViewMvpView<Person>>(schedulerProvider) {
 
-    override fun getResultsObservable(type: String?, page: Int) = peopleInteractor.getPopularPeople(page)
+    override fun getResults(type: String?, page: Int): Single<Results<Person>>
+            = peopleInteractor.getPopularPeople(page)
 }

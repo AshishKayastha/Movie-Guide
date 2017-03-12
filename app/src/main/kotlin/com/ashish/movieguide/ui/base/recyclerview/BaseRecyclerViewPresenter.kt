@@ -37,7 +37,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     fun loadFreshData(type: Int?, showProgress: Boolean = true) {
-        addDisposable(getResultsObservable(getType(type), 1)
+        addDisposable(getResults(getType(type), 1)
                 .doOnSuccess { totalPages = it.totalPages }
                 .observeOn(schedulerProvider.ui())
                 .doOnSubscribe { if (showProgress) getView()?.showProgress() }
@@ -47,7 +47,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     protected open fun getType(type: Int?): String? = null
 
-    protected abstract fun getResultsObservable(type: String?, page: Int): Single<Results<I>>
+    protected abstract fun getResults(type: String?, page: Int): Single<Results<I>>
 
     protected fun showResults(data: Results<I>) {
         currentPage = data.page
@@ -64,7 +64,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     fun loadMoreData(type: Int?, page: Int) {
         if (page <= totalPages) {
-            addDisposable(getResultsObservable(getType(type), page)
+            addDisposable(getResults(getType(type), page)
                     .observeOn(schedulerProvider.ui())
                     .doOnSubscribe { getView()?.showLoadingItem() }
                     .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))

@@ -6,9 +6,11 @@ import com.ashish.movieguide.data.api.tmdb.MovieApi.Companion.TOP_RATED
 import com.ashish.movieguide.data.api.tmdb.MovieApi.Companion.UPCOMING
 import com.ashish.movieguide.data.interactors.MovieInteractor
 import com.ashish.movieguide.data.models.tmdb.Movie
+import com.ashish.movieguide.data.models.tmdb.Results
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -26,5 +28,6 @@ class MoviePresenter @Inject constructor(
 
     override fun getType(type: Int?) = MOVIE_TYPES[type ?: 0]
 
-    override fun getResultsObservable(type: String?, page: Int) = movieInteractor.getMoviesByType(type, page)
+    override fun getResults(type: String?, page: Int): Single<Results<Movie>>
+            = movieInteractor.getMoviesByType(type, page)
 }

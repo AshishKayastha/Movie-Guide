@@ -25,8 +25,6 @@ class MultiSearchPresenter @Inject constructor(
 
     override fun getType(type: Int?) = searchQuery
 
-    override fun getResultsObservable(type: String?, page: Int): Single<Results<MultiSearch>> {
-        return searchApi.getMultiSearchResults(type!!, page)
-                .observeOn(schedulerProvider.ui())
-    }
+    override fun getResults(type: String?, page: Int): Single<Results<MultiSearch>>
+            = searchApi.getMultiSearchResults(type!!, page)
 }
