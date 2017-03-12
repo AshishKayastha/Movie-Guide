@@ -1,7 +1,7 @@
 package com.ashish.movieguide.data.api.tmdb
 
-import com.ashish.movieguide.data.models.MultiSearch
-import com.ashish.movieguide.data.models.Results
+import com.ashish.movieguide.data.models.tmdb.MultiSearch
+import com.ashish.movieguide.data.models.tmdb.Results
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

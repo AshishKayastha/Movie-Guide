@@ -6,8 +6,8 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.Episode
-import com.ashish.movieguide.data.models.EpisodeDetail
+import com.ashish.movieguide.data.models.tmdb.Episode
+import com.ashish.movieguide.data.models.tmdb.EpisodeDetail
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost

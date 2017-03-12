@@ -1,7 +1,7 @@
 package com.ashish.movieguide.ui.personal.tvshow
 
 import com.ashish.movieguide.data.interactors.AuthInteractor
-import com.ashish.movieguide.data.models.TVShow
+import com.ashish.movieguide.data.models.tmdb.TVShow
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movieguide.utils.Constants.PERSONAL_CONTENT_TYPES

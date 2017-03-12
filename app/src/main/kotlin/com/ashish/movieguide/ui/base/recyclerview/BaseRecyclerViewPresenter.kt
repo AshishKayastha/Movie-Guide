@@ -1,14 +1,14 @@
 package com.ashish.movieguide.ui.base.recyclerview
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.Results
+import com.ashish.movieguide.data.models.tmdb.Results
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
-import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
+import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayList
 
@@ -93,7 +93,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     protected fun showErrorMessage(t: Throwable) {
-        Logger.e(t)
+        Timber.e(t)
         getView()?.apply {
             if (t is IOException) {
                 showNoInternetMessage()

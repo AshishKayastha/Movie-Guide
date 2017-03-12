@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_layout"
+    style="@style/Match">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/first_keyline"
+            android:indeterminate="true"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        style="@style/MaterialKeylinePadding"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize">
+
+        <ImageView
+            android:id="@+id/trakt_logo"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_xxlarge"
+            android:src="@drawable/trakt_logo"
+            tools:ignore="ContentDescription" />
+
+        <com.ashish.movieguide.ui.widget.FontTextView
+            style="@style/PrimaryText"
+            android:layout_marginBottom="@dimen/spacing_xlarge"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/line_spacing"
+            android:text="@string/connect_to_trakt_desc"
+            android:textSize="@dimen/text_size_xlarge" />
+
+        <com.ashish.movieguide.ui.widget.FontButton
+            android:id="@+id/connect_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="20dp"
+            android:text="@string/connect_to_trakt"
+            android:theme="@style/ConnectButton"
+            app:fontName="@string/font_montserrat_medium" />
+
+        <com.ashish.movieguide.ui.widget.FontTextView
+            android:id="@+id/status_text"
+            style="@style/PrimaryText"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/line_spacing"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:visibility="gone" />
+
+</android.support.design.widget.CoordinatorLayout>

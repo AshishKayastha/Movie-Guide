@@ -1,7 +1,7 @@
 package com.ashish.movieguide.ui.base.detail
 
-import com.ashish.movieguide.data.models.Credit
-import com.ashish.movieguide.data.models.OMDbDetail
+import com.ashish.movieguide.data.models.tmdb.Credit
+import com.ashish.movieguide.data.models.tmdb.OMDbDetail
 import com.ashish.movieguide.ui.base.mvp.ProgressView
 import java.util.ArrayList
 

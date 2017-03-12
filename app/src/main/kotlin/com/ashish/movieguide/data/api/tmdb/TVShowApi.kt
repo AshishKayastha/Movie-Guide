@@ -1,12 +1,12 @@
 package com.ashish.movieguide.data.api.tmdb
 
-import com.ashish.movieguide.data.models.EpisodeDetail
-import com.ashish.movieguide.data.models.Rating
-import com.ashish.movieguide.data.models.Results
-import com.ashish.movieguide.data.models.SeasonDetail
-import com.ashish.movieguide.data.models.Status
-import com.ashish.movieguide.data.models.TVShow
-import com.ashish.movieguide.data.models.TVShowDetail
+import com.ashish.movieguide.data.models.tmdb.EpisodeDetail
+import com.ashish.movieguide.data.models.tmdb.Rating
+import com.ashish.movieguide.data.models.tmdb.Results
+import com.ashish.movieguide.data.models.tmdb.SeasonDetail
+import com.ashish.movieguide.data.models.tmdb.Status
+import com.ashish.movieguide.data.models.tmdb.TVShow
+import com.ashish.movieguide.data.models.tmdb.TVShowDetail
 import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Single
 import retrofit2.http.Body

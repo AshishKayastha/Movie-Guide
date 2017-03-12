@@ -1,10 +1,10 @@
 package com.ashish.movieguide.data.interactors
 
 import com.ashish.movieguide.data.api.tmdb.PeopleApi
-import com.ashish.movieguide.data.models.FullDetailContent
-import com.ashish.movieguide.data.models.Person
-import com.ashish.movieguide.data.models.PersonDetail
-import com.ashish.movieguide.data.models.Results
+import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.tmdb.Person
+import com.ashish.movieguide.data.models.tmdb.PersonDetail
+import com.ashish.movieguide.data.models.tmdb.Results
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -1,6 +1,6 @@
 package com.ashish.movieguide.ui.discover.filter
 
-import com.ashish.movieguide.data.models.FilterQuery
+import com.ashish.movieguide.data.models.tmdb.FilterQuery
 import com.ashish.movieguide.di.scopes.FragmentScope
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

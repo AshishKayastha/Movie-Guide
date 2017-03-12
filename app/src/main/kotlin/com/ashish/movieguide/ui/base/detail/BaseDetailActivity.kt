@@ -22,8 +22,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.Credit
-import com.ashish.movieguide.data.models.OMDbDetail
+import com.ashish.movieguide.data.models.tmdb.Credit
+import com.ashish.movieguide.data.models.tmdb.OMDbDetail
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.ui.common.adapter.DetailContentAdapter
 import com.ashish.movieguide.ui.common.adapter.ImageAdapter

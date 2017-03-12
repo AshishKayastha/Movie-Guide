@@ -6,10 +6,10 @@ import com.ashish.movieguide.data.api.tmdb.OMDbApi
 import com.ashish.movieguide.data.api.tmdb.PeopleApi
 import com.ashish.movieguide.data.api.tmdb.SearchApi
 import com.ashish.movieguide.data.api.tmdb.TVShowApi
+import com.ashish.movieguide.di.qualifiers.OMDb
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -46,5 +46,5 @@ object ApiModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideOMDbApi(@Named("omdb") retrofit: Retrofit): OMDbApi = retrofit.create(OMDbApi::class.java)
+    fun provideOMDbApi(@OMDb retrofit: Retrofit): OMDbApi = retrofit.create(OMDbApi::class.java)
 }

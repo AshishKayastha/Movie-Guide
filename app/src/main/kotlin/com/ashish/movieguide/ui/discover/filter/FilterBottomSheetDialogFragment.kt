@@ -13,7 +13,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.ashish.movieguide.R
 import com.ashish.movieguide.app.MovieGuideApp
-import com.ashish.movieguide.data.models.FilterQuery
+import com.ashish.movieguide.data.models.tmdb.FilterQuery
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.widget.FontButton
 import com.ashish.movieguide.ui.widget.FontTextView

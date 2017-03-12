@@ -1,6 +1,7 @@
 package com.ashish.movieguide.utils.extensions
 
 import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.support.annotation.StringRes
@@ -124,4 +125,30 @@ inline fun View.onLayoutLaid(crossinline action: () -> Unit) {
             action.invoke()
         }
     })
+}
+
+fun View.showOrHideWithAnimation(visible: Boolean, viewGone: Boolean = true) {
+    if (visible) showWithAnimation() else hideWithAnimation(viewGone)
+}
+
+fun View.showWithAnimation() {
+    if (visibility == GONE || visibility == INVISIBLE) {
+        alpha = 0F
+        animate().alpha(1F)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) = show()
+                })
+                .start()
+    }
+}
+
+fun View.hideWithAnimation(viewGone: Boolean = true) {
+    if (visibility == VISIBLE) {
+        alpha = 1F
+        animate().alpha(0F)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) = hide(viewGone)
+                })
+                .start()
+    }
 }

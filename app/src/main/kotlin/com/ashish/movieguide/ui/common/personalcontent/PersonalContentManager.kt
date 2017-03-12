@@ -2,16 +2,16 @@ package com.ashish.movieguide.ui.common.personalcontent
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.AuthInteractor
-import com.ashish.movieguide.data.models.AccountState
-import com.ashish.movieguide.data.models.Favorite
-import com.ashish.movieguide.data.models.Watchlist
+import com.ashish.movieguide.data.models.tmdb.AccountState
+import com.ashish.movieguide.data.models.tmdb.Favorite
+import com.ashish.movieguide.data.models.tmdb.Watchlist
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.Utils
-import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -69,7 +69,7 @@ class PersonalContentManager @Inject constructor(
     }
 
     private fun onMarkAsFavoriteError(t: Throwable) {
-        Logger.e(t)
+        Timber.e(t)
         view?.apply {
             if (t is AuthException) {
                 showMessage(R.string.error_not_logged_in)
@@ -106,7 +106,7 @@ class PersonalContentManager @Inject constructor(
     }
 
     private fun onAddToWatchlistError(t: Throwable) {
-        Logger.e(t)
+        Timber.e(t)
         view?.apply {
             if (t is AuthException) {
                 showMessage(R.string.error_not_logged_in)

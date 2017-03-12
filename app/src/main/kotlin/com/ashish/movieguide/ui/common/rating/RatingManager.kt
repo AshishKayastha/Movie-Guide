@@ -1,13 +1,13 @@
 package com.ashish.movieguide.ui.common.rating
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.Status
+import com.ashish.movieguide.data.models.tmdb.Status
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.utils.Utils
-import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 import javax.inject.Inject
 
 @ActivityScope
@@ -41,7 +41,7 @@ class RatingManager @Inject constructor(
     }
 
     private fun onSaveRatingFailed(t: Throwable) {
-        Logger.e(t)
+        Timber.e(t)
         view?.showMessage(R.string.error_save_rating)
     }
 
@@ -71,7 +71,7 @@ class RatingManager @Inject constructor(
     }
 
     private fun onDeleteRatingFailed(t: Throwable) {
-        Logger.e(t)
+        Timber.e(t)
         view?.showMessage(R.string.error_delete_rating)
     }
 

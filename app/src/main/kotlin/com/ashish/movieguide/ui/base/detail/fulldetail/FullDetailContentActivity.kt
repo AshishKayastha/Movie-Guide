@@ -7,9 +7,9 @@ import android.support.v7.widget.CardView
 import android.view.View
 import android.view.ViewStub
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.Credit
-import com.ashish.movieguide.data.models.Person
-import com.ashish.movieguide.data.models.YouTubeVideo
+import com.ashish.movieguide.data.models.tmdb.Credit
+import com.ashish.movieguide.data.models.tmdb.Person
+import com.ashish.movieguide.data.models.tmdb.YouTubeVideo
 import com.ashish.movieguide.ui.base.detail.BaseDetailActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter

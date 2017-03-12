@@ -5,6 +5,7 @@ import com.ashish.movieguide.di.modules.ActivityBinders
 import com.ashish.movieguide.di.modules.ApiModule
 import com.ashish.movieguide.di.modules.AppModule
 import com.ashish.movieguide.di.modules.NetModule
+import com.ashish.movieguide.di.modules.TraktApiModule
 import com.ashish.movieguide.di.multibindings.AbstractComponent
 import dagger.Component
 import javax.inject.Singleton
@@ -17,6 +18,7 @@ import javax.inject.Singleton
         AppModule::class,
         NetModule::class,
         ApiModule::class,
+        TraktApiModule::class,
         ActivityBinders::class
 ))
 interface AppComponent : AbstractComponent<MovieGuideApp>

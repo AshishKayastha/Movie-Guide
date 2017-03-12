@@ -3,14 +3,17 @@ package com.ashish.movieguide.app
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import com.ashish.movieguide.BuildConfig
 import com.ashish.movieguide.di.component.DaggerAppComponent
 import com.ashish.movieguide.di.modules.AppModule
 import com.ashish.movieguide.di.multibindings.AbstractComponent
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilder
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
-import com.ashish.movieguide.utils.logger.Logger
+import com.ashish.movieguide.utils.timber.DebugTree
+import com.ashish.movieguide.utils.timber.ReleaseTree
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -38,9 +41,9 @@ class MovieGuideApp : Application(), ActivityComponentBuilderHost {
         if (LeakCanary.isInAnalyzerProcess(this)) return
         refWatcher = LeakCanary.install(this)
 
-        initDagger()
         context = this
-        Logger.init()
+        initDagger()
+        initTimber()
     }
 
     private fun initDagger() {
@@ -48,6 +51,14 @@ class MovieGuideApp : Application(), ActivityComponentBuilderHost {
                 .appModule(AppModule(this))
                 .build()
                 .inject(this)
+    }
+
+    private fun initTimber() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        } else {
+            Timber.plant(ReleaseTree())
+        }
     }
 
     override fun <A : Activity, B : ActivityComponentBuilder<A, AbstractComponent<A>>>

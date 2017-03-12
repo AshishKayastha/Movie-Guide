@@ -245,4 +245,10 @@
         <item name="android:maxHeight">34dp</item>
         <item name="android:progressDrawable">@drawable/bg_rating_bar</item>
     </style>
+
+    <style name="ConnectButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">#ED1C24</item>
+        <item name="colorControlHighlight">#960006</item>
+        <item name="android:textColor">@color/primary_text_dark</item>
+    </style>
 </resources>

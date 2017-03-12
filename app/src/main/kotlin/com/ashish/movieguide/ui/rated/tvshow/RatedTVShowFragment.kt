@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.TVShow
+import com.ashish.movieguide.data.models.tmdb.TVShow
 import com.ashish.movieguide.di.modules.FragmentModule
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment

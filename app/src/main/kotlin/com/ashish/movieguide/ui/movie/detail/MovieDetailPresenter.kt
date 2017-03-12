@@ -2,8 +2,8 @@ package com.ashish.movieguide.ui.movie.detail
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.MovieInteractor
-import com.ashish.movieguide.data.models.FullDetailContent
-import com.ashish.movieguide.data.models.MovieDetail
+import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.tmdb.MovieDetail
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager

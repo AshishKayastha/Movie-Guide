@@ -1,6 +1,6 @@
 package com.ashish.movieguide.data.api.tmdb
 
-import com.ashish.movieguide.data.models.OMDbDetail
+import com.ashish.movieguide.data.models.tmdb.OMDbDetail
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

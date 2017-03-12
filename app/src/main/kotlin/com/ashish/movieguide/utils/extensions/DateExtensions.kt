@@ -2,7 +2,7 @@ package com.ashish.movieguide.utils.extensions
 
 import com.ashish.movieguide.utils.Constants.DEFAULT_DATE_PATTERN
 import com.ashish.movieguide.utils.Constants.MONTH_DAY_YEAR_PATTERN
-import com.ashish.movieguide.utils.logger.Logger
+import timber.log.Timber
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -19,7 +19,7 @@ fun String?.convertToDate(datePattern: String = DEFAULT_DATE_PATTERN): Date? {
             val sdf = SimpleDateFormat(datePattern, Locale.ENGLISH)
             return sdf.parse(this)
         } catch (e: ParseException) {
-            Logger.e(e)
+            Timber.e(e)
         }
     }
     return null
@@ -34,7 +34,7 @@ fun String?.getFormattedDate(inputDateFormat: String = DEFAULT_DATE_PATTERN,
             sdf.applyPattern(outputDateFormat)
             return sdf.format(date)
         } catch (e: ParseException) {
-            Logger.e(e)
+            Timber.e(e)
         }
     }
     return null
@@ -56,7 +56,7 @@ fun String.getParsedDate(pattern: String = DEFAULT_DATE_PATTERN): Date? {
         sdf.timeZone = TimeZone.getDefault()
         return sdf.parse(this)
     } catch (e: ParseException) {
-        Logger.e(e)
+        Timber.e(e)
     }
 
     return null

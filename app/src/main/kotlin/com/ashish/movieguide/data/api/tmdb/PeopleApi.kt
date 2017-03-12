@@ -1,8 +1,8 @@
 package com.ashish.movieguide.data.api.tmdb
 
-import com.ashish.movieguide.data.models.Person
-import com.ashish.movieguide.data.models.PersonDetail
-import com.ashish.movieguide.data.models.Results
+import com.ashish.movieguide.data.models.tmdb.Person
+import com.ashish.movieguide.data.models.tmdb.PersonDetail
+import com.ashish.movieguide.data.models.tmdb.Results
 import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Single
 import retrofit2.http.GET

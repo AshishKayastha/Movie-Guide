@@ -2,8 +2,8 @@ package com.ashish.movieguide.ui.people.detail
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.PeopleInteractor
-import com.ashish.movieguide.data.models.FullDetailContent
-import com.ashish.movieguide.data.models.PersonDetail
+import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.tmdb.PersonDetail
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.BaseDetailPresenter
 import com.ashish.movieguide.ui.base.detail.BaseDetailView

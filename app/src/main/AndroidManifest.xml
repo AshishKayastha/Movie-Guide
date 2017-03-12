@@ -65,6 +65,22 @@
             android:name=".ui.imageviewer.ImageViewerActivity"
             android:theme="@style/ImageViewerTheme" />
 
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:label="@string/connect_to_trakt"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="logincallback"
+                    android:scheme="oauth" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

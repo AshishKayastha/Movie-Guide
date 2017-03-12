@@ -20,13 +20,14 @@ import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderH
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilder
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
-import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_DISCOVER
-import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_FAVORITES
-import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_MOVIE
-import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_PEOPLE
-import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_RATED
-import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_TV_SHOW
-import com.ashish.movieguide.ui.main.TabPagerAdapter.Companion.CONTENT_TYPE_WATCHLIST
+import com.ashish.movieguide.ui.login.LoginActivity
+import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_DISCOVER
+import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_FAVORITES
+import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_MOVIE
+import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_PEOPLE
+import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_RATED
+import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_TV_SHOW
+import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_WATCHLIST
 import com.ashish.movieguide.ui.multisearch.activity.MultiSearchActivity
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.CustomTabsHelper
@@ -91,7 +92,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
         ratedTabTitles = getStringArray(R.array.rated_type_array)
 
         initDrawerHeader()
-        showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
+        showViewPagerFragment(CONTENT_TYPE_DISCOVER, discoverTabTitles)
         tabLayout.setupWithViewPager(viewPager)
 
         tabLayout.changeTabFont()
@@ -124,11 +125,12 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(), MainView, FragmentC
         userImage.setOnClickListener {
             drawerLayout.closeDrawers()
             runDelayed(200L) {
-                if (preferenceHelper.getId() > 0) {
-                    showLogOutDialog()
-                } else {
-                    showTmdbLoginDialog()
-                }
+                startActivity(Intent(this, LoginActivity::class.java))
+                //                if (preferenceHelper.getId() > 0) {
+                //                    showLogOutDialog()
+                //                } else {
+                //                    showTmdbLoginDialog()
+                //                }
             }
         }
     }

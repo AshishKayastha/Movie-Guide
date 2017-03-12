@@ -4,9 +4,9 @@ import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.common.palette.PaletteBitmap
 import com.ashish.movieguide.utils.CircularTransformation
-import com.ashish.movieguide.utils.logger.Logger
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.ImageViewTarget
+import timber.log.Timber
 
 inline fun ImageView.loadPaletteBitmap(imageUrl: String?, width: Int = 0, height: Int = 0,
                                        crossinline action: ((PaletteBitmap?) -> Unit)) {
@@ -32,7 +32,7 @@ inline fun ImageView.loadPaletteBitmap(imageUrl: String?, width: Int = 0, height
 
 fun ImageView.loadGravatarImage(gravatarHash: String?) {
     if (gravatarHash.isNotNullOrEmpty()) {
-        Logger.v(gravatarHash!!)
+        Timber.v(gravatarHash!!)
         Glide.with(context)
                 .load("https://www.gravatar.com/avatar/$gravatarHash.jpg?s=90")
                 .bitmapTransform(CircularTransformation(Glide.get(context).bitmapPool))

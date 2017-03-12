@@ -2,12 +2,12 @@ package com.ashish.movieguide.ui.main
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.AuthInteractor
-import com.ashish.movieguide.data.models.RequestToken
+import com.ashish.movieguide.data.models.tmdb.RequestToken
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
-import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -42,7 +42,7 @@ class MainPresenter @Inject constructor(
     }
 
     private fun onRequestTokenError(t: Throwable?) {
-        t?.let { Logger.e(t) }
+        t?.let { Timber.e(t) }
         getView()?.apply {
             hideProgressDialog()
             showMessage(R.string.error_tmdb_login)
@@ -60,7 +60,7 @@ class MainPresenter @Inject constructor(
     }
 
     private fun onCreateSessionError(t: Throwable) {
-        Logger.e(t)
+        Timber.e(t)
         getView()?.showMessage(R.string.error_tmdb_login)
     }
 }

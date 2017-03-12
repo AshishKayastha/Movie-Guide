@@ -1,8 +1,8 @@
 package com.ashish.movieguide.ui.multisearch.fragment
 
 import com.ashish.movieguide.data.api.tmdb.SearchApi
-import com.ashish.movieguide.data.models.MultiSearch
-import com.ashish.movieguide.data.models.Results
+import com.ashish.movieguide.data.models.tmdb.MultiSearch
+import com.ashish.movieguide.data.models.tmdb.Results
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider

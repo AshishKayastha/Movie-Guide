@@ -9,8 +9,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewStub
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.Movie
-import com.ashish.movieguide.data.models.MovieDetail
+import com.ashish.movieguide.data.models.tmdb.Movie
+import com.ashish.movieguide.data.models.tmdb.MovieDetail
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost

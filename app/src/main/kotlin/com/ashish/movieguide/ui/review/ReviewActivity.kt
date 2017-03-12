@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.Review
+import com.ashish.movieguide.data.models.tmdb.Review
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.animation.SlideInUpAnimator

@@ -1,6 +1,6 @@
 package com.ashish.movieguide.ui.discover.base
 
-import com.ashish.movieguide.data.models.FilterQuery
+import com.ashish.movieguide.data.models.tmdb.FilterQuery
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.discover.filter.FilterQueryModel

@@ -2,8 +2,8 @@ package com.ashish.movieguide.ui.season
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.TVShowInteractor
-import com.ashish.movieguide.data.models.FullDetailContent
-import com.ashish.movieguide.data.models.SeasonDetail
+import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.tmdb.SeasonDetail
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate

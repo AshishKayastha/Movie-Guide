@@ -2,7 +2,7 @@ package com.ashish.movieguide.ui.people.list
 
 import android.content.Intent
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.Person
+import com.ashish.movieguide.data.models.tmdb.Person
 import com.ashish.movieguide.di.modules.FragmentModule
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment

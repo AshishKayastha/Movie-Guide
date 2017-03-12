@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.ColorInt
 import android.support.v4.graphics.drawable.DrawableCompat
-import com.ashish.movieguide.data.models.AccountState
+import com.ashish.movieguide.data.models.tmdb.AccountState
 import com.ashish.movieguide.ui.common.palette.PaletteBitmap
 import com.ashish.movieguide.ui.common.palette.PaletteBitmapTranscoder
 import com.bumptech.glide.BitmapRequestBuilder

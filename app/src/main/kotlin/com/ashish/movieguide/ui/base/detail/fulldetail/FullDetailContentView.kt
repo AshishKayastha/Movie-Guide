@@ -1,6 +1,6 @@
 package com.ashish.movieguide.ui.base.detail.fulldetail
 
-import com.ashish.movieguide.data.models.YouTubeVideo
+import com.ashish.movieguide.data.models.tmdb.YouTubeVideo
 import com.ashish.movieguide.ui.base.detail.BaseDetailView
 
 /**

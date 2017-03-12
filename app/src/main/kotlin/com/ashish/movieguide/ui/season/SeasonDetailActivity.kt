@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewStub
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.Episode
-import com.ashish.movieguide.data.models.Season
-import com.ashish.movieguide.data.models.SeasonDetail
+import com.ashish.movieguide.data.models.tmdb.Episode
+import com.ashish.movieguide.data.models.tmdb.Season
+import com.ashish.movieguide.data.models.tmdb.SeasonDetail
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity

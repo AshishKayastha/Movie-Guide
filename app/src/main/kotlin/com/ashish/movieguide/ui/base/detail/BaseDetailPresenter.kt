@@ -1,17 +1,17 @@
 package com.ashish.movieguide.ui.base.detail
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.CreditResults
-import com.ashish.movieguide.data.models.FullDetailContent
-import com.ashish.movieguide.data.models.ImageItem
+import com.ashish.movieguide.data.models.tmdb.CreditResults
+import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.tmdb.ImageItem
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
-import com.ashish.movieguide.utils.logger.Logger
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
+import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayList
 
@@ -98,7 +98,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
     }
 
     private fun onLoadDetailError(t: Throwable, messageId: Int) {
-        Logger.e(t)
+        Timber.e(t)
         getView()?.apply {
             showErrorToast(t, messageId)
             finishActivity()

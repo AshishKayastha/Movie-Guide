@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.Movie
-import com.ashish.movieguide.data.models.MultiSearch
-import com.ashish.movieguide.data.models.Person
-import com.ashish.movieguide.data.models.TVShow
+import com.ashish.movieguide.data.models.tmdb.MultiSearch
+import com.ashish.movieguide.data.models.tmdb.Person
 import com.ashish.movieguide.di.modules.FragmentModule
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
@@ -76,11 +74,11 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
         val multiSearch = recyclerViewAdapter.getItem<MultiSearch>(position)
         with(multiSearch) {
             if (mediaType == MEDIA_TYPE_MOVIE) {
-                val movie = Movie(id, title, posterPath = posterPath)
+                val movie = com.ashish.movieguide.data.models.tmdb.Movie(id, title, posterPath = posterPath)
                 return MovieDetailActivity.createIntent(activity, movie)
 
             } else if (mediaType == MEDIA_TYPE_TV) {
-                val tvShow = TVShow(id, name, posterPath = posterPath)
+                val tvShow = com.ashish.movieguide.data.models.tmdb.TVShow(id, name, posterPath = posterPath)
                 return TVShowDetailActivity.createIntent(activity, tvShow)
 
             } else if (mediaType == MEDIA_TYPE_PERSON) {

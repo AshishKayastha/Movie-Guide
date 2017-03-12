@@ -5,7 +5,7 @@ import com.ashish.movieguide.data.api.tmdb.MovieApi.Companion.POPULAR
 import com.ashish.movieguide.data.api.tmdb.MovieApi.Companion.TOP_RATED
 import com.ashish.movieguide.data.api.tmdb.MovieApi.Companion.UPCOMING
 import com.ashish.movieguide.data.interactors.MovieInteractor
-import com.ashish.movieguide.data.models.Movie
+import com.ashish.movieguide.data.models.tmdb.Movie
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider

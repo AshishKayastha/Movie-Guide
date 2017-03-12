@@ -2,13 +2,13 @@ package com.ashish.movieguide.data.interactors
 
 import com.ashish.movieguide.data.api.tmdb.MovieApi
 import com.ashish.movieguide.data.api.tmdb.OMDbApi
-import com.ashish.movieguide.data.models.FullDetailContent
-import com.ashish.movieguide.data.models.Movie
-import com.ashish.movieguide.data.models.MovieDetail
-import com.ashish.movieguide.data.models.Rating
-import com.ashish.movieguide.data.models.Results
-import com.ashish.movieguide.data.models.Review
-import com.ashish.movieguide.data.models.Status
+import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.tmdb.Movie
+import com.ashish.movieguide.data.models.tmdb.MovieDetail
+import com.ashish.movieguide.data.models.tmdb.Rating
+import com.ashish.movieguide.data.models.tmdb.Results
+import com.ashish.movieguide.data.models.tmdb.Review
+import com.ashish.movieguide.data.models.tmdb.Status
 import com.ashish.movieguide.utils.extensions.convertToFullDetailContent
 import io.reactivex.Single
 import javax.inject.Inject

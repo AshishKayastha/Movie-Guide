@@ -1,6 +1,6 @@
 package com.ashish.movieguide.ui.discover.tvshow
 
-import com.ashish.movieguide.data.models.TVShow
+import com.ashish.movieguide.data.models.tmdb.TVShow
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.discover.base.BaseDiscoverFragment
 
