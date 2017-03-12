@@ -10,7 +10,7 @@
         style="@style/Toolbar">
 
         <ProgressBar
-            android:id="@+id/progress_bar"
+            android:id="@+id/web_progress_bar"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="end"
@@ -53,6 +53,8 @@
             android:text="@string/connect_to_trakt"
             android:theme="@style/ConnectButton"
             app:fontName="@string/font_montserrat_medium" />
+
+        <include layout="@layout/layout_progress_bar" />
 
         <com.ashish.movieguide.ui.widget.FontTextView
             android:id="@+id/status_text"

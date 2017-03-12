@@ -127,8 +127,8 @@ inline fun View.onLayoutLaid(crossinline action: () -> Unit) {
     })
 }
 
-fun View.showOrHideWithAnimation(visible: Boolean, viewGone: Boolean = true) {
-    if (visible) showWithAnimation() else hideWithAnimation(viewGone)
+fun View.showOrHideWithAnimation(show: Boolean, viewGone: Boolean = true) {
+    if (show) showWithAnimation() else hideWithAnimation(viewGone)
 }
 
 fun View.showWithAnimation() {

@@ -69,6 +69,7 @@
             android:name=".ui.login.LoginActivity"
             android:label="@string/connect_to_trakt"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -77,7 +78,7 @@
 
                 <data
                     android:host="logincallback"
-                    android:scheme="oauth" />
+                    android:scheme="mgoauth" />
             </intent-filter>
         </activity>
 

@@ -5,7 +5,6 @@ import com.ashish.movieguide.BuildConfig
 object TraktConstants {
 
     const val TRAKT_API_BASE_URL = "https://api.trakt.tv/"
-    const val TRAKT_OAUTH_URL = "https://trakt.tv/oauth/authorize"
 
     const val TRAKT_CLIENT_ID = BuildConfig.TRAKT_CLIENT_ID
     const val TRAKT_CLIENT_SECRET = BuildConfig.TRAKT_CLIENT_SECRET
@@ -19,7 +18,7 @@ object TraktConstants {
     const val HEADER_TRAKT_API_KEY = "trakt-api-key"
     const val HEADER_TRAKT_API_VERSION = "trakt-api-version"
 
-    const val REDIRECT_URI = "oauth://logincallback"
+    const val REDIRECT_URI = "mgoauth://logincallback"
     const val GRANT_TYPE_REFRESH_TOKEN = "refresh_token"
     const val GRANT_TYPE_AUTHORIZATION_CODE = "authorization_code"
 }

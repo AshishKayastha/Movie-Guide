@@ -248,7 +248,7 @@
 
     <style name="ConnectButton" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">#ED1C24</item>
-        <item name="colorControlHighlight">#960006</item>
-        <item name="android:textColor">@color/primary_text_dark</item>
+        <item name="colorControlHighlight">#b90007</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 </resources>

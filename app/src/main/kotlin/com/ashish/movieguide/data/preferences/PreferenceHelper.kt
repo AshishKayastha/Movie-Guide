@@ -3,6 +3,7 @@ package com.ashish.movieguide.data.preferences
 import android.content.SharedPreferences
 import com.ashish.movieguide.data.models.trakt.ImageSizes
 import com.ashish.movieguide.data.models.trakt.Images
+import com.ashish.movieguide.data.models.trakt.UserIds
 import com.ashish.movieguide.data.models.trakt.UserProfile
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,6 +15,7 @@ import javax.inject.Singleton
 class PreferenceHelper @Inject constructor(private val sharedPrefs: SharedPreferences) {
 
     companion object {
+        private const val PREF_SLUG = "slug"
         private const val PREF_NAME = "name"
         private const val PREF_USER_NAME = "user_name"
         private const val PREF_ABOUT_USER = "about"
@@ -46,6 +48,10 @@ class PreferenceHelper @Inject constructor(private val sharedPrefs: SharedPrefer
     fun getUserName(): String? = getString(PREF_USER_NAME)
 
     fun setUserName(userName: String?) = putString(PREF_USER_NAME, userName)
+
+    fun getSlug(): String? = getString(PREF_SLUG)
+
+    fun setSlug(slug: String?) = putString(PREF_SLUG, slug)
 
     fun getImageUrl(): String? = getString(PREF_USER_IMAGE_URL)
 
@@ -120,21 +126,24 @@ class PreferenceHelper @Inject constructor(private val sharedPrefs: SharedPrefer
         userProfile?.apply {
             setName(name)
             setUserName(username)
+            setSlug(userProfile.ids?.slug)
             setImageUrl(images?.avatar?.full)
             setLocation(location)
-            setAge(age)
+            setAge(age ?: 0)
             setAboutUser(about)
             setJoinedAt(joinedAt)
             setGender(gender)
-            setIsPrivate(private)
-            setIsVIP(vip)
-            setIsVIPEP(vipEp)
+            setIsPrivate(private ?: false)
+            setIsVIP(vip ?: false)
+            setIsVIPEP(vipEp ?: false)
         }
     }
 
     fun getUserProfile(): UserProfile {
+        val userIds = UserIds(getSlug())
         val avatar = ImageSizes(getImageUrl())
         return UserProfile(
+                ids = userIds,
                 name = getName(),
                 username = getUserName(),
                 age = getAge(),

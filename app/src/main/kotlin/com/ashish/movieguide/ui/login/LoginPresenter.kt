@@ -38,7 +38,6 @@ class LoginPresenter @Inject constructor(
     }
 
     private fun saveAccessToken(traktToken: TraktToken) {
-        Timber.d("saveAccessToken: %s", traktToken.toString())
         preferenceHelper.apply {
             setAccessToken(traktToken.accessToken)
             setRefreshToken(traktToken.refreshToken)
@@ -46,7 +45,6 @@ class LoginPresenter @Inject constructor(
     }
 
     private fun onLoginSuccess(settings: Settings) {
-        Timber.d("Settings: %s", settings.toString())
         preferenceHelper.saveUserProfile(settings.user)
         preferenceHelper.setCoverImageUrl(settings.account?.coverImage)
         getView()?.onLoginSuccess()

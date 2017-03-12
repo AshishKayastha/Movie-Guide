@@ -15,7 +15,7 @@ ext.versions = [
         paperParcelVersion       : '2.0.0',
         supportLibVersion        : '25.2.0',
         glideVersion             : '3.7.0',
-        loggingInterceptorVersion: '1.0.4',
+        loggingInterceptorVersion: '1.0.5',
         glideOkHttp3Version      : '1.4.0@aar',
 ]
 
