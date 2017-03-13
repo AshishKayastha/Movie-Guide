@@ -29,4 +29,9 @@
         <attr name="android:text" />
         <attr name="android:src" />
     </declare-styleable>
+
+    <declare-styleable name="TimeSpentView">
+        <attr name="timeSpentTypeText" format="string|reference" />
+        <attr name="timeSpentTypeCount" format="string|reference" />
+    </declare-styleable>
 </resources>

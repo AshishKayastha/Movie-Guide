@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/activity_profile">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/watched_movies_card"
+        style="@style/StatsCard"
+        android:layout_marginEnd="@dimen/spacing_micro">
+
+        <LinearLayout style="@style/StatsContainerView">
+
+            <com.ashish.movieguide.ui.widget.FontTextView
+                style="@style/PrimaryText"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/spacing_micro"
+                android:text="@string/watched_movies" />
+
+            <com.ashish.movieguide.ui.widget.FontTextView
+                style="@style/StatsTitleText"
+                tools:text="223" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/movies_time_spent_card"
+        style="@style/StatsCard"
+        android:layout_width="match_parent"
+        android:layout_toEndOf="@id/watched_movies_card">
+
+        <LinearLayout style="@style/StatsContainerView">
+
+            <com.ashish.movieguide.ui.widget.FontTextView
+                android:id="@+id/movies_time_spent_title"
+                style="@style/PrimaryText"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_large"
+                android:text="@string/time_spent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.ashish.movieguide.ui.widget.TimeSpentView
+                    android:id="@+id/movies_days_spent_view"
+                    style="@style/TimeSpentView"
+                    app:timeSpentTypeText="@string/time_spent_days" />
+
+                <com.ashish.movieguide.ui.widget.TimeSpentView
+                    android:id="@+id/movies_hours_spent_view"
+                    style="@style/TimeSpentView"
+                    app:timeSpentTypeText="@string/time_spent_hours" />
+
+                <com.ashish.movieguide.ui.widget.TimeSpentView
+                    android:id="@+id/movies_minutes_spent_view"
+                    style="@style/TimeSpentView"
+                    app:timeSpentTypeText="@string/time_spent_minutes" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</merge>

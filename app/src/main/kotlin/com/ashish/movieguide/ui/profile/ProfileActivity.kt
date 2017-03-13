@@ -24,7 +24,7 @@ import com.ashish.movieguide.utils.DialogUtils
 import com.ashish.movieguide.utils.StartTransitionListener
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.bindView
-import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
+import com.ashish.movieguide.utils.extensions.changeTitleTypeface
 import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.hide
@@ -33,6 +33,7 @@ import com.ashish.movieguide.utils.extensions.loadCircularImage
 import com.ashish.movieguide.utils.extensions.loadPaletteBitmap
 import com.ashish.movieguide.utils.extensions.setTopBarColorAndAnimate
 import com.ashish.movieguide.utils.extensions.show
+import com.ashish.movieguide.utils.extensions.tint
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import javax.inject.Inject
 
@@ -52,13 +53,14 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     private val followingCountText: FontTextView by bindView(R.id.following_count_text)
     private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
 
+    private var menu: Menu? = null
     private var displayName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         postponeEnterTransition()
 
-        toolbar?.changeViewGroupTextFont()
+        collapsingToolbar.changeTitleTypeface()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         appBar.addOnOffsetChangedListener(this)
     }
@@ -94,6 +96,7 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
             setTopBarColorAndAnimate(paletteBitmap, collapsingToolbar) {
                 val primaryBlack = getColorCompat(R.color.primary_text_dark)
 
+                menu?.tint(primaryBlack)
                 val backButton = toolbar[0] as ImageButton?
                 backButton?.setColorFilter(primaryBlack)
                 collapsingToolbar.setCollapsedTitleTextColor(primaryBlack)
@@ -138,6 +141,7 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_profile, menu)
+        this.menu = menu
         return super.onCreateOptionsMenu(menu)
     }
 

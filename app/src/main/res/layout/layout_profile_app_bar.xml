@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_bar"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:elevation="@dimen/toolbar_elevation"
+    android:fitsSystemWindows="true"
+    tools:showIn="@layout/activity_profile">
+
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/collapsing_toolbar"
+        style="@style/CollapsingToolbar">
+
+        <ImageView
+            android:id="@+id/cover_bg"
+            style="@style/Match"
+            android:scaleType="centerCrop"
+            app:layout_collapseMode="parallax"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/bg_drawer_header" />
+
+        <LinearLayout
+            style="@style/Match"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="@dimen/drawer_user_image_size"
+                android:layout_height="@dimen/drawer_user_image_size"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:scaleType="centerCrop"
+                android:transitionName="@string/transition_user_image"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/ic_person_white_80dp" />
+
+            <com.ashish.movieguide.ui.widget.FontTextView
+                android:id="@+id/display_name_text"
+                style="@style/PrimaryText.Title"
+                android:layout_marginBottom="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:gravity="center_horizontal"
+                tools:text="User Name" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
+
+                <com.ashish.movieguide.ui.widget.FontTextView
+                    android:id="@+id/friend_count_text"
+                    style="@style/SmallText"
+                    android:text="@string/friend_count" />
+
+                <com.ashish.movieguide.ui.widget.FontTextView
+                    style="@style/SmallText"
+                    android:layout_marginEnd="@dimen/line_spacing"
+                    android:layout_marginStart="@dimen/line_spacing"
+                    android:text="|"
+                    tools:ignore="HardcodedText" />
+
+                <com.ashish.movieguide.ui.widget.FontTextView
+                    android:id="@+id/follower_count_text"
+                    style="@style/SmallText"
+                    android:text="@string/follower_count" />
+
+                <com.ashish.movieguide.ui.widget.FontTextView
+                    style="@style/SmallText"
+                    android:layout_marginEnd="@dimen/line_spacing"
+                    android:layout_marginStart="@dimen/line_spacing"
+                    android:text="|"
+                    tools:ignore="HardcodedText" />
+
+                <com.ashish.movieguide.ui.widget.FontTextView
+                    android:id="@+id/following_count_text"
+                    style="@style/SmallText"
+                    android:text="@string/following_count" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/Toolbar"
+            android:background="@null"
+            app:layout_collapseMode="pin" />
+
+    </android.support.design.widget.CollapsingToolbarLayout>
+
+</android.support.design.widget.AppBarLayout>

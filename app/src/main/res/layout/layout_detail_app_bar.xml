@@ -5,17 +5,13 @@
     android:id="@+id/app_bar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/detail_backdrop_height"
-    android:elevation="0dp"
+    android:elevation="@dimen/toolbar_elevation"
     android:fitsSystemWindows="true"
     tools:showIn="@layout/activity_detail_movie">
 
     <android.support.design.widget.CollapsingToolbarLayout
         android:id="@+id/collapsing_toolbar"
-        style="@style/Match"
-        android:fitsSystemWindows="true"
-        app:collapsedTitleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-        app:contentScrim="?colorPrimary"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+        style="@style/CollapsingToolbar">
 
         <ImageView
             android:id="@+id/backdrop_image"

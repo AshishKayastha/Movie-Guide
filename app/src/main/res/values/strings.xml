@@ -250,4 +250,12 @@
 
     <string name="following_count">%d Following</string>
     <string name="followings_count">%d Followings</string>
+
+    <string name="watched_movies">Watched Movies</string>
+    <string name="watched_episodes">Watched Episodes</string>
+
+    <string name="time_spent">Time Spent</string>
+    <string name="time_spent_days">Days</string>
+    <string name="time_spent_hours">Hours</string>
+    <string name="time_spent_minutes">Minutes</string>
 </resources>

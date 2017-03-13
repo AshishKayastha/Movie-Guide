@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Wrap"
+    android:gravity="center"
+    tools:parentTag="LinearLayout">
+
+    <com.ashish.movieguide.ui.widget.FontTextView
+        android:id="@+id/time_spent_count_text"
+        style="@style/StatsTitleText"
+        tools:text="4" />
+
+    <com.ashish.movieguide.ui.widget.FontTextView
+        android:id="@+id/time_spent_type_title"
+        style="@style/PrimaryText"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/spacing_micro"
+        android:textAllCaps="true"
+        android:textSize="@dimen/text_size_small"
+        tools:text="Days" />
+
+</merge>

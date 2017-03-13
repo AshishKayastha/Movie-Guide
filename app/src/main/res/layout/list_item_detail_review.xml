@@ -2,10 +2,8 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/ListItemCard"
-    android:layout_marginBottom="@dimen/spacing_normal"
-    app:cardCornerRadius="0dp"
-    app:cardElevation="@dimen/padding_2dp">
+    style="@style/DetailCard"
+    android:layout_marginBottom="@dimen/spacing_normal">
 
     <LinearLayout
         style="@style/MaterialKeylinePadding"

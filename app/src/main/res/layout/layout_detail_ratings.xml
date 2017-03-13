@@ -3,11 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rating_card_view"
-    style="@style/Match.Width"
+    style="@style/DetailCard"
     android:visibility="gone"
-    app:cardBackgroundColor="@color/card_color"
-    app:cardCornerRadius="0dp"
-    app:cardElevation="@dimen/padding_2dp"
     tools:visibility="visible">
 
     <HorizontalScrollView

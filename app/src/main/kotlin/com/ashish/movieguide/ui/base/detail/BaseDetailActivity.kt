@@ -52,6 +52,7 @@ import com.ashish.movieguide.utils.extensions.animateBackgroundColorChange
 import com.ashish.movieguide.utils.extensions.animateTextColorChange
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeMenuAndSubMenuFont
+import com.ashish.movieguide.utils.extensions.changeTitleTypeface
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getColorCompat
@@ -176,11 +177,8 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         sharedElementEnterTransition = window.sharedElementEnterTransition
         sharedElementEnterTransition?.addListener(transitionListener)
 
+        collapsingToolbar.changeTitleTypeface()
         regularFont = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
-        collapsingToolbar.apply {
-            setExpandedTitleTypeface(regularFont)
-            setCollapsedTitleTypeface(regularFont)
-        }
     }
 
     abstract fun getTransitionNameId(): Int
