@@ -20,6 +20,7 @@ import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.ui.widget.FontTextView
+import com.ashish.movieguide.ui.widget.TimeSpentView
 import com.ashish.movieguide.utils.DialogUtils
 import com.ashish.movieguide.utils.StartTransitionListener
 import com.ashish.movieguide.utils.extensions.applyText
@@ -27,6 +28,7 @@ import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeTitleTypeface
 import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getColorCompat
+import com.ashish.movieguide.utils.extensions.getDayHourMinutes
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.loadCircularImage
@@ -52,6 +54,16 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     private val followersCountText: FontTextView by bindView(R.id.follower_count_text)
     private val followingCountText: FontTextView by bindView(R.id.following_count_text)
     private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
+
+    private val watchedMoviesText: FontTextView by bindView(R.id.watched_movies_text)
+    private val moviesDaySpentView: TimeSpentView by bindView(R.id.movies_days_spent_view)
+    private val moviesHourSpentView: TimeSpentView by bindView(R.id.movies_hours_spent_view)
+    private val moviesMinuteSpentView: TimeSpentView by bindView(R.id.movies_minutes_spent_view)
+
+    private val watchedEpisodesText: FontTextView by bindView(R.id.watched_episodes_text)
+    private val episodesDaySpentView: TimeSpentView by bindView(R.id.episodes_days_spent_view)
+    private val episodesHourSpentView: TimeSpentView by bindView(R.id.episodes_hours_spent_view)
+    private val episodesMinuteSpentView: TimeSpentView by bindView(R.id.episodes_minutes_spent_view)
 
     private var menu: Menu? = null
     private var displayName: String = ""
@@ -113,11 +125,23 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     }
 
     override fun showMovieStats(movieStats: MovieStats) {
+        val watchedMovies = movieStats.watched ?: 0
+        watchedMoviesText.text = watchedMovies.toString()
 
+        val (day, hour, minutes) = movieStats.minutes?.getDayHourMinutes()!!
+        moviesDaySpentView.setTimeSpentCount(day)
+        moviesHourSpentView.setTimeSpentCount(hour)
+        moviesMinuteSpentView.setTimeSpentCount(minutes)
     }
 
     override fun showEpisodeStats(episodeStats: EpisodeStats) {
+        val watchedEpisodes = episodeStats.watched ?: 0
+        watchedEpisodesText.text = watchedEpisodes.toString()
 
+        val (day, hour, minutes) = episodeStats.minutes?.getDayHourMinutes()!!
+        episodesDaySpentView.setTimeSpentCount(day)
+        episodesHourSpentView.setTimeSpentCount(hour)
+        episodesMinuteSpentView.setTimeSpentCount(minutes)
     }
 
     override fun showNetworkStats(networkStats: NetworkStats) {

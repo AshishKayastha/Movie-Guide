@@ -88,3 +88,18 @@ fun AccountState.getRatingValue(): Double? {
     }
     return 0.0
 }
+
+/**
+ * Convert minutes to day, hour, minutes
+ */
+fun Int?.getDayHourMinutes(): Triple<String, String, String> {
+    if (this != null && this > 0) {
+        val oneDay = 24 * 60
+        val day = this / oneDay
+        val hour = this % oneDay / 60
+        val minute = this % oneDay % 60
+        return Triple(day.toString(), hour.toString(), minute.toString())
+    }
+
+    return Triple("0", "0", "0")
+}

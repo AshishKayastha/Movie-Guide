@@ -19,6 +19,7 @@
                 android:text="@string/watched_movies" />
 
             <com.ashish.movieguide.ui.widget.FontTextView
+                android:id="@+id/watched_movies_text"
                 style="@style/StatsTitleText"
                 tools:text="223" />
 
