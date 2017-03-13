@@ -44,6 +44,7 @@ import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getStringArray
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.loadCircularImage
+import com.ashish.movieguide.utils.extensions.loadImage
 import com.ashish.movieguide.utils.extensions.runDelayed
 import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
@@ -151,6 +152,7 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
 
             userNameText.applyText(getUserName())
             userImage.loadCircularImage(getImageUrl())
+            headerImage.loadImage(getCoverImageUrl())
         }
     }
 

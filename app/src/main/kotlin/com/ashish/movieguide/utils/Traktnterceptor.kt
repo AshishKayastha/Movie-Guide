@@ -36,7 +36,11 @@ class Traktnterceptor @Inject constructor(
                 builder.header(HEADER_AUTHORIZATION, HEADER_BEARER + accessToken)
             }
 
-            return chain.proceed(builder.build())
+            // Enable Cache
+            val response = chain.proceed(builder.build())
+            return response.newBuilder()
+                    .header("Cache-Control", "max-age=" + 120)
+                    .build()
         }
 
         return null

@@ -1,8 +1,9 @@
 package com.ashish.movieguide.ui.profile
 
 import android.content.res.Configuration
-import android.graphics.Bitmap
 import android.os.Bundle
+import android.support.annotation.PluralsRes
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.view.Menu
 import android.view.MenuItem
@@ -19,8 +20,8 @@ import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.ui.widget.FontTextView
-import com.ashish.movieguide.utils.CircularTransformation
 import com.ashish.movieguide.utils.DialogUtils
+import com.ashish.movieguide.utils.StartTransitionListener
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
@@ -28,30 +29,30 @@ import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
+import com.ashish.movieguide.utils.extensions.loadCircularImage
 import com.ashish.movieguide.utils.extensions.loadPaletteBitmap
 import com.ashish.movieguide.utils.extensions.setTopBarColorAndAnimate
 import com.ashish.movieguide.utils.extensions.show
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Priority
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
-import dagger.Lazy
+import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import javax.inject.Inject
 
-class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileView {
+class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileView,
+        AppBarLayout.OnOffsetChangedListener {
 
-    @Inject lateinit var dialogUtils: Lazy<DialogUtils>
+    @Inject lateinit var dialogUtils: DialogUtils
     @Inject lateinit var preferenceHelper: PreferenceHelper
 
+    private val appBar: AppBarLayout by bindView(R.id.app_bar)
     private val coverImage: ImageView by bindView(R.id.cover_bg)
     private val userImage: ImageView by bindView(R.id.user_image)
     private val progressBar: ProgressBar by bindView(R.id.progress_bar)
-    private val userNameText: FontTextView by bindView(R.id.user_name_text)
+    private val displayNameText: FontTextView by bindView(R.id.display_name_text)
     private val friendsCountText: FontTextView by bindView(R.id.friend_count_text)
     private val followersCountText: FontTextView by bindView(R.id.follower_count_text)
     private val followingCountText: FontTextView by bindView(R.id.following_count_text)
     private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
+
+    private var displayName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +60,7 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
 
         toolbar?.changeViewGroupTextFont()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        appBar.addOnOffsetChangedListener(this)
     }
 
     override fun getLayoutId() = R.layout.activity_profile
@@ -75,9 +77,15 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
         presenter?.loadUserProfile()
     }
 
+    override fun showProgress() = progressBar.show()
+
+    override fun hideProgress() = progressBar.hide()
+
     override fun showUserProfile(userProfile: UserProfile, coverImageUrl: String?) {
+        displayName = userProfile.name ?: ""
+        displayNameText.applyText(displayName)
+
         loadCoverImage(coverImageUrl)
-        userNameText.applyText(userProfile.username)
         loadProfileImage(userProfile.images?.avatar?.full)
     }
 
@@ -95,18 +103,7 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
 
     private fun loadProfileImage(imageUrl: String?) {
         if (imageUrl.isNotNullOrEmpty()) {
-            Glide.with(this)
-                    .load(imageUrl)
-                    .asBitmap()
-                    .transform(CircularTransformation(Glide.get(this).bitmapPool))
-                    .priority(Priority.IMMEDIATE)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(object : SimpleTarget<Bitmap>() {
-                        override fun onResourceReady(bitmap: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {
-                            bitmap?.let { userImage.setImageBitmap(it) }
-                            startPostponedEnterTransition()
-                        }
-                    })
+            userImage.loadCircularImage(imageUrl, StartTransitionListener<GlideDrawable>(this))
         } else {
             startPostponedEnterTransition()
         }
@@ -128,16 +125,15 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
         }
     }
 
-    private fun getCountString(pluralId: Int, count: Int): String {
-        return resources.getQuantityString(pluralId, count, count)
-    }
+    private fun getCountString(@PluralsRes pluralId: Int, count: Int)
+            = resources.getQuantityString(pluralId, count, count)
 
-    override fun showProgress() {
-        progressBar.show()
-    }
-
-    override fun hideProgress() {
-        progressBar.hide()
+    override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+        if (appBarLayout.totalScrollRange + verticalOffset == 0) {
+            collapsingToolbar.title = displayName
+        } else {
+            collapsingToolbar.title = ""
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -151,7 +147,7 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     }
 
     private fun showLogOutDialog() {
-        dialogUtils.get().buildDialog()
+        dialogUtils.buildDialog()
                 .withTitle(R.string.title_log_out)
                 .withContent(R.string.content_log_out)
                 .withNegativeButton(android.R.string.cancel)
@@ -163,12 +159,17 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
-        dialogUtils.get().dismissAllDialogs()
+        dialogUtils.dismissAllDialogs()
         super.onConfigurationChanged(newConfig)
     }
 
     override fun onStop() {
-        dialogUtils.get().dismissAllDialogs()
+        dialogUtils.dismissAllDialogs()
         super.onStop()
+    }
+
+    override fun onDestroy() {
+        appBar.removeOnOffsetChangedListener(this)
+        super.onDestroy()
     }
 }

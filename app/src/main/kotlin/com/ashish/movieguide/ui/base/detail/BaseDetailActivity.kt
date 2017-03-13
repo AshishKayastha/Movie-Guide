@@ -42,8 +42,8 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_PERSON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movieguide.utils.Constants.IMDB_BASE_URL
-import com.ashish.movieguide.utils.Constants.THUMBNAIL_HEIGHT
-import com.ashish.movieguide.utils.Constants.THUMBNAIL_WIDTH
+import com.ashish.movieguide.utils.Constants.LIST_THUMBNAIL_HEIGHT
+import com.ashish.movieguide.utils.Constants.LIST_THUMBNAIL_WIDTH
 import com.ashish.movieguide.utils.CustomTypefaceSpan
 import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.StartSnapHelper
@@ -239,7 +239,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     private fun showPosterImage(posterImagePath: String) {
-        posterImage.loadPaletteBitmap(posterImagePath, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT) { paletteBitmap ->
+        posterImage.loadPaletteBitmap(posterImagePath, LIST_THUMBNAIL_WIDTH, LIST_THUMBNAIL_HEIGHT) { paletteBitmap ->
             // When the poster image is loaded then
             // start postponed shared element transition
             startPostponedEnterTransition()

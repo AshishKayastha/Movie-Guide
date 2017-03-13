@@ -3,7 +3,6 @@ package com.ashish.movieguide.ui.imageviewer
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Rect
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.transition.Transition
 import android.view.GestureDetector
@@ -13,7 +12,8 @@ import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.common.BaseFragment
 import com.ashish.movieguide.ui.widget.TouchImageView
-import com.ashish.movieguide.utils.Constants.THUMBNAIL_SIZE
+import com.ashish.movieguide.utils.Constants.DETAIL_IMAGE_THUMBNAIL_SIZE
+import com.ashish.movieguide.utils.StartTransitionListener
 import com.ashish.movieguide.utils.SystemUiHelper
 import com.ashish.movieguide.utils.TransitionListenerAdapter
 import com.ashish.movieguide.utils.extensions.bindView
@@ -22,8 +22,6 @@ import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import icepick.State
 
@@ -82,7 +80,7 @@ class ImageViewerFragment : BaseFragment() {
                 .dontAnimate()
                 .priority(Priority.IMMEDIATE)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .override(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
+                .override(DETAIL_IMAGE_THUMBNAIL_SIZE, DETAIL_IMAGE_THUMBNAIL_SIZE)
 
         fullBitmap = Glide.with(this)
                 .load(imageUrl!!.getLargeImageUrl())
@@ -92,16 +90,13 @@ class ImageViewerFragment : BaseFragment() {
     }
 
     fun loadThumbnail(startTransition: Boolean) {
-        thumbBitmap?.into(object : SimpleTarget<Bitmap>() {
-            override fun onResourceReady(bitmap: Bitmap?, animation: GlideAnimation<in Bitmap>?) {
-                if (bitmap != null) imageView.setImageBitmap(bitmap)
-                if (startTransition) activity?.startPostponedEnterTransition()
+        if (thumbBitmap != null) {
+            if (startTransition) {
+                thumbBitmap!!.listener(StartTransitionListener<Bitmap>(activity))
             }
 
-            override fun onLoadFailed(e: Exception?, errorDrawable: Drawable?) {
-                if (startTransition) activity?.startPostponedEnterTransition()
-            }
-        })
+            thumbBitmap!!.into(imageView)
+        }
     }
 
     private fun loadFullImage() {

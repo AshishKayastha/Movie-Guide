@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.ashish.movieguide.R
-import com.ashish.movieguide.utils.Constants.THUMBNAIL_SIZE
+import com.ashish.movieguide.utils.Constants.DETAIL_IMAGE_THUMBNAIL_SIZE
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate
 import com.bumptech.glide.Glide
@@ -54,7 +54,7 @@ class ImageAdapter(
                     .asBitmap()
                     .animate(R.anim.fade_in)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .override(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
+                    .override(DETAIL_IMAGE_THUMBNAIL_SIZE, DETAIL_IMAGE_THUMBNAIL_SIZE)
                     .into(imageView)
 
             imageView.transitionName = "image_$position"

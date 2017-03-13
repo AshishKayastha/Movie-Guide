@@ -65,8 +65,8 @@ object NetModule {
                 .readTimeout(30, SECONDS)
                 .writeTimeout(30, SECONDS)
                 .cache(cache)
-                .addInterceptor(offlineCacheInterceptor)
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(offlineCacheInterceptor)
                 .build()
     }
 
@@ -74,7 +74,7 @@ object NetModule {
     fun provideTMDbClient(@BaseOkHttp okHttpClient: OkHttpClient,
                           apiKeyInterceptor: TMDbApiKeyInterceptor): OkHttpClient {
         return okHttpClient.newBuilder()
-                .addNetworkInterceptor(apiKeyInterceptor)
+                .addInterceptor(apiKeyInterceptor)
                 .build()
     }
 

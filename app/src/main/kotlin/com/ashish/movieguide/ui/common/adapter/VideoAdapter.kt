@@ -7,10 +7,10 @@ import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.YouTubeVideo
 import com.ashish.movieguide.ui.widget.FontTextView
-import com.ashish.movieguide.utils.Constants.THUMBNAIL_SIZE
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate
+import com.ashish.movieguide.utils.extensions.loadImage
 import com.bumptech.glide.Glide
 
 class VideoAdapter(
@@ -49,13 +49,8 @@ class VideoAdapter(
         }
 
         fun bindData(youTubeVideo: YouTubeVideo) {
+            imageView.loadImage(youTubeVideo.imageUrl)
             videoNameText.applyText(youTubeVideo.name, true)
-
-            Glide.with(imageView.context)
-                    .load(youTubeVideo.imageUrl)
-                    .animate(R.anim.fade_in)
-                    .override(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
-                    .into(imageView)
         }
     }
 }

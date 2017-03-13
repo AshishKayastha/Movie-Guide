@@ -44,7 +44,7 @@
                     tools:src="@drawable/ic_person_white_80dp" />
 
                 <com.ashish.movieguide.ui.widget.FontTextView
-                    android:id="@+id/user_name_text"
+                    android:id="@+id/display_name_text"
                     style="@style/PrimaryText"
                     android:layout_marginBottom="@dimen/spacing_normal"
                     android:layout_marginTop="@dimen/spacing_medium"

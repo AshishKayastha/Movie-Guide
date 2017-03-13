@@ -11,8 +11,8 @@ import com.ashish.movieguide.ui.common.palette.PaletteImageViewTarget
 import com.ashish.movieguide.ui.widget.AspectRatioImageView
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.LabelLayout
-import com.ashish.movieguide.utils.Constants.THUMBNAIL_HEIGHT
-import com.ashish.movieguide.utils.Constants.THUMBNAIL_WIDTH
+import com.ashish.movieguide.utils.Constants.LIST_THUMBNAIL_HEIGHT
+import com.ashish.movieguide.utils.Constants.LIST_THUMBNAIL_WIDTH
 import com.ashish.movieguide.utils.extensions.bindOptionalView
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate
@@ -20,7 +20,6 @@ import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.transcodePaletteBitmap
 import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
 
 /**
  * Created by Ashish on Dec 30.
@@ -36,9 +35,6 @@ abstract class BaseContentHolder<in I : ViewType>(
     val posterImage: AspectRatioImageView by bindView(R.id.poster_image)
     val ratingLabel: LabelLayout? by bindOptionalView(R.id.rating_label)
 
-    @Suppress("LeakingThis")
-    val target: Target<PaletteBitmap> = PaletteImageViewTarget(this)
-
     val requestBuilder: BitmapRequestBuilder<String, PaletteBitmap> = Glide.with(itemView.context)
             .transcodePaletteBitmap(itemView.context)
 
@@ -48,15 +44,17 @@ abstract class BaseContentHolder<in I : ViewType>(
         }
     }
 
-    open fun bindData(item: I) = loadImage(item)
+    open fun bindData(item: I) {
+        loadImage(item)
+    }
 
     private fun loadImage(item: I) {
         val imageUrl = getImageUrl(item)
         if (imageUrl.isNotNullOrEmpty()) {
             requestBuilder.load(imageUrl)
                     .animate(R.anim.fade_in)
-                    .override(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT)
-                    .into(target)
+                    .override(LIST_THUMBNAIL_WIDTH, LIST_THUMBNAIL_HEIGHT)
+                    .into(PaletteImageViewTarget(this))
         } else {
             Glide.clear(posterImage)
         }
