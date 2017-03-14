@@ -7,7 +7,7 @@ import com.ashish.movieguide.data.models.tmdb.SeasonDetail
 import com.ashish.movieguide.data.models.tmdb.Status
 import com.ashish.movieguide.data.models.tmdb.TVShow
 import com.ashish.movieguide.data.models.tmdb.TVShowDetail
-import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
+import com.ashish.movieguide.utils.TMDbConstants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.DELETE

@@ -14,7 +14,7 @@ import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderH
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.rating.RatingDialog
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
-import com.ashish.movieguide.utils.Constants.TMDB_URL
+import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getStillImageUrl
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle

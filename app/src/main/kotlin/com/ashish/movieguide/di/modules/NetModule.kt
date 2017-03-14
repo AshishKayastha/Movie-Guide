@@ -8,9 +8,9 @@ import com.ashish.movieguide.di.qualifiers.BaseOkHttp
 import com.ashish.movieguide.di.qualifiers.OMDb
 import com.ashish.movieguide.di.qualifiers.Trakt
 import com.ashish.movieguide.utils.Constants.OMDB_API_BASE_URL
-import com.ashish.movieguide.utils.Constants.TMDB_API_BASE_URL
 import com.ashish.movieguide.utils.OfflineCacheInterceptor
 import com.ashish.movieguide.utils.TMDbApiKeyInterceptor
+import com.ashish.movieguide.utils.TMDbConstants.TMDB_API_BASE_URL
 import com.ashish.movieguide.utils.TraktAuthenticator
 import com.ashish.movieguide.utils.TraktConstants.TRAKT_API_BASE_URL
 import com.ashish.movieguide.utils.Traktnterceptor

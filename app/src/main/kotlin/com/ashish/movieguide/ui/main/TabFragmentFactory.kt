@@ -10,8 +10,8 @@ import com.ashish.movieguide.ui.rated.episode.RatedEpisodeFragment
 import com.ashish.movieguide.ui.rated.movie.RatedMovieFragment
 import com.ashish.movieguide.ui.rated.tvshow.RatedTVShowFragment
 import com.ashish.movieguide.ui.tvshow.list.TVShowFragment
-import com.ashish.movieguide.utils.Constants.FAVORITES
-import com.ashish.movieguide.utils.Constants.WATCHLIST
+import com.ashish.movieguide.utils.TMDbConstants.FAVORITES
+import com.ashish.movieguide.utils.TMDbConstants.WATCHLIST
 
 object TabFragmentFactory {
 

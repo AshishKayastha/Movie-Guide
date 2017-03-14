@@ -14,9 +14,9 @@ import com.ashish.movieguide.ui.personal.movie.PersonalMovieFragment.Companion.n
 import com.ashish.movieguide.ui.personal.tvshow.PersonalTVShowFragment.Companion.newInstance
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
-import com.ashish.movieguide.utils.Constants.FAVORITES
-import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_TV
-import com.ashish.movieguide.utils.Constants.WATCHLIST
+import com.ashish.movieguide.utils.TMDbConstants.FAVORITES
+import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_TV
+import com.ashish.movieguide.utils.TMDbConstants.WATCHLIST
 import icepick.State
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject

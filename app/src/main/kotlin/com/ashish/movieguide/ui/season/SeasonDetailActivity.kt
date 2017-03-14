@@ -17,7 +17,7 @@ import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.episode.EpisodeDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
-import com.ashish.movieguide.utils.Constants.TMDB_URL
+import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl

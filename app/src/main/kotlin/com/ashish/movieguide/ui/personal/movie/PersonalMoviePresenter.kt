@@ -5,7 +5,7 @@ import com.ashish.movieguide.data.models.tmdb.Movie
 import com.ashish.movieguide.data.models.tmdb.Results
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
-import com.ashish.movieguide.utils.Constants.PERSONAL_CONTENT_TYPES
+import com.ashish.movieguide.utils.TMDbConstants.PERSONAL_CONTENT_TYPES
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
 import javax.inject.Inject

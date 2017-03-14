@@ -23,7 +23,7 @@ import com.ashish.movieguide.ui.season.SeasonDetailActivity
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
-import com.ashish.movieguide.utils.Constants.TMDB_URL
+import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
 import com.ashish.movieguide.utils.extensions.find

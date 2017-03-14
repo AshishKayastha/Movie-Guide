@@ -30,16 +30,12 @@ class PreferenceHelper @Inject constructor(private val sharedPrefs: SharedPrefer
         private const val PREF_IS_PRIVATE = "is_private"
 
         private const val PREF_ID = "id"
-        private const val PREF_SESSION_ID = "session_id"
-        private const val PREF_GRAVATAR_HASH = "gravatar_hash"
 
         private const val PREF_ACCESS_TOKEN = "access_token"
         private const val PREF_REFRESH_TOKEN = "refresh_token"
     }
 
     fun getId(): Long = sharedPrefs.getLong(PREF_ID, 0L)
-
-    fun setId(id: Long) = sharedPrefs.edit().putLong(PREF_ID, id).apply()
 
     fun getName(): String? = getString(PREF_NAME)
 
@@ -92,14 +88,6 @@ class PreferenceHelper @Inject constructor(private val sharedPrefs: SharedPrefer
     fun isVIPEP(): Boolean = getBoolean(PREF_IS_VIP_EP)
 
     fun setIsVIPEP(isVIPEP: Boolean) = putBoolean(PREF_IS_VIP_EP, isVIPEP)
-
-    fun getGravatarHash(): String? = getString(PREF_GRAVATAR_HASH)
-
-    fun setGravatarHash(hash: String?) = putString(PREF_GRAVATAR_HASH, hash)
-
-    fun getSessionId(): String? = getString(PREF_SESSION_ID)
-
-    fun setSessionId(sessionId: String?) = putString(PREF_SESSION_ID, sessionId)
 
     fun getAccessToken(): String? = getString(PREF_ACCESS_TOKEN)
 

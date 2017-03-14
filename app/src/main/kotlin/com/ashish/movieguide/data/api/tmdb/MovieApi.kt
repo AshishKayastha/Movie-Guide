@@ -6,7 +6,7 @@ import com.ashish.movieguide.data.models.tmdb.Rating
 import com.ashish.movieguide.data.models.tmdb.Results
 import com.ashish.movieguide.data.models.tmdb.Review
 import com.ashish.movieguide.data.models.tmdb.Status
-import com.ashish.movieguide.utils.Constants.INCLUDE_IMAGE_LANGUAGE
+import com.ashish.movieguide.utils.TMDbConstants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.DELETE

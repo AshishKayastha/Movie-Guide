@@ -20,9 +20,9 @@ import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_PERSON
-import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_MOVIE
-import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_TV
-import com.ashish.movieguide.utils.Constants.TMDB_URL
+import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_MOVIE
+import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_TV
+import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getProfileUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty

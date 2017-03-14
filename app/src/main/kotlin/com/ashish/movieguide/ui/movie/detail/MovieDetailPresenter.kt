@@ -8,7 +8,7 @@ import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
 import com.ashish.movieguide.ui.common.rating.RatingManager
-import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_MOVIE
+import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movieguide.utils.extensions.getFormattedCurrency
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate

@@ -19,8 +19,8 @@ import com.ashish.movieguide.ui.widget.FontButton
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.Constants.DATE_PICKER_FORMAT
-import com.ashish.movieguide.utils.Constants.SORT_BY_MOVIE
-import com.ashish.movieguide.utils.Constants.SORT_BY_TV_SHOW
+import com.ashish.movieguide.utils.TMDbConstants.SORT_BY_MOVIE
+import com.ashish.movieguide.utils.TMDbConstants.SORT_BY_TV_SHOW
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.convertToDate
 import com.ashish.movieguide.utils.extensions.dpToPx

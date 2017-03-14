@@ -14,9 +14,9 @@ import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.ui.people.detail.PersonDetailActivity
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MULTI_SEARCH
-import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_MOVIE
-import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_PERSON
-import com.ashish.movieguide.utils.Constants.MEDIA_TYPE_TV
+import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_MOVIE
+import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_PERSON
+import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_TV
 
 /**
  * Created by Ashish on Jan 05.

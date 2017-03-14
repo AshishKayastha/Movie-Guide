@@ -3,13 +3,13 @@ package com.ashish.movieguide.utils.extensions
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TypefaceSpan
-import com.ashish.movieguide.utils.Constants.BACKDROP_URL_PREFIX
-import com.ashish.movieguide.utils.Constants.LARGE_BACKDROP_URL_PREFIX
-import com.ashish.movieguide.utils.Constants.LARGE_POSTER_URL_PREFIX
-import com.ashish.movieguide.utils.Constants.ORIGINAL_IMAGE_URL_PREFIX
-import com.ashish.movieguide.utils.Constants.POSTER_URL_PREFIX
-import com.ashish.movieguide.utils.Constants.PROFILE_URL_PREFIX
-import com.ashish.movieguide.utils.Constants.STILL_URL_PREFIX
+import com.ashish.movieguide.utils.TMDbConstants.BACKDROP_URL_PREFIX
+import com.ashish.movieguide.utils.TMDbConstants.LARGE_BACKDROP_URL_PREFIX
+import com.ashish.movieguide.utils.TMDbConstants.LARGE_POSTER_URL_PREFIX
+import com.ashish.movieguide.utils.TMDbConstants.ORIGINAL_IMAGE_URL_PREFIX
+import com.ashish.movieguide.utils.TMDbConstants.POSTER_URL_PREFIX
+import com.ashish.movieguide.utils.TMDbConstants.PROFILE_URL_PREFIX
+import com.ashish.movieguide.utils.TMDbConstants.STILL_URL_PREFIX
 import java.text.NumberFormat
 
 /**
