@@ -17,6 +17,8 @@
 
             <include layout="@layout/layout_profile_episode_stats" />
 
+            <include layout="@layout/layout_profile_ratings" />
+
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>

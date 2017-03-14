@@ -34,4 +34,11 @@
         <attr name="timeSpentTypeText" format="string|reference" />
         <attr name="timeSpentTypeCount" format="string|reference" />
     </declare-styleable>
+
+    <declare-styleable name="RatingCountLayout">
+        <attr name="android:max" />
+        <attr name="android:progress" />
+        <attr name="numRating" format="string|reference" />
+        <attr name="ratingCount" format="string|reference" />
+    </declare-styleable>
 </resources>

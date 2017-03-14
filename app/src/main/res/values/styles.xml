@@ -302,4 +302,13 @@
         <item name="android:layout_weight">1</item>
         <item name="timeSpentTypeCount">0</item>
     </style>
+
+    <style name="RatingCountLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_large</item>
+        <item name="android:max">100</item>
+        <item name="android:progress">60</item>
+        <item name="ratingCount">18</item>
+    </style>
 </resources>

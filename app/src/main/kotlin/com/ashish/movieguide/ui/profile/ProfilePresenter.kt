@@ -40,6 +40,7 @@ class ProfilePresenter @Inject constructor(
                 movies?.let { showMovieStats(it) }
                 episodes?.let { showEpisodeStats(it) }
                 network?.let { showNetworkStats(it) }
+                ratings?.let { showRatings(it) }
             }
         }
     }
@@ -50,7 +51,7 @@ class ProfilePresenter @Inject constructor(
             if (t is IOException) {
                 showMessage(R.string.error_no_internet)
             } else {
-
+                showMessage(R.string.error_retrieving_stats)
             }
         }
     }

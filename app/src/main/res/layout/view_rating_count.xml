@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    tools:parentTag="LinearLayout">
+
+    <com.ashish.movieguide.ui.widget.FontTextView
+        android:id="@+id/num_rating_text"
+        style="@style/PrimaryText"
+        android:layout_width="60dp"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:text="@string/star_count" />
+
+    <ProgressBar
+        android:id="@+id/rating_count_progress"
+        style="?android:progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_weight="1"
+        android:max="100"
+        android:progress="60"
+        android:scaleY="8" />
+
+    <com.ashish.movieguide.ui.widget.FontTextView
+        android:id="@+id/rating_count_text"
+        style="@style/PrimaryText"
+        android:layout_width="50dp"
+        tools:text="18" />
+
+</merge>

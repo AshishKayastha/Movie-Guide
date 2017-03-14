@@ -258,4 +258,9 @@
     <string name="time_spent_days">Days</string>
     <string name="time_spent_hours">Hours</string>
     <string name="time_spent_minutes">Minutes</string>
+
+    <string name="star_count">%d star</string>
+    <string name="ratings_distribution">Ratings Distribution</string>
+
+    <string name="error_retrieving_stats">An error occurred while trying to retrieve your stats</string>
 </resources>

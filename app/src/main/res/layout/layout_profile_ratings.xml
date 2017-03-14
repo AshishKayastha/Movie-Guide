@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StatsCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/watched_episodes_card"
+    tools:showIn="@layout/activity_profile">
+
+    <LinearLayout style="@style/StatsContainerView">
+
+        <com.ashish.movieguide.ui.widget.FontTextView
+            android:id="@+id/rating_distribution_title"
+            style="@style/PrimaryText.Title"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="@string/ratings_distribution" />
+
+        <com.ashish.movieguide.ui.widget.RatingCountLayout
+            android:id="@+id/ten_star_view"
+            style="@style/RatingCountLayout"
+            app:numRating="10" />
+
+        <com.ashish.movieguide.ui.widget.RatingCountLayout
+            android:id="@+id/nine_star_view"
+            style="@style/RatingCountLayout"
+            app:numRating="9" />
+
+        <com.ashish.movieguide.ui.widget.RatingCountLayout
+            android:id="@+id/eight_star_view"
+            style="@style/RatingCountLayout"
+            app:numRating="8" />
+
+        <com.ashish.movieguide.ui.widget.RatingCountLayout
+            android:id="@+id/seven_star_view"
+            style="@style/RatingCountLayout"
+            app:numRating="7" />
+
+        <com.ashish.movieguide.ui.widget.RatingCountLayout
+            android:id="@+id/six_star_view"
+            style="@style/RatingCountLayout"
+            app:numRating="6" />
+
+        <com.ashish.movieguide.ui.widget.RatingCountLayout
+            android:id="@+id/five_star_view"
+            style="@style/RatingCountLayout"
+            app:numRating="5" />
+
+        <com.ashish.movieguide.ui.widget.RatingCountLayout
+            android:id="@+id/four_star_view"
+            style="@style/RatingCountLayout"
+            app:numRating="4" />
+
+        <com.ashish.movieguide.ui.widget.RatingCountLayout
+            android:id="@+id/three_star_view"
+            style="@style/RatingCountLayout"
+            app:numRating="3" />
+
+        <com.ashish.movieguide.ui.widget.RatingCountLayout
+            android:id="@+id/two_star_view"
+            style="@style/RatingCountLayout"
+            app:numRating="2" />
+
+        <com.ashish.movieguide.ui.widget.RatingCountLayout
+            android:id="@+id/one_star_view"
+            style="@style/RatingCountLayout"
+            android:layout_marginBottom="0dp"
+            app:numRating="1" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -14,12 +14,14 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.trakt.EpisodeStats
 import com.ashish.movieguide.data.models.trakt.MovieStats
 import com.ashish.movieguide.data.models.trakt.NetworkStats
+import com.ashish.movieguide.data.models.trakt.Ratings
 import com.ashish.movieguide.data.models.trakt.UserProfile
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.ui.widget.FontTextView
+import com.ashish.movieguide.ui.widget.RatingCountLayout
 import com.ashish.movieguide.ui.widget.TimeSpentView
 import com.ashish.movieguide.utils.DialogUtils
 import com.ashish.movieguide.utils.StartTransitionListener
@@ -65,7 +67,19 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     private val episodesHourSpentView: TimeSpentView by bindView(R.id.episodes_hours_spent_view)
     private val episodesMinuteSpentView: TimeSpentView by bindView(R.id.episodes_minutes_spent_view)
 
+    private val tenStarView: RatingCountLayout by bindView(R.id.ten_star_view)
+    private val nineStarView: RatingCountLayout by bindView(R.id.nine_star_view)
+    private val eightStarView: RatingCountLayout by bindView(R.id.eight_star_view)
+    private val sevenStarView: RatingCountLayout by bindView(R.id.seven_star_view)
+    private val sixStarView: RatingCountLayout by bindView(R.id.six_star_view)
+    private val fiveStarView: RatingCountLayout by bindView(R.id.five_star_view)
+    private val fourStarView: RatingCountLayout by bindView(R.id.four_star_view)
+    private val threeStarView: RatingCountLayout by bindView(R.id.three_star_view)
+    private val twoStarView: RatingCountLayout by bindView(R.id.two_star_view)
+    private val oneStarView: RatingCountLayout by bindView(R.id.one_star_view)
+
     private var menu: Menu? = null
+    private var totalRatings: Int = 0
     private var displayName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,8 +139,8 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     }
 
     override fun showMovieStats(movieStats: MovieStats) {
-        val watchedMovies = movieStats.watched ?: 0
-        watchedMoviesText.text = watchedMovies.toString()
+        val watchedMoviesCount = movieStats.watched ?: 0
+        watchedMoviesText.text = watchedMoviesCount.toString()
 
         val (day, hour, minutes) = movieStats.minutes?.getDayHourMinutes()!!
         moviesDaySpentView.setTimeSpentCount(day)
@@ -135,8 +149,8 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     }
 
     override fun showEpisodeStats(episodeStats: EpisodeStats) {
-        val watchedEpisodes = episodeStats.watched ?: 0
-        watchedEpisodesText.text = watchedEpisodes.toString()
+        val watchedEpisodesCount = episodeStats.watched ?: 0
+        watchedEpisodesText.text = watchedEpisodesCount.toString()
 
         val (day, hour, minutes) = episodeStats.minutes?.getDayHourMinutes()!!
         episodesDaySpentView.setTimeSpentCount(day)
@@ -152,8 +166,35 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
         }
     }
 
-    private fun getCountString(@PluralsRes pluralId: Int, count: Int)
+    private fun getCountString(@PluralsRes pluralId: Int, count: Int): String
             = resources.getQuantityString(pluralId, count, count)
+
+    override fun showRatings(ratings: Ratings) {
+        totalRatings = ratings.total ?: 0
+        if (totalRatings > 0) {
+            ratings.distribution?.apply {
+                setRatingStars(tenStarView, ten)
+                setRatingStars(nineStarView, nine)
+                setRatingStars(eightStarView, eight)
+                setRatingStars(sevenStarView, seven)
+                setRatingStars(sixStarView, six)
+                setRatingStars(fiveStarView, five)
+                setRatingStars(fourStarView, four)
+                setRatingStars(threeStarView, three)
+                setRatingStars(twoStarView, two)
+                setRatingStars(oneStarView, one)
+            }
+        }
+    }
+
+    private fun setRatingStars(view: RatingCountLayout, ratingCount: Int?) {
+        if (ratingCount != null) {
+            view.apply {
+                setRatingCount(ratingCount.toString())
+                setRatingProgress(totalRatings, ratingCount)
+            }
+        }
+    }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
         if (appBarLayout.totalScrollRange + verticalOffset == 0) {
