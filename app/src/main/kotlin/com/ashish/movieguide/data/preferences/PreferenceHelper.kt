@@ -5,6 +5,7 @@ import com.ashish.movieguide.data.models.trakt.ImageSizes
 import com.ashish.movieguide.data.models.trakt.Images
 import com.ashish.movieguide.data.models.trakt.UserIds
 import com.ashish.movieguide.data.models.trakt.UserProfile
+import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,6 +35,8 @@ class PreferenceHelper @Inject constructor(private val sharedPrefs: SharedPrefer
         private const val PREF_ACCESS_TOKEN = "access_token"
         private const val PREF_REFRESH_TOKEN = "refresh_token"
     }
+
+    fun isLoggedIn(): Boolean = getSlug().isNotNullOrEmpty()
 
     fun getId(): Long = sharedPrefs.getLong(PREF_ID, 0L)
 

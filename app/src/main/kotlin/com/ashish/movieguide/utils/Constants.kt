@@ -13,6 +13,7 @@ object Constants {
     const val DATE_PICKER_FORMAT = "%d-%d-%d"
     const val DEFAULT_DATE_PATTERN = "yyyy-MM-dd"
     const val MONTH_DAY_YEAR_PATTERN = "MMM dd, yyyy"
+    const val GMT_ISO8601_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
     const val ADAPTER_TYPE_MOVIE = 0
     const val ADAPTER_TYPE_TV_SHOW = 1

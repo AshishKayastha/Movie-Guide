@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
+        android:id="@+id/viewPager"
         style="@style/Match" />
 
     <LinearLayout
-        android:id="@+id/appbar_wrapper"
+        android:id="@+id/appBarWrapper"
         style="@style/Match.Width"
         android:elevation="@dimen/toolbar_elevation">
 
         <com.ashish.movieguide.ui.widget.IgnoreBottomInsetFrameLayout
-            android:id="@+id/app_bar"
+            android:id="@+id/appBar"
             style="@style/Match.Width"
             android:background="@color/image_view_bg_color"
             android:fitsSystemWindows="true"

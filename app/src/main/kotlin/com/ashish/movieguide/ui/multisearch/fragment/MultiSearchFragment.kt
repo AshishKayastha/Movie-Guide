@@ -17,6 +17,7 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MULTI_SEARCH
 import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_PERSON
 import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_TV
+import kotlinx.android.synthetic.main.fragment_recycler_view.*
 
 /**
  * Created by Ashish on Jan 05.
@@ -38,7 +39,7 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        swipeRefreshLayout.isEnabled = false
+        swipeRefresh.isEnabled = false
     }
 
     override fun loadData() {

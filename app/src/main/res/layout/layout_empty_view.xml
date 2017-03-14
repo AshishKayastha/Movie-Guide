@@ -5,26 +5,25 @@
     style="@style/Match">
 
     <LinearLayout
-        android:id="@+id/empty_view"
+        android:id="@+id/emptyContentView"
         style="@style/Match.Width"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="vertical"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:id="@+id/empty_image_view"
+            android:id="@+id/emptyImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:srcCompat="@drawable/ic_movie_white_100dp"
             tools:ignore="ContentDescription" />
 
         <com.ashish.movieguide.ui.widget.FontTextView
-            android:id="@+id/empty_text"
+            android:id="@+id/emptyText"
             style="@style/PrimaryText"
             android:layout_marginTop="@dimen/spacing_normal"
             android:gravity="center"
-            android:text="@string/no_movies_available" />
+            tools:text="@string/no_movies_available" />
 
     </LinearLayout>
 

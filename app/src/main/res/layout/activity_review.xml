@@ -5,7 +5,7 @@
     style="@style/Match">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+        android:id="@+id/appBar"
         style="@style/Match.Width"
         android:animateLayoutChanges="true"
         android:elevation="@dimen/toolbar_elevation">
@@ -18,7 +18,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
+        android:id="@+id/swipeRefresh"
         style="@style/Match"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -27,7 +27,7 @@
             <include layout="@layout/layout_empty_view" />
 
             <com.ashish.movieguide.ui.widget.EmptyRecyclerView
-                android:id="@+id/recycler_view"
+                android:id="@+id/reviewRecyclerView"
                 style="@style/Match"
                 android:clipToPadding="false" />
 

@@ -62,10 +62,10 @@ fun String.getParsedDate(pattern: String = DEFAULT_DATE_PATTERN): Date? {
     return null
 }
 
-fun String?.getFormattedMediumDate(): String {
+fun String?.getFormattedMediumDate(pattern: String = DEFAULT_DATE_PATTERN): String {
     var formattedReleaseDate = ""
     if (isNotNullOrEmpty()) {
-        val parsedDate = this!!.getParsedDate()
+        val parsedDate = this!!.getParsedDate(pattern)
         if (parsedDate != null) {
             formattedReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(parsedDate)
         }

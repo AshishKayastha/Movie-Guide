@@ -17,7 +17,7 @@
         tools:targetApi="lollipop">
 
         <ImageButton
-            android:id="@+id/back_icon"
+            android:id="@+id/backIcon"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="@dimen/spacing_micro"
@@ -27,7 +27,7 @@
             tools:ignore="ContentDescription" />
 
         <android.support.v7.widget.SearchView
-            android:id="@+id/search_view"
+            android:id="@+id/searchView"
             style="@style/Match.Width"
             android:layout_marginStart="-4dp"
             android:imeOptions="flagNoExtractUi|actionSearch"

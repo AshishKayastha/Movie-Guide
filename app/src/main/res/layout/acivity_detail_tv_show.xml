@@ -9,16 +9,14 @@
 
     <include layout="@layout/layout_detail_trailer_fab" />
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nested_scroll_view"
-        style="@style/DetailNestedScrollView">
+    <android.support.v4.widget.NestedScrollView style="@style/DetailNestedScrollView">
 
         <FrameLayout style="@style/Match.Width">
 
             <include layout="@layout/layout_detail_progress_bar" />
 
             <LinearLayout
-                android:id="@+id/detail_container"
+                android:id="@+id/detailTVContainer"
                 style="@style/Match.Width"
                 android:paddingBottom="@dimen/spacing_large"
                 android:visibility="gone"
@@ -33,7 +31,7 @@
                 <include layout="@layout/layout_detail_videos_stub" />
 
                 <ViewStub
-                    android:id="@+id/seasons_view_stub"
+                    android:id="@+id/seasonsViewStub"
                     style="@style/Match.Width"
                     android:layout="@layout/layout_detail_seasons" />
 

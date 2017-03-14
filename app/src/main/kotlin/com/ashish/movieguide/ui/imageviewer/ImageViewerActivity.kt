@@ -7,16 +7,14 @@ import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.common.BaseActivity
 import com.ashish.movieguide.ui.widget.DepthPageTransformer
 import com.ashish.movieguide.utils.SystemUiHelper
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.transition.LeakFreeSupportSharedElementCallback
 import icepick.State
+import kotlinx.android.synthetic.main.activity_image_viewer.*
 import java.util.ArrayList
 
 /**
@@ -51,10 +49,6 @@ class ImageViewerActivity : BaseActivity() {
     @JvmField @State var imageUrlList: ArrayList<String>? = null
 
     var systemUiHelper: SystemUiHelper? = null
-
-    private val viewPager: ViewPager by bindView(R.id.view_pager)
-    private val appbarLayout: FrameLayout by bindView(R.id.app_bar)
-    private val wrapperLayout: LinearLayout by bindView(R.id.appbar_wrapper)
 
     private var isReturning: Boolean = false
     private lateinit var imageViewerAdapter: ImageViewerAdapter
@@ -98,9 +92,9 @@ class ImageViewerActivity : BaseActivity() {
     // Show or hide app bar depending upon whether SystemUI is currently visible or not
     private val visibilityChangeListener = object : SystemUiHelper.OnVisibilityChangeListener {
         override fun onVisibilityChange(visible: Boolean) {
-            wrapperLayout.animate()
+            appBarWrapper.animate()
                     .alpha(if (visible) 1f else 0f)
-                    .translationY(if (visible) 0f else -appbarLayout.bottom.toFloat())
+                    .translationY(if (visible) 0f else -appBar.bottom.toFloat())
                     .setDuration(400L)
                     .setInterpolator(INTERPOLATOR)
                     .start()

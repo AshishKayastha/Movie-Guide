@@ -1,15 +1,13 @@
 package com.ashish.movieguide.ui.profile
 
+import android.app.Activity
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.annotation.PluralsRes
 import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CollapsingToolbarLayout
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.ProgressBar
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.trakt.EpisodeStats
 import com.ashish.movieguide.data.models.trakt.MovieStats
@@ -20,17 +18,16 @@ import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
-import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.RatingCountLayout
-import com.ashish.movieguide.ui.widget.TimeSpentView
+import com.ashish.movieguide.utils.Constants.GMT_ISO8601_FORMAT
 import com.ashish.movieguide.utils.DialogUtils
 import com.ashish.movieguide.utils.StartTransitionListener
 import com.ashish.movieguide.utils.extensions.applyText
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeTitleTypeface
 import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.getDayHourMinutes
+import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.loadCircularImage
@@ -39,6 +36,11 @@ import com.ashish.movieguide.utils.extensions.setTopBarColorAndAnimate
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.tint
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
+import kotlinx.android.synthetic.main.layout_profile_app_bar.*
+import kotlinx.android.synthetic.main.layout_profile_episode_stats.*
+import kotlinx.android.synthetic.main.layout_profile_movie_stats.*
+import kotlinx.android.synthetic.main.layout_profile_ratings.*
+import kotlinx.android.synthetic.main.layout_progress_bar.*
 import javax.inject.Inject
 
 class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileView,
@@ -46,37 +48,6 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
 
     @Inject lateinit var dialogUtils: DialogUtils
     @Inject lateinit var preferenceHelper: PreferenceHelper
-
-    private val appBar: AppBarLayout by bindView(R.id.app_bar)
-    private val coverImage: ImageView by bindView(R.id.cover_bg)
-    private val userImage: ImageView by bindView(R.id.user_image)
-    private val progressBar: ProgressBar by bindView(R.id.progress_bar)
-    private val displayNameText: FontTextView by bindView(R.id.display_name_text)
-    private val friendsCountText: FontTextView by bindView(R.id.friend_count_text)
-    private val followersCountText: FontTextView by bindView(R.id.follower_count_text)
-    private val followingCountText: FontTextView by bindView(R.id.following_count_text)
-    private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
-
-    private val watchedMoviesText: FontTextView by bindView(R.id.watched_movies_text)
-    private val moviesDaySpentView: TimeSpentView by bindView(R.id.movies_days_spent_view)
-    private val moviesHourSpentView: TimeSpentView by bindView(R.id.movies_hours_spent_view)
-    private val moviesMinuteSpentView: TimeSpentView by bindView(R.id.movies_minutes_spent_view)
-
-    private val watchedEpisodesText: FontTextView by bindView(R.id.watched_episodes_text)
-    private val episodesDaySpentView: TimeSpentView by bindView(R.id.episodes_days_spent_view)
-    private val episodesHourSpentView: TimeSpentView by bindView(R.id.episodes_hours_spent_view)
-    private val episodesMinuteSpentView: TimeSpentView by bindView(R.id.episodes_minutes_spent_view)
-
-    private val tenStarView: RatingCountLayout by bindView(R.id.ten_star_view)
-    private val nineStarView: RatingCountLayout by bindView(R.id.nine_star_view)
-    private val eightStarView: RatingCountLayout by bindView(R.id.eight_star_view)
-    private val sevenStarView: RatingCountLayout by bindView(R.id.seven_star_view)
-    private val sixStarView: RatingCountLayout by bindView(R.id.six_star_view)
-    private val fiveStarView: RatingCountLayout by bindView(R.id.five_star_view)
-    private val fourStarView: RatingCountLayout by bindView(R.id.four_star_view)
-    private val threeStarView: RatingCountLayout by bindView(R.id.three_star_view)
-    private val twoStarView: RatingCountLayout by bindView(R.id.two_star_view)
-    private val oneStarView: RatingCountLayout by bindView(R.id.one_star_view)
 
     private var menu: Menu? = null
     private var totalRatings: Int = 0
@@ -113,6 +84,11 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
         displayName = userProfile.name ?: ""
         displayNameText.applyText(displayName)
 
+        val formattedDate = userProfile.joinedAt.getFormattedMediumDate(GMT_ISO8601_FORMAT)
+        if (formattedDate.isNotNullOrEmpty()) {
+            joinedOnText.text = String.format(getString(R.string.joined_on_format), formattedDate)
+        }
+
         loadCoverImage(coverImageUrl)
         loadProfileImage(userProfile.images?.avatar?.full)
     }
@@ -143,9 +119,9 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
         watchedMoviesText.text = watchedMoviesCount.toString()
 
         val (day, hour, minutes) = movieStats.minutes?.getDayHourMinutes()!!
-        moviesDaySpentView.setTimeSpentCount(day)
-        moviesHourSpentView.setTimeSpentCount(hour)
-        moviesMinuteSpentView.setTimeSpentCount(minutes)
+        moviesDaysSpentView.setTimeSpentCount(day)
+        moviesHoursSpentView.setTimeSpentCount(hour)
+        moviesMinutesSpentView.setTimeSpentCount(minutes)
     }
 
     override fun showEpisodeStats(episodeStats: EpisodeStats) {
@@ -153,15 +129,15 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
         watchedEpisodesText.text = watchedEpisodesCount.toString()
 
         val (day, hour, minutes) = episodeStats.minutes?.getDayHourMinutes()!!
-        episodesDaySpentView.setTimeSpentCount(day)
-        episodesHourSpentView.setTimeSpentCount(hour)
-        episodesMinuteSpentView.setTimeSpentCount(minutes)
+        episodesDaysSpentView.setTimeSpentCount(day)
+        episodesHoursSpentView.setTimeSpentCount(hour)
+        episodesMinutesSpentView.setTimeSpentCount(minutes)
     }
 
     override fun showNetworkStats(networkStats: NetworkStats) {
         with(networkStats) {
-            friendsCountText.applyText(getCountString(R.plurals.friends, friends ?: 0))
-            followersCountText.applyText(getCountString(R.plurals.followers, followers ?: 0))
+            friendCountText.applyText(getCountString(R.plurals.friends, friends ?: 0))
+            followerCountText.applyText(getCountString(R.plurals.followers, followers ?: 0))
             followingCountText.applyText(getCountString(R.plurals.followings, following ?: 0))
         }
     }
@@ -222,6 +198,7 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
                 .withNegativeButton(android.R.string.cancel)
                 .withPositiveButton(R.string.title_log_out, {
                     preferenceHelper.clearUserData()
+                    setResult(Activity.RESULT_OK)
                     finish()
                 })
                 .show()

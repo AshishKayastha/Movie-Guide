@@ -4,24 +4,19 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import com.ashish.movieguide.R
 import com.ashish.movieguide.app.MovieGuideApp
 import com.ashish.movieguide.data.models.tmdb.FilterQuery
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
-import com.ashish.movieguide.ui.widget.FontButton
-import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.Constants.DATE_PICKER_FORMAT
 import com.ashish.movieguide.utils.TMDbConstants.SORT_BY_MOVIE
 import com.ashish.movieguide.utils.TMDbConstants.SORT_BY_TV_SHOW
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.convertToDate
 import com.ashish.movieguide.utils.extensions.dpToPx
 import com.ashish.movieguide.utils.extensions.get
@@ -32,6 +27,7 @@ import com.ashish.movieguide.utils.extensions.isValidDate
 import com.ashish.movieguide.utils.extensions.showToast
 import icepick.Icepick
 import icepick.State
+import kotlinx.android.synthetic.main.fragment_bottom_sheet_filter.*
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -61,12 +57,6 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     @JvmField @State var isMovie: Boolean = true
     @JvmField @State var filterQuery: FilterQuery? = null
-
-    private val endDateText: FontTextView by bindView(R.id.end_date_text)
-    private val applyFilterBtn: FontButton by bindView(R.id.apply_filter_btn)
-    private val startDateText: FontTextView by bindView(R.id.start_date_text)
-    private val sortByRadioGroup: RadioGroup by bindView(R.id.sort_radio_group)
-    private val genreRecyclerView: RecyclerView by bindView(R.id.genre_recycler_view)
 
     private val calendar = Calendar.getInstance()
     private lateinit var genreAdapter: GenreAdapter
@@ -120,12 +110,12 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         } else {
             // Hide sort by title RadioButton for TV Shows
-            sortByRadioGroup.weightSum = 3f
-            sortByRadioGroup[2]?.hide()
+            sortRadioGroup.weightSum = 3f
+            sortRadioGroup[2]?.hide()
             sortByIndex = SORT_BY_TV_SHOW.indexOf(filterQuery?.sortBy)
         }
 
-        (sortByRadioGroup[sortByIndex] as RadioButton?)?.isChecked = true
+        (sortRadioGroup[sortByIndex] as RadioButton?)?.isChecked = true
 
         applyFilterBtn.setOnClickListener {
             if (isValidDate(filterQuery?.minDate, filterQuery?.maxDate)) {
@@ -186,8 +176,8 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun updateFilterQuery() {
-        val radioButton = sortByRadioGroup.findViewById(sortByRadioGroup.checkedRadioButtonId)
-        val sortByIndex = sortByRadioGroup.indexOfChild(radioButton)
+        val radioButton = sortRadioGroup.findViewById(sortRadioGroup.checkedRadioButtonId)
+        val sortByIndex = sortRadioGroup.indexOfChild(radioButton)
 
         if (isMovie) {
             filterQuery?.sortBy = SORT_BY_MOVIE[sortByIndex]

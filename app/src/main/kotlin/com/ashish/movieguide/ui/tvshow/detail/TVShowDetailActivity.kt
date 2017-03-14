@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewStub
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.Season
 import com.ashish.movieguide.data.models.tmdb.TVShow
@@ -24,7 +23,6 @@ import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
@@ -33,9 +31,13 @@ import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.setFavoriteIcon
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
+import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
 import dagger.Lazy
 import icepick.State
+import kotlinx.android.synthetic.main.acivity_detail_tv_show.*
+import kotlinx.android.synthetic.main.layout_detail_app_bar.*
+import kotlinx.android.synthetic.main.layout_detail_similar_content_stub.*
 import javax.inject.Inject
 
 /**
@@ -59,9 +61,6 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
     @Inject lateinit var preferenceHelper: PreferenceHelper
 
     @JvmField @State var tvShow: TVShow? = null
-
-    private val seasonsViewStub: ViewStub by bindView(R.id.seasons_view_stub)
-    private val similarTVShowsViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
     private var seasonsAdapter: RecyclerViewAdapter<Season>? = null
     private var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>? = null
@@ -117,7 +116,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
             }
 
             imdbId = detailContent.externalIds?.imdbId
-            titleText.setTitleAndYear(name, firstAirDate)
+            contentTitleText.setTitleAndYear(name, firstAirDate)
         }
 
         if (isLoggedIn) {
@@ -125,6 +124,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
             menu?.setRatingItemTitle(R.string.title_rate_tv_show)
         }
 
+        detailTVContainer.show()
         super.showDetailContent(detailContent)
     }
 
@@ -136,19 +136,19 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
         seasonsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_SEASON,
                 onSeasonItemClickLitener)
 
-        inflateViewStubRecyclerView(seasonsViewStub, R.id.seasons_recycler_view, seasonsAdapter!!, seasonsList)
+        inflateViewStubRecyclerView(seasonsViewStub, R.id.seasonsRecyclerView, seasonsAdapter!!, seasonsList)
     }
 
     override fun showSimilarTVShowList(similarTVShowList: List<TVShow>) {
         similarTVShowsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_TV_SHOW,
                 onSimilarTVShowItemClickLitener)
 
-        similarTVShowsViewStub.setOnInflateListener { _, view ->
-            val textView = view.find<FontTextView>(R.id.similar_content_title)
+        similarContentViewStub.setOnInflateListener { _, view ->
+            val textView = view.find<FontTextView>(R.id.similarContentTitle)
             textView.setText(R.string.similar_tv_shows_title)
         }
 
-        inflateViewStubRecyclerView(similarTVShowsViewStub, R.id.similar_content_recycler_view,
+        inflateViewStubRecyclerView(similarContentViewStub, R.id.similarContentRecyclerView,
                 similarTVShowsAdapter!!, similarTVShowList)
     }
 
@@ -158,7 +158,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
 
         R.id.action_rating -> performAction {
             if (isLoggedIn) {
-                ratingDialog.get().showRatingDialog(ratingLabelLayout.getRating())
+                ratingDialog.get().showRatingDialog(myRatingLabel.getRating())
             }
         }
 
@@ -185,7 +185,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
     }
 
     override fun showSavedRating(rating: Double?) {
-        ratingLabelLayout.setRating(rating)
+        myRatingLabel.setRating(rating)
     }
 
     override fun saveRating(rating: Double) {

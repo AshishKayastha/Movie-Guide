@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewStub
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.Movie
 import com.ashish.movieguide.data.models.tmdb.MovieDetail
@@ -21,7 +20,6 @@ import com.ashish.movieguide.ui.common.rating.RatingDialog
 import com.ashish.movieguide.ui.review.ReviewActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
@@ -29,9 +27,14 @@ import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.setFavoriteIcon
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
+import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
 import dagger.Lazy
 import icepick.State
+import kotlinx.android.synthetic.main.activity_detail_movie.*
+import kotlinx.android.synthetic.main.layout_detail_app_bar.*
+import kotlinx.android.synthetic.main.layout_detail_read_reviews.*
+import kotlinx.android.synthetic.main.layout_detail_similar_content_stub.*
 import javax.inject.Inject
 
 /**
@@ -55,9 +58,6 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
     @Inject lateinit var preferenceHelper: PreferenceHelper
 
     @JvmField @State var movie: Movie? = null
-
-    private val readReviewsView: View by bindView(R.id.read_reviews_view)
-    private val similarMoviesViewStub: ViewStub by bindView(R.id.similar_content_view_stub)
 
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
 
@@ -114,7 +114,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
             }
 
             this@MovieDetailActivity.imdbId = imdbId
-            titleText.setTitleAndYear(title, releaseDate)
+            contentTitleText.setTitleAndYear(title, releaseDate)
         }
 
         if (isLoggedIn) {
@@ -122,6 +122,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
             menu?.setRatingItemTitle(R.string.title_rate_movie)
         }
 
+        detailMovieContainer.show()
         super.showDetailContent(detailContent)
     }
 
@@ -131,7 +132,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
         similarMoviesAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_MOVIE,
                 onSimilarMovieItemClickLitener)
 
-        inflateViewStubRecyclerView(similarMoviesViewStub, R.id.similar_content_recycler_view,
+        inflateViewStubRecyclerView(similarContentViewStub, R.id.similarContentRecyclerView,
                 similarMoviesAdapter!!, similarMoviesList)
     }
 
@@ -141,7 +142,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
 
         R.id.action_rating -> performAction {
             if (isLoggedIn) {
-                ratingDialog.get().showRatingDialog(ratingLabelLayout.getRating())
+                ratingDialog.get().showRatingDialog(myRatingLabel.getRating())
             }
         }
 
@@ -168,7 +169,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
     }
 
     override fun showSavedRating(rating: Double?) {
-        ratingLabelLayout.setRating(rating)
+        myRatingLabel.setRating(rating)
     }
 
     override fun saveRating(rating: Double) {

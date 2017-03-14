@@ -21,6 +21,7 @@ import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
+import kotlinx.android.synthetic.main.fragment_recycler_view.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -42,7 +43,7 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        swipeRefreshLayout.isEnabled = false
+        swipeRefresh.isEnabled = false
     }
 
     override fun <F : Fragment, B : FragmentComponentBuilder<F, AbstractComponent<F>>>

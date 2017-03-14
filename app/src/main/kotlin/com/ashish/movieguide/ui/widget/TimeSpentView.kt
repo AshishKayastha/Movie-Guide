@@ -37,8 +37,8 @@ class TimeSpentView @JvmOverloads constructor(
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        timeSpentTypeText = find<FontTextView>(R.id.time_spent_type_title)
-        timeSpentCountText = find<FontTextView>(R.id.time_spent_count_text)
+        timeSpentTypeText = find<FontTextView>(R.id.timeSpentTypeTitle)
+        timeSpentCountText = find<FontTextView>(R.id.timeSpentCountText)
 
         setTimeSpentCount(timeSpent)
         setTimeSpentType(timeSpentType)

@@ -10,7 +10,6 @@ import android.support.v7.widget.SearchView
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
-import android.widget.ImageButton
 import android.widget.TextView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.di.modules.ActivityModule
@@ -30,6 +29,7 @@ import com.ashish.movieguide.utils.extensions.onLayoutLaid
 import com.ashish.movieguide.utils.extensions.showKeyboard
 import com.ashish.movieguide.utils.extensions.startCircularRevealAnimation
 import com.ashish.movieguide.utils.keyboardwatcher.KeyboardWatcher
+import kotlinx.android.synthetic.main.activity_multi_search.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -44,8 +44,6 @@ class MultiSearchActivity : BaseActivity(), FragmentComponentBuilderHost {
     lateinit var componentBuilders: Map<Class<out Fragment>, @JvmSuppressWildcards Provider<FragmentComponentBuilder<*, *>>>
 
     private val rootView: View by bindView(R.id.content_layout)
-    private val backIcon: ImageButton by bindView(R.id.back_icon)
-    private val searchView: SearchView by bindView(R.id.search_view)
 
     private var endRadius: Float = 0f
     private var multiSearchFragment: MultiSearchFragment? = null

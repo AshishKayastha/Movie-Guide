@@ -19,8 +19,11 @@ import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getStillImageUrl
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
+import com.ashish.movieguide.utils.extensions.show
 import dagger.Lazy
 import icepick.State
+import kotlinx.android.synthetic.main.activity_detail_episode.*
+import kotlinx.android.synthetic.main.layout_detail_app_bar.*
 import javax.inject.Inject
 
 /**
@@ -80,7 +83,7 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
 
     override fun showDetailContent(detailContent: EpisodeDetail) {
         detailContent.apply {
-            titleText.setTitleAndYear(name, airDate)
+            contentTitleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
         }
 
@@ -89,6 +92,7 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
             menu?.setRatingItemTitle(R.string.title_rate_episode)
         }
 
+        detailEpisodeContainer.show()
         super.showDetailContent(detailContent)
     }
 
@@ -99,7 +103,7 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_rating -> performAction {
             if (isLoggedIn) {
-                ratingDialog.get().showRatingDialog(ratingLabelLayout.getRating())
+                ratingDialog.get().showRatingDialog(myRatingLabel.getRating())
             }
         }
 
@@ -112,7 +116,7 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
     }
 
     override fun showSavedRating(rating: Double?) {
-        ratingLabelLayout.setRating(rating)
+        myRatingLabel.setRating(rating)
     }
 
     override fun saveRating(rating: Double) {

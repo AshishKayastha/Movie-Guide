@@ -5,9 +5,9 @@
     tools:showIn="@layout/activity_profile">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/watched_episodes_card"
+        android:id="@+id/watchedEpisodesCard"
         style="@style/StatsCard"
-        android:layout_below="@+id/watched_movies_card"
+        android:layout_below="@+id/watchedMoviesCard"
         android:layout_marginEnd="@dimen/spacing_micro">
 
         <LinearLayout style="@style/StatsContainerView">
@@ -20,7 +20,7 @@
                 android:text="@string/watched_episodes" />
 
             <com.ashish.movieguide.ui.widget.FontTextView
-                android:id="@+id/watched_episodes_text"
+                android:id="@+id/watchedEpisodesText"
                 style="@style/StatsTitleText"
                 tools:text="100" />
 
@@ -29,16 +29,15 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/episodes_time_spent_card"
+        android:id="@+id/episodesTimeSpentCard"
         style="@style/StatsCard"
         android:layout_width="match_parent"
-        android:layout_below="@+id/movies_time_spent_card"
-        android:layout_toEndOf="@id/watched_episodes_card">
+        android:layout_below="@+id/moviesTimeSpentCard"
+        android:layout_toEndOf="@id/watchedEpisodesCard">
 
         <LinearLayout style="@style/StatsContainerView">
 
             <com.ashish.movieguide.ui.widget.FontTextView
-                android:id="@+id/episodes_time_spent_title"
                 style="@style/PrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_marginBottom="@dimen/spacing_large"
@@ -49,17 +48,17 @@
                 android:layout_height="wrap_content">
 
                 <com.ashish.movieguide.ui.widget.TimeSpentView
-                    android:id="@+id/episodes_days_spent_view"
+                    android:id="@+id/episodesDaysSpentView"
                     style="@style/TimeSpentView"
                     app:timeSpentTypeText="@string/time_spent_days" />
 
                 <com.ashish.movieguide.ui.widget.TimeSpentView
-                    android:id="@+id/episodes_hours_spent_view"
+                    android:id="@+id/episodesHoursSpentView"
                     style="@style/TimeSpentView"
                     app:timeSpentTypeText="@string/time_spent_hours" />
 
                 <com.ashish.movieguide.ui.widget.TimeSpentView
-                    android:id="@+id/episodes_minutes_spent_view"
+                    android:id="@+id/episodesMinutesSpentView"
                     style="@style/TimeSpentView"
                     app:timeSpentTypeText="@string/time_spent_minutes" />
 

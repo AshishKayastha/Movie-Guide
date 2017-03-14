@@ -241,6 +241,7 @@
 
     <!-- Profile -->
     <string name="title_profile">Profile</string>
+    <string name="joined_on_format">Joined Trakt On: %s</string>
 
     <string name="friend_count">%d Friend</string>
     <string name="friends_count">%d Friends</string>

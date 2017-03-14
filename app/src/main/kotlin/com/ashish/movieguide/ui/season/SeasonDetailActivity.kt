@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.ViewStub
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.Episode
 import com.ashish.movieguide.data.models.tmdb.Season
@@ -18,11 +17,13 @@ import com.ashish.movieguide.ui.episode.EpisodeDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
+import com.ashish.movieguide.utils.extensions.show
 import icepick.State
+import kotlinx.android.synthetic.main.activity_detail_season.*
+import kotlinx.android.synthetic.main.layout_detail_app_bar.*
 
 /**
  * Created by Ashish on Jan 07.
@@ -44,8 +45,6 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
 
     @JvmField @State var tvShowId: Long? = null
     @JvmField @State var season: Season? = null
-
-    private val episodesViewStub: ViewStub by bindView(R.id.episodes_view_stub)
 
     private var episodesAdapter: RecyclerViewAdapter<Episode>? = null
 
@@ -85,9 +84,11 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
 
     override fun showDetailContent(detailContent: SeasonDetail) {
         detailContent.apply {
-            titleText.setTitleAndYear(name, airDate)
+            contentTitleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
         }
+
+        detailSeasonContainer.show()
         super.showDetailContent(detailContent)
     }
 
@@ -106,7 +107,7 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
         episodesAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_EPISODE,
                 onEpisodeItemClickLitener)
 
-        inflateViewStubRecyclerView(episodesViewStub, R.id.episodes_recycler_view, episodesAdapter!!, episodeList)
+        inflateViewStubRecyclerView(episodesViewStub, R.id.episodesRecyclerView, episodesAdapter!!, episodeList)
     }
 
     override fun getShareText(): CharSequence {

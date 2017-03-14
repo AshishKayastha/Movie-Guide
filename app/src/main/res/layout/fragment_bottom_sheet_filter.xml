@@ -5,95 +5,95 @@
     android:background="@drawable/bg_primary_gradient">
 
     <com.ashish.movieguide.ui.widget.FontTextView
-        android:id="@+id/sort_by_title"
+        android:id="@+id/sortByTitle"
         style="@style/FilterTitleText"
         android:text="@string/sort_by_txt" />
 
     <RadioGroup
-        android:id="@+id/sort_radio_group"
+        android:id="@+id/sortRadioGroup"
         style="@style/MaterialKeylineMargin"
-        android:layout_below="@id/sort_by_title"
+        android:layout_below="@id/sortByTitle"
         android:layout_marginTop="@dimen/spacing_medium"
         android:orientation="horizontal"
         android:weightSum="4">
 
         <com.ashish.movieguide.ui.widget.FontRadioButton
-            android:id="@+id/sort_by_popularity_rb"
+            android:id="@+id/sortByPopularityRB"
             style="@style/SortRadioButton.First"
             android:checked="true"
             android:text="@string/sort_by_popularity" />
 
         <com.ashish.movieguide.ui.widget.FontRadioButton
-            android:id="@+id/sort_by_date_rb"
+            android:id="@+id/sortByDateRB"
             style="@style/SortRadioButton"
             android:text="@string/sort_by_date" />
 
         <com.ashish.movieguide.ui.widget.FontRadioButton
-            android:id="@+id/sort_by_title_rb"
+            android:id="@+id/sortByTitleRB"
             style="@style/SortRadioButton"
             android:text="@string/sort_by_title" />
 
         <com.ashish.movieguide.ui.widget.FontRadioButton
-            android:id="@+id/sort_by_avg_vote_rb"
+            android:id="@+id/sortByAvgVoteRB"
             style="@style/SortRadioButton.Last"
             android:text="@string/sort_by_avg_vote" />
 
     </RadioGroup>
 
     <Space
-        android:id="@+id/centered_space"
+        android:id="@+id/centeredSpace"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_centerInParent="true" />
 
     <com.ashish.movieguide.ui.widget.FontTextView
-        android:id="@+id/date_title_text"
+        android:id="@+id/dateTitleText"
         style="@style/FilterTitleText"
-        android:layout_below="@id/sort_radio_group"
+        android:layout_below="@id/sortRadioGroup"
         android:layout_marginTop="@dimen/spacing_large"
         android:text="@string/choose_date_txt" />
 
     <com.ashish.movieguide.ui.widget.FontTextView
-        android:id="@+id/start_date_text"
+        android:id="@+id/startDateText"
         style="@style/FilterDateText"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/date_title_text"
+        android:layout_below="@id/dateTitleText"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_marginStart="@dimen/first_keyline"
-        android:layout_toStartOf="@id/centered_space"
+        android:layout_toStartOf="@id/centeredSpace"
         android:text="@string/start_date_txt" />
 
     <com.ashish.movieguide.ui.widget.FontTextView
-        android:id="@+id/end_date_text"
+        android:id="@+id/endDateText"
         style="@style/FilterDateText"
-        android:layout_below="@id/date_title_text"
+        android:layout_below="@id/dateTitleText"
         android:layout_marginEnd="@dimen/first_keyline"
         android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_toEndOf="@id/centered_space"
+        android:layout_toEndOf="@id/centeredSpace"
         android:text="@string/end_date_txt" />
 
     <com.ashish.movieguide.ui.widget.FontTextView
-        android:id="@+id/genre_title_text"
+        android:id="@+id/genreTitleText"
         style="@style/FilterTitleText"
-        android:layout_below="@id/start_date_text"
+        android:layout_below="@id/startDateText"
         android:layout_marginTop="@dimen/spacing_large"
         android:text="@string/select_genre_txt" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/genre_recycler_view"
+        android:id="@+id/genreRecyclerView"
         style="@style/Match.Width"
-        android:layout_below="@id/genre_title_text"
+        android:layout_below="@id/genreTitleText"
         android:layout_marginTop="@dimen/spacing_normal"
         android:clipToPadding="false"
         android:paddingEnd="@dimen/spacing_normal"
         android:paddingStart="@dimen/spacing_normal" />
 
     <com.ashish.movieguide.ui.widget.FontButton
-        android:id="@+id/apply_filter_btn"
+        android:id="@+id/applyFilterBtn"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/genre_recycler_view"
+        android:layout_below="@id/genreRecyclerView"
         android:layout_marginTop="@dimen/spacing_xlarge"
         android:background="@drawable/selector_accent_btn"
         android:text="@string/apply_filter_btn"

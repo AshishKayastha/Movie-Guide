@@ -7,8 +7,6 @@ import android.support.annotation.StringRes
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
-import android.widget.ImageView
-import android.widget.ProgressBar
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.animation.SlideInUpAnimator
 import com.ashish.movieguide.ui.base.mvp.MvpFragment
@@ -16,17 +14,16 @@ import com.ashish.movieguide.ui.common.adapter.InfiniteScrollListener
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.common.adapter.ViewType
-import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
-import com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout
-import com.ashish.movieguide.ui.widget.StaggeredGridRecyclerView
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
 import icepick.State
+import kotlinx.android.synthetic.main.fragment_recycler_view.*
+import kotlinx.android.synthetic.main.layout_empty_view.*
+import kotlinx.android.synthetic.main.layout_progress_bar.*
 
 /**
  * Created by Ashish on Dec 30.
@@ -36,13 +33,6 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
     @JvmField @State var type: Int? = null
-
-    protected val emptyContentView: View by bindView(R.id.empty_view)
-    protected val progressBar: ProgressBar by bindView(R.id.progress_bar)
-    protected val emptyTextView: FontTextView by bindView(R.id.empty_text)
-    protected val emptyImageView: ImageView by bindView(R.id.empty_image_view)
-    protected val recyclerView: StaggeredGridRecyclerView by bindView(R.id.recycler_view)
-    protected val swipeRefreshLayout: MultiSwipeRefreshLayout by bindView(R.id.swipe_refresh)
 
     protected lateinit var recyclerViewAdapter: RecyclerViewAdapter<I>
 
@@ -58,8 +48,8 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     }
 
     private fun initViews() {
-        emptyTextView.setText(getEmptyTextId())
-        emptyImageView.setImageResource(getEmptyImageId())
+        emptyText.setText(getEmptyTextId())
+        emptyImage.setImageResource(getEmptyImageId())
 
         recyclerViewAdapter = RecyclerViewAdapter(R.layout.list_item_content, getAdapterType(), this)
 
@@ -74,7 +64,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
             adapter = recyclerViewAdapter
         }
 
-        swipeRefreshLayout.apply {
+        swipeRefresh.apply {
             setColorSchemeResources(R.color.colorAccent)
             setSwipeableViews(emptyContentView, recyclerView)
             setOnRefreshListener(this@BaseRecyclerViewFragment)
@@ -111,7 +101,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     override fun hideProgress() {
         progressBar.hide()
-        swipeRefreshLayout.isRefreshing = false
+        swipeRefresh.isRefreshing = false
         emptyContentView.setVisibility(recyclerViewAdapter.itemCount == 0)
     }
 

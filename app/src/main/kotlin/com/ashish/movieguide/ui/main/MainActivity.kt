@@ -3,13 +3,12 @@ package com.ashish.movieguide.ui.main
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.util.Pair
 import android.support.v4.view.GravityCompat.START
-import android.support.v4.view.ViewPager
-import android.support.v4.widget.DrawerLayout
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -36,18 +35,16 @@ import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.CustomTypefaceSpan
 import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.extensions.applyText
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeMenuAndSubMenuFont
 import com.ashish.movieguide.utils.extensions.changeTabFont
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getStringArray
-import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.loadCircularImage
 import com.ashish.movieguide.utils.extensions.loadImage
 import com.ashish.movieguide.utils.extensions.runDelayed
 import com.ashish.movieguide.utils.extensions.setVisibility
-import com.ashish.movieguide.utils.extensions.startActivityWithTransition
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -61,11 +58,6 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
 
     @Inject
     lateinit var componentBuilders: Map<Class<out Fragment>, @JvmSuppressWildcards Provider<FragmentComponentBuilder<*, *>>>
-
-    private val viewPager: ViewPager by bindView(R.id.view_pager)
-    private val tabLayout: TabLayout by bindView(R.id.tab_layout)
-    private val drawerLayout: DrawerLayout by bindView(R.id.drawer_layout)
-    private val navigationView: NavigationView by bindView(R.id.navigation_view)
 
     private lateinit var userImage: ImageView
     private lateinit var headerImage: ImageView
@@ -130,21 +122,32 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
 
         showUserProfile()
         userImage.setOnClickListener {
-            if (preferenceHelper.getSlug().isNotNullOrEmpty()) {
-                val viewPair = Pair.create(userImage as View, getString(R.string.transition_user_image))
-                startActivityWithTransition(viewPair, Intent(this, ProfileActivity::class.java))
+            if (preferenceHelper.isLoggedIn()) {
+                startProfileActivity()
             } else {
-                drawerLayout.closeDrawers()
-                runDelayed(250L) {
-                    startActivityForResult(Intent(this, LoginActivity::class.java), RC_CONNECT_TRAKT)
-                }
+                startLoginActivity()
             }
         }
     }
 
+    private fun startLoginActivity() {
+        drawerLayout.closeDrawers()
+        runDelayed(250L) {
+            startActivityForResult(Intent(this, LoginActivity::class.java), RC_CONNECT_TRAKT)
+        }
+    }
+
+    private fun startProfileActivity() {
+        val viewPair = Pair.create(userImage as View, getString(R.string.transition_user_image))
+        val intent = Intent(this, ProfileActivity::class.java)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, viewPair)
+        window.exitTransition = null
+        ActivityCompat.startActivityForResult(this, intent, RC_CONNECT_TRAKT, options?.toBundle())
+    }
+
     private fun showUserProfile() {
         preferenceHelper.apply {
-            if (getSlug().isNotNullOrEmpty()) {
+            if (isLoggedIn()) {
                 nameText.applyText(getName())
             } else {
                 nameText.setText(R.string.connect_to_trakt)

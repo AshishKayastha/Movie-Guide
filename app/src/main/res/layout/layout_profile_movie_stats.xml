@@ -5,7 +5,7 @@
     tools:showIn="@layout/activity_profile">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/watched_movies_card"
+        android:id="@+id/watchedMoviesCard"
         style="@style/StatsCard"
         android:layout_marginEnd="@dimen/spacing_micro">
 
@@ -19,7 +19,7 @@
                 android:text="@string/watched_movies" />
 
             <com.ashish.movieguide.ui.widget.FontTextView
-                android:id="@+id/watched_movies_text"
+                android:id="@+id/watchedMoviesText"
                 style="@style/StatsTitleText"
                 tools:text="223" />
 
@@ -28,15 +28,14 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/movies_time_spent_card"
+        android:id="@+id/moviesTimeSpentCard"
         style="@style/StatsCard"
         android:layout_width="match_parent"
-        android:layout_toEndOf="@id/watched_movies_card">
+        android:layout_toEndOf="@id/watchedMoviesCard">
 
         <LinearLayout style="@style/StatsContainerView">
 
             <com.ashish.movieguide.ui.widget.FontTextView
-                android:id="@+id/movies_time_spent_title"
                 style="@style/PrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_marginBottom="@dimen/spacing_large"
@@ -47,17 +46,17 @@
                 android:layout_height="wrap_content">
 
                 <com.ashish.movieguide.ui.widget.TimeSpentView
-                    android:id="@+id/movies_days_spent_view"
+                    android:id="@+id/moviesDaysSpentView"
                     style="@style/TimeSpentView"
                     app:timeSpentTypeText="@string/time_spent_days" />
 
                 <com.ashish.movieguide.ui.widget.TimeSpentView
-                    android:id="@+id/movies_hours_spent_view"
+                    android:id="@+id/moviesHoursSpentView"
                     style="@style/TimeSpentView"
                     app:timeSpentTypeText="@string/time_spent_hours" />
 
                 <com.ashish.movieguide.ui.widget.TimeSpentView
-                    android:id="@+id/movies_minutes_spent_view"
+                    android:id="@+id/moviesMinutesSpentView"
                     style="@style/TimeSpentView"
                     app:timeSpentTypeText="@string/time_spent_minutes" />
 

@@ -6,12 +6,12 @@
     tools:parentTag="LinearLayout">
 
     <com.ashish.movieguide.ui.widget.FontTextView
-        android:id="@+id/time_spent_count_text"
+        android:id="@+id/timeSpentCountText"
         style="@style/StatsTitleText"
         tools:text="4" />
 
     <com.ashish.movieguide.ui.widget.FontTextView
-        android:id="@+id/time_spent_type_title"
+        android:id="@+id/timeSpentTypeTitle"
         style="@style/PrimaryText"
         android:layout_width="wrap_content"
         android:layout_marginTop="@dimen/spacing_micro"

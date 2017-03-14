@@ -48,9 +48,9 @@ class RatingCountLayout @JvmOverloads constructor(
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        progressBar = find<ProgressBar>(R.id.rating_count_progress)
-        ratingsCountText = find<FontTextView>(R.id.rating_count_text)
-        numOfRatingsText = find<FontTextView>(R.id.num_rating_text)
+        progressBar = find<ProgressBar>(R.id.ratingCountProgress)
+        ratingsCountText = find<FontTextView>(R.id.ratingCountText)
+        numOfRatingsText = find<FontTextView>(R.id.numRatingText)
 
         setRatingCount(ratingsCount)
         setNumOfRatings(numOfRatings)

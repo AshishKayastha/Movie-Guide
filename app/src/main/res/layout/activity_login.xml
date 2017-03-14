@@ -10,7 +10,7 @@
         style="@style/Toolbar">
 
         <ProgressBar
-            android:id="@+id/web_progress_bar"
+            android:id="@+id/webProgressBar"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="end"
@@ -27,7 +27,6 @@
         android:layout_marginTop="?actionBarSize">
 
         <ImageView
-            android:id="@+id/trakt_logo"
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_gravity="center_horizontal"
@@ -45,7 +44,7 @@
             android:textSize="@dimen/text_size_xlarge" />
 
         <com.ashish.movieguide.ui.widget.FontButton
-            android:id="@+id/connect_btn"
+            android:id="@+id/connectBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -56,13 +55,13 @@
             app:fontName="@string/font_montserrat_medium" />
 
         <ProgressBar
-            android:id="@+id/progress_bar"
+            android:id="@+id/progressBar"
             style="@style/ProgressBar"
             android:layout_marginTop="@dimen/spacing_xlarge"
             tools:visibility="visible" />
 
         <com.ashish.movieguide.ui.widget.FontTextView
-            android:id="@+id/status_text"
+            android:id="@+id/statusText"
             style="@style/PrimaryText"
             android:layout_marginTop="@dimen/spacing_medium"
             android:gravity="center"
@@ -72,7 +71,7 @@
     </LinearLayout>
 
     <WebView
-        android:id="@+id/web_view"
+        android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"

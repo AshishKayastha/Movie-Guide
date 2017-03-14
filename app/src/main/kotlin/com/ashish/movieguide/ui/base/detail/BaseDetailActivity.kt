@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.IdRes
 import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v4.app.ShareCompat
 import android.support.v4.util.Pair
 import android.support.v7.widget.LinearLayoutManager
@@ -19,8 +18,6 @@ import android.view.View
 import android.view.ViewStub
 import android.view.ViewTreeObserver
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.ProgressBar
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.Credit
 import com.ashish.movieguide.data.models.tmdb.OMDbDetail
@@ -33,7 +30,6 @@ import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.imageviewer.ImageViewerActivity
 import com.ashish.movieguide.ui.imageviewer.ImageViewerActivity.Companion.EXTRA_CURRENT_POSITION
 import com.ashish.movieguide.ui.imageviewer.ImageViewerActivity.Companion.EXTRA_STARTING_POSITION
-import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_CREDIT
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
@@ -50,7 +46,6 @@ import com.ashish.movieguide.utils.StartSnapHelper
 import com.ashish.movieguide.utils.TransitionListenerAdapter
 import com.ashish.movieguide.utils.extensions.animateBackgroundColorChange
 import com.ashish.movieguide.utils.extensions.animateTextColorChange
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeMenuAndSubMenuFont
 import com.ashish.movieguide.utils.extensions.changeTitleTypeface
 import com.ashish.movieguide.utils.extensions.find
@@ -71,6 +66,12 @@ import com.ashish.movieguide.utils.extensions.startActivityWithTransition
 import com.ashish.movieguide.utils.extensions.startCircularRevealAnimation
 import com.ashish.movieguide.utils.extensions.tint
 import com.ashish.movieguide.utils.transition.LeakFreeSupportSharedElementCallback
+import kotlinx.android.synthetic.main.layout_detail_app_bar.*
+import kotlinx.android.synthetic.main.layout_detail_cast_credits_stub.*
+import kotlinx.android.synthetic.main.layout_detail_content_recycler_view.*
+import kotlinx.android.synthetic.main.layout_detail_crew_credits_stub.*
+import kotlinx.android.synthetic.main.layout_detail_images_stub.*
+import kotlinx.android.synthetic.main.layout_detail_progress_bar.*
 import java.util.ArrayList
 
 /**
@@ -84,20 +85,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     protected var imdbId: String? = null
     protected var castAdapter: RecyclerViewAdapter<Credit>? = null
     protected var crewAdapter: RecyclerViewAdapter<Credit>? = null
-
-    protected val titleText: FontTextView by bindView(R.id.content_title_text)
-    protected val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
-
-    private val appBarLayout: AppBarLayout by bindView(R.id.app_bar)
-    private val progressBar: ProgressBar by bindView(R.id.progress_bar)
-    private val detailContainer: View by bindView(R.id.detail_container)
-    private val backdropImage: ImageView by bindView(R.id.backdrop_image)
-    private val posterImage: ImageView by bindView(R.id.detail_poster_image)
-
-    private val castViewStub: ViewStub by bindView(R.id.cast_view_stub)
-    private val crewViewStub: ViewStub by bindView(R.id.crew_view_stub)
-    private val imagesViewStub: ViewStub by bindView(R.id.images_view_stub)
-    private val detailContentRecyclerView: RecyclerView by bindView(R.id.detail_content_recycler_view)
 
     private var loadContent: Boolean = true
     private lateinit var regularFont: Typeface
@@ -171,7 +158,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        posterImage.setTransitionName(getTransitionNameId())
+        detailPosterImage.setTransitionName(getTransitionNameId())
         showPosterImage(getPosterPath())
 
         sharedElementEnterTransition = window.sharedElementEnterTransition
@@ -211,7 +198,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
           end radius - maximum value between backdrop image width and height
          */
         val cx = (backdropImage.left + backdropImage.right) / 2
-        val cy = backdropImage.bottom - titleText.height
+        val cy = backdropImage.bottom - contentTitleText.height
         val endRadius = Math.max(backdropImage.width, backdropImage.height).toFloat()
 
         backdropImage.startCircularRevealAnimation(cx, cy, 0f, endRadius) {
@@ -237,14 +224,16 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     }
 
     private fun showPosterImage(posterImagePath: String) {
-        posterImage.loadPaletteBitmap(posterImagePath, LIST_THUMBNAIL_WIDTH, LIST_THUMBNAIL_HEIGHT) { paletteBitmap ->
+        detailPosterImage.loadPaletteBitmap(posterImagePath, LIST_THUMBNAIL_WIDTH,
+                LIST_THUMBNAIL_HEIGHT) { paletteBitmap ->
             // When the poster image is loaded then
             // start postponed shared element transition
             startPostponedEnterTransition()
 
             paletteBitmap.setPaletteColor { swatch ->
-                titleText.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
-                titleText.animateTextColorChange(getColorCompat(R.color.primary_text_light), swatch.bodyTextColor)
+                contentTitleText.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
+                contentTitleText.animateTextColorChange(getColorCompat(R.color.primary_text_light),
+                        swatch.bodyTextColor)
             }
         }
     }
@@ -256,8 +245,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     override fun hideProgress() = progressBar.hide()
 
     override fun showDetailContent(detailContent: I) {
-        detailContainer.show()
-        appBarLayout.addOnOffsetChangedListener(this)
+        appBar.addOnOffsetChangedListener(this)
         showOrHideMenu(R.id.action_imdb, imdbId)
         menu?.findItem(R.id.action_share)?.isVisible = true
     }
@@ -285,7 +273,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
 
     override fun showImageList(imageUrlList: ArrayList<String>) {
         imageAdapter = ImageAdapter(imageUrlList, onImageItemClickListener)
-        imagesRecyclerView = inflateViewStubRecyclerView(imagesViewStub, R.id.detail_images_recycler_view,
+        imagesRecyclerView = inflateViewStubRecyclerView(imagesViewStub, R.id.detailImagesRecyclerView,
                 imageAdapter!!)
     }
 
@@ -305,7 +293,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         castAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT,
                 getCastItemClickListener())
 
-        inflateViewStubRecyclerView(castViewStub, R.id.cast_recycler_view, castAdapter!!, castList)
+        inflateViewStubRecyclerView(castViewStub, R.id.castRecyclerView, castAdapter!!, castList)
     }
 
     abstract fun getCastItemClickListener(): OnItemClickListener?
@@ -314,7 +302,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         crewAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT,
                 getCrewItemClickListener())
 
-        inflateViewStubRecyclerView(crewViewStub, R.id.crew_recycler_view, crewAdapter!!, crewList)
+        inflateViewStubRecyclerView(crewViewStub, R.id.crewRecyclerView, crewAdapter!!, crewList)
     }
 
     abstract fun getCrewItemClickListener(): OnItemClickListener?
@@ -450,6 +438,6 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         imageAdapter?.removeListener()
         imagesRecyclerView?.adapter = null
         removeSharedElementTransitionListener()
-        appBarLayout.removeOnOffsetChangedListener(this)
+        appBar.removeOnOffsetChangedListener(this)
     }
 }

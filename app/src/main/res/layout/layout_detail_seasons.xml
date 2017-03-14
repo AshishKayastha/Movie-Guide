@@ -8,7 +8,7 @@
         android:text="@string/seasons_title" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/seasons_recycler_view"
+        android:id="@+id/seasonsRecyclerView"
         style="@style/DetailRecyclerView" />
 
 </LinearLayout>

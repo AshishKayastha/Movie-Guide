@@ -8,7 +8,7 @@
         android:text="@string/videos_title" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/detail_videos_recycler_view"
+        android:id="@+id/detailVideosRecyclerView"
         style="@style/DetailRecyclerView"
         android:paddingEnd="@dimen/spacing_medium"
         android:paddingStart="@dimen/spacing_medium" />

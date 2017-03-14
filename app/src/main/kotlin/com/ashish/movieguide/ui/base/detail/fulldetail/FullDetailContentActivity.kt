@@ -1,11 +1,8 @@
 package com.ashish.movieguide.ui.base.detail.fulldetail
 
 import android.support.design.widget.AppBarLayout
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.view.ViewCompat
-import android.support.v7.widget.CardView
 import android.view.View
-import android.view.ViewStub
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.Credit
 import com.ashish.movieguide.data.models.tmdb.Person
@@ -15,12 +12,12 @@ import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.common.adapter.VideoAdapter
 import com.ashish.movieguide.ui.people.detail.PersonDetailActivity
-import com.ashish.movieguide.ui.widget.FontTextView
-import com.ashish.movieguide.ui.widget.LabelLayout
-import com.ashish.movieguide.ui.widget.RatingView
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.openUrl
 import com.ashish.movieguide.utils.extensions.show
+import kotlinx.android.synthetic.main.layout_detail_app_bar.*
+import kotlinx.android.synthetic.main.layout_detail_ratings.*
+import kotlinx.android.synthetic.main.layout_detail_trailer_fab.*
+import kotlinx.android.synthetic.main.layout_detail_videos_stub.*
 
 /**
  * This is base class and extension of [BaseDetailActivity] which
@@ -28,21 +25,6 @@ import com.ashish.movieguide.utils.extensions.show
  */
 abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : FullDetailContentPresenter<I, V>>
     : BaseDetailActivity<I, V, P>(), FullDetailContentView<I> {
-
-    protected val ratingLabelLayout: LabelLayout by bindView(R.id.my_rating_label)
-
-    private val ratingCardView: CardView by bindView(R.id.rating_card_view)
-
-    private val tmdbRatingView: RatingView by bindView(R.id.tmdb_rating_view)
-    private val imdbRatingView: RatingView by bindView(R.id.imdb_rating_view)
-    private val tomatoRatingView: RatingView by bindView(R.id.tomato_rating_view)
-    private val audienceScoreView: RatingView by bindView(R.id.audience_score_view)
-
-    private val metascoreView: View by bindView(R.id.metascore_view)
-    private val metascoreText: FontTextView by bindView(R.id.metascore_text)
-
-    private val videosViewStub: ViewStub by bindView(R.id.videos_view_stub)
-    private val playTrailerFAB: FloatingActionButton by bindView(R.id.play_trailer_fab)
 
     private var videoAdapter: VideoAdapter? = null
 
@@ -106,7 +88,7 @@ abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : Fu
 
     override fun showYouTubeVideos(youTubeVideos: List<YouTubeVideo>) {
         videoAdapter = VideoAdapter(youTubeVideos, onVideoItemClickListener)
-        inflateViewStubRecyclerView(videosViewStub, R.id.detail_videos_recycler_view, videoAdapter!!)
+        inflateViewStubRecyclerView(videosViewStub, R.id.detailVideosRecyclerView, videoAdapter!!)
     }
 
     override fun getCastItemClickListener() = onCastItemClickListener

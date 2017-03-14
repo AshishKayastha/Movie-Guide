@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.ImageView
-import android.widget.ProgressBar
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.Review
 import com.ashish.movieguide.di.modules.ActivityModule
@@ -18,17 +16,16 @@ import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.common.adapter.InfiniteScrollListener
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
-import com.ashish.movieguide.ui.widget.EmptyRecyclerView
-import com.ashish.movieguide.ui.widget.FontTextView
-import com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_REVIEW
 import com.ashish.movieguide.utils.CustomTabsHelper
-import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.show
 import icepick.State
+import kotlinx.android.synthetic.main.activity_review.*
+import kotlinx.android.synthetic.main.layout_empty_view.*
+import kotlinx.android.synthetic.main.layout_progress_bar.*
 
 class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresenter>(),
         BaseRecyclerViewMvpView<Review>, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
@@ -45,17 +42,10 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
 
     @JvmField @State var movieId: Long = 0L
 
-    private val emptyContentView: View by bindView(R.id.empty_view)
-    private val progressBar: ProgressBar by bindView(R.id.progress_bar)
-    private val emptyTextView: FontTextView by bindView(R.id.empty_text)
-    private val emptyImageView: ImageView by bindView(R.id.empty_image_view)
-    private val recyclerView: EmptyRecyclerView by bindView(R.id.recycler_view)
-    private val swipeRefreshLayout: MultiSwipeRefreshLayout by bindView(R.id.swipe_refresh)
-
     private lateinit var reviewAdapter: RecyclerViewAdapter<Review>
 
     private val scrollListener: InfiniteScrollListener = InfiniteScrollListener { currentPage ->
-        if (currentPage > 1) recyclerView.post { presenter?.loadMoreData(null, currentPage) }
+        if (currentPage > 1) reviewRecyclerView.post { presenter?.loadMoreData(null, currentPage) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,12 +55,12 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar?.changeViewGroupTextFont()
 
-        emptyTextView.setText(R.string.no_reviews_available)
-        emptyImageView.setImageResource(R.drawable.ic_review_white_100dp)
+        emptyText.setText(R.string.no_reviews_available)
+        emptyImage.setImageResource(R.drawable.ic_review_white_100dp)
 
         reviewAdapter = RecyclerViewAdapter(R.layout.list_item_detail_review, ADAPTER_TYPE_REVIEW, this)
 
-        recyclerView.apply {
+        reviewRecyclerView.apply {
             setHasFixedSize(true)
             emptyView = emptyContentView
             itemAnimator = SlideInUpAnimator()
@@ -79,9 +69,9 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
             adapter = reviewAdapter
         }
 
-        swipeRefreshLayout.apply {
+        swipeRefresh.apply {
             setColorSchemeResources(R.color.colorAccent)
-            setSwipeableViews(emptyContentView, recyclerView)
+            setSwipeableViews(emptyContentView, reviewRecyclerView)
             setOnRefreshListener(this@ReviewActivity)
         }
     }
@@ -118,7 +108,7 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
 
     override fun hideProgress() {
         progressBar.hide()
-        swipeRefreshLayout.isRefreshing = false
+        swipeRefresh.isRefreshing = false
         emptyContentView.setVisibility(reviewAdapter.itemCount == 0)
     }
 

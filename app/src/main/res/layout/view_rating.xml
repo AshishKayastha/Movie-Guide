@@ -6,13 +6,13 @@
     tools:visibility="visible">
 
     <ImageView
-        android:id="@+id/rating_image"
+        android:id="@+id/ratingImage"
         style="@style/RatingImage"
         android:src="@drawable/ic_rt_certified"
         tools:ignore="ContentDescription" />
 
     <com.ashish.movieguide.ui.widget.FontTextView
-        android:id="@+id/rating_text"
+        android:id="@+id/ratingText"
         style="@style/RatingText"
         tools:text="95%" />
 

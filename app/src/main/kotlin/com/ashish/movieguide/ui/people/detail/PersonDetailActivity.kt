@@ -26,7 +26,10 @@ import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getProfileUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
+import com.ashish.movieguide.utils.extensions.show
 import icepick.State
+import kotlinx.android.synthetic.main.activity_detail_person.*
+import kotlinx.android.synthetic.main.layout_detail_app_bar.*
 
 /**
  * Created by Ashish on Jan 04.
@@ -100,11 +103,12 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail,
 
     override fun showDetailContent(detailContent: PersonDetail) {
         detailContent.apply {
-            titleText.text = name
+            contentTitleText.text = name
             this@PersonDetailActivity.imdbId = imdbId
             showProfileBackdropImage(detailContent.images)
         }
 
+        detailPersonContainer.show()
         super.showDetailContent(detailContent)
     }
 
