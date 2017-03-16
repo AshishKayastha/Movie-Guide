@@ -19,5 +19,5 @@ fun Palette?.getSwatchWithMostPixels(): Palette.Swatch? {
 }
 
 fun PaletteBitmap?.setPaletteColor(func: (swatch: Palette.Swatch) -> Unit) {
-    this?.palette?.getSwatchWithMostPixels()?.apply { func(this) }
+    this?.palette?.getSwatchWithMostPixels()?.run { func(this) }
 }

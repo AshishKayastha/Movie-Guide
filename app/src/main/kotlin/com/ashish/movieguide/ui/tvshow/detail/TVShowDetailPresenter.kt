@@ -2,8 +2,11 @@ package com.ashish.movieguide.ui.tvshow.detail
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.TVShowInteractor
-import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.common.FullDetailContent
 import com.ashish.movieguide.data.models.tmdb.TVShowDetail
+import com.ashish.movieguide.data.models.trakt.SyncItems
+import com.ashish.movieguide.data.models.trakt.SyncShow
+import com.ashish.movieguide.data.models.trakt.TraktShow
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
@@ -11,9 +14,10 @@ import com.ashish.movieguide.ui.common.rating.RatingManager
 import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_TV
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
-import com.ashish.movieguide.utils.extensions.getRatingValue
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
+import io.reactivex.Single
 import java.util.ArrayList
+import java.util.Collections
 import javax.inject.Inject
 
 /**
@@ -25,7 +29,7 @@ class TVShowDetailPresenter @Inject constructor(
         private val personalContentManager: PersonalContentManager,
         private val ratingManager: RatingManager,
         schedulerProvider: BaseSchedulerProvider
-) : FullDetailContentPresenter<TVShowDetail, TVShowDetailView>(schedulerProvider) {
+) : FullDetailContentPresenter<TVShowDetail, TraktShow, TVShowDetailView>(schedulerProvider) {
 
     override fun attachView(view: TVShowDetailView) {
         super.attachView(view)
@@ -33,28 +37,25 @@ class TVShowDetailPresenter @Inject constructor(
         personalContentManager.setView(view)
     }
 
-    override fun getDetailContent(id: Long) = tvShowInteractor.getFullTVShowDetail(id)
+    override fun getDetailContent(id: Long): Single<FullDetailContent<TVShowDetail, TraktShow>>
+            = tvShowInteractor.getFullTVShowDetail(id)
 
-    override fun showDetailContent(fullDetailContent: FullDetailContent<TVShowDetail>) {
+    override fun showDetailContent(fullDetailContent: FullDetailContent<TVShowDetail, TraktShow>) {
         super.showDetailContent(fullDetailContent)
-        getView()?.apply {
+        getView()?.run {
             hideProgress()
             val tvShowDetail = fullDetailContent.detailContent
-            val accountState = tvShowDetail?.tvRatings
-            personalContentManager.setAccountState(accountState)
-
-            showSavedRating(accountState?.getRatingValue())
             setTMDbRating(tvShowDetail?.voteAverage)
             showItemList(tvShowDetail?.seasons) { showSeasonsList(it) }
             showItemList(tvShowDetail?.similarTVShowResults?.results) { showSimilarTVShowList(it) }
         }
     }
 
-    override fun getContentList(fullDetailContent: FullDetailContent<TVShowDetail>): List<String> {
+    override fun getContentList(fullDetailContent: FullDetailContent<TVShowDetail, TraktShow>): List<String> {
         val contentList = ArrayList<String>()
-        fullDetailContent.detailContent?.apply {
+        fullDetailContent.detailContent?.run {
             val omdbDetail = fullDetailContent.omdbDetail
-            contentList.apply {
+            contentList.run {
                 add(overview ?: "")
                 add(genres.convertListToCommaSeparatedText { it.name.toString() })
                 add(omdbDetail?.Rated ?: "")
@@ -92,14 +93,25 @@ class TVShowDetailPresenter @Inject constructor(
         personalContentManager.addToWatchlist(getTvId(), MEDIA_TYPE_TV)
     }
 
-    fun saveRating(rating: Double) {
-        val tvId = getTvId()
-        ratingManager.saveRating(tvShowInteractor.rateTVShow(tvId, rating), tvId, rating)
+    fun addRating(rating: Int) {
+        syncRatings(rating) { syncItems ->
+            ratingManager.addRating(syncItems, getTvId(), rating)
+        }
     }
 
-    fun deleteRating() {
-        val tvId = getTvId()
-        ratingManager.deleteRating(tvShowInteractor.deleteTVRating(tvId), tvId)
+    fun removeRating() {
+        syncRatings(null) { syncItems ->
+            ratingManager.removeRating(syncItems, getTvId())
+        }
+    }
+
+    private fun syncRatings(rating: Int?, syncRatingAction: (SyncItems) -> Unit) {
+        val traktItem = fullDetailContent?.traktItem
+        if (traktItem != null) {
+            val syncShow = SyncShow(rating, traktItem.ids, "")
+            val syncItems = SyncItems(shows = Collections.singletonList(syncShow))
+            syncRatingAction.invoke(syncItems)
+        }
     }
 
     private fun getTvId() = fullDetailContent?.detailContent?.id!!

@@ -61,7 +61,7 @@ inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 8
                               crossinline onAnimationUpdate: (color: Int) -> Unit) {
     if (startColor != endColor) {
         val colorAnimator = ValueAnimator.ofArgb(startColor, endColor)
-        colorAnimator.apply {
+        colorAnimator.run {
             this.duration = duration
             interpolator = FastOutSlowInInterpolator()
             addUpdateListener { animation -> onAnimationUpdate(animation.animatedValue as Int) }

@@ -1,7 +1,7 @@
 package com.ashish.movieguide.ui.base.detail.fulldetail
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.common.FullDetailContent
 import com.ashish.movieguide.data.models.tmdb.VideoItem
 import com.ashish.movieguide.data.models.tmdb.Videos
 import com.ashish.movieguide.data.models.tmdb.YouTubeVideo
@@ -12,9 +12,9 @@ import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 /**
  * Created by Ashish on Jan 20.
  */
-abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
+abstract class FullDetailContentPresenter<I, T, V : FullDetailContentView<I>>(
         schedulerProvider: BaseSchedulerProvider
-) : BaseDetailPresenter<I, V>(schedulerProvider) {
+) : BaseDetailPresenter<I, T, V>(schedulerProvider) {
 
     companion object {
         private const val YOUTUBE_SITE = "YouTube"
@@ -22,8 +22,8 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
         private const val YOUTUBE_THUMB_URL = "https://img.youtube.com/vi/{id}/hqdefault.jpg"
     }
 
-    override fun showDetailContent(fullDetailContent: FullDetailContent<I>) {
-        fullDetailContent.omdbDetail?.apply {
+    override fun showDetailContent(fullDetailContent: FullDetailContent<I, T>) {
+        fullDetailContent.omdbDetail?.run {
             if (isValidRating(imdbRating) || isValidRating(tomatoRating) || isValidRating(tomatoUserRating)
                     || isValidRating(Metascore)) {
                 getView()?.showRatingCard()
@@ -41,7 +41,7 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
     protected fun setTMDbRating(voteAverage: Double?) {
         val tmdbRating = voteAverage.toString()
         if (isValidRating(tmdbRating)) {
-            getView()?.apply {
+            getView()?.run {
                 showRatingCard()
                 showTmdbRating(tmdbRating)
             }
@@ -54,7 +54,7 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
 
     private fun setTomatoRating(tomatoRating: String?, tomatoImage: String?) {
         if (isValidRating(tomatoRating)) {
-            getView()?.apply {
+            getView()?.run {
                 if (tomatoImage == "certified") {
                     showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_certified)
                 } else if (tomatoImage == "fresh") {
@@ -68,7 +68,7 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
 
     private fun setAudienceScore(tomatoUserRating: String?, tomatoUserMeter: String?) {
         if (isValidRating(tomatoUserRating)) {
-            getView()?.apply {
+            getView()?.run {
                 val flixterScore = tomatoUserRating!!.toFloat()
                 if (flixterScore >= 3.5) {
                     showAudienceScore(tomatoUserMeter!!, R.drawable.ic_audience_score_good)
@@ -81,7 +81,7 @@ abstract class FullDetailContentPresenter<I, V : FullDetailContentView<I>>(
 
     private fun setMetaScore(metaScore: String?) {
         if (isValidRating(metaScore)) {
-            getView()?.apply {
+            getView()?.run {
                 val metaScoreInt = metaScore!!.toInt()
                 if (metaScoreInt > 60) {
                     showMetaScore(metaScore, 0xFF66CC33.toInt())

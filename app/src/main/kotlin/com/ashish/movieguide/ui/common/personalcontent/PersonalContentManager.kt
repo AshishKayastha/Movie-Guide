@@ -2,7 +2,6 @@ package com.ashish.movieguide.ui.common.personalcontent
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.AuthInteractor
-import com.ashish.movieguide.data.models.tmdb.AccountState
 import com.ashish.movieguide.data.models.tmdb.Favorite
 import com.ashish.movieguide.data.models.tmdb.Watchlist
 import com.ashish.movieguide.data.preferences.PreferenceHelper
@@ -36,17 +35,6 @@ class PersonalContentManager @Inject constructor(
         this.view = view
     }
 
-    fun setAccountState(accountState: AccountState?) {
-        // Show favorite and watchlist menu item only if user is logged in
-        if (preferenceHelper.getId() > 0) {
-            isFavorite = accountState?.favorite ?: false
-            view?.setFavoriteIcon(isFavorite)
-
-            isInWatchlist = accountState?.watchlist ?: false
-            view?.changeWatchlistMenuItem(isInWatchlist)
-        }
-    }
-
     fun markAsFavorite(mediaId: Long?, mediaType: String) {
         performActionIfOnline {
             if (mediaId != null) {
@@ -70,7 +58,7 @@ class PersonalContentManager @Inject constructor(
 
     private fun onMarkAsFavoriteError(t: Throwable) {
         Timber.e(t)
-        view?.apply {
+        view?.run {
             if (t is AuthException) {
                 showMessage(R.string.error_not_logged_in)
             } else {
@@ -107,7 +95,7 @@ class PersonalContentManager @Inject constructor(
 
     private fun onAddToWatchlistError(t: Throwable) {
         Timber.e(t)
-        view?.apply {
+        view?.run {
             if (t is AuthException) {
                 showMessage(R.string.error_not_logged_in)
             } else {
@@ -120,7 +108,7 @@ class PersonalContentManager @Inject constructor(
     }
 
     private fun showWatchlistMessage(addMessage: Int, removeMessage: Int) {
-        view?.apply {
+        view?.run {
             if (isInWatchlist) {
                 showMessage(addMessage)
             } else {

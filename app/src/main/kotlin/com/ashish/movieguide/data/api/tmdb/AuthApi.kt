@@ -1,16 +1,12 @@
 package com.ashish.movieguide.data.api.tmdb
 
-import com.ashish.movieguide.data.models.tmdb.Account
 import com.ashish.movieguide.data.models.tmdb.Episode
 import com.ashish.movieguide.data.models.tmdb.Favorite
 import com.ashish.movieguide.data.models.tmdb.Movie
-import com.ashish.movieguide.data.models.tmdb.RequestToken
 import com.ashish.movieguide.data.models.tmdb.Results
-import com.ashish.movieguide.data.models.tmdb.Session
 import com.ashish.movieguide.data.models.tmdb.Status
 import com.ashish.movieguide.data.models.tmdb.TVShow
 import com.ashish.movieguide.data.models.tmdb.Watchlist
-import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -22,15 +18,6 @@ import retrofit2.http.Query
  * Created by Ashish on Jan 28.
  */
 interface AuthApi {
-
-    @GET("authentication/token/new")
-    fun createRequestToken(): Single<RequestToken>
-
-    @GET("authentication/session/new")
-    fun createSession(@Query("request_token") requestToken: String): Observable<Session>
-
-    @GET("account")
-    fun getUserAccount(@Query("session_id") sessionId: String): Observable<Account>
 
     @POST("account/{accountId}/favorite")
     fun markAsFavorite(

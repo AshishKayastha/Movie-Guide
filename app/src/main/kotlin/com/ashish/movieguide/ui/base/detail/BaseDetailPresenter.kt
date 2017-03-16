@@ -1,8 +1,8 @@
 package com.ashish.movieguide.ui.base.detail
 
 import com.ashish.movieguide.R
+import com.ashish.movieguide.data.models.common.FullDetailContent
 import com.ashish.movieguide.data.models.tmdb.CreditResults
-import com.ashish.movieguide.data.models.tmdb.FullDetailContent
 import com.ashish.movieguide.data.models.tmdb.ImageItem
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.AuthException
@@ -18,11 +18,11 @@ import java.util.ArrayList
 /**
  * Created by Ashish on Jan 03.
  */
-abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
+abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
         schedulerProvider: BaseSchedulerProvider
 ) : RxPresenter<V>(schedulerProvider) {
 
-    protected var fullDetailContent: FullDetailContent<I>? = null
+    protected var fullDetailContent: FullDetailContent<I, T>? = null
 
     fun loadDetailContent(id: Long?) {
         if (fullDetailContent != null) {
@@ -42,10 +42,10 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
         }
     }
 
-    abstract fun getDetailContent(id: Long): Single<FullDetailContent<I>>
+    abstract fun getDetailContent(id: Long): Single<FullDetailContent<I, T>>
 
-    protected open fun showDetailContent(fullDetailContent: FullDetailContent<I>) {
-        getView()?.apply {
+    protected open fun showDetailContent(fullDetailContent: FullDetailContent<I, T>) {
+        getView()?.run {
             val contentList = getContentList(fullDetailContent)
             showDetailContentList(contentList)
 
@@ -82,7 +82,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
         }
     }
 
-    abstract fun getContentList(fullDetailContent: FullDetailContent<I>): List<String>
+    abstract fun getContentList(fullDetailContent: FullDetailContent<I, T>): List<String>
 
     abstract fun getBackdropImages(detailContent: I): List<ImageItem>?
 
@@ -91,7 +91,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
     abstract fun getCredits(detailContent: I): CreditResults?
 
     private fun showCredits(creditResults: CreditResults?) {
-        getView()?.apply {
+        getView()?.run {
             showItemList(creditResults?.cast) { showCastList(it) }
             showItemList(creditResults?.crew) { showCrewList(it) }
         }
@@ -99,7 +99,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
 
     private fun onLoadDetailError(t: Throwable, messageId: Int) {
         Timber.e(t)
-        getView()?.apply {
+        getView()?.run {
             showErrorToast(t, messageId)
             finishActivity()
         }
@@ -108,7 +108,7 @@ abstract class BaseDetailPresenter<I, V : BaseDetailView<I>>(
     abstract fun getErrorMessageId(): Int
 
     private fun showErrorToast(t: Throwable, messageId: Int) {
-        getView()?.apply {
+        getView()?.run {
             if (t is IOException) {
                 showToastMessage(R.string.error_no_internet)
             } else if (t is AuthException) {

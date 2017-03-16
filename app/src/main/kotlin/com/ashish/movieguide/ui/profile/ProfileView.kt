@@ -3,7 +3,7 @@ package com.ashish.movieguide.ui.profile
 import com.ashish.movieguide.data.models.trakt.EpisodeStats
 import com.ashish.movieguide.data.models.trakt.MovieStats
 import com.ashish.movieguide.data.models.trakt.NetworkStats
-import com.ashish.movieguide.data.models.trakt.Ratings
+import com.ashish.movieguide.data.models.trakt.RatingDistribution
 import com.ashish.movieguide.data.models.trakt.UserProfile
 import com.ashish.movieguide.ui.base.mvp.ProgressView
 
@@ -17,5 +17,5 @@ interface ProfileView : ProgressView {
 
     fun showNetworkStats(networkStats: NetworkStats)
 
-    fun showRatings(ratings: Ratings)
+    fun showRatings(ratingDistribution: RatingDistribution)
 }

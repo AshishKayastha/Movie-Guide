@@ -60,7 +60,7 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
 
         reviewAdapter = RecyclerViewAdapter(R.layout.list_item_detail_review, ADAPTER_TYPE_REVIEW, this)
 
-        reviewRecyclerView.apply {
+        reviewRecyclerView.run {
             setHasFixedSize(true)
             emptyView = emptyContentView
             itemAnimator = SlideInUpAnimator()
@@ -69,7 +69,7 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
             adapter = reviewAdapter
         }
 
-        swipeRefresh.apply {
+        swipeRefresh.run {
             setColorSchemeResources(R.color.colorAccent)
             setSwipeableViews(emptyContentView, reviewRecyclerView)
             setOnRefreshListener(this@ReviewActivity)

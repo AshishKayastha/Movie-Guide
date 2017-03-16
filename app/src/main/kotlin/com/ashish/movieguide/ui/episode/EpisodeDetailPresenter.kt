@@ -2,16 +2,19 @@ package com.ashish.movieguide.ui.episode
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.TVShowInteractor
+import com.ashish.movieguide.data.models.common.FullDetailContent
 import com.ashish.movieguide.data.models.tmdb.EpisodeDetail
-import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.trakt.SyncEpisode
+import com.ashish.movieguide.data.models.trakt.SyncItems
+import com.ashish.movieguide.data.models.trakt.TraktEpisode
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.rating.RatingManager
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
-import com.ashish.movieguide.utils.extensions.getRatingValue
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
 import java.util.ArrayList
+import java.util.Collections
 import javax.inject.Inject
 
 /**
@@ -22,9 +25,8 @@ class EpisodeDetailPresenter @Inject constructor(
         private val tvShowInteractor: TVShowInteractor,
         private val ratingManager: RatingManager,
         schedulerProvider: BaseSchedulerProvider
-) : FullDetailContentPresenter<EpisodeDetail, EpisodeDetailView>(schedulerProvider) {
+) : FullDetailContentPresenter<EpisodeDetail, TraktEpisode, EpisodeDetailView>(schedulerProvider) {
 
-    private var tvId: Long = 0L
     private var seasonNumber: Int = 1
     private var episodeNumber: Int = 1
 
@@ -38,22 +40,20 @@ class EpisodeDetailPresenter @Inject constructor(
         this.episodeNumber = episodeNumber
     }
 
-    override fun getDetailContent(id: Long): Single<FullDetailContent<EpisodeDetail>> {
-        tvId = id
+    override fun getDetailContent(id: Long): Single<FullDetailContent<EpisodeDetail, TraktEpisode>> {
         return tvShowInteractor.getFullEpisodeDetail(id, seasonNumber, episodeNumber)
     }
 
-    override fun showDetailContent(fullDetailContent: FullDetailContent<EpisodeDetail>) {
+    override fun showDetailContent(fullDetailContent: FullDetailContent<EpisodeDetail, TraktEpisode>) {
         super.showDetailContent(fullDetailContent)
         setTMDbRating(fullDetailContent.detailContent?.voteAverage)
-        getView()?.showSavedRating(fullDetailContent.detailContent?.episodeRatings?.getRatingValue())
     }
 
-    override fun getContentList(fullDetailContent: FullDetailContent<EpisodeDetail>): List<String> {
+    override fun getContentList(fullDetailContent: FullDetailContent<EpisodeDetail, TraktEpisode>): List<String> {
         val contentList = ArrayList<String>()
-        fullDetailContent.detailContent?.apply {
+        fullDetailContent.detailContent?.run {
             val omdbDetail = fullDetailContent.omdbDetail
-            contentList.apply {
+            contentList.run {
                 add(overview ?: "")
                 add(omdbDetail?.Rated ?: "")
                 add(omdbDetail?.Awards ?: "")
@@ -79,14 +79,25 @@ class EpisodeDetailPresenter @Inject constructor(
 
     override fun getErrorMessageId() = R.string.error_load_episode_detail
 
-    fun saveRating(rating: Double) {
-        ratingManager.saveRating(tvShowInteractor.rateEpisode(tvId, seasonNumber,
-                episodeNumber, rating), getEpisodeId(), rating)
+    fun addRating(rating: Int) {
+        syncRatings(rating) { syncItems ->
+            ratingManager.addRating(syncItems, getEpisodeId(), rating)
+        }
     }
 
-    fun deleteRating() {
-        ratingManager.deleteRating(tvShowInteractor.deleteEpisodeRating(tvId, seasonNumber, episodeNumber),
-                getEpisodeId())
+    fun removeRating() {
+        syncRatings(null) { syncItems ->
+            ratingManager.removeRating(syncItems, getEpisodeId())
+        }
+    }
+
+    private fun syncRatings(rating: Int?, syncRatingAction: (SyncItems) -> Unit) {
+        val traktItem = fullDetailContent?.traktItem
+        if (traktItem != null) {
+            val syncEpisode = SyncEpisode(rating, traktItem.ids, "")
+            val syncItems = SyncItems(episodes = Collections.singletonList(syncEpisode))
+            syncRatingAction.invoke(syncItems)
+        }
     }
 
     private fun getEpisodeId() = fullDetailContent?.detailContent?.id!!

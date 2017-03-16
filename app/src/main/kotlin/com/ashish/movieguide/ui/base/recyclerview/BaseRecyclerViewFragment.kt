@@ -53,7 +53,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
         recyclerViewAdapter = RecyclerViewAdapter(R.layout.list_item_content, getAdapterType(), this)
 
-        recyclerView.apply {
+        recyclerView.run {
             setHasFixedSize(true)
             emptyView = emptyContentView
             itemAnimator = SlideInUpAnimator()
@@ -64,7 +64,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
             adapter = recyclerViewAdapter
         }
 
-        swipeRefresh.apply {
+        swipeRefresh.run {
             setColorSchemeResources(R.color.colorAccent)
             setSwipeableViews(emptyContentView, recyclerView)
             setOnRefreshListener(this@BaseRecyclerViewFragment)

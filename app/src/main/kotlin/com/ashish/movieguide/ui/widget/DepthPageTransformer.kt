@@ -11,7 +11,7 @@ class DepthPageTransformer : PageTransformer {
     }
 
     private fun onPreTransform(page: View, position: Float) {
-        page.apply {
+        page.run {
             rotationX = 0f
             rotationY = 0f
             rotation = 0f
@@ -30,14 +30,14 @@ class DepthPageTransformer : PageTransformer {
 
     private fun onTransform(view: View, position: Float) {
         if (position <= 0f) {
-            view.apply {
+            view.run {
                 translationX = 0f
                 scaleX = 1f
                 scaleY = 1f
             }
         } else if (position <= 1f) {
             val scaleFactor = 0.75f + (1 - 0.75f) * (1 - Math.abs(position))
-            view.apply {
+            view.run {
                 alpha = 1 - position
                 pivotY = 0.5f * view.height
                 translationX = view.width * -position

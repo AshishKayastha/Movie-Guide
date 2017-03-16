@@ -19,8 +19,8 @@ import android.view.ViewStub
 import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import com.ashish.movieguide.R
+import com.ashish.movieguide.data.models.common.OMDbDetail
 import com.ashish.movieguide.data.models.tmdb.Credit
-import com.ashish.movieguide.data.models.tmdb.OMDbDetail
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.ui.common.adapter.DetailContentAdapter
 import com.ashish.movieguide.ui.common.adapter.ImageAdapter
@@ -76,9 +76,11 @@ import java.util.ArrayList
 
 /**
  * This is a base class which handles common logic for showing
- * detail contents provided by TMDb.
+ * detail contents provided by TMDb and Trakt api.
+ * @param I TMDB Item
+ * @param T Trakt Item
  */
-abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresenter<I, V>>
+abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPresenter<I, T, V>>
     : MvpActivity<V, P>(), BaseDetailView<I>, AppBarLayout.OnOffsetChangedListener {
 
     protected var menu: Menu? = null
@@ -263,7 +265,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
     abstract fun getDetailContentType(): Int
 
     private fun setDetailContentAdapter(contentTitleId: Int, contentList: List<String>) {
-        detailContentRecyclerView.apply {
+        detailContentRecyclerView.run {
             setHasFixedSize(true)
             isNestedScrollingEnabled = false
             layoutManager = LinearLayoutManager(this@BaseDetailActivity)
@@ -312,7 +314,7 @@ abstract class BaseDetailActivity<I, V : BaseDetailView<I>, P : BaseDetailPresen
         val inflatedView = viewStub.inflate()
         val recyclerView = inflatedView.find<RecyclerView>(viewId)
 
-        recyclerView.apply {
+        recyclerView.run {
             setHasFixedSize(true)
             addItemDecoration(ItemOffsetDecoration())
             layoutManager = LinearLayoutManager(this@BaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)

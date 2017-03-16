@@ -98,7 +98,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
                     filterQuery?.genreIds)
         }
 
-        genreRecyclerView.apply {
+        genreRecyclerView.run {
             addItemDecoration(ItemOffsetDecoration(8f.dpToPx().toInt()))
             layoutManager = StaggeredGridLayoutManager(2, GridLayoutManager.HORIZONTAL)
             adapter = genreAdapter
@@ -136,7 +136,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun getFragmentArguments() {
-        arguments.apply {
+        arguments.run {
             isMovie = getBoolean(ARG_IS_MOVIE)
             filterQuery = getParcelable(ARG_FILTER_QUERY)
         }

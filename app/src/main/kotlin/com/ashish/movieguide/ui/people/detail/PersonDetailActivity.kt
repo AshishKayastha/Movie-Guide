@@ -11,6 +11,7 @@ import com.ashish.movieguide.data.models.tmdb.Person
 import com.ashish.movieguide.data.models.tmdb.PersonDetail
 import com.ashish.movieguide.data.models.tmdb.ProfileImages
 import com.ashish.movieguide.data.models.tmdb.TVShow
+import com.ashish.movieguide.data.models.trakt.TraktPerson
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.BaseDetailActivity
@@ -34,7 +35,7 @@ import kotlinx.android.synthetic.main.layout_detail_app_bar.*
 /**
  * Created by Ashish on Jan 04.
  */
-class PersonDetailActivity : BaseDetailActivity<PersonDetail,
+class PersonDetailActivity : BaseDetailActivity<PersonDetail, TraktPerson,
         BaseDetailView<PersonDetail>, PersonDetailPresenter>() {
 
     companion object {
@@ -102,7 +103,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail,
     override fun getPosterPath() = person?.profilePath.getProfileUrl()
 
     override fun showDetailContent(detailContent: PersonDetail) {
-        detailContent.apply {
+        detailContent.run {
             contentTitleText.text = name
             this@PersonDetailActivity.imdbId = imdbId
             showProfileBackdropImage(detailContent.images)

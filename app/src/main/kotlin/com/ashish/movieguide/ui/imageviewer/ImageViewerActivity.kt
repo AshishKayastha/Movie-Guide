@@ -106,7 +106,7 @@ class ImageViewerActivity : BaseActivity() {
         postponeEnterTransition()
         setEnterSharedElementCallback(callback)
 
-        supportActionBar?.apply {
+        supportActionBar?.run {
             setDisplayHomeAsUpEnabled(true)
             if (this@ImageViewerActivity.title.isEmpty()) {
                 setImageCountTitle()
@@ -118,7 +118,7 @@ class ImageViewerActivity : BaseActivity() {
         toolbar?.changeViewGroupTextFont()
 
         imageViewerAdapter = ImageViewerAdapter(supportFragmentManager, imageUrlList!!)
-        viewPager.apply {
+        viewPager.run {
             adapter = imageViewerAdapter
             currentItem = currentPosition
             setPageTransformer(true, DepthPageTransformer())

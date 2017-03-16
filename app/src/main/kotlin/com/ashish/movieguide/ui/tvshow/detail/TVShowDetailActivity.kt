@@ -11,6 +11,7 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.Season
 import com.ashish.movieguide.data.models.tmdb.TVShow
 import com.ashish.movieguide.data.models.tmdb.TVShowDetail
+import com.ashish.movieguide.data.models.trakt.TraktShow
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
@@ -43,7 +44,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 03.
  */
-class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
+class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
         TVShowDetailView, TVShowDetailPresenter>(),
         TVShowDetailView, RatingDialog.UpdateRatingListener {
 
@@ -110,7 +111,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
     override fun getPosterPath() = tvShow?.posterPath.getPosterUrl()
 
     override fun showDetailContent(detailContent: TVShowDetail) {
-        detailContent.apply {
+        detailContent.run {
             if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
                 showBackdropImage(backdropPath.getBackdropUrl())
             }
@@ -184,16 +185,16 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail,
         menu?.changeWatchlistMenuItem(isInWatchlist)
     }
 
-    override fun showSavedRating(rating: Double?) {
+    override fun showSavedRating(rating: Int?) {
         myRatingLabel.setRating(rating)
     }
 
-    override fun saveRating(rating: Double) {
-        presenter?.saveRating(rating)
+    override fun addRating(rating: Int) {
+        presenter?.addRating(rating)
     }
 
-    override fun deleteRating() {
-        presenter?.deleteRating()
+    override fun removeRating() {
+        presenter?.removeRating()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

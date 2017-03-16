@@ -58,7 +58,7 @@ class LabelLayout @JvmOverloads constructor(
         labelTextSize = ta.getDimensionPixelSize(R.styleable.LabelLayout_android_textSize, 14f.spToPx().toInt())
         ta.recycle()
 
-        textPaint.apply {
+        textPaint.run {
             isDither = true
             isAntiAlias = true
             strokeCap = Paint.Cap.SQUARE
@@ -75,7 +75,7 @@ class LabelLayout @JvmOverloads constructor(
         val labelHalfWidth = calculateWidth(labelDistance, labelHeight) / 2
         val labelHalfHeight = labelHeight / 2
 
-        labelRect.apply {
+        labelRect.run {
             left = centerCoordinate[0] - labelHalfWidth
             right = centerCoordinate[0] + labelHalfWidth
             top = centerCoordinate[1] - labelHalfHeight
@@ -111,6 +111,14 @@ class LabelLayout @JvmOverloads constructor(
     fun setRating(rating: Double?) {
         if (rating != null && rating > 0.0) {
             setLabelText(DecimalFormat("0.#").format(rating))
+        } else {
+            hide()
+        }
+    }
+
+    fun setRating(rating: Int?) {
+        if (rating != null && rating > 0) {
+            setLabelText(rating.toString())
         } else {
             hide()
         }
@@ -231,7 +239,7 @@ class LabelLayout @JvmOverloads constructor(
 
             if (intrinsicWidth <= labelRectWidth && intrinsicHeight <= labelRectHeight) {
                 // No need to scale
-                backgroundRect.apply {
+                backgroundRect.run {
                     left = labelRect.centerX() - intrinsicWidth / 2
                     top = labelRect.centerY() - intrinsicHeight / 2
                     right = labelRect.centerX() + intrinsicWidth / 2
@@ -253,7 +261,7 @@ class LabelLayout @JvmOverloads constructor(
                     height = labelRectHeight
                 }
 
-                backgroundRect.apply {
+                backgroundRect.run {
                     with(labelRect) {
                         left = centerX() - width / 2
                         top = centerY() - height / 2

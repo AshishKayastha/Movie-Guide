@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.ColorInt
 import android.support.v4.graphics.drawable.DrawableCompat
-import com.ashish.movieguide.data.models.tmdb.AccountState
 import com.ashish.movieguide.ui.common.palette.PaletteBitmap
 import com.ashish.movieguide.ui.common.palette.PaletteBitmapTranscoder
 import com.bumptech.glide.BitmapRequestBuilder
@@ -78,15 +77,6 @@ inline fun <T> Bundle?.getExtrasOrRestore(target: T, getExtras: () -> Unit) {
     } else {
         Icepick.restoreInstanceState(target, this)
     }
-}
-
-fun AccountState.getRatingValue(): Double? {
-    if (rated is Map<*, *>) {
-        @Suppress("UNCHECKED_CAST")
-        val ratingMap = rated as Map<String, Double>
-        return ratingMap["value"]
-    }
-    return 0.0
 }
 
 /**

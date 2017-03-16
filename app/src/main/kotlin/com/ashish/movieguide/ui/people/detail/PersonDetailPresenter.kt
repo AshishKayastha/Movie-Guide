@@ -2,8 +2,9 @@ package com.ashish.movieguide.ui.people.detail
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.PeopleInteractor
-import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.common.FullDetailContent
 import com.ashish.movieguide.data.models.tmdb.PersonDetail
+import com.ashish.movieguide.data.models.trakt.TraktPerson
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.BaseDetailPresenter
 import com.ashish.movieguide.ui.base.detail.BaseDetailView
@@ -20,14 +21,14 @@ import javax.inject.Inject
 class PersonDetailPresenter @Inject constructor(
         private val peopleInteractor: PeopleInteractor,
         schedulerProvider: BaseSchedulerProvider
-) : BaseDetailPresenter<PersonDetail, BaseDetailView<PersonDetail>>(schedulerProvider) {
+) : BaseDetailPresenter<PersonDetail, TraktPerson, BaseDetailView<PersonDetail>>(schedulerProvider) {
 
     override fun getDetailContent(id: Long) = peopleInteractor.getFullPersonDetail(id)
 
-    override fun getContentList(fullDetailContent: FullDetailContent<PersonDetail>): List<String> {
+    override fun getContentList(fullDetailContent: FullDetailContent<PersonDetail, TraktPerson>): List<String> {
         val contentList = ArrayList<String>()
-        fullDetailContent.detailContent?.apply {
-            contentList.apply {
+        fullDetailContent.detailContent?.run {
+            contentList.run {
                 add(biography ?: "")
                 add(birthday.getFormattedMediumDate())
                 add(placeOfBirth ?: "")

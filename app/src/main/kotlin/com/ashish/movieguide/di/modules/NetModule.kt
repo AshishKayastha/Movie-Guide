@@ -41,7 +41,9 @@ object NetModule {
     private const val CACHE_DIRECTORY = "http-cache"
     private const val CACHE_SIZE = 20 * 1024 * 1024L // 20MB
 
-    @Provides @Singleton @JvmStatic
+    @Provides
+    @Singleton
+    @JvmStatic
     fun provideHttpLoggingInterceptor(): LoggingInterceptor {
         return LoggingInterceptor.Builder()
                 .loggable(BuildConfig.DEBUG)
@@ -52,12 +54,17 @@ object NetModule {
                 .build()
     }
 
-    @Provides @Singleton @JvmStatic
+    @Provides
+    @Singleton
+    @JvmStatic
     fun provideCache(@ApplicationContext context: Context): Cache {
         return Cache(File(context.cacheDir, CACHE_DIRECTORY), CACHE_SIZE)
     }
 
-    @Provides @Singleton @JvmStatic @BaseOkHttp
+    @Provides
+    @Singleton
+    @JvmStatic
+    @BaseOkHttp
     fun provideBaseOkHttpClient(cache: Cache, loggingInterceptor: LoggingInterceptor,
                                 offlineCacheInterceptor: OfflineCacheInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
@@ -70,7 +77,9 @@ object NetModule {
                 .build()
     }
 
-    @Provides @Singleton @JvmStatic
+    @Provides
+    @Singleton
+    @JvmStatic
     fun provideTMDbClient(@BaseOkHttp okHttpClient: OkHttpClient,
                           apiKeyInterceptor: TMDbApiKeyInterceptor): OkHttpClient {
         return okHttpClient.newBuilder()
@@ -78,17 +87,25 @@ object NetModule {
                 .build()
     }
 
-    @Provides @Singleton @JvmStatic
+    @Provides
+    @Singleton
+    @JvmStatic
     fun provideMoshi(): Moshi = Moshi.Builder().build()
 
-    @Provides @Singleton @JvmStatic
+    @Provides
+    @Singleton
+    @JvmStatic
     fun provideMoshiConverterFactory(moshi: Moshi): MoshiConverterFactory = MoshiConverterFactory.create(moshi)
 
-    @Provides @Singleton @JvmStatic
+    @Provides
+    @Singleton
+    @JvmStatic
     fun provideRxJavaCallAdapterFactory(): CallAdapter.Factory
             = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
 
-    @Provides @Singleton @JvmStatic
+    @Provides
+    @Singleton
+    @JvmStatic
     fun provideTMDbRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
                             callAdapterFactory: CallAdapter.Factory): Retrofit {
         return Retrofit.Builder()
@@ -99,7 +116,10 @@ object NetModule {
                 .build()
     }
 
-    @Provides @Singleton @JvmStatic @OMDb
+    @Provides
+    @Singleton
+    @JvmStatic
+    @OMDb
     fun provideOMDbRetrofit(@BaseOkHttp client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
                             callAdapterFactory: CallAdapter.Factory): Retrofit {
         return Retrofit.Builder()
@@ -110,7 +130,10 @@ object NetModule {
                 .build()
     }
 
-    @Provides @Singleton @JvmStatic @Trakt
+    @Provides
+    @Singleton
+    @JvmStatic
+    @Trakt
     fun provideTraktClient(@BaseOkHttp okHttpClient: OkHttpClient, traktnterceptor: Traktnterceptor,
                            traktAuthenticator: TraktAuthenticator): OkHttpClient {
         return okHttpClient.newBuilder()
@@ -119,7 +142,10 @@ object NetModule {
                 .build()
     }
 
-    @Provides @Singleton @JvmStatic @Trakt
+    @Provides
+    @Singleton
+    @JvmStatic
+    @Trakt
     fun provideTraktRetrofit(@Trakt client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
                              callAdapterFactory: CallAdapter.Factory): Retrofit {
         return Retrofit.Builder()
@@ -130,6 +156,8 @@ object NetModule {
                 .build()
     }
 
-    @Provides @Singleton @JvmStatic
+    @Provides
+    @Singleton
+    @JvmStatic
     fun provideschedulers(schedulerProvider: SchedulerProvider): BaseSchedulerProvider = schedulerProvider
 }

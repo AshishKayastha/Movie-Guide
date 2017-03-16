@@ -5,5 +5,5 @@ data class Stats(
         val shows: ShowStats? = null,
         val episodes: EpisodeStats? = null,
         val network: NetworkStats? = null,
-        val ratings: Ratings? = null
+        val ratings: RatingDistribution? = null
 )

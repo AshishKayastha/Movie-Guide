@@ -57,7 +57,7 @@ fun Activity.setOverflowMenuColor(color: Int) {
 
 fun Menu.setFavoriteIcon(isFavorite: Boolean?) {
     val favItem = findItem(R.id.action_favorite)
-    favItem.apply {
+    favItem.run {
         isVisible = true
         if (isFavorite == true) {
             setIcon(R.drawable.ic_favorite_white_24dp)
@@ -100,7 +100,7 @@ fun ActionMenuItemView.startFavoriteAnimation(isFavorite: Boolean) {
 
 fun Menu.changeWatchlistMenuItem(isInWatchlist: Boolean) {
     val favItem = findItem(R.id.action_watchlist)
-    favItem.apply {
+    favItem.run {
         isVisible = true
         if (isInWatchlist) {
             setTitle(R.string.remove_from_watchlist)
@@ -114,7 +114,7 @@ fun Menu.changeWatchlistMenuItem(isInWatchlist: Boolean) {
 
 fun Menu.setRatingItemTitle(@StringRes titleId: Int) {
     val menuItem = findItem(R.id.action_rating)
-    menuItem.apply {
+    menuItem.run {
         isVisible = true
         setTitle(titleId)
     }

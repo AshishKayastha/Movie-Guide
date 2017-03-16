@@ -8,6 +8,7 @@ import android.view.MenuItem
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.Episode
 import com.ashish.movieguide.data.models.tmdb.EpisodeDetail
+import com.ashish.movieguide.data.models.trakt.TraktEpisode
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
@@ -29,7 +30,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 08.
  */
-class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
+class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpisode,
         EpisodeDetailView, EpisodeDetailPresenter>(),
         EpisodeDetailView, RatingDialog.UpdateRatingListener {
 
@@ -82,7 +83,7 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
     override fun getPosterPath() = episode?.stillPath.getStillImageUrl()
 
     override fun showDetailContent(detailContent: EpisodeDetail) {
-        detailContent.apply {
+        detailContent.run {
             contentTitleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
         }
@@ -115,16 +116,16 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail,
                 "episode/" + episode!!.episodeNumber
     }
 
-    override fun showSavedRating(rating: Double?) {
+    override fun showSavedRating(rating: Int?) {
         myRatingLabel.setRating(rating)
     }
 
-    override fun saveRating(rating: Double) {
-        presenter?.saveRating(rating)
+    override fun addRating(rating: Int) {
+        presenter?.addRating(rating)
     }
 
-    override fun deleteRating() {
-        presenter?.deleteRating()
+    override fun removeRating() {
+        presenter?.removeRating()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

@@ -66,7 +66,8 @@ class RatedEpisodeFragment : BaseRecyclerViewFragment<Episode,
                 .subscribe({ (_, rating) ->
                     if (rating > 0) {
                         val episode = recyclerViewAdapter.getItem<Episode>(clickedItemPosition)
-                        recyclerViewAdapter.replaceItem(clickedItemPosition, episode.copy(rating = rating))
+                        recyclerViewAdapter.replaceItem(clickedItemPosition,
+                                episode.copy(rating = rating.toDouble()))
                     } else {
                         recyclerViewAdapter.removeItem(clickedItemPosition)
                     }

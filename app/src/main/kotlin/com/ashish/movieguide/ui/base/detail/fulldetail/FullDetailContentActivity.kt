@@ -22,9 +22,12 @@ import kotlinx.android.synthetic.main.layout_detail_videos_stub.*
 /**
  * This is base class and extension of [BaseDetailActivity] which
  * handles all the logic for showing different ratings of media content from OMDb api.
+ * @param I TMDB Item
+ * @param T Trakt Item
  */
-abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : FullDetailContentPresenter<I, V>>
-    : BaseDetailActivity<I, V, P>(), FullDetailContentView<I> {
+abstract class FullDetailContentActivity<I, T, V : FullDetailContentView<I>,
+        P : FullDetailContentPresenter<I, T, V>>
+    : BaseDetailActivity<I, T, V, P>(), FullDetailContentView<I> {
 
     private var videoAdapter: VideoAdapter? = null
 
@@ -80,7 +83,7 @@ abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : Fu
     }
 
     override fun showTrailerFAB(trailerUrl: String) {
-        playTrailerFAB.apply {
+        playTrailerFAB.run {
             postDelayed({ animate().alpha(1f).scaleX(1f).scaleY(1f).start() }, 80L)
             setOnClickListener { openUrl(trailerUrl) }
         }
@@ -99,7 +102,7 @@ abstract class FullDetailContentActivity<I, V : FullDetailContentView<I>, P : Fu
         super.onOffsetChanged(appBarLayout, verticalOffset)
 
         // Show or hide FAB depending upon whether appbar is collapsing or expanding
-        playTrailerFAB.apply {
+        playTrailerFAB.run {
             val isCollapsing = collapsingToolbar.height + verticalOffset <
                     2.4 * ViewCompat.getMinimumHeight(collapsingToolbar)
             if (isCollapsing) hide() else show()

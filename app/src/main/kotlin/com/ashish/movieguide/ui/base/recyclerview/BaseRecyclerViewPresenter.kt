@@ -56,7 +56,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     private fun showItemList() {
-        getView()?.apply {
+        getView()?.run {
             showItemList(itemList)
             setCurrentPage(currentPage)
         }
@@ -72,7 +72,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     protected fun addNewItemList(data: Results<I>?) {
-        getView()?.apply {
+        getView()?.run {
             if (data != null) {
                 currentPage = data.page
                 val newItemList = data.results
@@ -85,7 +85,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     protected fun handleLoadMoreError(t: Throwable) {
-        getView()?.apply {
+        getView()?.run {
             removeLoadingItem()
             resetLoading()
             showErrorMessage(t)
@@ -94,7 +94,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     protected fun showErrorMessage(t: Throwable) {
         Timber.e(t)
-        getView()?.apply {
+        getView()?.run {
             if (t is IOException) {
                 showNoInternetMessage()
             } else if (t is AuthException) {

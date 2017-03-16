@@ -35,7 +35,7 @@ class ProfilePresenter @Inject constructor(
     }
 
     private fun showUserStats(stats: Stats) {
-        getView()?.apply {
+        getView()?.run {
             with(stats) {
                 movies?.let { showMovieStats(it) }
                 episodes?.let { showEpisodeStats(it) }
@@ -47,7 +47,7 @@ class ProfilePresenter @Inject constructor(
 
     private fun handleError(t: Throwable) {
         Timber.e(t)
-        getView()?.apply {
+        getView()?.run {
             if (t is IOException) {
                 showMessage(R.string.error_no_internet)
             } else {

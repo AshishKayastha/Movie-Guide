@@ -38,7 +38,7 @@ class LoginPresenter @Inject constructor(
     }
 
     private fun saveAccessToken(traktToken: TraktToken) {
-        preferenceHelper.apply {
+        preferenceHelper.run {
             setAccessToken(traktToken.accessToken)
             setRefreshToken(traktToken.refreshToken)
         }
@@ -52,12 +52,12 @@ class LoginPresenter @Inject constructor(
 
     private fun handleError(t: Throwable) {
         Timber.e(t)
-        preferenceHelper.apply {
+        preferenceHelper.run {
             setAccessToken(null)
             setRefreshToken(null)
         }
 
-        getView()?.apply {
+        getView()?.run {
             if (t is IOException) {
                 showMessage(R.string.error_no_internet)
             } else {

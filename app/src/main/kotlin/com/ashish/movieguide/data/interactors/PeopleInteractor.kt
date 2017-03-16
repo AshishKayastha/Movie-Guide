@@ -1,10 +1,11 @@
 package com.ashish.movieguide.data.interactors
 
 import com.ashish.movieguide.data.api.tmdb.PeopleApi
-import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.common.FullDetailContent
 import com.ashish.movieguide.data.models.tmdb.Person
 import com.ashish.movieguide.data.models.tmdb.PersonDetail
 import com.ashish.movieguide.data.models.tmdb.Results
+import com.ashish.movieguide.data.models.trakt.TraktPerson
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,8 +20,8 @@ class PeopleInteractor @Inject constructor(private val peopleApi: PeopleApi) {
         return peopleApi.getPopularPeople(page)
     }
 
-    fun getFullPersonDetail(personId: Long): Single<FullDetailContent<PersonDetail>> {
+    fun getFullPersonDetail(personId: Long): Single<FullDetailContent<PersonDetail, TraktPerson>> {
         return peopleApi.getPersonDetail(personId, "combined_credits,images")
-                .flatMap { Single.just(FullDetailContent(it, null)) }
+                .flatMap { Single.just(FullDetailContent(it, null, null)) }
     }
 }

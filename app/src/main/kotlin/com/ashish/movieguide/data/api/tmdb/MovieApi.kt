@@ -2,16 +2,11 @@ package com.ashish.movieguide.data.api.tmdb
 
 import com.ashish.movieguide.data.models.tmdb.Movie
 import com.ashish.movieguide.data.models.tmdb.MovieDetail
-import com.ashish.movieguide.data.models.tmdb.Rating
 import com.ashish.movieguide.data.models.tmdb.Results
 import com.ashish.movieguide.data.models.tmdb.Review
-import com.ashish.movieguide.data.models.tmdb.Status
 import com.ashish.movieguide.utils.TMDbConstants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -39,12 +34,6 @@ interface MovieApi {
             @Path("movieId") movieId: Long,
             @Query("append_to_response") appendedResponse: String
     ): Single<MovieDetail>
-
-    @POST("movie/{movieId}/rating")
-    fun rateMovie(@Path("movieId") movieId: Long, @Body rating: Rating): Single<Status>
-
-    @DELETE("movie/{movieId}/rating")
-    fun deleteMovieRating(@Path("movieId") movieId: Long): Single<Status>
 
     @GET("movie/{movieId}/reviews")
     fun getMovieReviews(

@@ -22,7 +22,7 @@ class CircularTextDrawable(context: Context, private val text: String) : ShapeDr
     private val borderPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     init {
-        textPaint.apply {
+        textPaint.run {
             color = Color.WHITE
             style = Paint.Style.FILL
             textSize = 18f.spToPx()
@@ -30,7 +30,7 @@ class CircularTextDrawable(context: Context, private val text: String) : ShapeDr
             typeface = FontUtils.getTypeface(context, FontUtils.MONTSERRAT_MEDIUM)
         }
 
-        borderPaint.apply {
+        borderPaint.run {
             color = Color.WHITE
             style = Paint.Style.STROKE
             strokeWidth = borderWidth

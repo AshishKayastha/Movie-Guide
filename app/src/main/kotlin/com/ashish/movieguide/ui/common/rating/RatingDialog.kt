@@ -42,8 +42,8 @@ class RatingDialog @Inject constructor(private val context: Context) {
                 .setCancelable(false)
                 .setView(view)
                 .setNeutralButton(android.R.string.cancel, null)
-                .setNegativeButton(R.string.remove_btn, { _, _ -> listener?.deleteRating() })
-                .setPositiveButton(R.string.rate_btn, { _, _ -> listener?.saveRating(ratingBar.rating.toDouble()) })
+                .setNegativeButton(R.string.remove_btn, { _, _ -> listener?.removeRating() })
+                .setPositiveButton(R.string.rate_btn, { _, _ -> listener?.addRating(ratingBar.rating.toInt()) })
                 .create()
 
         ratingDialog?.changeDialogButtonTypeface()
@@ -63,7 +63,7 @@ class RatingDialog @Inject constructor(private val context: Context) {
     }
 
     interface UpdateRatingListener {
-        fun saveRating(rating: Double)
-        fun deleteRating()
+        fun addRating(rating: Int)
+        fun removeRating()
     }
 }

@@ -12,7 +12,7 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.trakt.EpisodeStats
 import com.ashish.movieguide.data.models.trakt.MovieStats
 import com.ashish.movieguide.data.models.trakt.NetworkStats
-import com.ashish.movieguide.data.models.trakt.Ratings
+import com.ashish.movieguide.data.models.trakt.RatingDistribution
 import com.ashish.movieguide.data.models.trakt.UserProfile
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
@@ -81,16 +81,19 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     override fun hideProgress() = progressBar.hide()
 
     override fun showUserProfile(userProfile: UserProfile, coverImageUrl: String?) {
-        displayName = userProfile.name ?: ""
-        displayNameText.applyText(displayName)
+        with(userProfile) {
+            displayName = name ?: ""
+            displayNameText.applyText(displayName)
+            locationText.applyText(location)
 
-        val formattedDate = userProfile.joinedAt.getFormattedMediumDate(GMT_ISO8601_FORMAT)
-        if (formattedDate.isNotNullOrEmpty()) {
-            joinedOnText.text = String.format(getString(R.string.joined_on_format), formattedDate)
+            val formattedDate = joinedAt.getFormattedMediumDate(GMT_ISO8601_FORMAT)
+            if (formattedDate.isNotNullOrEmpty()) {
+                joinedOnText.text = String.format(getString(R.string.joined_on_format), formattedDate)
+            }
+
+            loadCoverImage(coverImageUrl)
+            loadProfileImage(images?.avatar?.full)
         }
-
-        loadCoverImage(coverImageUrl)
-        loadProfileImage(userProfile.images?.avatar?.full)
     }
 
     private fun loadCoverImage(coverImageUrl: String?) {
@@ -145,10 +148,10 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     private fun getCountString(@PluralsRes pluralId: Int, count: Int): String
             = resources.getQuantityString(pluralId, count, count)
 
-    override fun showRatings(ratings: Ratings) {
-        totalRatings = ratings.total ?: 0
+    override fun showRatings(ratingDistribution: RatingDistribution) {
+        totalRatings = ratingDistribution.total ?: 0
         if (totalRatings > 0) {
-            ratings.distribution?.apply {
+            ratingDistribution.distribution?.run {
                 setRatingStars(tenStarView, ten)
                 setRatingStars(nineStarView, nine)
                 setRatingStars(eightStarView, eight)
@@ -165,7 +168,7 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
 
     private fun setRatingStars(view: RatingCountLayout, ratingCount: Int?) {
         if (ratingCount != null) {
-            view.apply {
+            view.run {
                 setRatingCount(ratingCount.toString())
                 setRatingProgress(totalRatings, ratingCount)
             }

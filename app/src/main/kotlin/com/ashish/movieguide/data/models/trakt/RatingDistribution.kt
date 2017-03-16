@@ -1,6 +1,6 @@
 package com.ashish.movieguide.data.models.trakt
 
-data class Ratings(
+data class RatingDistribution(
         val total: Int? = null,
         val distribution: Distribution? = null
 )

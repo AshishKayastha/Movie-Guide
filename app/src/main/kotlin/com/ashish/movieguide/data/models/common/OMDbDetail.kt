@@ -1,7 +1,7 @@
-package com.ashish.movieguide.data.models.tmdb
+package com.ashish.movieguide.data.models.common
 
 data class OMDbDetail(
-        val imdbId: String,
+        val imdbId: String? = null,
         val Rated: String? = null,
         val Country: String? = null,
         val Awards: String? = null,

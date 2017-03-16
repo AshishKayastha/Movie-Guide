@@ -1,17 +1,18 @@
 package com.ashish.movieguide.ui.common.rating
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Status
+import com.ashish.movieguide.data.api.trakt.SyncApi
+import com.ashish.movieguide.data.models.trakt.SyncItems
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
-import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import javax.inject.Inject
 
 @ActivityScope
 class RatingManager @Inject constructor(
+        private val syncApi: SyncApi,
         private val schedulerProvider: BaseSchedulerProvider,
         private val ratingChangeObserver: RatingChangeObserver
 ) {
@@ -23,16 +24,16 @@ class RatingManager @Inject constructor(
         this.view = view
     }
 
-    fun saveRating(saveRatingObservable: Single<Status>, mediaId: Long, rating: Double) {
+    fun addRating(syncItems: SyncItems, mediaId: Long, rating: Int) {
         performActionIfOnline {
-            compositeDisposable.add(saveRatingObservable
+            compositeDisposable.add(syncApi.addRatings(syncItems)
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ onSaveRatingSuccess(mediaId, rating) }, { onSaveRatingFailed(it) }))
+                    .subscribe({ onAddRatingSuccess(mediaId, rating) }, { onAddRatingFailed(it) }))
         }
     }
 
-    private fun onSaveRatingSuccess(mediaId: Long, rating: Double) {
-        view?.apply {
+    private fun onAddRatingSuccess(mediaId: Long, rating: Int) {
+        view?.run {
             showSavedRating(rating)
             showToastMessage(R.string.success_save_rating)
         }
@@ -40,26 +41,31 @@ class RatingManager @Inject constructor(
         ratingChangeObserver.notifyRatingChanged(mediaId, rating)
     }
 
-    private fun onSaveRatingFailed(t: Throwable) {
+    private fun onAddRatingFailed(t: Throwable) {
         Timber.e(t)
         view?.showMessage(R.string.error_save_rating)
     }
 
-    fun deleteRating(deleteRatingObservable: Single<Status>, mediaId: Long) {
+    fun removeRating(syncItems: SyncItems, mediaId: Long) {
         performActionIfOnline {
-            compositeDisposable.add(deleteRatingObservable
+            compositeDisposable.add(syncApi.removeRatings(syncItems)
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ onDeleteRatingSuccess(mediaId) }, { onDeleteRatingFailed(it) }))
+                    .subscribe({ onRemoveRatingSuccess(mediaId) }, { onRemoveRatingFailed(it) }))
         }
     }
 
-    private fun onDeleteRatingSuccess(mediaId: Long) {
-        view?.apply {
-            showSavedRating(0.0)
+    private fun onRemoveRatingSuccess(mediaId: Long) {
+        view?.run {
+            showSavedRating(0)
             showToastMessage(R.string.success_delete_rating)
         }
 
-        ratingChangeObserver.notifyRatingChanged(mediaId, 0.0)
+        ratingChangeObserver.notifyRatingChanged(mediaId, 0)
+    }
+
+    private fun onRemoveRatingFailed(t: Throwable) {
+        Timber.e(t)
+        view?.showMessage(R.string.error_delete_rating)
     }
 
     private fun performActionIfOnline(onlineAction: () -> Unit) {
@@ -68,11 +74,6 @@ class RatingManager @Inject constructor(
         } else {
             view?.showMessage(R.string.error_no_internet)
         }
-    }
-
-    private fun onDeleteRatingFailed(t: Throwable) {
-        Timber.e(t)
-        view?.showMessage(R.string.error_delete_rating)
     }
 
     fun unsubscribe() = compositeDisposable.clear()

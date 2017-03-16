@@ -24,6 +24,5 @@ data class MovieDetail(
         @Json(name = "vote_average") val voteAverage: Double? = null,
         @Json(name = "backdrop_path") val backdropPath: String? = null,
         @Json(name = "credits") val creditsResults: CreditResults? = null,
-        @Json(name = "account_states") val movieRatings: AccountState? = null,
         @Json(name = "similar") val similarMovieResults: Results<Movie>? = null
 )

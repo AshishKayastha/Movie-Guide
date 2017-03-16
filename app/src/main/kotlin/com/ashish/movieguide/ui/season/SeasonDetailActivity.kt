@@ -8,6 +8,7 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.Episode
 import com.ashish.movieguide.data.models.tmdb.Season
 import com.ashish.movieguide.data.models.tmdb.SeasonDetail
+import com.ashish.movieguide.data.models.trakt.TraktSeason
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
@@ -28,8 +29,8 @@ import kotlinx.android.synthetic.main.layout_detail_app_bar.*
 /**
  * Created by Ashish on Jan 07.
  */
-class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetailView, SeasonDetailPresenter>(),
-        SeasonDetailView {
+class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, TraktSeason,
+        SeasonDetailView, SeasonDetailPresenter>(), SeasonDetailView {
 
     companion object {
         private const val EXTRA_SEASON = "season"
@@ -83,7 +84,7 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, SeasonDetai
     override fun getPosterPath() = season?.posterPath.getPosterUrl()
 
     override fun showDetailContent(detailContent: SeasonDetail) {
-        detailContent.apply {
+        detailContent.run {
             contentTitleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
         }

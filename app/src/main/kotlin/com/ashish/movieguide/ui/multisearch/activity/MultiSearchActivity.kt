@@ -95,7 +95,7 @@ class MultiSearchActivity : BaseActivity(), FragmentComponentBuilderHost {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
         val searchText = searchView.find<TextView>(android.support.v7.appcompat.R.id.search_src_text)
-        searchText.apply {
+        searchText.run {
             changeTypeface()
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)

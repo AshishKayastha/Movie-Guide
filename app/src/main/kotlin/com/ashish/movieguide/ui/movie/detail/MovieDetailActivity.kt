@@ -10,6 +10,7 @@ import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.models.tmdb.Movie
 import com.ashish.movieguide.data.models.tmdb.MovieDetail
+import com.ashish.movieguide.data.models.trakt.TraktMovie
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
@@ -40,7 +41,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 31.
  */
-class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
+class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
         MovieDetailView, MovieDetailPresenter>(),
         MovieDetailView, RatingDialog.UpdateRatingListener {
 
@@ -62,7 +63,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
 
     private val isLoggedIn: Boolean by lazy {
-        preferenceHelper.getId() > 0
+        preferenceHelper.isLoggedIn()
     }
 
     private val onSimilarMovieItemClickLitener = object : OnItemClickListener {
@@ -108,7 +109,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
     override fun getItemTitle(): String = movie?.title ?: ""
 
     override fun showDetailContent(detailContent: MovieDetail) {
-        detailContent.apply {
+        detailContent.run {
             if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
                 showBackdropImage(backdropPath.getBackdropUrl())
             }
@@ -168,16 +169,16 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail,
         menu?.changeWatchlistMenuItem(isInWatchlist)
     }
 
-    override fun showSavedRating(rating: Double?) {
+    override fun showSavedRating(rating: Int?) {
         myRatingLabel.setRating(rating)
     }
 
-    override fun saveRating(rating: Double) {
-        presenter?.saveRating(rating)
+    override fun addRating(rating: Int) {
+        presenter?.addRating(rating)
     }
 
-    override fun deleteRating() {
-        presenter?.deleteRating()
+    override fun removeRating() {
+        presenter?.removeRating()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

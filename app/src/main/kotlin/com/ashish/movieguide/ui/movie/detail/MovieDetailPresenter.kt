@@ -2,8 +2,11 @@ package com.ashish.movieguide.ui.movie.detail
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.MovieInteractor
-import com.ashish.movieguide.data.models.tmdb.FullDetailContent
+import com.ashish.movieguide.data.models.common.FullDetailContent
 import com.ashish.movieguide.data.models.tmdb.MovieDetail
+import com.ashish.movieguide.data.models.trakt.SyncItems
+import com.ashish.movieguide.data.models.trakt.SyncMovie
+import com.ashish.movieguide.data.models.trakt.TraktMovie
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
@@ -13,9 +16,9 @@ import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
 import com.ashish.movieguide.utils.extensions.getFormattedCurrency
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.extensions.getFormattedRuntime
-import com.ashish.movieguide.utils.extensions.getRatingValue
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import java.util.ArrayList
+import java.util.Collections
 import javax.inject.Inject
 
 /**
@@ -27,7 +30,7 @@ class MovieDetailPresenter @Inject constructor(
         private val personalContentManager: PersonalContentManager,
         private val ratingManager: RatingManager,
         schedulerProvider: BaseSchedulerProvider
-) : FullDetailContentPresenter<MovieDetail, MovieDetailView>(schedulerProvider) {
+) : FullDetailContentPresenter<MovieDetail, TraktMovie, MovieDetailView>(schedulerProvider) {
 
     override fun attachView(view: MovieDetailView) {
         super.attachView(view)
@@ -37,25 +40,21 @@ class MovieDetailPresenter @Inject constructor(
 
     override fun getDetailContent(id: Long) = movieInteractor.getFullMovieDetail(id)
 
-    override fun showDetailContent(fullDetailContent: FullDetailContent<MovieDetail>) {
+    override fun showDetailContent(fullDetailContent: FullDetailContent<MovieDetail, TraktMovie>) {
         super.showDetailContent(fullDetailContent)
-        getView()?.apply {
+        getView()?.run {
             hideProgress()
             val movieDetail = fullDetailContent.detailContent
-            val accountState = movieDetail?.movieRatings
-            personalContentManager.setAccountState(accountState)
-
-            showSavedRating(accountState?.getRatingValue())
             setTMDbRating(movieDetail?.voteAverage)
             showItemList(movieDetail?.similarMovieResults?.results) { showSimilarMoviesList(it) }
         }
     }
 
-    override fun getContentList(fullDetailContent: FullDetailContent<MovieDetail>): List<String> {
+    override fun getContentList(fullDetailContent: FullDetailContent<MovieDetail, TraktMovie>): List<String> {
         val contentList = ArrayList<String>()
-        fullDetailContent.detailContent?.apply {
+        fullDetailContent.detailContent?.run {
             val omdbDetail = fullDetailContent.omdbDetail
-            contentList.apply {
+            contentList.run {
                 add(overview ?: "")
                 add(tagline ?: "")
                 add(genres.convertListToCommaSeparatedText { it.name.toString() })
@@ -93,14 +92,25 @@ class MovieDetailPresenter @Inject constructor(
         personalContentManager.addToWatchlist(getMovieId(), MEDIA_TYPE_MOVIE)
     }
 
-    fun saveRating(rating: Double) {
-        val movieId = getMovieId()
-        ratingManager.saveRating(movieInteractor.rateMovie(movieId, rating), movieId, rating)
+    fun addRating(rating: Int) {
+        syncRatings(rating) { syncItems ->
+            ratingManager.addRating(syncItems, getMovieId(), rating)
+        }
     }
 
-    fun deleteRating() {
-        val movieId = getMovieId()
-        ratingManager.deleteRating(movieInteractor.deleteMovieRating(movieId), movieId)
+    fun removeRating() {
+        syncRatings(null) { syncItems ->
+            ratingManager.removeRating(syncItems, getMovieId())
+        }
+    }
+
+    private fun syncRatings(rating: Int?, syncRatingAction: (SyncItems) -> Unit) {
+        val traktItem = fullDetailContent?.traktItem
+        if (traktItem != null) {
+            val syncMovie = SyncMovie(rating, traktItem.ids, "")
+            val syncItems = SyncItems(Collections.singletonList(syncMovie))
+            syncRatingAction.invoke(syncItems)
+        }
     }
 
     private fun getMovieId() = fullDetailContent?.detailContent?.id!!

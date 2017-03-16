@@ -77,7 +77,7 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
         setTheme(R.style.AppTheme_TransparentStatusBar)
         super.onCreate(savedInstanceState)
 
-        supportActionBar?.apply {
+        supportActionBar?.run {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
         }
@@ -113,7 +113,7 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
     override fun getLayoutId() = R.layout.activity_main
 
     private fun initDrawerHeader() {
-        navigationView.getHeaderView(0).apply {
+        navigationView.getHeaderView(0).run {
             nameText = find<FontTextView>(R.id.name_text)
             userImage = find<ImageView>(R.id.user_image)
             headerImage = find<ImageView>(R.id.header_bg_image)
@@ -146,7 +146,7 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
     }
 
     private fun showUserProfile() {
-        preferenceHelper.apply {
+        preferenceHelper.run {
             if (isLoggedIn()) {
                 nameText.applyText(getName())
             } else {
@@ -164,7 +164,7 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
         tabLayout.setVisibility(contentType != CONTENT_TYPE_PEOPLE)
 
         tabPagerAdapter = TabPagerAdapter(contentType, supportFragmentManager, titleArray)
-        viewPager.apply {
+        viewPager.run {
             adapter = tabPagerAdapter
             offscreenPageLimit = tabPagerAdapter.count - 1
         }

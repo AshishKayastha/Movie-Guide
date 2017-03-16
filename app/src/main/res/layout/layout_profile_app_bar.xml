@@ -44,6 +44,16 @@
                 tools:text="User Name" />
 
             <com.ashish.movieguide.ui.widget.FontTextView
+                android:id="@+id/locationText"
+                style="@style/PrimaryText"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_normal"
+                android:drawablePadding="@dimen/spacing_micro"
+                android:drawableStart="@drawable/ic_location_white_18dp"
+                android:gravity="center"
+                tools:text="Location" />
+
+            <com.ashish.movieguide.ui.widget.FontTextView
                 android:id="@+id/joinedOnText"
                 style="@style/PrimaryText"
                 android:layout_marginBottom="@dimen/spacing_normal"

@@ -1,18 +1,13 @@
 package com.ashish.movieguide.data.api.tmdb
 
 import com.ashish.movieguide.data.models.tmdb.EpisodeDetail
-import com.ashish.movieguide.data.models.tmdb.Rating
 import com.ashish.movieguide.data.models.tmdb.Results
 import com.ashish.movieguide.data.models.tmdb.SeasonDetail
-import com.ashish.movieguide.data.models.tmdb.Status
 import com.ashish.movieguide.data.models.tmdb.TVShow
 import com.ashish.movieguide.data.models.tmdb.TVShowDetail
 import com.ashish.movieguide.utils.TMDbConstants.INCLUDE_IMAGE_LANGUAGE
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -42,12 +37,6 @@ interface TVShowApi {
             @Query("append_to_response") appendedResponse: String
     ): Single<TVShowDetail>
 
-    @POST("tv/{tvId}/rating")
-    fun rateTVShow(@Path("tvId") tvId: Long, @Body rating: Rating): Single<Status>
-
-    @DELETE("tv/{tvId}/rating")
-    fun deleteTVRating(@Path("tvId") tvId: Long): Single<Status>
-
 
     /* Season */
 
@@ -68,20 +57,6 @@ interface TVShowApi {
             @Path("episodeNumber") episodeNumber: Int,
             @Query("append_to_response") appendedResponse: String
     ): Single<EpisodeDetail>
-
-    @POST("tv/{tvId}/season/{seasonNumber}/episode/{episodeNumber}/rating")
-    fun rateEpisode(
-            @Path("tvId") tvId: Long,
-            @Path("seasonNumber") seasonNumber: Int,
-            @Path("episodeNumber") episodeNumber: Int,
-            @Body rating: Rating
-    ): Single<Status>
-
-    @DELETE("tv/{tvId}/season/{seasonNumber}/episode/{episodeNumber}/rating")
-    fun deleteEpisodeRating(@Path("tvId") tvId: Long,
-                            @Path("seasonNumber") seasonNumber: Int,
-                            @Path("episodeNumber") episodeNumber: Int
-    ): Single<Status>
 
 
     @GET("discover/tv")
