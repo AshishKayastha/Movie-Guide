@@ -54,6 +54,15 @@
             android:theme="@style/ConnectButton"
             app:fontName="@string/font_montserrat_medium" />
 
+        <com.ashish.movieguide.ui.widget.FontTextView
+            android:id="@+id/joinTraktText"
+            style="@style/PrimaryText"
+            android:layout_marginBottom="@dimen/spacing_micro"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/line_spacing"
+            android:text="@string/join_trakt_desc" />
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="@style/ProgressBar"

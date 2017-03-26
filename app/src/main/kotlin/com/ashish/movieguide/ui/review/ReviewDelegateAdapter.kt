@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Review
+import com.ashish.movieguide.data.network.entities.tmdb.Review
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RemoveListener
 import com.ashish.movieguide.ui.common.adapter.ViewType

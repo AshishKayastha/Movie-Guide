@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_view"
+    style="@style/Match.Width"
+    android:layout_below="@+id/poster_image"
+    android:padding="@dimen/spacing_large"
+    tools:showIn="@layout/list_item_content">
+
+    <com.ashish.movieguide.ui.widget.FontTextView
+        android:id="@+id/content_title"
+        style="@style/PrimaryText"
+        android:lineSpacingExtra="@dimen/spacing_micro"
+        android:maxLines="2"
+        app:fontName="@string/font_montserrat_medium"
+        tools:text="Movie Title" />
+
+    <com.ashish.movieguide.ui.widget.FontTextView
+        android:id="@+id/content_subtitle"
+        style="@style/SecondaryText"
+        android:layout_marginTop="@dimen/spacing_micro"
+        android:maxLines="1"
+        tools:text="Movie Subtitle" />
+
+</LinearLayout>

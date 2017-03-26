@@ -2,8 +2,8 @@ package com.ashish.movieguide.ui.common.personalcontent
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.AuthInteractor
-import com.ashish.movieguide.data.models.tmdb.Favorite
-import com.ashish.movieguide.data.models.tmdb.Watchlist
+import com.ashish.movieguide.data.network.entities.tmdb.Favorite
+import com.ashish.movieguide.data.network.entities.tmdb.Watchlist
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.utils.AuthException

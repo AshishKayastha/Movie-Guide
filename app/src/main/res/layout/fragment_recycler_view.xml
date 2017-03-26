@@ -13,8 +13,6 @@
             android:clipToPadding="false"
             android:padding="@dimen/spacing_micro" />
 
-        <include layout="@layout/layout_progress_bar" />
-
     </FrameLayout>
 
 </com.ashish.movieguide.ui.widget.MultiSwipeRefreshLayout>

@@ -17,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.ashish.movieguide.ui.widget.CustomToast
 
 /**
  * Created by Ashish on Jan 08.
@@ -28,8 +29,12 @@ fun Context.getDrawableCompat(@DrawableRes drawableResId: Int): Drawable {
     return ContextCompat.getDrawable(this, drawableResId)
 }
 
-fun Context.showToast(messageId: Int, duration: Int = Toast.LENGTH_LONG) {
-    Toast.makeText(this, messageId, duration).show()
+fun Context.showToast(messageId: Int, isError: Boolean = true) {
+    if (isError) {
+        CustomToast.showErrorToast(this, getString(messageId))
+    } else {
+        CustomToast.showSuccessToast(this, getString(messageId))
+    }
 }
 
 fun Context.showToast(message: CharSequence, duration: Int = Toast.LENGTH_LONG) {

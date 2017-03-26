@@ -1,6 +1,8 @@
 <resources>
     <!-- General -->
-    <string name="error_no_internet">No Internet Connection</string>
+    <string name="retry_btn">Retry</string>
+    <string name="error_no_internet">No internet connection. Make sure Wi-Fi or cellular data is turned on,
+        then try again.</string>
     <string name="error_load_data">An error occurred while trying to fetch data!</string>
     <string name="error_not_logged_in">You are not logged into TMDb. Please log in to access this feature.</string>
 
@@ -232,12 +234,13 @@
 
     <string name="menu_share">Share</string>
 
-    <!-- Trakt -->
+    <!-- Login -->
     <string name="connect_to_trakt">Connect to Trakt</string>
     <string name="trakt_logging_in">Connected to Trakt. Just a moment…</string>
     <string name="success_trakt_login">Successfully connected to your Trakt account</string>
     <string name="error_trakt_login">Something went wrong. Check your Trakt credentials and try again.</string>
     <string name="connect_to_trakt_desc">Connect Movie Guide to Trakt to keep track of TV shows and movies you watch.</string>
+    <string name="join_trakt_desc">Don\'t have Trakt account?\nJust tap on connect button and join Trakt!</string>
 
     <!-- Profile -->
     <string name="title_profile">Profile</string>

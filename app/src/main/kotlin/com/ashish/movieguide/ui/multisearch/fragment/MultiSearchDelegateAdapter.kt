@@ -2,7 +2,7 @@ package com.ashish.movieguide.ui.multisearch.fragment
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.ashish.movieguide.data.models.tmdb.MultiSearch
+import com.ashish.movieguide.data.network.entities.tmdb.MultiSearch
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RemoveListener

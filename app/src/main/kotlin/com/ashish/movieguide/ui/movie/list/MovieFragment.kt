@@ -3,7 +3,7 @@ package com.ashish.movieguide.ui.movie.list
 import android.content.Intent
 import android.os.Bundle
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Movie
+import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.di.modules.FragmentModule
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
@@ -20,7 +20,6 @@ class MovieFragment : BaseRecyclerViewFragment<Movie,
     companion object {
         private const val ARG_MOVIE_TYPE = "movie_type"
 
-        @JvmStatic
         fun newInstance(movieType: Int): MovieFragment {
             val extras = Bundle()
             extras.putInt(ARG_MOVIE_TYPE, movieType)

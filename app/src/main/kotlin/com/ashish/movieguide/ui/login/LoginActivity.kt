@@ -116,6 +116,7 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
     private fun showOrHideConnectBtn(showBtn: Boolean) {
         webView.showOrHideWithAnimation(!showBtn)
         connectBtn.showOrHideWithAnimation(showBtn)
+        joinTraktText.showOrHideWithAnimation(showBtn)
     }
 
     private fun showStatusText(message: String?, showProgressBar: Boolean = false) {

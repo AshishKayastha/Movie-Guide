@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer-array name="swipe_refresh_colors">
+        <item>@color/colorAccent</item>
+        <item>@android:color/holo_red_dark</item>
+        <item>@android:color/holo_blue_bright</item>
+    </integer-array>
+
     <string-array name="movie_list_type_array">
         <item>@string/now_playing_txt</item>
         <item>@string/popular_txt</item>

@@ -1,8 +1,8 @@
 package com.ashish.movieguide.ui.common.rating
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.api.trakt.SyncApi
-import com.ashish.movieguide.data.models.trakt.SyncItems
+import com.ashish.movieguide.data.network.api.trakt.SyncApi
+import com.ashish.movieguide.data.network.entities.trakt.SyncItems
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider

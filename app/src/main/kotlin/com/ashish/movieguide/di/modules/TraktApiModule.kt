@@ -1,10 +1,10 @@
 package com.ashish.movieguide.di.modules
 
-import com.ashish.movieguide.data.api.trakt.SyncApi
-import com.ashish.movieguide.data.api.trakt.TraktAuthApi
-import com.ashish.movieguide.data.api.trakt.TraktMovieApi
-import com.ashish.movieguide.data.api.trakt.TraktShowApi
-import com.ashish.movieguide.data.api.trakt.UserApi
+import com.ashish.movieguide.data.network.api.trakt.SyncApi
+import com.ashish.movieguide.data.network.api.trakt.TraktAuthApi
+import com.ashish.movieguide.data.network.api.trakt.TraktMovieApi
+import com.ashish.movieguide.data.network.api.trakt.TraktShowApi
+import com.ashish.movieguide.data.network.api.trakt.UserApi
 import com.ashish.movieguide.di.qualifiers.Trakt
 import dagger.Module
 import dagger.Provides

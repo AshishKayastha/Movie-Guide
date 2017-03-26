@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.YouTubeVideo
+import com.ashish.movieguide.data.network.entities.tmdb.YouTubeVideo
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.bindView

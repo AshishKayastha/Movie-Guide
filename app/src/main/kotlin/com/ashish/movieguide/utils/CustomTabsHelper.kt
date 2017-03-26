@@ -56,7 +56,7 @@ object CustomTabsHelper {
 class KeepAliveService : Service() {
 
     companion object {
-        @JvmStatic private val BINDER = Binder()
+        private val BINDER = Binder()
     }
 
     override fun onBind(intent: Intent) = BINDER

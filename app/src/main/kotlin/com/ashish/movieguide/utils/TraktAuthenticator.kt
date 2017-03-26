@@ -1,6 +1,6 @@
 package com.ashish.movieguide.utils
 
-import com.ashish.movieguide.data.models.trakt.TraktToken
+import com.ashish.movieguide.data.network.entities.trakt.TraktToken
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.qualifiers.BaseOkHttp
 import com.ashish.movieguide.utils.TraktConstants.GRANT_TYPE_REFRESH_TOKEN

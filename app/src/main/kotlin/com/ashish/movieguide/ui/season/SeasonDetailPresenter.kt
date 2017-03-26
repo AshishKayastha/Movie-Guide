@@ -2,13 +2,14 @@ package com.ashish.movieguide.ui.season
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.TVShowInteractor
-import com.ashish.movieguide.data.models.common.FullDetailContent
-import com.ashish.movieguide.data.models.tmdb.SeasonDetail
-import com.ashish.movieguide.data.models.trakt.TraktSeason
+import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.SeasonDetail
+import com.ashish.movieguide.data.network.entities.trakt.TraktSeason
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
+import io.reactivex.Observable
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -27,7 +28,8 @@ class SeasonDetailPresenter @Inject constructor(
         this.seasonNumber = seasonNumber
     }
 
-    override fun getDetailContent(id: Long) = tvShowInteractor.getFullSeasonDetail(id, seasonNumber)
+    override fun getDetailContent(id: Long): Observable<FullDetailContent<SeasonDetail, TraktSeason>>
+            = tvShowInteractor.getFullSeasonDetail(id, seasonNumber)
 
     override fun showDetailContent(fullDetailContent: FullDetailContent<SeasonDetail, TraktSeason>) {
         super.showDetailContent(fullDetailContent)

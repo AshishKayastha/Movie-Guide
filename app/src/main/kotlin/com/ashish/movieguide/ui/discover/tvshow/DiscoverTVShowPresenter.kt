@@ -1,8 +1,8 @@
 package com.ashish.movieguide.ui.discover.tvshow
 
 import com.ashish.movieguide.data.interactors.TVShowInteractor
-import com.ashish.movieguide.data.models.tmdb.Results
-import com.ashish.movieguide.data.models.tmdb.TVShow
+import com.ashish.movieguide.data.network.entities.tmdb.Results
+import com.ashish.movieguide.data.network.entities.tmdb.TVShow
 import com.ashish.movieguide.ui.discover.base.BaseDiscoverPresenter
 import com.ashish.movieguide.ui.discover.filter.FilterQueryModel
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider

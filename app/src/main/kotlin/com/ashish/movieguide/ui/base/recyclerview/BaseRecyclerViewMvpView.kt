@@ -18,5 +18,7 @@ interface BaseRecyclerViewMvpView<in I : ViewType> : ProgressView {
 
     fun removeLoadingItem()
 
+    fun showErrorView()
+
     fun resetLoading()
 }

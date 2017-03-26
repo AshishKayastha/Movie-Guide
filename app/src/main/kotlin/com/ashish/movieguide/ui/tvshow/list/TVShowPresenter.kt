@@ -1,12 +1,12 @@
 package com.ashish.movieguide.ui.tvshow.list
 
-import com.ashish.movieguide.data.api.tmdb.TVShowApi.Companion.AIRING_TODAY
-import com.ashish.movieguide.data.api.tmdb.TVShowApi.Companion.ON_THE_AIR
-import com.ashish.movieguide.data.api.tmdb.TVShowApi.Companion.POPULAR
-import com.ashish.movieguide.data.api.tmdb.TVShowApi.Companion.TOP_RATED
 import com.ashish.movieguide.data.interactors.TVShowInteractor
-import com.ashish.movieguide.data.models.tmdb.Results
-import com.ashish.movieguide.data.models.tmdb.TVShow
+import com.ashish.movieguide.data.network.api.tmdb.TVShowApi.Companion.AIRING_TODAY
+import com.ashish.movieguide.data.network.api.tmdb.TVShowApi.Companion.ON_THE_AIR
+import com.ashish.movieguide.data.network.api.tmdb.TVShowApi.Companion.POPULAR
+import com.ashish.movieguide.data.network.api.tmdb.TVShowApi.Companion.TOP_RATED
+import com.ashish.movieguide.data.network.entities.tmdb.Results
+import com.ashish.movieguide.data.network.entities.tmdb.TVShow
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
@@ -22,7 +22,6 @@ class TVShowPresenter @Inject constructor(
 ) : BaseRecyclerViewPresenter<TVShow, BaseRecyclerViewMvpView<TVShow>>(schedulerProvider) {
 
     companion object {
-        @JvmStatic
         private val TV_SHOW_TYPES = arrayOf(ON_THE_AIR, POPULAR, TOP_RATED, AIRING_TODAY)
     }
 

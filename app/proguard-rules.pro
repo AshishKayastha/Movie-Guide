@@ -4,7 +4,7 @@
 -dontnote android.net.http.*
 -dontnote org.apache.http.**
 
--keep class com.ashish.movieguide.data.models.**
+-keep class com.ashish.movieguide.data.network.models.**
 
 -keep public class * extends android.view.View {
     public <init>(android.content.Context);
@@ -45,23 +45,6 @@
 
 # RxJava 2
 -dontnote io.reactivex.**
-
-# RxJava
--dontwarn sun.misc.**
--dontnote rx.internal.util.PlatformDependent
-
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-   long producerIndex;
-   long consumerIndex;
-}
-
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode producerNode;
-}
-
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode consumerNode;
-}
 
 # IcePick
 -dontwarn icepick.**

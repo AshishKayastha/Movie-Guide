@@ -26,28 +26,7 @@
             app:labelTextColor="@android:color/white"
             tools:ignore="HardcodedText" />
 
-        <LinearLayout
-            android:id="@+id/content_view"
-            style="@style/Match.Width"
-            android:layout_below="@id/poster_image"
-            android:padding="@dimen/spacing_large">
-
-            <com.ashish.movieguide.ui.widget.FontTextView
-                android:id="@+id/content_title"
-                style="@style/PrimaryText"
-                android:lineSpacingExtra="@dimen/spacing_micro"
-                android:maxLines="2"
-                app:fontName="@string/font_montserrat_medium"
-                tools:text="Movie Title" />
-
-            <com.ashish.movieguide.ui.widget.FontTextView
-                android:id="@+id/content_subtitle"
-                style="@style/SecondaryText"
-                android:layout_marginTop="@dimen/spacing_micro"
-                android:maxLines="1"
-                tools:text="Movie Subtitle" />
-
-        </LinearLayout>
+        <include layout="@layout/layout_list_item_content" />
 
     </RelativeLayout>
 

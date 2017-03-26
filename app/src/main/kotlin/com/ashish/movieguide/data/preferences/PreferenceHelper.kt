@@ -1,10 +1,10 @@
 package com.ashish.movieguide.data.preferences
 
 import android.content.SharedPreferences
-import com.ashish.movieguide.data.models.trakt.ImageSizes
-import com.ashish.movieguide.data.models.trakt.Images
-import com.ashish.movieguide.data.models.trakt.UserIds
-import com.ashish.movieguide.data.models.trakt.UserProfile
+import com.ashish.movieguide.data.network.entities.trakt.ImageSizes
+import com.ashish.movieguide.data.network.entities.trakt.Images
+import com.ashish.movieguide.data.network.entities.trakt.UserIds
+import com.ashish.movieguide.data.network.entities.trakt.UserProfile
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import javax.inject.Inject
 import javax.inject.Singleton

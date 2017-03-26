@@ -1,13 +1,13 @@
 package com.ashish.movieguide.data.interactors
 
-import com.ashish.movieguide.data.api.tmdb.AuthApi
-import com.ashish.movieguide.data.models.tmdb.Episode
-import com.ashish.movieguide.data.models.tmdb.Favorite
-import com.ashish.movieguide.data.models.tmdb.Movie
-import com.ashish.movieguide.data.models.tmdb.Results
-import com.ashish.movieguide.data.models.tmdb.Status
-import com.ashish.movieguide.data.models.tmdb.TVShow
-import com.ashish.movieguide.data.models.tmdb.Watchlist
+import com.ashish.movieguide.data.network.api.tmdb.AuthApi
+import com.ashish.movieguide.data.network.entities.tmdb.Episode
+import com.ashish.movieguide.data.network.entities.tmdb.Favorite
+import com.ashish.movieguide.data.network.entities.tmdb.Movie
+import com.ashish.movieguide.data.network.entities.tmdb.Results
+import com.ashish.movieguide.data.network.entities.tmdb.Status
+import com.ashish.movieguide.data.network.entities.tmdb.TVShow
+import com.ashish.movieguide.data.network.entities.tmdb.Watchlist
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.utils.AuthException
 import io.reactivex.Single

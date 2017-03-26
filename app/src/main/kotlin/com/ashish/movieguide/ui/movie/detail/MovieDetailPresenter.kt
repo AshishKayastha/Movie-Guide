@@ -2,11 +2,11 @@ package com.ashish.movieguide.ui.movie.detail
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.MovieInteractor
-import com.ashish.movieguide.data.models.common.FullDetailContent
-import com.ashish.movieguide.data.models.tmdb.MovieDetail
-import com.ashish.movieguide.data.models.trakt.SyncItems
-import com.ashish.movieguide.data.models.trakt.SyncMovie
-import com.ashish.movieguide.data.models.trakt.TraktMovie
+import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.MovieDetail
+import com.ashish.movieguide.data.network.entities.trakt.SyncItems
+import com.ashish.movieguide.data.network.entities.trakt.SyncMovie
+import com.ashish.movieguide.data.network.entities.trakt.TraktMovie
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
@@ -17,6 +17,7 @@ import com.ashish.movieguide.utils.extensions.getFormattedCurrency
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.extensions.getFormattedRuntime
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
+import io.reactivex.Observable
 import java.util.ArrayList
 import java.util.Collections
 import javax.inject.Inject
@@ -38,7 +39,8 @@ class MovieDetailPresenter @Inject constructor(
         personalContentManager.setView(view)
     }
 
-    override fun getDetailContent(id: Long) = movieInteractor.getFullMovieDetail(id)
+    override fun getDetailContent(id: Long): Observable<FullDetailContent<MovieDetail, TraktMovie>>
+            = movieInteractor.getMovieDetail(id)
 
     override fun showDetailContent(fullDetailContent: FullDetailContent<MovieDetail, TraktMovie>) {
         super.showDetailContent(fullDetailContent)
@@ -80,7 +82,7 @@ class MovieDetailPresenter @Inject constructor(
 
     override fun getVideos(detailContent: MovieDetail) = detailContent.videos
 
-    override fun getCredits(detailContent: MovieDetail) = detailContent.creditsResults
+    override fun getCredits(detailContent: MovieDetail) = detailContent.credits
 
     override fun getErrorMessageId() = R.string.error_load_movie_detail
 

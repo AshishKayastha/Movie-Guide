@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import com.ashish.movieguide.R
 import com.ashish.movieguide.app.MovieGuideApp
-import com.ashish.movieguide.data.models.tmdb.FilterQuery
+import com.ashish.movieguide.data.network.entities.tmdb.FilterQuery
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.Constants.DATE_PICKER_FORMAT
@@ -42,7 +42,6 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         private const val ARG_IS_MOVIE = "is_movie"
         private const val ARG_FILTER_QUERY = "filter_query"
 
-        @JvmStatic
         fun newInstance(isMovie: Boolean, filterQuery: FilterQuery): FilterBottomSheetDialogFragment {
             val args = Bundle()
             args.putBoolean(ARG_IS_MOVIE, isMovie)

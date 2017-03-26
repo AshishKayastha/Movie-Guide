@@ -1,10 +1,10 @@
 package com.ashish.movieguide.ui.base.detail.fulldetail
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.common.FullDetailContent
-import com.ashish.movieguide.data.models.tmdb.VideoItem
-import com.ashish.movieguide.data.models.tmdb.Videos
-import com.ashish.movieguide.data.models.tmdb.YouTubeVideo
+import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.VideoItem
+import com.ashish.movieguide.data.network.entities.tmdb.Videos
+import com.ashish.movieguide.data.network.entities.tmdb.YouTubeVideo
 import com.ashish.movieguide.ui.base.detail.BaseDetailPresenter
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider

@@ -64,17 +64,15 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
-    @BaseOkHttp
     fun provideBaseOkHttpClient(cache: Cache, loggingInterceptor: LoggingInterceptor,
-                                offlineCacheInterceptor: OfflineCacheInterceptor): OkHttpClient {
+                                offlineCacheInterceptor: OfflineCacheInterceptor): OkHttpClient.Builder {
         return OkHttpClient.Builder()
-                .connectTimeout(30, SECONDS)
-                .readTimeout(30, SECONDS)
-                .writeTimeout(30, SECONDS)
+                .connectTimeout(20, SECONDS)
+                .readTimeout(20, SECONDS)
+                .writeTimeout(20, SECONDS)
                 .cache(cache)
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(offlineCacheInterceptor)
-                .build()
     }
 
     @Provides

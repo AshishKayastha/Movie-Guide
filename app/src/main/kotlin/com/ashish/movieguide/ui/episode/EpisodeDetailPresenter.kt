@@ -2,17 +2,17 @@ package com.ashish.movieguide.ui.episode
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.TVShowInteractor
-import com.ashish.movieguide.data.models.common.FullDetailContent
-import com.ashish.movieguide.data.models.tmdb.EpisodeDetail
-import com.ashish.movieguide.data.models.trakt.SyncEpisode
-import com.ashish.movieguide.data.models.trakt.SyncItems
-import com.ashish.movieguide.data.models.trakt.TraktEpisode
+import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.EpisodeDetail
+import com.ashish.movieguide.data.network.entities.trakt.SyncEpisode
+import com.ashish.movieguide.data.network.entities.trakt.SyncItems
+import com.ashish.movieguide.data.network.entities.trakt.TraktEpisode
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.rating.RatingManager
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
-import io.reactivex.Single
+import io.reactivex.Observable
 import java.util.ArrayList
 import java.util.Collections
 import javax.inject.Inject
@@ -40,7 +40,7 @@ class EpisodeDetailPresenter @Inject constructor(
         this.episodeNumber = episodeNumber
     }
 
-    override fun getDetailContent(id: Long): Single<FullDetailContent<EpisodeDetail, TraktEpisode>> {
+    override fun getDetailContent(id: Long): Observable<FullDetailContent<EpisodeDetail, TraktEpisode>> {
         return tvShowInteractor.getFullEpisodeDetail(id, seasonNumber, episodeNumber)
     }
 

@@ -9,11 +9,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.trakt.EpisodeStats
-import com.ashish.movieguide.data.models.trakt.MovieStats
-import com.ashish.movieguide.data.models.trakt.NetworkStats
-import com.ashish.movieguide.data.models.trakt.RatingDistribution
-import com.ashish.movieguide.data.models.trakt.UserProfile
+import com.ashish.movieguide.data.network.entities.trakt.EpisodeStats
+import com.ashish.movieguide.data.network.entities.trakt.MovieStats
+import com.ashish.movieguide.data.network.entities.trakt.NetworkStats
+import com.ashish.movieguide.data.network.entities.trakt.RatingDistribution
+import com.ashish.movieguide.data.network.entities.trakt.UserProfile
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
@@ -208,13 +208,17 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
-        dialogUtils.dismissAllDialogs()
+        dismissDialog()
         super.onConfigurationChanged(newConfig)
     }
 
     override fun onStop() {
-        dialogUtils.dismissAllDialogs()
+        dismissDialog()
         super.onStop()
+    }
+
+    private fun dismissDialog() {
+        if (isFinishing) dialogUtils.dismissAllDialogs()
     }
 
     override fun onDestroy() {

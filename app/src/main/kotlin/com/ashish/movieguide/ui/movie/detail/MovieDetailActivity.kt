@@ -8,9 +8,9 @@ import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Movie
-import com.ashish.movieguide.data.models.tmdb.MovieDetail
-import com.ashish.movieguide.data.models.trakt.TraktMovie
+import com.ashish.movieguide.data.network.entities.tmdb.Movie
+import com.ashish.movieguide.data.network.entities.tmdb.MovieDetail
+import com.ashish.movieguide.data.network.entities.trakt.TraktMovie
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
@@ -48,7 +48,6 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     companion object {
         private const val EXTRA_MOVIE = "movie"
 
-        @JvmStatic
         fun createIntent(context: Context, movie: Movie?): Intent {
             return Intent(context, MovieDetailActivity::class.java)
                     .putExtra(EXTRA_MOVIE, movie)
@@ -182,13 +181,19 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
-        if (isLoggedIn) ratingDialog.get().dismissDialog()
+        dismissDialog()
         super.onConfigurationChanged(newConfig)
     }
 
     override fun onStop() {
-        if (isLoggedIn) ratingDialog.get().dismissDialog()
+        dismissDialog()
         super.onStop()
+    }
+
+    private fun dismissDialog() {
+        if (isLoggedIn && isFinishing) {
+            ratingDialog.get().dismissDialog()
+        }
     }
 
     override fun performCleanup() {

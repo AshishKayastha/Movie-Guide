@@ -26,10 +26,8 @@ object TMDbConstants {
     const val WATCHLIST = 1
 
     // Types of personal list for movies and tv shows
-    @JvmStatic
     val PERSONAL_CONTENT_TYPES = arrayOf("favorite", "watchlist")
 
-    @JvmStatic
     val SORT_BY_MOVIE = arrayOf(
             "popularity.desc",
             "release_date.desc",
@@ -37,7 +35,6 @@ object TMDbConstants {
             "vote_average.desc"
     )
 
-    @JvmStatic
     val SORT_BY_TV_SHOW = arrayOf(
             "popularity.desc",
             "first_air_date.desc",

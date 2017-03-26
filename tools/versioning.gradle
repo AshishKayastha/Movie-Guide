@@ -6,14 +6,15 @@ ext.versions = [
         // Libraries
         daggerVersion            : '2.9',
         leakCanaryVersion        : '1.5',
+        stethoVersion            : '1.4.2',
+        requeryVersion           : '1.2.1',
         timberVersion            : '4.5.1',
         icepickVersion           : '3.2.0',
         retrofitVersion          : '2.2.0',
-        rxJava2Version           : '2.0.6',
+        rxJava2Version           : '2.0.7',
         rxAndroid2Version        : '2.0.1',
-        rxJava2InteropVersion    : '0.9.1',
         paperParcelVersion       : '2.0.0',
-        supportLibVersion        : '25.2.0',
+        supportLibVersion        : '25.3.0',
         glideVersion             : '3.7.0',
         loggingInterceptorVersion: '1.0.5',
         glideOkHttp3Version      : '1.4.0@aar',
@@ -51,6 +52,6 @@ ext {
 
         (major, minor, patch, candidate) = [major, minor, patch, candidate].collect { it.toInteger() }
 
-        (major * 1000000) + (minor * 10000) + (patch * 100) + candidate;
+        (major * 1000000) + (minor * 10000) + (patch * 100) + candidate
     }
 }

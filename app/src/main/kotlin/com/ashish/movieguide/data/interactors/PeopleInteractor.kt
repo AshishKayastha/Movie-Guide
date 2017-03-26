@@ -1,11 +1,12 @@
 package com.ashish.movieguide.data.interactors
 
-import com.ashish.movieguide.data.api.tmdb.PeopleApi
-import com.ashish.movieguide.data.models.common.FullDetailContent
-import com.ashish.movieguide.data.models.tmdb.Person
-import com.ashish.movieguide.data.models.tmdb.PersonDetail
-import com.ashish.movieguide.data.models.tmdb.Results
-import com.ashish.movieguide.data.models.trakt.TraktPerson
+import com.ashish.movieguide.data.network.api.tmdb.PeopleApi
+import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.Person
+import com.ashish.movieguide.data.network.entities.tmdb.PersonDetail
+import com.ashish.movieguide.data.network.entities.tmdb.Results
+import com.ashish.movieguide.data.network.entities.trakt.TraktPerson
+import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,8 +21,8 @@ class PeopleInteractor @Inject constructor(private val peopleApi: PeopleApi) {
         return peopleApi.getPopularPeople(page)
     }
 
-    fun getFullPersonDetail(personId: Long): Single<FullDetailContent<PersonDetail, TraktPerson>> {
+    fun getFullPersonDetail(personId: Long): Observable<FullDetailContent<PersonDetail, TraktPerson>> {
         return peopleApi.getPersonDetail(personId, "combined_credits,images")
-                .flatMap { Single.just(FullDetailContent(it, null, null)) }
+                .flatMap { Observable.just(FullDetailContent(it, null, null)) }
     }
 }

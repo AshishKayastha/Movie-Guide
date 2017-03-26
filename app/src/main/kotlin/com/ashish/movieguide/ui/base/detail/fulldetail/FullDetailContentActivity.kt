@@ -4,9 +4,9 @@ import android.support.design.widget.AppBarLayout
 import android.support.v4.view.ViewCompat
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Credit
-import com.ashish.movieguide.data.models.tmdb.Person
-import com.ashish.movieguide.data.models.tmdb.YouTubeVideo
+import com.ashish.movieguide.data.network.entities.tmdb.Credit
+import com.ashish.movieguide.data.network.entities.tmdb.Person
+import com.ashish.movieguide.data.network.entities.tmdb.YouTubeVideo
 import com.ashish.movieguide.ui.base.detail.BaseDetailActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter

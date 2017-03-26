@@ -14,16 +14,13 @@ import com.ashish.movieguide.ui.common.adapter.InfiniteScrollListener
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.ERROR_VIEW
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
-import com.ashish.movieguide.utils.extensions.hide
-import com.ashish.movieguide.utils.extensions.setVisibility
-import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
 import icepick.State
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
 import kotlinx.android.synthetic.main.layout_empty_view.*
-import kotlinx.android.synthetic.main.layout_progress_bar.*
 
 /**
  * Created by Ashish on Dec 30.
@@ -65,7 +62,6 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         }
 
         swipeRefresh.run {
-            setColorSchemeResources(R.color.colorAccent)
             setSwipeableViews(emptyContentView, recyclerView)
             setOnRefreshListener(this@BaseRecyclerViewFragment)
         }
@@ -78,9 +74,6 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     protected open fun loadData() = presenter?.loadData(type)
 
-    /**
-     * Get type of adapter to represent type of data being shown in this list
-     */
     abstract fun getAdapterType(): Int
 
     @StringRes
@@ -95,18 +88,15 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
     }
 
     override fun showProgress() {
-        emptyContentView.hide()
-        progressBar.show()
+        swipeRefresh.isRefreshing = true
     }
 
     override fun hideProgress() {
-        progressBar.hide()
         swipeRefresh.isRefreshing = false
-        emptyContentView.setVisibility(recyclerViewAdapter.itemCount == 0)
     }
 
     override fun setCurrentPage(currentPage: Int) {
-        scrollListener.setCurrentPage(currentPage)
+        scrollListener.currentPage = currentPage
     }
 
     override fun showItemList(itemList: List<I>?) = recyclerViewAdapter.showItemList(itemList)
@@ -119,24 +109,28 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         recyclerViewAdapter.removeLoadingItem()
     }
 
-    override fun resetLoading() = scrollListener.resetLoading()
+    override fun showErrorView() = recyclerViewAdapter.showErrorItem()
+
+    override fun resetLoading() = scrollListener.stopLoading()
 
     override fun onItemClick(position: Int, view: View) {
-        val intent = getDetailIntent(position)
-        if (intent != null) {
-            val posterImagePair = view.getPosterImagePair(getTransitionNameId(position))
-            activity?.startActivityWithTransition(posterImagePair, intent)
+        val viewType = recyclerViewAdapter.getViewType(position)
+        if (viewType == ERROR_VIEW) {
+            recyclerViewAdapter.removeErrorItem()
+            scrollListener.shouldLoadMore = true
+            presenter?.loadMoreData(type, scrollListener.currentPage)
+
+        } else {
+            val intent = getDetailIntent(position)
+            if (intent != null) {
+                val posterImagePair = view.getPosterImagePair(getTransitionNameId(position))
+                activity?.startActivityWithTransition(posterImagePair, intent)
+            }
         }
     }
 
-    /**
-     * Get transition name for shared element transition
-     */
     abstract fun getTransitionNameId(position: Int): Int
 
-    /**
-     * Create intent to start detail activity
-     */
     abstract fun getDetailIntent(position: Int): Intent?
 
     override fun onDestroyView() {

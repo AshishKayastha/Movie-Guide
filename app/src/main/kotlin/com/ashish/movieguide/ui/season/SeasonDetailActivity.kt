@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Episode
-import com.ashish.movieguide.data.models.tmdb.Season
-import com.ashish.movieguide.data.models.tmdb.SeasonDetail
-import com.ashish.movieguide.data.models.trakt.TraktSeason
+import com.ashish.movieguide.data.network.entities.tmdb.Episode
+import com.ashish.movieguide.data.network.entities.tmdb.Season
+import com.ashish.movieguide.data.network.entities.tmdb.SeasonDetail
+import com.ashish.movieguide.data.network.entities.trakt.TraktSeason
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
@@ -36,7 +36,6 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, TraktSeason
         private const val EXTRA_SEASON = "season"
         private const val EXTRA_TV_SHOW_ID = "tv_show_id"
 
-        @JvmStatic
         fun createIntent(context: Context, tvShowId: Long?, season: Season?): Intent {
             return Intent(context, SeasonDetailActivity::class.java)
                     .putExtra(EXTRA_TV_SHOW_ID, tvShowId)

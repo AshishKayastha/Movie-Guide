@@ -7,7 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Review
+import com.ashish.movieguide.data.network.entities.tmdb.Review
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.animation.SlideInUpAnimator
@@ -19,13 +19,9 @@ import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_REVIEW
 import com.ashish.movieguide.utils.CustomTabsHelper
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
-import com.ashish.movieguide.utils.extensions.hide
-import com.ashish.movieguide.utils.extensions.setVisibility
-import com.ashish.movieguide.utils.extensions.show
 import icepick.State
 import kotlinx.android.synthetic.main.activity_review.*
 import kotlinx.android.synthetic.main.layout_empty_view.*
-import kotlinx.android.synthetic.main.layout_progress_bar.*
 
 class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresenter>(),
         BaseRecyclerViewMvpView<Review>, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
@@ -33,7 +29,6 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
     companion object {
         private const val EXTRA_MOVIE_ID = "movie_id"
 
-        @JvmStatic
         fun createIntent(context: Context, movieId: Long?): Intent {
             return Intent(context, ReviewActivity::class.java)
                     .putExtra(EXTRA_MOVIE_ID, movieId)
@@ -70,7 +65,6 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
         }
 
         swipeRefresh.run {
-            setColorSchemeResources(R.color.colorAccent)
             setSwipeableViews(emptyContentView, reviewRecyclerView)
             setOnRefreshListener(this@ReviewActivity)
         }
@@ -102,18 +96,15 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
     }
 
     override fun showProgress() {
-        emptyContentView.hide()
-        progressBar.show()
+        swipeRefresh.isRefreshing = false
     }
 
     override fun hideProgress() {
-        progressBar.hide()
         swipeRefresh.isRefreshing = false
-        emptyContentView.setVisibility(reviewAdapter.itemCount == 0)
     }
 
     override fun setCurrentPage(currentPage: Int) {
-        scrollListener.setCurrentPage(currentPage)
+        scrollListener.currentPage = currentPage
     }
 
     override fun showItemList(itemList: List<Review>?) = reviewAdapter.showItemList(itemList)
@@ -126,7 +117,9 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
         reviewAdapter.removeLoadingItem()
     }
 
-    override fun resetLoading() = scrollListener.resetLoading()
+    override fun showErrorView() = reviewAdapter.showErrorItem()
+
+    override fun resetLoading() = scrollListener.stopLoading()
 
     override fun onItemClick(position: Int, view: View) {
         val review = reviewAdapter.getItem<Review>(position)

@@ -8,10 +8,10 @@ import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Season
-import com.ashish.movieguide.data.models.tmdb.TVShow
-import com.ashish.movieguide.data.models.tmdb.TVShowDetail
-import com.ashish.movieguide.data.models.trakt.TraktShow
+import com.ashish.movieguide.data.network.entities.tmdb.Season
+import com.ashish.movieguide.data.network.entities.tmdb.TVShow
+import com.ashish.movieguide.data.network.entities.tmdb.TVShowDetail
+import com.ashish.movieguide.data.network.entities.trakt.TraktShow
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
@@ -51,7 +51,6 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
     companion object {
         private const val EXTRA_TV_SHOW = "tv_show"
 
-        @JvmStatic
         fun createIntent(context: Context, tvShow: TVShow?): Intent {
             return Intent(context, TVShowDetailActivity::class.java)
                     .putExtra(EXTRA_TV_SHOW, tvShow)

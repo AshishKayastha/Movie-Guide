@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.MultiSearch
-import com.ashish.movieguide.data.models.tmdb.Person
+import com.ashish.movieguide.data.network.entities.tmdb.MultiSearch
+import com.ashish.movieguide.data.network.entities.tmdb.Person
 import com.ashish.movieguide.di.modules.FragmentModule
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
@@ -26,7 +26,7 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
         BaseRecyclerViewMvpView<MultiSearch>, MultiSearchPresenter>() {
 
     companion object {
-        @JvmStatic fun newInstance() = MultiSearchFragment()
+        fun newInstance() = MultiSearchFragment()
     }
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
@@ -75,11 +75,11 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
         val multiSearch = recyclerViewAdapter.getItem<MultiSearch>(position)
         with(multiSearch) {
             if (mediaType == MEDIA_TYPE_MOVIE) {
-                val movie = com.ashish.movieguide.data.models.tmdb.Movie(id, title, posterPath = posterPath)
+                val movie = com.ashish.movieguide.data.network.entities.tmdb.Movie(id, title, posterPath = posterPath)
                 return MovieDetailActivity.createIntent(activity, movie)
 
             } else if (mediaType == MEDIA_TYPE_TV) {
-                val tvShow = com.ashish.movieguide.data.models.tmdb.TVShow(id, name, posterPath = posterPath)
+                val tvShow = com.ashish.movieguide.data.network.entities.tmdb.TVShow(id, name, posterPath = posterPath)
                 return TVShowDetailActivity.createIntent(activity, tvShow)
 
             } else if (mediaType == MEDIA_TYPE_PERSON) {

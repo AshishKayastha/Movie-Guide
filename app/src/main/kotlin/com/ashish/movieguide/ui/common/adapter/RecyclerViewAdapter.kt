@@ -5,6 +5,7 @@ import android.util.SparseArray
 import android.view.ViewGroup
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
+import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.ERROR_VIEW
 import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.LOADING_VIEW
 import com.bumptech.glide.Glide
 import java.util.ArrayList
@@ -22,6 +23,10 @@ class RecyclerViewAdapter<in I : ViewType>(
         override fun getViewType() = LOADING_VIEW
     }
 
+    private val errorItem = object : ViewType {
+        override fun getViewType() = ERROR_VIEW
+    }
+
     private var itemList: ArrayList<ViewType> = ArrayList()
     private var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()
     private val contentAdapter = AdapterFactory.getAdapter(layoutId, adapterType, onItemClickListener)
@@ -29,6 +34,7 @@ class RecyclerViewAdapter<in I : ViewType>(
     init {
         delegateAdapters.put(LOADING_VIEW, LoadingDelegateAdapter())
         delegateAdapters.put(CONTENT_VIEW, contentAdapter)
+        delegateAdapters.put(ERROR_VIEW, LoadMoreErrorDelegateAdapter(onItemClickListener))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -47,6 +53,8 @@ class RecyclerViewAdapter<in I : ViewType>(
 
     override fun getItemCount() = itemList.size
 
+    fun getViewType(position: Int) = itemList[position].getViewType()
+
     @Suppress("UNCHECKED_CAST")
     fun <I> getItem(position: Int) = itemList[position] as I
 
@@ -63,6 +71,11 @@ class RecyclerViewAdapter<in I : ViewType>(
         notifyItemInserted(itemCount - 1)
     }
 
+    fun showErrorItem() {
+        itemList.add(errorItem)
+        notifyItemInserted(itemCount - 1)
+    }
+
     fun addNewItemList(newItemList: List<I>?) {
         val loadingItemPosition = removeLoadingItem()
         newItemList?.let {
@@ -72,11 +85,14 @@ class RecyclerViewAdapter<in I : ViewType>(
     }
 
     fun removeLoadingItem(): Int {
-        val loadingItemPosition = itemCount - 1
-        itemList.removeAt(loadingItemPosition)
-        notifyItemRemoved(loadingItemPosition)
-        notifyItemRangeChanged(loadingItemPosition, itemCount)
-        return loadingItemPosition
+        val position = itemList.indexOf(loadingItem)
+        if (position > -1) removeItem(position)
+        return position
+    }
+
+    fun removeErrorItem() {
+        val position = itemList.indexOf(errorItem)
+        if (position > -1) removeItem(position)
     }
 
     fun replaceItem(position: Int, item: I) {
@@ -91,10 +107,10 @@ class RecyclerViewAdapter<in I : ViewType>(
     }
 
     fun clearAll() {
-        val oldSize = itemCount
-        if (oldSize > 0) {
+        val totalItems = itemCount
+        if (totalItems > 0) {
             itemList.clear()
-            notifyItemRangeRemoved(0, oldSize)
+            notifyItemRangeRemoved(0, totalItems)
         }
     }
 

@@ -8,9 +8,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.FilterQuery
-import com.ashish.movieguide.data.models.tmdb.Movie
-import com.ashish.movieguide.data.models.tmdb.TVShow
+import com.ashish.movieguide.data.network.entities.tmdb.FilterQuery
+import com.ashish.movieguide.data.network.entities.tmdb.Movie
+import com.ashish.movieguide.data.network.entities.tmdb.TVShow
 import com.ashish.movieguide.di.multibindings.AbstractComponent
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilder
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost

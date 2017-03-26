@@ -6,9 +6,9 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Episode
-import com.ashish.movieguide.data.models.tmdb.EpisodeDetail
-import com.ashish.movieguide.data.models.trakt.TraktEpisode
+import com.ashish.movieguide.data.network.entities.tmdb.Episode
+import com.ashish.movieguide.data.network.entities.tmdb.EpisodeDetail
+import com.ashish.movieguide.data.network.entities.trakt.TraktEpisode
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
@@ -38,7 +38,6 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
         private const val EXTRA_EPISODE = "episode"
         private const val EXTRA_TV_SHOW_ID = "tv_show_id"
 
-        @JvmStatic
         fun createIntent(context: Context, tvShowId: Long?, episode: Episode?): Intent {
             return Intent(context, EpisodeDetailActivity::class.java)
                     .putExtra(EXTRA_TV_SHOW_ID, tvShowId)

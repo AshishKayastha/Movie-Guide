@@ -5,13 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Credit
-import com.ashish.movieguide.data.models.tmdb.Movie
-import com.ashish.movieguide.data.models.tmdb.Person
-import com.ashish.movieguide.data.models.tmdb.PersonDetail
-import com.ashish.movieguide.data.models.tmdb.ProfileImages
-import com.ashish.movieguide.data.models.tmdb.TVShow
-import com.ashish.movieguide.data.models.trakt.TraktPerson
+import com.ashish.movieguide.data.network.entities.tmdb.Credit
+import com.ashish.movieguide.data.network.entities.tmdb.Movie
+import com.ashish.movieguide.data.network.entities.tmdb.Person
+import com.ashish.movieguide.data.network.entities.tmdb.PersonDetail
+import com.ashish.movieguide.data.network.entities.tmdb.ProfileImages
+import com.ashish.movieguide.data.network.entities.tmdb.TVShow
+import com.ashish.movieguide.data.network.entities.trakt.TraktPerson
 import com.ashish.movieguide.di.modules.ActivityModule
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.BaseDetailActivity
@@ -41,7 +41,6 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, TraktPerson,
     companion object {
         private const val EXTRA_PERSON = "person"
 
-        @JvmStatic
         fun createIntent(context: Context, person: Person?): Intent {
             return Intent(context, PersonDetailActivity::class.java)
                     .putExtra(EXTRA_PERSON, person)

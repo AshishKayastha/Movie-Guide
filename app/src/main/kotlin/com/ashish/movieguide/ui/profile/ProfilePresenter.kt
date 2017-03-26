@@ -1,8 +1,8 @@
 package com.ashish.movieguide.ui.profile
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.api.trakt.UserApi
-import com.ashish.movieguide.data.models.trakt.Stats
+import com.ashish.movieguide.data.network.api.trakt.UserApi
+import com.ashish.movieguide.data.network.entities.trakt.Stats
 import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.mvp.RxPresenter

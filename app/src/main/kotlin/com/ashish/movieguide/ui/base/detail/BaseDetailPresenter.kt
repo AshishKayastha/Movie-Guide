@@ -1,16 +1,16 @@
 package com.ashish.movieguide.ui.base.detail
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.common.FullDetailContent
-import com.ashish.movieguide.data.models.tmdb.CreditResults
-import com.ashish.movieguide.data.models.tmdb.ImageItem
+import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
+import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
-import io.reactivex.Single
+import io.reactivex.Observable
 import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayList
@@ -36,13 +36,13 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
         if (id != null) {
             getView()?.showProgress()
             addDisposable(getDetailContent(id)
-                    .doOnSuccess { fullDetailContent = it }
+                    .doOnNext { fullDetailContent = it }
                     .observeOn(schedulerProvider.ui())
                     .subscribe({ showDetailContent(it) }, { onLoadDetailError(it, getErrorMessageId()) }))
         }
     }
 
-    abstract fun getDetailContent(id: Long): Single<FullDetailContent<I, T>>
+    abstract fun getDetailContent(id: Long): Observable<FullDetailContent<I, T>>
 
     protected open fun showDetailContent(fullDetailContent: FullDetailContent<I, T>) {
         getView()?.run {

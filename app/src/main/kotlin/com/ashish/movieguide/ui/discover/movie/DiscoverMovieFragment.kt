@@ -1,6 +1,6 @@
 package com.ashish.movieguide.ui.discover.movie
 
-import com.ashish.movieguide.data.models.tmdb.Movie
+import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.discover.base.BaseDiscoverFragment
 
@@ -10,7 +10,7 @@ import com.ashish.movieguide.ui.discover.base.BaseDiscoverFragment
 class DiscoverMovieFragment : BaseDiscoverFragment<Movie, DiscoverMoviePresenter>() {
 
     companion object {
-        @JvmStatic fun newInstance() = DiscoverMovieFragment()
+        fun newInstance() = DiscoverMovieFragment()
     }
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {

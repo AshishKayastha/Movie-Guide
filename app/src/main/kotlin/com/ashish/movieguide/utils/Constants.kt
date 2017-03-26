@@ -24,9 +24,7 @@ object Constants {
     const val ADAPTER_TYPE_MULTI_SEARCH = 6
     const val ADAPTER_TYPE_REVIEW = 7
 
-    @JvmStatic val DETAIL_IMAGE_THUMBNAIL_SIZE = 180f.dpToPx().toInt()
-
-    @JvmStatic val LIST_THUMBNAIL_WIDTH = 200f.dpToPx().toInt()
-
-    @JvmStatic val LIST_THUMBNAIL_HEIGHT = 260f.dpToPx().toInt()
+    val LIST_THUMBNAIL_WIDTH = 200f.dpToPx().toInt()
+    val LIST_THUMBNAIL_HEIGHT = 260f.dpToPx().toInt()
+    val DETAIL_IMAGE_THUMBNAIL_SIZE = 180f.dpToPx().toInt()
 }

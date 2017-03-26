@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.TVShow
+import com.ashish.movieguide.data.network.entities.tmdb.TVShow
 import com.ashish.movieguide.di.modules.FragmentModule
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
@@ -32,7 +32,6 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
     companion object {
         private const val ARG_PERSONAL_TV_SHOW_TYPE = "personal_tv_show_type"
 
-        @JvmStatic
         fun newInstance(tvShowType: Int): PersonalTVShowFragment {
             val extras = Bundle()
             extras.putInt(ARG_PERSONAL_TV_SHOW_TYPE, tvShowType)

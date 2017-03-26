@@ -1,11 +1,11 @@
 package com.ashish.movieguide.di.modules
 
-import com.ashish.movieguide.data.api.tmdb.AuthApi
-import com.ashish.movieguide.data.api.tmdb.MovieApi
-import com.ashish.movieguide.data.api.tmdb.OMDbApi
-import com.ashish.movieguide.data.api.tmdb.PeopleApi
-import com.ashish.movieguide.data.api.tmdb.SearchApi
-import com.ashish.movieguide.data.api.tmdb.TVShowApi
+import com.ashish.movieguide.data.network.api.tmdb.AuthApi
+import com.ashish.movieguide.data.network.api.tmdb.MovieApi
+import com.ashish.movieguide.data.network.api.tmdb.OMDbApi
+import com.ashish.movieguide.data.network.api.tmdb.PeopleApi
+import com.ashish.movieguide.data.network.api.tmdb.SearchApi
+import com.ashish.movieguide.data.network.api.tmdb.TVShowApi
 import com.ashish.movieguide.di.qualifiers.OMDb
 import dagger.Module
 import dagger.Provides

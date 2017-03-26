@@ -2,7 +2,7 @@ package com.ashish.movieguide.ui.people.list
 
 import android.content.Intent
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Person
+import com.ashish.movieguide.data.network.entities.tmdb.Person
 import com.ashish.movieguide.di.modules.FragmentModule
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
@@ -17,7 +17,7 @@ class PeopleFragment : BaseRecyclerViewFragment<Person,
         BaseRecyclerViewMvpView<Person>, PeoplePresenter>() {
 
     companion object {
-        @JvmStatic fun newInstance() = PeopleFragment()
+        fun newInstance() = PeopleFragment()
     }
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {

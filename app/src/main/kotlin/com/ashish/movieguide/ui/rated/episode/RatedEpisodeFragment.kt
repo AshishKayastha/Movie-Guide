@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.models.tmdb.Episode
+import com.ashish.movieguide.data.network.entities.tmdb.Episode
 import com.ashish.movieguide.di.modules.FragmentModule
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
@@ -20,7 +20,7 @@ class RatedEpisodeFragment : BaseRecyclerViewFragment<Episode,
         BaseRecyclerViewMvpView<Episode>, RatedEpisodePresenter>() {
 
     companion object {
-        @JvmStatic fun newInstance() = RatedEpisodeFragment()
+        fun newInstance() = RatedEpisodeFragment()
     }
 
     @Inject lateinit var ratingChangeObserver: RatingChangeObserver

@@ -37,6 +37,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -47,20 +48,20 @@ android {
 
                 // Change release file name to "Movie Guide v{versionName}.apk"
                 variant.outputs.each { output ->
-                    def apk = output.outputFile;
-                    def newName = "Movie Guide v" + defaultConfig.versionName + ".apk";
-                    output.outputFile = new File(apk.parentFile, newName);
+                    def apk = output.outputFile
+                    def newName = "Movie Guide v" + defaultConfig.versionName + ".apk"
+                    output.outputFile = new File(apk.parentFile, newName)
                 }
 
                 variant.assemble.doLast {
-                    def path = null;
+                    def path = null
                     variant.outputs.each { output ->
                         //noinspection GrReassignedInClosureLocalVar
                         path = output.outputFile
 
                         // Delete unaligned apk file
                         File aligned = output.outputFile
-                        File unaligned = output.packageApplication.outputFile;
+                        File unaligned = output.packageApplication.outputFile
                         if (!unaligned.getName().equalsIgnoreCase(aligned.getName())) {
                             unaligned.delete()
                         }
@@ -91,8 +92,8 @@ android {
         threadCount 8
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+    sourceSets.each {
+        it.java.srcDirs += "src/${it.name}/kotlin"
     }
 
     packagingOptions {
@@ -129,6 +130,12 @@ dependencies {
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlinVersion"
 
+    // Requery
+    compile "io.requery:requery:$versions.requeryVersion"
+    compile "io.requery:requery-kotlin:$versions.requeryVersion"
+    compile "io.requery:requery-android:$versions.requeryVersion"
+    kapt "io.requery:requery-processor:$versions.requeryVersion"
+
     // Retrofit 2
     compile "com.squareup.retrofit2:retrofit:$versions.retrofitVersion"
     compile "com.squareup.retrofit2:converter-moshi:$versions.retrofitVersion"
@@ -156,4 +163,8 @@ dependencies {
     // Leak Canary
     debugCompile "com.squareup.leakcanary:leakcanary-android:$versions.leakCanaryVersion"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanaryVersion"
+
+    // Stetho
+    debugCompile "com.facebook.stetho:stetho:$versions.stethoVersion"
+    debugCompile "com.facebook.stetho:stetho-okhttp3:$versions.stethoVersion"
 }
