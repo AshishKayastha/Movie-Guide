@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.ViewType
-import com.ashish.movieguide.ui.common.palette.PaletteBitmap
-import com.ashish.movieguide.ui.common.palette.PaletteImageViewTarget
 import com.ashish.movieguide.ui.widget.AspectRatioImageView
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.LabelLayout
@@ -17,9 +15,12 @@ import com.ashish.movieguide.utils.extensions.bindOptionalView
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
-import com.ashish.movieguide.utils.extensions.transcodePaletteBitmap
-import com.bumptech.glide.BitmapRequestBuilder
-import com.bumptech.glide.Glide
+import com.ashish.movieguide.utils.glide.GlideApp
+import com.ashish.movieguide.utils.glide.PaletteBitmapTransitionOptions
+import com.ashish.movieguide.utils.glide.palette.PaletteBitmap
+import com.ashish.movieguide.utils.glide.palette.PaletteImageViewTarget
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.request.RequestOptions
 
 /**
  * Created by Ashish on Dec 30.
@@ -35,13 +36,15 @@ abstract class BaseContentHolder<in I : ViewType>(
     val posterImage: AspectRatioImageView by bindView(R.id.poster_image)
     val ratingLabel: LabelLayout? by bindOptionalView(R.id.rating_label)
 
-    val requestBuilder: BitmapRequestBuilder<String, PaletteBitmap> = Glide.with(itemView.context)
-            .transcodePaletteBitmap(itemView.context)
+    private val requestBuilder: RequestBuilder<PaletteBitmap>
 
     init {
         itemView.setOnClickListener { view ->
             getItemClickListener()?.onItemClick(adapterPosition, view)
         }
+
+        requestBuilder = GlideApp.with(itemView.context)
+                .`as`(PaletteBitmap::class.java)
     }
 
     open fun bindData(item: I) {
@@ -52,11 +55,11 @@ abstract class BaseContentHolder<in I : ViewType>(
         val imageUrl = getImageUrl(item)
         if (imageUrl.isNotNullOrEmpty()) {
             requestBuilder.load(imageUrl)
-                    .animate(R.anim.fade_in)
-                    .override(LIST_THUMBNAIL_WIDTH, LIST_THUMBNAIL_HEIGHT)
+                    .transition(PaletteBitmapTransitionOptions.crossFade())
+                    .apply(RequestOptions().override(LIST_THUMBNAIL_WIDTH, LIST_THUMBNAIL_HEIGHT))
                     .into(PaletteImageViewTarget(this))
         } else {
-            Glide.clear(posterImage)
+            GlideApp.with(itemView.context).clear(posterImage)
         }
     }
 

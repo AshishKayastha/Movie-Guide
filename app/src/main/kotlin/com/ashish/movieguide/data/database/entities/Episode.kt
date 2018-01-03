@@ -70,10 +70,10 @@ interface Episode : Persistable, Parcelable {
     @get:OneToOne
     var omdb: OMDb?
 
-    @get:OneToMany
+    @get:OneToMany(mappedBy = "id")
     val images: MutableSet<Image>?
 
-    @get:OneToMany
+    @get:OneToMany(mappedBy = "id")
     val videos: MutableSet<Video>?
 
     @get:ManyToMany

@@ -6,7 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
-@Module(subcomponents = arrayOf(FilterComponent::class))
+@Module(subcomponents = [FilterComponent::class])
 abstract class FilterFragmentBinder {
 
     @Binds

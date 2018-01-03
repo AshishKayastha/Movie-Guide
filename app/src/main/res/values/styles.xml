@@ -87,11 +87,6 @@
         <item name="fontName">@string/font_montserrat_regular</item>
     </style>
 
-    <style name="PrimaryText.Normal">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textSize">@dimen/text_size_normal</item>
-    </style>
-
     <style name="PrimaryText.Title">
         <item name="android:textSize">@dimen/text_size_xlarge</item>
         <item name="android:layout_marginTop">@dimen/spacing_medium</item>
@@ -185,11 +180,6 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">@dimen/spacing_normal</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
-    </style>
-
-    <style name="RatingText.Small">
-        <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:layout_marginTop">@dimen/spacing_micro</item>
     </style>
 
     <style name="FilterDateText" parent="PrimaryText">

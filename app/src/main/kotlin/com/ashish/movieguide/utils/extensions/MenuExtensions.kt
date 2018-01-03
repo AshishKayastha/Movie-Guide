@@ -27,13 +27,12 @@ val Menu.menus: List<MenuItem>
     get() = (0 until size()).map { getItem(it) }
 
 fun Menu.changeMenuAndSubMenuFont(typefaceSpan: TypefaceSpan) {
-    menus.filterNotNull()
-            .forEach { menuItem ->
-                menuItem.title = menuItem.title.getTextWithCustomTypeface(typefaceSpan)
-                if (menuItem.hasSubMenu()) {
-                    menuItem.subMenu.changeMenuAndSubMenuFont(typefaceSpan)
-                }
-            }
+    menus.forEach { menuItem ->
+        menuItem.title = menuItem.title.getTextWithCustomTypeface(typefaceSpan)
+        if (menuItem.hasSubMenu()) {
+            menuItem.subMenu.changeMenuAndSubMenuFont(typefaceSpan)
+        }
+    }
 }
 
 fun Menu.tint(@ColorInt color: Int) = menus.forEach { it.tint(color) }

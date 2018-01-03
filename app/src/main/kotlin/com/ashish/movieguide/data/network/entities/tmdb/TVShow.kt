@@ -23,7 +23,8 @@ data class TVShow(
     override fun getViewType() = CONTENT_VIEW
 
     companion object {
-        @JvmField @Suppress("unused")
+        @JvmField
+        @Suppress("unused")
         val CREATOR = PaperParcelTVShow.CREATOR
     }
 

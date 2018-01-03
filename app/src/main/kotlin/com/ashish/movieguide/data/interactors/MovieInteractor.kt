@@ -36,7 +36,7 @@ class MovieInteractor @Inject constructor(
     fun getMovieDetail(movieId: Long): Observable<FullDetailContent<MovieDetail, TraktMovie>> {
         return movieApi.getMovieDetail(movieId, "credits,similar,images,videos")
                 .flatMap { convertToFullMovieDetail(it) }
-                .doOnNext { localMovieRepository.putMovieDetailBlocking(it) }
+        //                .doOnNext { localMovieRepository.putMovieDetailBlocking(it) }
     }
 
     private fun convertToFullMovieDetail(movieDetail: MovieDetail)

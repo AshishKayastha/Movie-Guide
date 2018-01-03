@@ -5,7 +5,7 @@ import com.ashish.movieguide.di.multibindings.AbstractComponent
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilder
 import dagger.Subcomponent
 
-@Subcomponent(modules = arrayOf(FragmentModule::class))
+@Subcomponent(modules = [FragmentModule::class])
 interface MultiSearchFragmentComponent : AbstractComponent<MultiSearchFragment> {
 
     @Subcomponent.Builder

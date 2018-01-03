@@ -1,5 +1,6 @@
 package com.ashish.movieguide.app
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import com.ashish.movieguide.di.component.DaggerAppComponent
@@ -19,6 +20,7 @@ class MovieGuideApp : BaseApp(), ActivityComponentBuilderHost {
 
     companion object {
 
+        @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
 
         fun getRefWatcher(context: Context) = (context.applicationContext as MovieGuideApp).refWatcher

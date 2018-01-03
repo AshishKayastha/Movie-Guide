@@ -43,19 +43,21 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
 
     @Inject lateinit var statusObserver: PersonalContentStatusObserver
 
-    @JvmField @State var clickedItemPosition: Int = -1
+    @JvmField
+    @State
+    var clickedItemPosition: Int = -1
 
     private var disposable: Disposable? = null
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
         builderHost.getFragmentComponentBuilder(PersonalTVShowFragment::class.java,
                 PersonalTVShowComponent.Builder::class.java)
-                .withModule(FragmentModule(activity))
+                .withModule(FragmentModule(activity!!))
                 .build()
                 .inject(this)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observePersonalContentStatusChange()
     }
@@ -77,9 +79,13 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
     override fun getTransitionNameId(position: Int) = R.string.transition_tv_poster
 
     override fun getDetailIntent(position: Int): Intent? {
-        clickedItemPosition = position
-        val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
-        return TVShowDetailActivity.createIntent(activity, tvShow)
+        return if (activity != null) {
+            clickedItemPosition = position
+            val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
+            TVShowDetailActivity.createIntent(activity!!, tvShow)
+        } else {
+            return null
+        }
     }
 
     private fun observePersonalContentStatusChange() {

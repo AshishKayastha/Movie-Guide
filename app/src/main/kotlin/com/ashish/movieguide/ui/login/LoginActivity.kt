@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.login
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.Bitmap
 import android.net.Uri
@@ -29,7 +30,9 @@ import java.security.SecureRandom
 
 class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
 
-    @JvmField @State var state: String = BigInteger(130, SecureRandom()).toString(32)
+    @JvmField
+    @State
+    var state: String = BigInteger(130, SecureRandom()).toString(32)
 
     private val loginWebClient: WebViewClient = object : WebViewClient() {
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -62,6 +65,7 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         overridePendingTransition(R.anim.slide_in_right, R.anim.hold_anim)
         super.onCreate(savedInstanceState)
@@ -73,7 +77,7 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
         CookieManager.getInstance().removeAllCookies {}
 
         webView.settings.javaScriptEnabled = true
-        webView.setWebViewClient(loginWebClient)
+        webView.webViewClient = loginWebClient
 
         connectBtn.setOnClickListener {
             if (Utils.isOnline()) {
@@ -141,7 +145,7 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
     }
 
     override fun onDestroy() {
-        webView.setWebViewClient(null)
+        webView.webViewClient = null
         webView.destroy()
         super.onDestroy()
     }

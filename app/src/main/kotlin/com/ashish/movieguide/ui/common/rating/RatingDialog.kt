@@ -23,6 +23,7 @@ class RatingDialog @Inject constructor(private val context: Context) {
         this.listener = listener
     }
 
+    @Suppress("NAME_SHADOWING")
     fun showRatingDialog(rating: Double?) {
         val view = context.inflateLayout(R.layout.dialog_rating)
 

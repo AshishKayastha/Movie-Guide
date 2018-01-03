@@ -15,13 +15,13 @@ import icepick.Icepick
  */
 abstract class BaseFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(getLayoutId())
     }
 
     abstract fun getLayoutId(): Int
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState.getExtrasOrRestore(this) {
             getFragmentArguments(arguments)
@@ -30,7 +30,7 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun getFragmentArguments(arguments: Bundle?) {}
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         Icepick.saveInstanceState(this, outState)
         super.onSaveInstanceState(outState)
     }
@@ -42,6 +42,6 @@ abstract class BaseFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        MovieGuideApp.getRefWatcher(activity).watch(this)
+        activity?.run { MovieGuideApp.getRefWatcher(this).watch(this) }
     }
 }

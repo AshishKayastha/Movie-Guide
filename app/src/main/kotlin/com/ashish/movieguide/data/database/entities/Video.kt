@@ -2,7 +2,6 @@ package com.ashish.movieguide.data.database.entities
 
 import io.requery.Entity
 import io.requery.Key
-import io.requery.ManyToOne
 import io.requery.Persistable
 import io.requery.Table
 
@@ -20,19 +19,4 @@ interface Video : Persistable {
     var key: String?
 
     var type: String?
-
-
-    /**********   Relations   **********/
-
-    @get:ManyToOne
-    var movie: Movie?
-
-    @get:ManyToOne
-    var show: Show?
-
-    @get:ManyToOne
-    var season: Season?
-
-    @get:ManyToOne
-    var episode: Episode?
 }

@@ -19,6 +19,7 @@ import com.ashish.movieguide.utils.TMDbConstants.SORT_BY_MOVIE
 import com.ashish.movieguide.utils.TMDbConstants.SORT_BY_TV_SHOW
 import com.ashish.movieguide.utils.extensions.convertToDate
 import com.ashish.movieguide.utils.extensions.dpToPx
+import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getExtrasOrRestore
 import com.ashish.movieguide.utils.extensions.getFormattedDate
@@ -54,8 +55,13 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     @Inject lateinit var filterQueryModel: FilterQueryModel
 
-    @JvmField @State var isMovie: Boolean = true
-    @JvmField @State var filterQuery: FilterQuery? = null
+    @JvmField
+    @State
+    var isMovie: Boolean = true
+
+    @JvmField
+    @State
+    var filterQuery: FilterQuery? = null
 
     private val calendar = Calendar.getInstance()
     private lateinit var genreAdapter: GenreAdapter
@@ -83,17 +89,17 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         return inflater.inflate(R.layout.fragment_bottom_sheet_filter, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState.getExtrasOrRestore(this) {
             getFragmentArguments()
         }
 
-        if (isMovie) {
-            genreAdapter = GenreAdapter(activity, R.array.movie_genre_list, R.array.movie_genre_id_list,
+        genreAdapter = if (isMovie) {
+            GenreAdapter(activity!!, R.array.movie_genre_list, R.array.movie_genre_id_list,
                     filterQuery?.genreIds)
         } else {
-            genreAdapter = GenreAdapter(activity, R.array.tv_genre_list, R.array.tv_genre_id_list,
+            GenreAdapter(activity!!, R.array.tv_genre_list, R.array.tv_genre_id_list,
                     filterQuery?.genreIds)
         }
 
@@ -106,7 +112,6 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         val sortByIndex: Int
         if (isMovie) {
             sortByIndex = SORT_BY_MOVIE.indexOf(filterQuery?.sortBy)
-
         } else {
             // Hide sort by title RadioButton for TV Shows
             sortRadioGroup.weightSum = 3f
@@ -122,7 +127,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
                 filterQueryModel.setFilterQuery(filterQuery!!)
                 dismiss()
             } else {
-                activity.showToast(R.string.error_choose_valid_date)
+                activity?.showToast(R.string.error_choose_valid_date)
             }
         }
 
@@ -130,12 +135,11 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         initDatePicker(filterQuery?.maxDate.convertToDate(), false)
 
         startDateText.setOnClickListener { startDatePickerDialog?.show() }
-
         endDateText.setOnClickListener { endDatePickerDialog?.show() }
     }
 
     private fun getFragmentArguments() {
-        arguments.run {
+        arguments?.run {
             isMovie = getBoolean(ARG_IS_MOVIE)
             filterQuery = getParcelable(ARG_FILTER_QUERY)
         }
@@ -175,19 +179,14 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun updateFilterQuery() {
-        val radioButton = sortRadioGroup.findViewById(sortRadioGroup.checkedRadioButtonId)
+        val radioButton = sortRadioGroup.find<RadioButton>(sortRadioGroup.checkedRadioButtonId)
         val sortByIndex = sortRadioGroup.indexOfChild(radioButton)
 
-        if (isMovie) {
-            filterQuery?.sortBy = SORT_BY_MOVIE[sortByIndex]
-        } else {
-            filterQuery?.sortBy = SORT_BY_TV_SHOW[sortByIndex]
-        }
-
+        filterQuery?.sortBy = if (isMovie) SORT_BY_MOVIE[sortByIndex] else SORT_BY_TV_SHOW[sortByIndex]
         filterQuery?.genreIds = genreAdapter.getSelectedGenreIds()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         updateFilterQuery()
         Icepick.saveInstanceState(this, outState)
         super.onSaveInstanceState(outState)
@@ -200,6 +199,6 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        MovieGuideApp.getRefWatcher(activity).watch(this)
+        activity?.run { MovieGuideApp.getRefWatcher(this).watch(this) }
     }
 }

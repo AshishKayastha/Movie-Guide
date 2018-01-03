@@ -15,12 +15,12 @@ import javax.inject.Singleton
  * Created by Ashish on Dec 27.
  */
 @Singleton
-@Component(modules = arrayOf(
-        AppModule::class,
-        NetModule::class,
-        ApiModule::class,
-        TraktApiModule::class,
-        BuildTypeModule::class,
-        ActivityBinders::class
-))
+@Component(modules = [
+    AppModule::class,
+    NetModule::class,
+    ApiModule::class,
+    TraktApiModule::class,
+    BuildTypeModule::class,
+    ActivityBinders::class
+])
 interface AppComponent : AbstractComponent<MovieGuideApp>

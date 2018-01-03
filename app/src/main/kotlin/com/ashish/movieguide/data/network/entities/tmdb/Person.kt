@@ -17,7 +17,8 @@ data class Person(
     override fun getViewType() = CONTENT_VIEW
 
     companion object {
-        @JvmField @Suppress("unused")
+        @JvmField
+        @Suppress("unused")
         val CREATOR = PaperParcelPerson.CREATOR
     }
 

@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -65,6 +66,7 @@ public class TouchImageView extends AppCompatImageView {
         configureImageView(context);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void configureImageView(Context context) {
         super.setClickable(true);
 
@@ -559,14 +561,8 @@ public class TouchImageView extends AppCompatImageView {
         matrix.getValues(m);
         float x = m[Matrix.MTRANS_X];
 
-        if (getImageWidth() < viewWidth) {
-            return false;
-        } else if (x >= -1 && direction < 0) {
-            return false;
-        } else if (Math.abs(x) + viewWidth + 1 >= getImageWidth() && direction > 0) {
-            return false;
-        }
-        return true;
+        return !(getImageWidth() < viewWidth) && (!(x >= -1) || direction >= 0)
+                && (!(Math.abs(x) + viewWidth + 1 >= getImageWidth()) || direction <= 0);
     }
 
     void scaleImage(double deltaScale, float focusX, float focusY, boolean stretchImageToSuper) {
@@ -659,8 +655,8 @@ public class TouchImageView extends AppCompatImageView {
             overScroller.fling(startX, startY, velocityX, velocityY, minX, maxX, minY, maxY);
         }
 
-        void forceFinished(boolean finished) {
-            overScroller.forceFinished(finished);
+        void forceFinished() {
+            overScroller.forceFinished(true);
         }
 
         boolean isFinished() {
@@ -759,6 +755,7 @@ public class TouchImageView extends AppCompatImageView {
         private final PointF last = new PointF();
 
         @Override
+        @SuppressLint("ClickableViewAccessibility")
         public boolean onTouch(View v, MotionEvent event) {
             scaleGestureDetector.onTouchEvent(event);
             gestureDetector.onTouchEvent(event);
@@ -980,7 +977,7 @@ public class TouchImageView extends AppCompatImageView {
         void cancelFling() {
             if (scroller != null) {
                 setState(State.NONE);
-                scroller.forceFinished(true);
+                scroller.forceFinished();
             }
         }
 

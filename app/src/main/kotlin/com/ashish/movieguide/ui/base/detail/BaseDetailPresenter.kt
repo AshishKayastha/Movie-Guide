@@ -75,8 +75,7 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
                           getImageUrl: (String?) -> String?) {
         if (imageItemList.isNotNullOrEmpty()) {
             val posterImageUrlList = imageItemList!!
-                    .map { getImageUrl(it.filePath) }
-                    .filterNotNull()
+                    .mapNotNull { getImageUrl(it.filePath) }
                     .toList()
             urlList.addAll(posterImageUrlList)
         }
@@ -109,12 +108,10 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
 
     private fun showErrorToast(t: Throwable, messageId: Int) {
         getView()?.run {
-            if (t is IOException) {
-                showToastMessage(R.string.error_no_internet)
-            } else if (t is AuthException) {
-                showToastMessage(R.string.error_not_logged_in)
-            } else {
-                showToastMessage(messageId)
+            when (t) {
+                is IOException -> showToastMessage(R.string.error_no_internet)
+                is AuthException -> showToastMessage(R.string.error_not_logged_in)
+                else -> showToastMessage(messageId)
             }
         }
     }

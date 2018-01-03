@@ -43,8 +43,12 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, TraktSeason
         }
     }
 
-    @JvmField @State var tvShowId: Long? = null
-    @JvmField @State var season: Season? = null
+    @JvmField
+    @State
+    var tvShowId: Long? = null
+    @JvmField
+    @State
+    var season: Season? = null
 
     private var episodesAdapter: RecyclerViewAdapter<Episode>? = null
 

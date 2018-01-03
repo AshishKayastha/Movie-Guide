@@ -36,7 +36,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
     private var progressDialog: AlertDialog? = null
 
     init {
-        contentText = contentView.find<FontTextView>(R.id.loading_text)
+        contentText = contentView.find(R.id.loading_text)
     }
 
     @Suppress("unused")
@@ -44,7 +44,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
         showOkMessageDialog(getString(contentId))
     }
 
-    fun showOkMessageDialog(content: CharSequence?) {
+    private fun showOkMessageDialog(content: CharSequence?) {
         buildDialog().withContent(content)
                 .withPositiveButton(getString(android.R.string.ok))
                 .show()
@@ -67,7 +67,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
 
     fun withTitle(@StringRes titleId: Int) = withTitle(getString(titleId))
 
-    fun withTitle(title: CharSequence?): DialogUtils {
+    private fun withTitle(title: CharSequence?): DialogUtils {
         checkMessageDialog()
         messageDialog?.setTitle(title.getTextWithCustomTypeface(mediumTypefaceSpan))
         return this
@@ -75,7 +75,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
 
     fun withContent(@StringRes contentId: Int) = withContent(getString(contentId))
 
-    fun withContent(content: CharSequence?): DialogUtils {
+    private fun withContent(content: CharSequence?): DialogUtils {
         checkMessageDialog()
         messageDialog?.setMessage(content.getTextWithCustomTypeface(regularTypefaceSpan))
         return this
@@ -85,7 +85,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
         return withPositiveButton(getString(positiveTextId), positiveBtnClick)
     }
 
-    fun withPositiveButton(positiveText: CharSequence?, positiveBtnClick: (() -> Unit)? = null): DialogUtils {
+    private fun withPositiveButton(positiveText: CharSequence?, positiveBtnClick: (() -> Unit)? = null): DialogUtils {
         checkMessageDialog()
 
         messageDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, { _, _ ->
@@ -100,7 +100,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
         return withNegativeButton(getString(negativeTextId), negativeBtnClick)
     }
 
-    fun withNegativeButton(negativeText: CharSequence?, negativeBtnClick: (() -> Unit)? = null): DialogUtils {
+    private fun withNegativeButton(negativeText: CharSequence?, negativeBtnClick: (() -> Unit)? = null): DialogUtils {
         checkMessageDialog()
 
         messageDialog?.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText, { _, _ ->
@@ -124,7 +124,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
         }
     }
 
-    fun dismissMessageDialog() = messageDialog?.dismiss()
+    private fun dismissMessageDialog() = messageDialog?.dismiss()
 
     fun showProgressDialog(@StringRes contentId: Int) {
         if (progressDialog == null) {
@@ -138,7 +138,7 @@ class DialogUtils @Inject constructor(private val context: Context) {
         progressDialog!!.show()
     }
 
-    fun dismissProgressDialog() = progressDialog?.dismiss()
+    private fun dismissProgressDialog() = progressDialog?.dismiss()
 
     fun dismissAllDialogs() {
         dismissMessageDialog()

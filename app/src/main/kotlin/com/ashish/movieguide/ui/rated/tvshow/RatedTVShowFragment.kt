@@ -25,19 +25,21 @@ class RatedTVShowFragment : BaseRecyclerViewFragment<TVShow,
 
     @Inject lateinit var ratingChangeObserver: RatingChangeObserver
 
-    @JvmField @State var clickedItemPosition: Int = -1
+    @JvmField
+    @State
+    var clickedItemPosition: Int = -1
 
     private var disposable: Disposable? = null
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
         builderHost.getFragmentComponentBuilder(RatedTVShowFragment::class.java,
                 RatedTVShowComponent.Builder::class.java)
-                .withModule(FragmentModule(activity))
+                .withModule(FragmentModule(activity!!))
                 .build()
                 .inject(this)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeTVRatingChanged()
     }
@@ -51,9 +53,13 @@ class RatedTVShowFragment : BaseRecyclerViewFragment<TVShow,
     override fun getTransitionNameId(position: Int) = R.string.transition_tv_poster
 
     override fun getDetailIntent(position: Int): Intent? {
-        clickedItemPosition = position
-        val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
-        return TVShowDetailActivity.createIntent(activity, tvShow)
+        return if (activity != null) {
+            clickedItemPosition = position
+            val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
+            TVShowDetailActivity.createIntent(activity!!, tvShow)
+        } else {
+            return null
+        }
     }
 
     private fun observeTVRatingChanged() {

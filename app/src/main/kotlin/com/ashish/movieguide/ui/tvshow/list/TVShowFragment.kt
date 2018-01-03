@@ -31,7 +31,7 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow,
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
         builderHost.getFragmentComponentBuilder(TVShowFragment::class.java, TVShowComponent.Builder::class.java)
-                .withModule(FragmentModule(activity))
+                .withModule(FragmentModule(activity!!))
                 .build()
                 .inject(this)
     }
@@ -49,7 +49,11 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow,
     override fun getTransitionNameId(position: Int) = R.string.transition_tv_poster
 
     override fun getDetailIntent(position: Int): Intent? {
-        val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
-        return TVShowDetailActivity.createIntent(activity, tvShow)
+        return if (activity != null) {
+            val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
+            TVShowDetailActivity.createIntent(activity!!, tvShow)
+        } else {
+            return null
+        }
     }
 }

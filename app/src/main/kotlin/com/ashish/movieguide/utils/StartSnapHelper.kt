@@ -66,14 +66,14 @@ class StartSnapHelper : LinearSnapHelper() {
             // to avoid having the last item not completely visible.
             val endOfList = layoutManager.findLastCompletelyVisibleItemPosition() == layoutManager.getItemCount() - 1
 
-            if (visibleWidth > 0.5f && !endOfList) {
-                return child
+            return if (visibleWidth > 0.5f && !endOfList) {
+                child
             } else if (endOfList) {
-                return null
+                null
             } else {
                 // If the child wasn't returned, we need to return
                 // the next view close to the start.
-                return layoutManager.findViewByPosition(firstChild + 1)
+                layoutManager.findViewByPosition(firstChild + 1)
             }
         }
 

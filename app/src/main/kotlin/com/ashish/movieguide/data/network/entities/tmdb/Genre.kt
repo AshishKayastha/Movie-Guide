@@ -8,7 +8,8 @@ import paperparcel.PaperParcel
 data class Genre(val id: Long? = null, val name: String? = null) : Parcelable {
 
     companion object {
-        @JvmField @Suppress("unused")
+        @JvmField
+        @Suppress("unused")
         val CREATOR = PaperParcelGenre.CREATOR
     }
 

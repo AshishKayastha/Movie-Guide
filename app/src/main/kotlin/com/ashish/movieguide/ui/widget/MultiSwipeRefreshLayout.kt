@@ -1,7 +1,6 @@
 package com.ashish.movieguide.ui.widget
 
 import android.content.Context
-import android.support.v4.view.ViewCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.util.AttributeSet
 import android.view.View
@@ -16,7 +15,7 @@ class MultiSwipeRefreshLayout @JvmOverloads constructor(
         attrs: AttributeSet? = null
 ) : SwipeRefreshLayout(context, attrs) {
 
-    var swipeableChildren = ArrayList<View>()
+    private var swipeableChildren = ArrayList<View>()
 
     init {
         val colors = resources.getIntArray(R.array.swipe_refresh_colors)
@@ -32,7 +31,7 @@ class MultiSwipeRefreshLayout @JvmOverloads constructor(
     override fun canChildScrollUp(): Boolean {
         if (swipeableChildren.size > 0) {
             swipeableChildren
-                    .filter { it.isShown && !ViewCompat.canScrollVertically(it, -1) }
+                    .filter { it.isShown && !it.canScrollVertically(-1) }
                     .forEach { return false }
         }
         return true

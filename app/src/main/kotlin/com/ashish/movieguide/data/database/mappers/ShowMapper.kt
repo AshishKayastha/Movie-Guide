@@ -4,16 +4,16 @@ import com.ashish.movieguide.data.database.entities.Show
 import com.ashish.movieguide.data.database.entities.ShowEntity
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
 import com.ashish.movieguide.data.network.entities.trakt.TraktShow
-import io.reactivex.functions.BiFunction
+import com.ashish.movieguide.utils.BiFunction
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ShowMapper @Inject constructor() : BiFunction<TVShow, TraktShow, Show> {
 
-    override fun apply(tvShow: TVShow, traktShow: TraktShow?): Show {
+    override fun apply(var1: TVShow, var2: TraktShow?): Show {
         val showEntity = ShowEntity()
-        tvShow.run {
+        var1.run {
             showEntity.tmdbId = id!!
             showEntity.name = name
             showEntity.overview = overview
@@ -24,7 +24,7 @@ class ShowMapper @Inject constructor() : BiFunction<TVShow, TraktShow, Show> {
             showEntity.firstAirDate = firstAirDate
         }
 
-        traktShow?.addToShowEntity(showEntity)
+        var2?.addToShowEntity(showEntity)
         return showEntity
     }
 }

@@ -55,12 +55,10 @@ abstract class FullDetailContentPresenter<I, T, V : FullDetailContentView<I>>(
     private fun setTomatoRating(tomatoRating: String?, tomatoImage: String?) {
         if (isValidRating(tomatoRating)) {
             getView()?.run {
-                if (tomatoImage == "certified") {
-                    showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_certified)
-                } else if (tomatoImage == "fresh") {
-                    showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_fresh)
-                } else if (tomatoImage == "rotten") {
-                    showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_rotten)
+                when (tomatoImage) {
+                    "certified" -> showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_certified)
+                    "fresh" -> showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_fresh)
+                    "rotten" -> showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_rotten)
                 }
             }
         }
@@ -83,12 +81,10 @@ abstract class FullDetailContentPresenter<I, T, V : FullDetailContentView<I>>(
         if (isValidRating(metaScore)) {
             getView()?.run {
                 val metaScoreInt = metaScore!!.toInt()
-                if (metaScoreInt > 60) {
-                    showMetaScore(metaScore, 0xFF66CC33.toInt())
-                } else if (metaScoreInt in 41..60) {
-                    showMetaScore(metaScore, 0xFFFFCC33.toInt())
-                } else {
-                    showMetaScore(metaScore, 0xFFFF0000.toInt())
+                when {
+                    metaScoreInt > 60 -> showMetaScore(metaScore, 0xFF66CC33.toInt())
+                    metaScoreInt in 41..60 -> showMetaScore(metaScore, 0xFFFFCC33.toInt())
+                    else -> showMetaScore(metaScore, 0xFFFF0000.toInt())
                 }
             }
         }

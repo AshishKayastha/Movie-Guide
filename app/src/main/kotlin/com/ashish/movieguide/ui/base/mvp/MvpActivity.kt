@@ -27,7 +27,7 @@ abstract class MvpActivity<V : MvpView, P : RxPresenter<V>> : BaseActivity(), Mv
     @Inject
     lateinit var presenterLoaderProvider: Provider<PresenterLoader<P>>
 
-    protected val rootView: View? by bindOptionalView(R.id.content_layout)
+    private val rootView: View? by bindOptionalView(R.id.content_layout)
 
     protected var presenter: P? = null
 

@@ -16,7 +16,8 @@ data class FilterQuery(
 ) : Parcelable {
 
     companion object {
-        @JvmField @Suppress("unused")
+        @JvmField
+        @Suppress("unused")
         val CREATOR = PaperParcelFilterQuery.CREATOR
     }
 

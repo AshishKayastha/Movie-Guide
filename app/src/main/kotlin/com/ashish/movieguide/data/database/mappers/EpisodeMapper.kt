@@ -3,7 +3,7 @@ package com.ashish.movieguide.data.database.mappers
 import com.ashish.movieguide.data.database.entities.EpisodeEntity
 import com.ashish.movieguide.data.network.entities.tmdb.Episode
 import com.ashish.movieguide.data.network.entities.trakt.TraktEpisode
-import io.reactivex.functions.BiFunction
+import com.ashish.movieguide.utils.BiFunction
 import javax.inject.Inject
 import javax.inject.Singleton
 import com.ashish.movieguide.data.database.entities.Episode as LocalEpisode
@@ -11,9 +11,9 @@ import com.ashish.movieguide.data.database.entities.Episode as LocalEpisode
 @Singleton
 class EpisodeMapper @Inject constructor() : BiFunction<Episode, TraktEpisode, LocalEpisode> {
 
-    override fun apply(episode: Episode, traktEpisode: TraktEpisode?): LocalEpisode {
+    override fun apply(var1: Episode, var2: TraktEpisode?): LocalEpisode {
         val episodeEntity = EpisodeEntity()
-        episode.run {
+        var1.run {
             episodeEntity.tmdbId = id!!
             episodeEntity.name = name
             episodeEntity.overview = overview
@@ -25,7 +25,7 @@ class EpisodeMapper @Inject constructor() : BiFunction<Episode, TraktEpisode, Lo
             episodeEntity.episodeNumber = episodeNumber
         }
 
-        traktEpisode?.addToEpisodeEntity(episodeEntity)
+        var2?.addToEpisodeEntity(episodeEntity)
         return episodeEntity
     }
 }

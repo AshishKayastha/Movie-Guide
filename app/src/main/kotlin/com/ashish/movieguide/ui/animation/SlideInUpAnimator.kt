@@ -17,8 +17,10 @@ class SlideInUpAnimator : BaseItemAnimator() {
     }
 
     override fun preAnimateAddImpl(holder: RecyclerView.ViewHolder) {
-        ViewCompat.setTranslationY(holder.itemView, holder.itemView.height.toFloat())
-        ViewCompat.setAlpha(holder.itemView, 0f)
+        holder.itemView.apply {
+            alpha = 0f
+            translationY = height.toFloat()
+        }
     }
 
     override fun addAnimation(holder: RecyclerView.ViewHolder) {

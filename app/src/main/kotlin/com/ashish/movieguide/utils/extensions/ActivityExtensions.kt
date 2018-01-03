@@ -7,7 +7,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.util.Pair
 import android.view.View
-import com.ashish.movieguide.ui.common.palette.PaletteBitmap
+import com.ashish.movieguide.utils.glide.palette.PaletteBitmap
 
 /**
  * Created by Ashish on Jan 03.
@@ -21,7 +21,7 @@ fun Activity?.hideKeyboard() {
 fun Activity.startActivityWithTransition(viewPair: Pair<View, String>?, intent: Intent) {
     val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, viewPair)
     window.exitTransition = null
-    ActivityCompat.startActivity(this, intent, options?.toBundle())
+    ActivityCompat.startActivity(this, intent, options.toBundle())
 }
 
 inline fun Activity.setTopBarColorAndAnimate(paletteBitmap: PaletteBitmap?, collapsingToolbar: CollapsingToolbarLayout,

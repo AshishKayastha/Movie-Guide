@@ -8,7 +8,6 @@ import android.graphics.Path
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.TintTypedArray
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.ashish.movieguide.R
@@ -46,7 +45,7 @@ class LabelLayout @JvmOverloads constructor(
     init {
         setWillNotDraw(false)
 
-        val ta = TintTypedArray.obtainStyledAttributes(context, attrs, R.styleable.LabelLayout)
+        val ta = context.obtainStyledAttributes(attrs, R.styleable.LabelLayout)
 
         labelBackground = ta.getDrawable(R.styleable.LabelLayout_labelBackground)
         labelHeight = ta.getDimensionPixelSize(R.styleable.LabelLayout_labelHeight, 0)
@@ -102,7 +101,7 @@ class LabelLayout @JvmOverloads constructor(
         canvas.drawTextOnPath(labelText, bisectorPath, offsets[0], offsets[1], textPaint)
     }
 
-    fun setLabelText(labelText: String) {
+    private fun setLabelText(labelText: String) {
         show()
         this.labelText = labelText
         invalidate()

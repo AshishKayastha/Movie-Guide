@@ -50,7 +50,7 @@ interface Person : Persistable, Parcelable {
 
     /**********   Relations   **********/
 
-    @get:OneToMany
+    @get:OneToMany(mappedBy = "id")
     val images: MutableSet<Image>?
 
     @get:ManyToMany

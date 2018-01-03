@@ -4,7 +4,6 @@ import android.os.Parcelable
 import io.requery.Column
 import io.requery.Entity
 import io.requery.ForeignKey
-import io.requery.Index
 import io.requery.Key
 import io.requery.ManyToMany
 import io.requery.OneToMany
@@ -62,7 +61,6 @@ interface Show : Persistable, Parcelable {
     var backdropPath: String?
 
     @get:Column(name = "first_air_date")
-    @get:Index(value = "first_air_date_index")
     var firstAirDate: String?
 
     @get:Column(name = "last_air_date")
@@ -91,13 +89,13 @@ interface Show : Persistable, Parcelable {
     @get:OneToOne
     var omdb: OMDb?
 
-    @get:OneToMany
+    @get:OneToMany(mappedBy = "id")
     val seasons: MutableSet<Season>?
 
-    @get:OneToMany
+    @get:OneToMany(mappedBy = "id")
     val images: MutableSet<Image>?
 
-    @get:OneToMany
+    @get:OneToMany(mappedBy = "id")
     val videos: MutableSet<Video>?
 
     @get:ManyToMany

@@ -40,11 +40,11 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : BaseFragment(), Mv
 
     abstract fun injectDependencies(builderHost: FragmentComponentBuilderHost)
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(getLayoutId())
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rootView = activity?.findViewById(R.id.content_layout)
     }

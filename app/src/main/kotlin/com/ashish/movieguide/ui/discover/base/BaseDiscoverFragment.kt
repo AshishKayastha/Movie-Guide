@@ -40,7 +40,7 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
     @Inject
     lateinit var componentBuilders: Map<Class<out Fragment>, @JvmSuppressWildcards Provider<FragmentComponentBuilder<*, *>>>
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         swipeRefresh.isEnabled = false
@@ -70,13 +70,15 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
     }
 
     override fun getDetailIntent(position: Int): Intent? {
-        if (isMovie()) {
-            val movie = recyclerViewAdapter.getItem<Movie>(position)
-            return MovieDetailActivity.createIntent(activity, movie)
-        } else {
-            val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
-            return TVShowDetailActivity.createIntent(activity, tvShow)
-        }
+        return if (activity != null) {
+            if (isMovie()) {
+                val movie = recyclerViewAdapter.getItem<Movie>(position)
+                MovieDetailActivity.createIntent(activity!!, movie)
+            } else {
+                val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
+                TVShowDetailActivity.createIntent(activity!!, tvShow)
+            }
+        } else null
     }
 
     abstract fun getDiscoverMediaType(): Int
@@ -88,7 +90,7 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
     override fun showFilterBottomSheetDialog(filterQuery: FilterQuery) {
         val filterBottomSheetFragment = FilterBottomSheetDialogFragment.newInstance(isMovie(), filterQuery)
         filterBottomSheetFragment.setTargetFragment(this, RC_FILTER_FRAGMENT)
-        filterBottomSheetFragment.show(childFragmentManager, filterBottomSheetFragment.tag)
+        filterBottomSheetFragment.show(fragmentManager, filterBottomSheetFragment.tag)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {

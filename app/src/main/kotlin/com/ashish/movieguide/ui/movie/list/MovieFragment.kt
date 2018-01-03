@@ -31,7 +31,7 @@ class MovieFragment : BaseRecyclerViewFragment<Movie,
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
         builderHost.getFragmentComponentBuilder(MovieFragment::class.java, MovieComponent.Builder::class.java)
-                .withModule(FragmentModule(activity))
+                .withModule(FragmentModule(activity!!))
                 .build()
                 .inject(this)
     }
@@ -50,6 +50,10 @@ class MovieFragment : BaseRecyclerViewFragment<Movie,
 
     override fun getDetailIntent(position: Int): Intent? {
         val movie = recyclerViewAdapter.getItem<Movie>(position)
-        return MovieDetailActivity.createIntent(activity, movie)
+        return if (activity != null) {
+            MovieDetailActivity.createIntent(activity!!, movie)
+        } else {
+            return null
+        }
     }
 }

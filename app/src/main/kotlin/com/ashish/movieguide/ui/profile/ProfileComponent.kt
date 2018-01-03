@@ -7,7 +7,7 @@ import com.ashish.movieguide.di.scopes.ActivityScope
 import dagger.Subcomponent
 
 @ActivityScope
-@Subcomponent(modules = arrayOf(ActivityModule::class))
+@Subcomponent(modules = [ActivityModule::class])
 interface ProfileComponent : AbstractComponent<ProfileActivity> {
 
     @Subcomponent.Builder

@@ -43,10 +43,10 @@ class MultiSearchDelegateAdapter(
 
         private fun getSubtitle(multiSearch: MultiSearch): String {
             with(multiSearch) {
-                if (releaseDate.isNotNullOrEmpty()) {
-                    return releaseDate.getYearOnly()
+                return if (releaseDate.isNotNullOrEmpty()) {
+                    releaseDate.getYearOnly()
                 } else {
-                    return firstAirDate.getYearOnly()
+                    firstAirDate.getYearOnly()
                 }
             }
         }
@@ -55,10 +55,10 @@ class MultiSearchDelegateAdapter(
 
         override fun getImageUrl(item: MultiSearch): String? {
             with(item) {
-                if (profilePath.isNotNullOrEmpty()) {
-                    return profilePath.getProfileUrl()
+                return if (profilePath.isNotNullOrEmpty()) {
+                    profilePath.getProfileUrl()
                 } else {
-                    return posterPath.getPosterUrl()
+                    posterPath.getPosterUrl()
                 }
             }
         }

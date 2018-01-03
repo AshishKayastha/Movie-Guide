@@ -37,7 +37,7 @@ class KeyboardWatcher @Inject constructor(
     fun watchKeyboard(listener: KeyboardVisibilityListener) {
         this.listener = listener
 
-        val content = activity.findViewById(Window.ID_ANDROID_CONTENT)
+        val content = activity.findViewById(Window.ID_ANDROID_CONTENT) as View
         content.isFocusable = true
         content.isFocusableInTouchMode = true
 

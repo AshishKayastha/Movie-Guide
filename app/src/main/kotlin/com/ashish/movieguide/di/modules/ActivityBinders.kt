@@ -29,18 +29,18 @@ import dagger.multibindings.IntoMap
 /**
  * Created by Ashish on Feb 25.
  */
-@Module(subcomponents = arrayOf(
-        LoginComponent::class,
-        ProfileComponent::class,
-        MainComponent::class,
-        MovieDetailComponent::class,
-        TVShowDetailComponent::class,
-        SeasonDetailComponent::class,
-        EpisodeDetailComponent::class,
-        PersonDetailComponent::class,
-        MultiSearchComponent::class,
-        ReviewComponent::class
-))
+@Module(subcomponents = [
+    LoginComponent::class,
+    ProfileComponent::class,
+    MainComponent::class,
+    MovieDetailComponent::class,
+    TVShowDetailComponent::class,
+    SeasonDetailComponent::class,
+    EpisodeDetailComponent::class,
+    PersonDetailComponent::class,
+    MultiSearchComponent::class,
+    ReviewComponent::class
+])
 abstract class ActivityBinders {
 
     @Binds

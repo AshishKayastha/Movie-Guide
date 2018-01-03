@@ -17,6 +17,7 @@ import android.view.View.VISIBLE
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.TextView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.utils.FontUtils
@@ -24,7 +25,7 @@ import com.ashish.movieguide.utils.FontUtils
 /**
  * Created by Ashish on Dec 27.
  */
-inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
+inline fun <reified T : View> View.find(id: Int): T = findViewById(id)
 
 fun View.setVisibility(visible: Boolean) {
     if (visible) show() else hide()
@@ -71,7 +72,7 @@ inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 8
 }
 
 fun View.getPosterImagePair(@StringRes transitionNameId: Int): Pair<View, String>? {
-    val posterImageView = findViewById(R.id.poster_image)
+    val posterImageView = find<ImageView>(R.id.poster_image)
     return if (posterImageView != null) Pair.create(posterImageView, context.getString(transitionNameId)) else null
 }
 

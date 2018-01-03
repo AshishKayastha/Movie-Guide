@@ -14,15 +14,7 @@ class InfiniteScrollListener(private val loadMore: (currentPage: Int) -> Unit) :
     }
 
     var currentPage = 1
-        get() = field
-        set(value) {
-            field = value
-        }
-
     var shouldLoadMore = true
-        set(value) {
-            field = value
-        }
 
     private var previousTotal = 0
     private var isLoading = true

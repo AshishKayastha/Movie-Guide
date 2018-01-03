@@ -31,14 +31,14 @@ fun Int?.getFormattedRuntime(): String {
         val hours = this / 60
         val minutes = this % 60
 
-        if (hours > 0) {
+        return if (hours > 0) {
             if (minutes > 0) {
-                return String.format("%dh %dm", hours, minutes)
+                String.format("%dh %dm", hours, minutes)
             } else {
-                return String.format("%dh", hours)
+                String.format("%dh", hours)
             }
         } else {
-            return String.format("%dm", minutes)
+            String.format("%dm", minutes)
         }
     }
 
@@ -64,23 +64,21 @@ fun String?.getStillImageUrl() = getImageUrl(STILL_URL_PREFIX)
 fun String?.getOriginalImageUrl() = getImageUrl(ORIGINAL_IMAGE_URL_PREFIX)
 
 fun String.getLargeImageUrl(): String {
-    if (contains(POSTER_URL_PREFIX)) {
-        return replace(POSTER_URL_PREFIX, LARGE_POSTER_URL_PREFIX)
-    } else if (contains(BACKDROP_URL_PREFIX)) {
-        return replace(BACKDROP_URL_PREFIX, LARGE_BACKDROP_URL_PREFIX)
-    } else {
-        return this
+    return when {
+        contains(POSTER_URL_PREFIX) -> replace(POSTER_URL_PREFIX, LARGE_POSTER_URL_PREFIX)
+        contains(BACKDROP_URL_PREFIX) -> replace(BACKDROP_URL_PREFIX, LARGE_BACKDROP_URL_PREFIX)
+        else -> this
     }
 }
 
 fun String?.getImageUrl(urlPrefix: String) = if (isNotNullOrEmpty()) urlPrefix + this else ""
 
 fun CharSequence?.getTextWithCustomTypeface(typefaceSpan: TypefaceSpan): SpannableString? {
-    if (isNotNullOrEmpty()) {
+    return if (isNotNullOrEmpty()) {
         val spannableString = SpannableString(this)
         spannableString.setSpan(typefaceSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        return spannableString
+        spannableString
     } else {
-        return null
+        null
     }
 }

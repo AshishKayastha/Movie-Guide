@@ -7,10 +7,7 @@ import com.ashish.movieguide.di.scopes.ActivityScope
 import dagger.Subcomponent
 
 @ActivityScope
-@Subcomponent(modules = arrayOf(
-        ActivityModule::class,
-        MainFragmentBinders::class
-))
+@Subcomponent(modules = [ActivityModule::class, MainFragmentBinders::class])
 interface MainComponent : AbstractComponent<MainActivity> {
 
     @Subcomponent.Builder

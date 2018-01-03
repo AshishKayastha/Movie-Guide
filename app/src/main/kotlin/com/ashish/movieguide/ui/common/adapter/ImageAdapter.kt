@@ -8,8 +8,8 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.utils.Constants.DETAIL_IMAGE_THUMBNAIL_SIZE
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.ashish.movieguide.utils.glide.GlideApp
+import com.bumptech.glide.request.RequestOptions
 
 /**
  * Created by Ashish on Jan 14.
@@ -29,11 +29,6 @@ class ImageAdapter(
 
     override fun getItemCount() = imageUrlList.size
 
-    override fun onViewRecycled(holder: ImageHolder) {
-        super.onViewRecycled(holder)
-        Glide.clear(holder.imageView)
-    }
-
     override fun removeListener() {
         onItemClickListener = null
     }
@@ -49,12 +44,10 @@ class ImageAdapter(
         }
 
         fun bindData(imageUrl: String, position: Int) {
-            Glide.with(imageView.context)
-                    .load(imageUrl)
+            GlideApp.with(imageView.context)
                     .asBitmap()
-                    .animate(R.anim.fade_in)
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .override(DETAIL_IMAGE_THUMBNAIL_SIZE, DETAIL_IMAGE_THUMBNAIL_SIZE)
+                    .apply(RequestOptions().override(DETAIL_IMAGE_THUMBNAIL_SIZE, DETAIL_IMAGE_THUMBNAIL_SIZE))
+                    .load(imageUrl)
                     .into(imageView)
 
             imageView.transitionName = "image_$position"

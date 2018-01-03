@@ -6,6 +6,7 @@
     style="@style/Match.Width"
     android:background="?selectableItemBackground"
     android:clickable="true"
+    android:focusable="true"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="@dimen/first_keyline">

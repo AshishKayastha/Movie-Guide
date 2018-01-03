@@ -47,7 +47,9 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, TraktPerson,
         }
     }
 
-    @JvmField @State var person: Person? = null
+    @JvmField
+    @State
+    var person: Person? = null
 
     private val onCastItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -116,7 +118,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, TraktPerson,
         val profileImages = images?.profiles
         if (profileImages.isNotNullOrEmpty()) {
             val backdropPath = profileImages!![profileImages.size - 1].filePath
-            if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
+            if (getBackdropPath().isEmpty() && backdropPath.isNotNullOrEmpty()) {
                 showBackdropImage(backdropPath.getOriginalImageUrl())
             }
         } else {

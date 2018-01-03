@@ -13,6 +13,7 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
 
     companion object {
 
+        @JvmStatic
         protected val INTERPOLATOR: Interpolator = LinearInterpolator()
 
         protected val addAnimations = ArrayList<ViewHolder>()
@@ -31,16 +32,19 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
         private val changeAnimations = ArrayList<ViewHolder>()
 
         private fun clear(view: View) {
-            ViewCompat.setAlpha(view, 1f)
-            ViewCompat.setScaleY(view, 1f)
-            ViewCompat.setScaleX(view, 1f)
-            ViewCompat.setTranslationY(view, 0f)
-            ViewCompat.setTranslationX(view, 0f)
-            ViewCompat.setRotation(view, 0f)
-            ViewCompat.setRotationY(view, 0f)
-            ViewCompat.setRotationX(view, 0f)
-            ViewCompat.setPivotY(view, (view.measuredHeight / 2).toFloat())
-            ViewCompat.setPivotX(view, (view.measuredWidth / 2).toFloat())
+            view.apply {
+                alpha = 1f
+                scaleX = 1f
+                scaleY = 1f
+                translationX = 0f
+                translationY = 0f
+                rotation = 0f
+                rotationX = 0f
+                rotationY = 0f
+                pivotX = (measuredWidth / 2).toFloat()
+                pivotY = (measuredHeight / 2).toFloat()
+            }
+
             ViewCompat.animate(view).setInterpolator(null).startDelay = 0
         }
     }
@@ -140,7 +144,7 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    protected fun preAnimateRemoveImpl(holder: ViewHolder) {
+    private fun preAnimateRemoveImpl(holder: ViewHolder) {
     }
 
     private fun animateRemoveImpl(holder: ViewHolder) {
@@ -186,8 +190,8 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
         var newFromX = fromX
         var newFromY = fromY
         val view = holder.itemView
-        newFromX += ViewCompat.getTranslationX(holder.itemView).toInt()
-        newFromY += ViewCompat.getTranslationY(holder.itemView).toInt()
+        newFromX += holder.itemView.translationX.toInt()
+        newFromY += holder.itemView.translationY.toInt()
 
         endAnimation(holder)
         val deltaX = toX - newFromX
@@ -197,8 +201,8 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
             return false
         }
 
-        if (deltaX != 0) ViewCompat.setTranslationX(view, (-deltaX).toFloat())
-        if (deltaY != 0) ViewCompat.setTranslationY(view, (-deltaY).toFloat())
+        if (deltaX != 0) view.translationX = (-deltaX).toFloat()
+        if (deltaY != 0) view.translationY = (-deltaY).toFloat()
 
         pendingMoves.add(MoveInfo(holder, newFromX, newFromY, toX, toY))
         return true
@@ -218,8 +222,8 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
             override fun onAnimationStart(view: View) = dispatchMoveStarting(holder)
 
             override fun onAnimationCancel(view: View) {
-                if (deltaX != 0) ViewCompat.setTranslationX(view, 0f)
-                if (deltaY != 0) ViewCompat.setTranslationY(view, 0f)
+                if (deltaX != 0) view.translationX = 0f
+                if (deltaY != 0) view.translationY = 0f
             }
 
             override fun onAnimationEnd(view: View) {
@@ -233,25 +237,29 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
 
     override fun animateChange(oldHolder: ViewHolder, newHolder: ViewHolder?, fromX: Int, fromY: Int, toX: Int,
                                toY: Int): Boolean {
-        val prevTranslationX = ViewCompat.getTranslationX(oldHolder.itemView)
-        val prevTranslationY = ViewCompat.getTranslationY(oldHolder.itemView)
-        val prevAlpha = ViewCompat.getAlpha(oldHolder.itemView)
+        val prevTranslationX = oldHolder.itemView.translationX
+        val prevTranslationY = oldHolder.itemView.translationY
+        val prevAlpha = oldHolder.itemView.alpha
         endAnimation(oldHolder)
 
         val deltaX = (toX.toFloat() - fromX.toFloat() - prevTranslationX).toInt()
         val deltaY = (toY.toFloat() - fromY.toFloat() - prevTranslationY).toInt()
 
         // recover prev translation state after ending animation
-        ViewCompat.setTranslationX(oldHolder.itemView, prevTranslationX)
-        ViewCompat.setTranslationY(oldHolder.itemView, prevTranslationY)
-        ViewCompat.setAlpha(oldHolder.itemView, prevAlpha)
+        oldHolder.itemView.apply {
+            translationX = prevTranslationX
+            translationY = prevTranslationY
+            alpha = prevAlpha
+        }
 
-        if (newHolder != null && newHolder.itemView != null) {
+        if (newHolder?.itemView != null) {
             // carry over translation values
             endAnimation(newHolder)
-            ViewCompat.setTranslationX(newHolder.itemView, (-deltaX).toFloat())
-            ViewCompat.setTranslationY(newHolder.itemView, (-deltaY).toFloat())
-            ViewCompat.setAlpha(newHolder.itemView, 0f)
+            newHolder.itemView.apply {
+                translationX = (-deltaX).toFloat()
+                translationY = (-deltaY).toFloat()
+                alpha = 0f
+            }
         }
 
         pendingChanges.add(ChangeInfo(oldHolder, newHolder, fromX, fromY, toX, toY))
@@ -275,9 +283,11 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
 
                 override fun onAnimationEnd(view: View) {
                     oldViewAnim.setListener(null)
-                    ViewCompat.setAlpha(view, 1f)
-                    ViewCompat.setTranslationX(view, 0f)
-                    ViewCompat.setTranslationY(view, 0f)
+                    view.apply {
+                        alpha = 1f
+                        translationX = 0f
+                        translationY = 0f
+                    }
                     dispatchChangeFinished(changeInfo.oldHolder, true)
                     changeAnimations.remove(changeInfo.oldHolder!!)
                     dispatchFinishedWhenDone()
@@ -300,9 +310,11 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
 
                         override fun onAnimationEnd(view: View) {
                             newViewAnimation.setListener(null)
-                            ViewCompat.setAlpha(newView, 1f)
-                            ViewCompat.setTranslationX(newView, 0f)
-                            ViewCompat.setTranslationY(newView, 0f)
+                            newView.apply {
+                                alpha = 1f
+                                translationX = 0f
+                                translationY = 0f
+                            }
                             dispatchChangeFinished(changeInfo.newHolder, false)
                             changeAnimations.remove(changeInfo.newHolder!!)
                             dispatchFinishedWhenDone()
@@ -325,18 +337,20 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
 
     private fun endChangeAnimationIfNecessary(changeInfo: ChangeInfo, item: ViewHolder): Boolean {
         var oldItem = false
-        if (changeInfo.newHolder == item) {
-            changeInfo.newHolder = null
-        } else if (changeInfo.oldHolder == item) {
-            changeInfo.oldHolder = null
-            oldItem = true
-        } else {
-            return false
+        when (item) {
+            changeInfo.newHolder -> changeInfo.newHolder = null
+            changeInfo.oldHolder -> {
+                changeInfo.oldHolder = null
+                oldItem = true
+            }
+            else -> return false
         }
 
-        ViewCompat.setAlpha(item.itemView, 1f)
-        ViewCompat.setTranslationX(item.itemView, 0f)
-        ViewCompat.setTranslationY(item.itemView, 0f)
+        item.itemView.apply {
+            alpha = 1f
+            translationX = 0f
+            translationY = 0f
+        }
         dispatchChangeFinished(item, oldItem)
         return true
     }
@@ -349,8 +363,10 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
         for (i in pendingMoves.indices.reversed()) {
             val moveInfo = pendingMoves[i]
             if (moveInfo.holder === item) {
-                ViewCompat.setTranslationY(view, 0f)
-                ViewCompat.setTranslationX(view, 0f)
+                view.apply {
+                    translationX = 0f
+                    translationY = 0f
+                }
                 dispatchMoveFinished(item)
                 pendingMoves.removeAt(i)
             }
@@ -380,8 +396,10 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
             for (j in moves.indices.reversed()) {
                 val moveInfo = moves[j]
                 if (moveInfo.holder === item) {
-                    ViewCompat.setTranslationY(view, 0f)
-                    ViewCompat.setTranslationX(view, 0f)
+                    view.apply {
+                        translationX = 0f
+                        translationY = 0f
+                    }
                     dispatchMoveFinished(item)
                     moves.removeAt(j)
                     if (moves.isEmpty()) {
@@ -433,8 +451,10 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
         for (i in count - 1 downTo 0) {
             val item = pendingMoves[i]
             val view = item.holder.itemView
-            ViewCompat.setTranslationY(view, 0f)
-            ViewCompat.setTranslationX(view, 0f)
+            view.apply {
+                translationX = 0f
+                translationY = 0f
+            }
             dispatchMoveFinished(item.holder)
             pendingMoves.removeAt(i)
         }
@@ -470,8 +490,10 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
                 val moveInfo = moves[j]
                 val item = moveInfo.holder
                 val view = item.itemView
-                ViewCompat.setTranslationY(view, 0f)
-                ViewCompat.setTranslationX(view, 0f)
+                view.apply {
+                    translationX = 0f
+                    translationY = 0f
+                }
                 dispatchMoveFinished(moveInfo.holder)
                 moves.removeAt(j)
                 if (moves.isEmpty()) {
@@ -487,7 +509,7 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
             for (j in count - 1 downTo 0) {
                 val item = additions[j]
                 val view = item.itemView
-                ViewCompat.setAlpha(view, 1f)
+                view.alpha = 1f
                 dispatchAddFinished(item)
 
                 //this check prevent exception when removal already happened during finishing animation
@@ -562,7 +584,7 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
         override fun onAnimationCancel(view: View) {}
     }
 
-    protected inner class DefaultAddVpaListener(internal var viewHolder: ViewHolder) : VpaListenerAdapter() {
+    protected inner class DefaultAddVpaListener(private var viewHolder: ViewHolder) : VpaListenerAdapter() {
 
         override fun onAnimationStart(view: View) = dispatchAddStarting(viewHolder)
 
@@ -576,7 +598,7 @@ abstract class BaseItemAnimator : SimpleItemAnimator() {
         }
     }
 
-    protected inner class DefaultRemoveVpaListener(internal var viewHolder: ViewHolder) : VpaListenerAdapter() {
+    protected inner class DefaultRemoveVpaListener(private var viewHolder: ViewHolder) : VpaListenerAdapter() {
 
         override fun onAnimationStart(view: View) = dispatchRemoveStarting(viewHolder)
 

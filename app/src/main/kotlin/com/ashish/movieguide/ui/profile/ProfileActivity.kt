@@ -35,7 +35,6 @@ import com.ashish.movieguide.utils.extensions.loadPaletteBitmap
 import com.ashish.movieguide.utils.extensions.setTopBarColorAndAnimate
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.tint
-import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import kotlinx.android.synthetic.main.layout_profile_app_bar.*
 import kotlinx.android.synthetic.main.layout_profile_episode_stats.*
 import kotlinx.android.synthetic.main.layout_profile_movie_stats.*
@@ -111,7 +110,7 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
 
     private fun loadProfileImage(imageUrl: String?) {
         if (imageUrl.isNotNullOrEmpty()) {
-            userImage.loadCircularImage(imageUrl, StartTransitionListener<GlideDrawable>(this))
+            userImage.loadCircularImage(imageUrl, StartTransitionListener(this))
         } else {
             startPostponedEnterTransition()
         }

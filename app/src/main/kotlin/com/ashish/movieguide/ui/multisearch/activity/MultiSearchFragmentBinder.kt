@@ -8,7 +8,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
-@Module(subcomponents = arrayOf(MultiSearchFragmentComponent::class))
+@Module(subcomponents = [MultiSearchFragmentComponent::class])
 abstract class MultiSearchFragmentBinder {
 
     @Binds

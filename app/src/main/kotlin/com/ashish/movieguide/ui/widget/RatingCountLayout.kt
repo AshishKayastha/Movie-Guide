@@ -48,16 +48,16 @@ class RatingCountLayout @JvmOverloads constructor(
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        progressBar = find<ProgressBar>(R.id.ratingCountProgress)
-        ratingsCountText = find<FontTextView>(R.id.ratingCountText)
-        numOfRatingsText = find<FontTextView>(R.id.numRatingText)
+        progressBar = find(R.id.ratingCountProgress)
+        ratingsCountText = find(R.id.ratingCountText)
+        numOfRatingsText = find(R.id.numRatingText)
 
         setRatingCount(ratingsCount)
         setNumOfRatings(numOfRatings)
         setRatingProgress(maxProgress, progress)
     }
 
-    fun setNumOfRatings(numOfRating: String?) {
+    private fun setNumOfRatings(numOfRating: String?) {
         if (numOfRating.isNotNullOrEmpty()) {
             val count = Integer.parseInt(numOfRating)
             numOfRatingsText.text = String.format(starCount, count)

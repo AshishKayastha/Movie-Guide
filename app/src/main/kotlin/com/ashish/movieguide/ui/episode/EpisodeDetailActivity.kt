@@ -48,8 +48,12 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
     @Inject lateinit var ratingDialog: Lazy<RatingDialog>
     @Inject lateinit var preferenceHelper: PreferenceHelper
 
-    @JvmField @State var tvShowId: Long? = null
-    @JvmField @State var episode: Episode? = null
+    @JvmField
+    @State
+    var tvShowId: Long? = null
+    @JvmField
+    @State
+    var episode: Episode? = null
 
     private val isLoggedIn: Boolean by lazy {
         preferenceHelper.getId() > 0

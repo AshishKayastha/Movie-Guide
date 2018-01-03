@@ -7,7 +7,7 @@ import com.ashish.movieguide.ui.discover.filter.FilterFragmentBinder
 import dagger.Subcomponent
 
 @FragmentScope
-@Subcomponent(modules = arrayOf(FilterFragmentBinder::class))
+@Subcomponent(modules = [FilterFragmentBinder::class])
 interface DiscoverMovieComponent : AbstractComponent<DiscoverMovieFragment> {
 
     @Subcomponent.Builder

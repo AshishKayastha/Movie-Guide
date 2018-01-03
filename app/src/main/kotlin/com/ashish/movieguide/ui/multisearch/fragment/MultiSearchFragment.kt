@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
+import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.data.network.entities.tmdb.MultiSearch
 import com.ashish.movieguide.data.network.entities.tmdb.Person
+import com.ashish.movieguide.data.network.entities.tmdb.TVShow
 import com.ashish.movieguide.di.modules.FragmentModule
 import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
@@ -32,12 +34,12 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
         builderHost.getFragmentComponentBuilder(MultiSearchFragment::class.java,
                 MultiSearchFragmentComponent.Builder::class.java)
-                .withModule(FragmentModule(activity))
+                .withModule(FragmentModule(activity!!))
                 .build()
                 .inject(this)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         swipeRefresh.isEnabled = false
     }
@@ -61,34 +63,36 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
     override fun getTransitionNameId(position: Int): Int {
         val multiSearch = recyclerViewAdapter.getItem<MultiSearch>(position)
         with(multiSearch) {
-            if (mediaType == MEDIA_TYPE_TV) {
-                return R.string.transition_tv_poster
-            } else if (mediaType == MEDIA_TYPE_PERSON) {
-                return R.string.transition_person_profile
-            } else {
-                return R.string.transition_movie_poster
+            return when (mediaType) {
+                MEDIA_TYPE_TV -> R.string.transition_tv_poster
+                MEDIA_TYPE_PERSON -> R.string.transition_person_profile
+                else -> R.string.transition_movie_poster
             }
         }
     }
 
     override fun getDetailIntent(position: Int): Intent? {
-        val multiSearch = recyclerViewAdapter.getItem<MultiSearch>(position)
-        with(multiSearch) {
-            if (mediaType == MEDIA_TYPE_MOVIE) {
-                val movie = com.ashish.movieguide.data.network.entities.tmdb.Movie(id, title, posterPath = posterPath)
-                return MovieDetailActivity.createIntent(activity, movie)
-
-            } else if (mediaType == MEDIA_TYPE_TV) {
-                val tvShow = com.ashish.movieguide.data.network.entities.tmdb.TVShow(id, name, posterPath = posterPath)
-                return TVShowDetailActivity.createIntent(activity, tvShow)
-
-            } else if (mediaType == MEDIA_TYPE_PERSON) {
-                val people = Person(id, name, profilePath = profilePath)
-                return PersonDetailActivity.createIntent(activity, people)
-
-            } else {
-                return null
+        if (activity != null) {
+            val multiSearch = recyclerViewAdapter.getItem<MultiSearch>(position)
+            with(multiSearch) {
+                return when (mediaType) {
+                    MEDIA_TYPE_MOVIE -> {
+                        val movie = Movie(id, title, posterPath = posterPath)
+                        MovieDetailActivity.createIntent(activity!!, movie)
+                    }
+                    MEDIA_TYPE_TV -> {
+                        val tvShow = TVShow(id, name, posterPath = posterPath)
+                        TVShowDetailActivity.createIntent(activity!!, tvShow)
+                    }
+                    MEDIA_TYPE_PERSON -> {
+                        val people = Person(id, name, profilePath = profilePath)
+                        PersonDetailActivity.createIntent(activity!!, people)
+                    }
+                    else -> null
+                }
             }
+        } else {
+            return null
         }
     }
 }

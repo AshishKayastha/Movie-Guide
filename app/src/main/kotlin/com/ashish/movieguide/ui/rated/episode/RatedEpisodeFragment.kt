@@ -25,19 +25,21 @@ class RatedEpisodeFragment : BaseRecyclerViewFragment<Episode,
 
     @Inject lateinit var ratingChangeObserver: RatingChangeObserver
 
-    @JvmField @State var clickedItemPosition: Int = -1
+    @JvmField
+    @State
+    var clickedItemPosition: Int = -1
 
     private var disposable: Disposable? = null
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
         builderHost.getFragmentComponentBuilder(RatedEpisodeFragment::class.java,
                 RatedEpisodeComponent.Builder::class.java)
-                .withModule(FragmentModule(activity))
+                .withModule(FragmentModule(activity!!))
                 .build()
                 .inject(this)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeEpisodeRatingChanged()
     }
@@ -51,9 +53,13 @@ class RatedEpisodeFragment : BaseRecyclerViewFragment<Episode,
     override fun getTransitionNameId(position: Int) = R.string.transition_episode_image
 
     override fun getDetailIntent(position: Int): Intent? {
-        clickedItemPosition = position
-        val episode = recyclerViewAdapter.getItem<Episode>(position)
-        return EpisodeDetailActivity.createIntent(activity, episode.tvShowId, episode)
+        return if (activity != null) {
+            clickedItemPosition = position
+            val episode = recyclerViewAdapter.getItem<Episode>(position)
+            EpisodeDetailActivity.createIntent(activity!!, episode.tvShowId, episode)
+        } else {
+            return null
+        }
     }
 
     private fun observeEpisodeRatingChanged() {

@@ -22,6 +22,7 @@
         android:background="@drawable/selector_drawer_user_image"
         android:clickable="true"
         android:elevation="@dimen/padding_2dp"
+        android:focusable="true"
         tools:ignore="ContentDescription" />
 
     <LinearLayout

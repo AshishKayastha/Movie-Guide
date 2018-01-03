@@ -1,5 +1,6 @@
 package com.ashish.movieguide.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Service
 import android.content.Context
@@ -16,7 +17,7 @@ import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
  */
 object CustomTabsHelper {
 
-    const val RC_TMDB_LOGIN = 1001
+    private const val RC_TMDB_LOGIN = 1001
     private const val EXTRA_CUSTOM_TABS_KEEP_ALIVE = "android.support.customtabs.extra.KEEP_ALIVE"
 
     fun launchUrl(activity: Activity, url: String?) {
@@ -36,7 +37,7 @@ object CustomTabsHelper {
         }
     }
 
-    fun buildCustomTabsIntent(activity: Activity): Intent {
+    private fun buildCustomTabsIntent(activity: Activity): Intent {
         val customTabsIntent = CustomTabsIntent.Builder()
                 .setShowTitle(true)
                 .setToolbarColor(activity.getColorCompat(R.color.colorPrimary))
@@ -47,12 +48,13 @@ object CustomTabsHelper {
         return customTabsIntent.intent
     }
 
-    fun addKeepAliveExtra(context: Context, intent: Intent) {
+    private fun addKeepAliveExtra(context: Context, intent: Intent) {
         val keepAliveIntent = Intent().setClassName(context.packageName, KeepAliveService::class.java.canonicalName)
         intent.putExtra(EXTRA_CUSTOM_TABS_KEEP_ALIVE, keepAliveIntent)
     }
 }
 
+@SuppressLint("Registered")
 class KeepAliveService : Service() {
 
     companion object {

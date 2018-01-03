@@ -23,6 +23,7 @@
             android:layout_marginStart="@dimen/spacing_micro"
             android:background="?selectableItemBackgroundBorderless"
             android:clickable="true"
+            android:focusable="true"
             app:srcCompat="@drawable/ic_arrow_back_white_24dp"
             tools:ignore="ContentDescription" />
 

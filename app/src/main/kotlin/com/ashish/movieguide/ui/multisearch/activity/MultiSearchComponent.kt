@@ -7,10 +7,7 @@ import com.ashish.movieguide.di.scopes.ActivityScope
 import dagger.Subcomponent
 
 @ActivityScope
-@Subcomponent(modules = arrayOf(
-        ActivityModule::class,
-        MultiSearchFragmentBinder::class
-))
+@Subcomponent(modules = [ActivityModule::class, MultiSearchFragmentBinder::class])
 interface MultiSearchComponent : AbstractComponent<MultiSearchActivity> {
 
     @Subcomponent.Builder

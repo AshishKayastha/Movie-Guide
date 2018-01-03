@@ -1,6 +1,5 @@
 package com.ashish.movieguide.utils.extensions
 
-import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -8,11 +7,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.ColorInt
 import android.support.v4.graphics.drawable.DrawableCompat
-import com.ashish.movieguide.ui.common.palette.PaletteBitmap
-import com.ashish.movieguide.ui.common.palette.PaletteBitmapTranscoder
-import com.bumptech.glide.BitmapRequestBuilder
-import com.bumptech.glide.RequestManager
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import icepick.Icepick
 
 /**
@@ -21,13 +15,6 @@ import icepick.Icepick
 fun Float.dpToPx() = this * Resources.getSystem().displayMetrics.density
 
 fun Float.spToPx() = this * Resources.getSystem().displayMetrics.scaledDensity
-
-fun RequestManager.transcodePaletteBitmap(context: Context): BitmapRequestBuilder<String, PaletteBitmap> {
-    return fromString()
-            .asBitmap()
-            .transcode(PaletteBitmapTranscoder(context), PaletteBitmap::class.java)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-}
 
 fun isApiOrAbove(version: Int) = Build.VERSION.SDK_INT >= version
 

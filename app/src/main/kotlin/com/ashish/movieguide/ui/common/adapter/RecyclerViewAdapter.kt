@@ -7,7 +7,7 @@ import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.ERROR_VIEW
 import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.LOADING_VIEW
-import com.bumptech.glide.Glide
+import com.ashish.movieguide.utils.glide.GlideApp
 import java.util.ArrayList
 
 /**
@@ -48,7 +48,9 @@ class RecyclerViewAdapter<in I : ViewType>(
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
         super.onViewRecycled(holder)
-        if (holder is BaseContentHolder<*>) Glide.clear(holder.posterImage)
+        if (holder is BaseContentHolder<*>) {
+            GlideApp.with(holder.posterImage.context).clear(holder.posterImage)
+        }
     }
 
     override fun getItemCount() = itemList.size

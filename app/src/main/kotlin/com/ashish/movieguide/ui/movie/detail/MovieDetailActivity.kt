@@ -22,6 +22,7 @@ import com.ashish.movieguide.ui.review.ReviewActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
+import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
@@ -57,7 +58,9 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     @Inject lateinit var ratingDialog: Lazy<RatingDialog>
     @Inject lateinit var preferenceHelper: PreferenceHelper
 
-    @JvmField @State var movie: Movie? = null
+    @JvmField
+    @State
+    var movie: Movie? = null
 
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
 
@@ -109,7 +112,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
 
     override fun showDetailContent(detailContent: MovieDetail) {
         detailContent.run {
-            if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
+            if (getBackdropPath().isEmpty() && backdropPath.isNotNullOrEmpty()) {
                 showBackdropImage(backdropPath.getBackdropUrl())
             }
 
@@ -158,7 +161,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     }
 
     override fun animateFavoriteIcon(isFavorite: Boolean) {
-        val view = toolbar?.findViewById(R.id.action_favorite)
+        val view = toolbar?.find<View>(R.id.action_favorite)
         if (view is ActionMenuItemView) {
             view.startFavoriteAnimation(isFavorite)
         }

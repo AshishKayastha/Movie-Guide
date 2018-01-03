@@ -29,7 +29,9 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         P : BaseRecyclerViewPresenter<I, V>> : MvpFragment<V, P>(), BaseRecyclerViewMvpView<I>,
         SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
-    @JvmField @State var type: Int? = null
+    @JvmField
+    @State
+    var type: Int? = null
 
     protected lateinit var recyclerViewAdapter: RecyclerViewAdapter<I>
 
@@ -39,7 +41,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     override fun getLayoutId() = R.layout.fragment_recycler_view
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }

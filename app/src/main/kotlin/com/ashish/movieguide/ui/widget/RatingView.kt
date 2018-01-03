@@ -38,8 +38,8 @@ class RatingView @JvmOverloads constructor(
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        ratingImage = find<ImageView>(R.id.ratingImage)
-        ratingText = find<FontTextView>(R.id.ratingText)
+        ratingImage = find(R.id.ratingImage)
+        ratingText = find(R.id.ratingText)
 
         if (text.isNotNullOrEmpty()) setText(text)
         if (drawable != null) ratingImage.setImageDrawable(drawable)

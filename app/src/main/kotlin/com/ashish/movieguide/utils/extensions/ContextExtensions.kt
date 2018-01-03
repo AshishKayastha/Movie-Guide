@@ -16,7 +16,6 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import com.ashish.movieguide.ui.widget.CustomToast
 
 /**
@@ -25,7 +24,7 @@ import com.ashish.movieguide.ui.widget.CustomToast
 @ColorInt
 fun Context.getColorCompat(@ColorRes colorResId: Int) = ContextCompat.getColor(this, colorResId)
 
-fun Context.getDrawableCompat(@DrawableRes drawableResId: Int): Drawable {
+fun Context.getDrawableCompat(@DrawableRes drawableResId: Int): Drawable? {
     return ContextCompat.getDrawable(this, drawableResId)
 }
 
@@ -35,10 +34,6 @@ fun Context.showToast(messageId: Int, isError: Boolean = true) {
     } else {
         CustomToast.showSuccessToast(this, getString(messageId))
     }
-}
-
-fun Context.showToast(message: CharSequence, duration: Int = Toast.LENGTH_LONG) {
-    Toast.makeText(this, message, duration).show()
 }
 
 val Context.inputMethodManager: InputMethodManager?

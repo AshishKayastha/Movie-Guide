@@ -30,7 +30,14 @@ class LocalMovieRepository @Inject constructor(
                 .observable()
     }
 
-    fun putMovieBlocking(movie: Movie, traktMovie: TraktMovie?): LocalMovie {
+    private fun putMovieBlocking(movie: Movie, traktMovie: TraktMovie?): LocalMovie {
+        val savedMovie = dataStore.findByKey(LocalMovie::class, movie.id).blockingGet()
+        if (savedMovie != null) {
+            savedMovie.images?.forEach {
+
+            }
+        }
+
         val movieEntity = movieMapper.apply(movie, traktMovie)
         return dataStore.upsert(movieEntity).blockingGet()
     }
@@ -53,7 +60,7 @@ class LocalMovieRepository @Inject constructor(
         return dataStore.upsert(movieDetailEntity).blockingGet()
     }
 
-    fun putMovie(movie: Movie, traktMovie: TraktMovie?): Observable<LocalMovie> {
+    private fun putMovie(movie: Movie, traktMovie: TraktMovie?): Observable<LocalMovie> {
         val movieEntity = movieMapper.apply(movie, traktMovie)
         return dataStore.upsert(movieEntity).toObservable()
     }

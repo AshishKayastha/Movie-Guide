@@ -4,7 +4,6 @@ import android.os.Parcelable
 import io.requery.Column
 import io.requery.Entity
 import io.requery.ForeignKey
-import io.requery.Index
 import io.requery.Key
 import io.requery.ManyToMany
 import io.requery.OneToMany
@@ -52,7 +51,6 @@ interface Movie : Persistable, Parcelable {
     var voteAverage: Double?
 
     @get:Column(name = "release_date")
-    @get:Index(value = "release_date_index")
     var releaseDate: String?
 
     @get:Column(name = "poster_path")
@@ -74,10 +72,10 @@ interface Movie : Persistable, Parcelable {
     @get:OneToOne
     var omdb: OMDb?
 
-    @get:OneToMany
+    @get:OneToMany(mappedBy = "id")
     val images: MutableSet<Image>?
 
-    @get:OneToMany
+    @get:OneToMany(mappedBy = "id")
     val videos: MutableSet<Video>?
 
     @get:ManyToMany

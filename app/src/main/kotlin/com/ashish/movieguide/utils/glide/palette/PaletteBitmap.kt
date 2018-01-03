@@ -1,4 +1,4 @@
-package com.ashish.movieguide.ui.common.palette
+package com.ashish.movieguide.utils.glide.palette
 
 import android.graphics.Bitmap
 import android.support.v7.graphics.Palette

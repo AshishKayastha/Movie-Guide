@@ -36,10 +36,10 @@ class GenreAdapter(
         genres = resources.getStringArray(genreArrayId)
         genreIds = resources.getStringArray(genreIdArrayId)
 
-        if (selectedGenreIds.isNotNullOrEmpty()) {
-            selectedGenreIdList = ArrayList(selectedGenreIds!!.split(SEPARATOR))
+        selectedGenreIdList = if (selectedGenreIds.isNotNullOrEmpty()) {
+            ArrayList(selectedGenreIds!!.split(SEPARATOR))
         } else {
-            selectedGenreIdList = ArrayList<String>()
+            ArrayList()
         }
     }
 

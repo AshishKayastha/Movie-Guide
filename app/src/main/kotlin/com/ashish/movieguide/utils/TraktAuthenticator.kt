@@ -48,7 +48,7 @@ class TraktAuthenticator @Inject constructor(
         if (!refreshResponse.isSuccessful) return null
 
         val jsonAdapter = moshi.adapter(TraktToken::class.java)
-        val traktToken = jsonAdapter.fromJson(refreshResponse.body().string())
+        val traktToken = jsonAdapter.fromJson(refreshResponse.body()?.string())
 
         val accessToken = traktToken.accessToken
         preferenceHelper.setAccessToken(accessToken)

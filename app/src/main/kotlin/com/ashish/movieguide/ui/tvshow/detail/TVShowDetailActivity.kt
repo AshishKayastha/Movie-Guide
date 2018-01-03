@@ -60,7 +60,9 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
     @Inject lateinit var ratingDialog: Lazy<RatingDialog>
     @Inject lateinit var preferenceHelper: PreferenceHelper
 
-    @JvmField @State var tvShow: TVShow? = null
+    @JvmField
+    @State
+    var tvShow: TVShow? = null
 
     private var seasonsAdapter: RecyclerViewAdapter<Season>? = null
     private var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>? = null
@@ -111,7 +113,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
 
     override fun showDetailContent(detailContent: TVShowDetail) {
         detailContent.run {
-            if (getBackdropPath().isNullOrEmpty() && backdropPath.isNotNullOrEmpty()) {
+            if (getBackdropPath().isEmpty() && backdropPath.isNotNullOrEmpty()) {
                 showBackdropImage(backdropPath.getBackdropUrl())
             }
 
@@ -174,7 +176,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
     }
 
     override fun animateFavoriteIcon(isFavorite: Boolean) {
-        val view = toolbar?.findViewById(R.id.action_favorite)
+        val view = toolbar?.find<View>(R.id.action_favorite)
         if (view is ActionMenuItemView) {
             view.startFavoriteAnimation(isFavorite)
         }

@@ -114,10 +114,10 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
 
     private fun initDrawerHeader() {
         navigationView.getHeaderView(0).run {
-            nameText = find<FontTextView>(R.id.name_text)
-            userImage = find<ImageView>(R.id.user_image)
-            headerImage = find<ImageView>(R.id.header_bg_image)
-            userNameText = find<FontTextView>(R.id.user_name_text)
+            nameText = find(R.id.name_text)
+            userImage = find(R.id.user_image)
+            headerImage = find(R.id.header_bg_image)
+            userNameText = find(R.id.user_name_text)
         }
 
         showUserProfile()
@@ -142,7 +142,7 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
         val intent = Intent(this, ProfileActivity::class.java)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, viewPair)
         window.exitTransition = null
-        ActivityCompat.startActivityForResult(this, intent, RC_CONNECT_TRAKT, options?.toBundle())
+        ActivityCompat.startActivityForResult(this, intent, RC_CONNECT_TRAKT, options.toBundle())
     }
 
     private fun showUserProfile() {

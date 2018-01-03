@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewStub
 import android.view.ViewTreeObserver
 import android.widget.ImageButton
+import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.common.OMDbDetail
 import com.ashish.movieguide.data.network.entities.tmdb.Credit
@@ -134,7 +135,7 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
 
     private val onImageItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
-            val imageView = view.findViewById(R.id.detail_content_image)
+            val imageView = view.findViewById(R.id.detail_content_image) as ImageView
             startImageViewerActivity(imageAdapter?.imageUrlList, "", position, imageView)
         }
     }
@@ -185,9 +186,7 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
     protected fun showBackdropImage(backdropPath: String) {
         backdropImage.loadPaletteBitmap(backdropPath) { paletteBitmap ->
             revealBackdropImage()
-            setTopBarColorAndAnimate(paletteBitmap, collapsingToolbar) {
-                tintTopBarIconsToBlack()
-            }
+            setTopBarColorAndAnimate(paletteBitmap, collapsingToolbar, this::tintTopBarIconsToBlack)
         }
     }
 
@@ -203,9 +202,8 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
         val cy = backdropImage.bottom - contentTitleText.height
         val endRadius = Math.max(backdropImage.width, backdropImage.height).toFloat()
 
-        backdropImage.startCircularRevealAnimation(cx, cy, 0f, endRadius) {
-            removeSharedElementTransitionListener()
-        }
+        backdropImage.startCircularRevealAnimation(cx = cx, cy = cy, startRadius = 0f, endRadius = endRadius,
+                animationEnd = this::removeSharedElementTransitionListener)
     }
 
     private fun removeSharedElementTransitionListener() {
@@ -286,7 +284,7 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
         menu?.changeMenuAndSubMenuFont(CustomTypefaceSpan(regularFont))
     }
 
-    protected fun showOrHideMenu(menuItemId: Int, text: String?) {
+    private fun showOrHideMenu(menuItemId: Int, text: String?) {
         val menuItem = menu?.findItem(menuItemId)
         menuItem?.isVisible = text.isNotNullOrEmpty()
     }

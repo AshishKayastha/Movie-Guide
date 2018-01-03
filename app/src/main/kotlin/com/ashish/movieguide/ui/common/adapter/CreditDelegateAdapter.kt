@@ -39,10 +39,10 @@ class CreditDelegateAdapter(
 
         override fun getImageUrl(item: Credit): String? {
             with(item) {
-                if (profilePath.isNotNullOrEmpty()) {
-                    return profilePath.getProfileUrl()
+                return if (profilePath.isNotNullOrEmpty()) {
+                    profilePath.getProfileUrl()
                 } else {
-                    return posterPath.getPosterUrl()
+                    posterPath.getPosterUrl()
                 }
             }
         }

@@ -22,7 +22,7 @@ class PeopleFragment : BaseRecyclerViewFragment<Person,
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
         builderHost.getFragmentComponentBuilder(PeopleFragment::class.java, PeopleComponent.Builder::class.java)
-                .withModule(FragmentModule(activity))
+                .withModule(FragmentModule(activity!!))
                 .build()
                 .inject(this)
     }
@@ -36,7 +36,11 @@ class PeopleFragment : BaseRecyclerViewFragment<Person,
     override fun getTransitionNameId(position: Int) = R.string.transition_person_profile
 
     override fun getDetailIntent(position: Int): Intent? {
-        val people = recyclerViewAdapter.getItem<Person>(position)
-        return PersonDetailActivity.createIntent(activity, people)
+        return if (activity != null) {
+            val people = recyclerViewAdapter.getItem<Person>(position)
+            PersonDetailActivity.createIntent(activity!!, people)
+        } else {
+            null
+        }
     }
 }

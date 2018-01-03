@@ -1,4 +1,4 @@
-package com.ashish.movieguide.ui.common.palette
+package com.ashish.movieguide.utils.glide.palette
 
 import android.graphics.Color
 import com.ashish.movieguide.R
@@ -7,7 +7,6 @@ import com.ashish.movieguide.utils.extensions.animateBackgroundColorChange
 import com.ashish.movieguide.utils.extensions.animateTextColorChange
 import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.setPaletteColor
-import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.ImageViewTarget
 
 /**
@@ -19,21 +18,18 @@ class PaletteImageViewTarget(private val holder: BaseContentHolder<*>)
     private val primaryTextColor = holder.itemView.context.getColorCompat(R.color.primary_text_light)
     private val secondaryTextColor = holder.itemView.context.getColorCompat(R.color.secondary_text_light)
 
-    override fun onResourceReady(paletteBitmap: PaletteBitmap?, animation: GlideAnimation<in PaletteBitmap>?) {
-        if (animation == null || !animation.animate(paletteBitmap, this)) {
-            setResource(paletteBitmap)
-        }
+    override fun setResource(paletteBitmap: PaletteBitmap?) {
+        if (paletteBitmap != null) {
+            val bitmap = paletteBitmap.bitmap
+            super.view.setImageBitmap(bitmap)
 
-        paletteBitmap.setPaletteColor { swatch ->
-            with(holder) {
-                contentView.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
-                contentTitle.animateTextColorChange(primaryTextColor, swatch.titleTextColor)
-                contentSubtitle.animateTextColorChange(secondaryTextColor, swatch.bodyTextColor)
+            paletteBitmap.setPaletteColor { swatch ->
+                with(holder) {
+                    contentView.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
+                    contentTitle.animateTextColorChange(primaryTextColor, swatch.titleTextColor)
+                    contentSubtitle.animateTextColorChange(secondaryTextColor, swatch.bodyTextColor)
+                }
             }
         }
-    }
-
-    override fun setResource(paletteBitmap: PaletteBitmap?) {
-        super.view.setImageBitmap(paletteBitmap?.bitmap)
     }
 }

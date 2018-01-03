@@ -11,7 +11,8 @@ import paperparcel.PaperParcel
 data class Network(val id: Long? = null, val name: String? = null) : Parcelable {
 
     companion object {
-        @JvmField @Suppress("unused")
+        @JvmField
+        @Suppress("unused")
         val CREATOR = PaperParcelNetwork.CREATOR
     }
 

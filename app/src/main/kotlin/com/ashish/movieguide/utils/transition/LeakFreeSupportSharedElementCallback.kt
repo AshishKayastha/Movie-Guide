@@ -27,19 +27,18 @@ abstract class LeakFreeSupportSharedElementCallback : SharedElementCallback() {
     override fun onCaptureSharedElementSnapshot(sharedElement: View, viewToGlobalMatrix: Matrix,
                                                 screenBounds: RectF): Parcelable {
         if (sharedElement is ImageView) {
-            val imageView = sharedElement
-            val drawable = imageView.drawable
-            val bg = imageView.background
+            val drawable = sharedElement.drawable
+            val bg = sharedElement.background
 
             if (drawable != null && (bg == null || bg.alpha == 0)) {
                 val bitmap = TransitionUtils.createDrawableBitmap(drawable)
                 if (bitmap != null) {
                     val bundle = Bundle()
                     bundle.putParcelable(BUNDLE_SNAPSHOT_BITMAP, bitmap)
-                    bundle.putString(BUNDLE_SNAPSHOT_IMAGE_SCALETYPE, imageView.scaleType.toString())
+                    bundle.putString(BUNDLE_SNAPSHOT_IMAGE_SCALETYPE, sharedElement.scaleType.toString())
 
-                    if (imageView.scaleType == ImageView.ScaleType.MATRIX) {
-                        val matrix = imageView.imageMatrix
+                    if (sharedElement.scaleType == ImageView.ScaleType.MATRIX) {
+                        val matrix = sharedElement.imageMatrix
                         val values = FloatArray(9)
                         matrix.getValues(values)
                         bundle.putFloatArray(BUNDLE_SNAPSHOT_IMAGE_MATRIX, values)
@@ -66,11 +65,10 @@ abstract class LeakFreeSupportSharedElementCallback : SharedElementCallback() {
     override fun onCreateSnapshotView(context: Context?, snapshot: Parcelable?): View? {
         var view: View? = null
         if (snapshot is Bundle) {
-            val bundle = snapshot
-            var bitmap = bundle.getParcelable<Bitmap>(BUNDLE_SNAPSHOT_BITMAP)
+            var bitmap = snapshot.getParcelable<Bitmap>(BUNDLE_SNAPSHOT_BITMAP)
 
             if (bitmap == null) {
-                bundle.clear()
+                snapshot.clear()
                 return null
             }
 
@@ -86,10 +84,10 @@ abstract class LeakFreeSupportSharedElementCallback : SharedElementCallback() {
                 val imageView = ImageView(context)
                 view = imageView
                 imageView.setImageBitmap(bitmap)
-                imageView.scaleType = ImageView.ScaleType.valueOf(bundle.getString(BUNDLE_SNAPSHOT_IMAGE_SCALETYPE))
+                imageView.scaleType = ImageView.ScaleType.valueOf(snapshot.getString(BUNDLE_SNAPSHOT_IMAGE_SCALETYPE))
 
                 if (imageView.scaleType == ImageView.ScaleType.MATRIX) {
-                    val values = bundle.getFloatArray(BUNDLE_SNAPSHOT_IMAGE_MATRIX)
+                    val values = snapshot.getFloatArray(BUNDLE_SNAPSHOT_IMAGE_MATRIX)
                     val matrix = Matrix()
                     matrix.setValues(values)
                     imageView.imageMatrix = matrix
@@ -99,7 +97,7 @@ abstract class LeakFreeSupportSharedElementCallback : SharedElementCallback() {
                 view.background = BitmapDrawable(context!!.resources, bitmap)
             }
 
-            bundle.clear()
+            snapshot.clear()
         }
 
         return view

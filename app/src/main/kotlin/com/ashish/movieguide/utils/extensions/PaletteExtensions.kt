@@ -1,7 +1,7 @@
 package com.ashish.movieguide.utils.extensions
 
 import android.support.v7.graphics.Palette
-import com.ashish.movieguide.ui.common.palette.PaletteBitmap
+import com.ashish.movieguide.utils.glide.palette.PaletteBitmap
 
 /**
  * Created by Ashish on Dec 29.

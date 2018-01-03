@@ -11,7 +11,7 @@ import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate
 import com.ashish.movieguide.utils.extensions.loadImage
-import com.bumptech.glide.Glide
+import com.ashish.movieguide.utils.glide.GlideApp
 
 class VideoAdapter(
         val youTubeVideos: List<YouTubeVideo>,
@@ -30,7 +30,7 @@ class VideoAdapter(
 
     override fun onViewRecycled(holder: VideoHolder) {
         super.onViewRecycled(holder)
-        Glide.clear(holder.imageView)
+        GlideApp.with(holder.imageView.context).clear(holder.imageView)
     }
 
     override fun removeListener() {

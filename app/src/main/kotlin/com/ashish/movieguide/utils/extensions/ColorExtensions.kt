@@ -13,11 +13,11 @@ import android.support.v7.graphics.Palette
 fun Bitmap.isDark(pixelX: Int, pixelY: Int): Boolean {
     // first try palette with a small color quant size
     val palette = Palette.from(this).maximumColorCount(3).generate()
-    if (palette.swatches.size > 0) {
-        return isDark(palette)
+    return if (palette.swatches.size > 0) {
+        isDark(palette)
     } else {
         // if palette failed, then check the color of the specified pixel
-        return getPixel(pixelX, pixelY).isDark()
+        getPixel(pixelX, pixelY).isDark()
     }
 }
 

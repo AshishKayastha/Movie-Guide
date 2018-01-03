@@ -41,10 +41,18 @@ class ImageViewerActivity : BaseActivity() {
         }
     }
 
-    @JvmField @State var title: String = ""
-    @JvmField @State var currentPosition: Int = 0
-    @JvmField @State var startingPosition: Int = 0
-    @JvmField @State var imageUrlList: ArrayList<String>? = null
+    @JvmField
+    @State
+    var title: String = ""
+    @JvmField
+    @State
+    var currentPosition: Int = 0
+    @JvmField
+    @State
+    var startingPosition: Int = 0
+    @JvmField
+    @State
+    var imageUrlList: ArrayList<String>? = null
 
     var systemUiHelper: SystemUiHelper? = null
 

@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.imageviewer
 
+import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Rect
@@ -16,10 +17,9 @@ import com.ashish.movieguide.utils.StartTransitionListener
 import com.ashish.movieguide.utils.SystemUiHelper
 import com.ashish.movieguide.utils.TransitionListenerAdapter
 import com.ashish.movieguide.utils.extensions.getLargeImageUrl
-import com.bumptech.glide.BitmapRequestBuilder
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Priority
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.ashish.movieguide.utils.glide.GlideApp
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import icepick.State
 import kotlinx.android.synthetic.main.fragment_image_viewer.*
@@ -43,12 +43,17 @@ class ImageViewerFragment : BaseFragment() {
         }
     }
 
-    @JvmField @State var position: Int = 0
-    @JvmField @State var imageUrl: String? = null
+    @JvmField
+    @State
+    var position: Int = 0
+
+    @JvmField
+    @State
+    var imageUrl: String? = null
 
     private var sharedElementEnterTransition: Transition? = null
-    private var fullBitmap: BitmapRequestBuilder<String, Bitmap>? = null
-    private var thumbBitmap: BitmapRequestBuilder<String, Bitmap>? = null
+    private var fullBitmap: RequestBuilder<Bitmap>? = null
+    private var thumbBitmap: RequestBuilder<Bitmap>? = null
 
     private val transitionListener = object : TransitionListenerAdapter() {
         override fun onTransitionEnd(transition: Transition) = loadFullImage()
@@ -57,7 +62,7 @@ class ImageViewerFragment : BaseFragment() {
 
     override fun getLayoutId() = R.layout.fragment_image_viewer
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupGlide()
         setupImage()
@@ -70,25 +75,23 @@ class ImageViewerFragment : BaseFragment() {
     }
 
     private fun setupGlide() {
-        thumbBitmap = Glide.with(this)
+        thumbBitmap = GlideApp.with(this)
+                .asBitmap()
                 .load(imageUrl)
-                .asBitmap()
-                .dontAnimate()
-                .priority(Priority.IMMEDIATE)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .override(DETAIL_IMAGE_THUMBNAIL_SIZE, DETAIL_IMAGE_THUMBNAIL_SIZE)
+                .apply(RequestOptions().override(DETAIL_IMAGE_THUMBNAIL_SIZE, DETAIL_IMAGE_THUMBNAIL_SIZE))
 
-        fullBitmap = Glide.with(this)
-                .load(imageUrl!!.getLargeImageUrl())
+        fullBitmap = GlideApp.with(this)
                 .asBitmap()
-                .dontAnimate()
-                .override(Resources.getSystem().displayMetrics.widthPixels, Target.SIZE_ORIGINAL)
+                .load(imageUrl!!.getLargeImageUrl())
+                .apply(RequestOptions().override(Resources.getSystem().displayMetrics.widthPixels,
+                        Target.SIZE_ORIGINAL))
     }
 
+    @SuppressLint("CheckResult")
     fun loadThumbnail(startTransition: Boolean) {
         if (thumbBitmap != null) {
-            if (startTransition) {
-                thumbBitmap!!.listener(StartTransitionListener<Bitmap>(activity))
+            if (startTransition && activity != null) {
+                thumbBitmap!!.listener(StartTransitionListener<Bitmap>(activity!!))
             }
 
             thumbBitmap!!.into(imageView)
@@ -114,16 +117,19 @@ class ImageViewerFragment : BaseFragment() {
      * previous Activity, or null if the view is not visible on the screen.
      */
     fun getImageView(): ImageView? {
-        return if (isViewInBounds(activity.window.decorView, imageView)) imageView else null
+        return if (isViewInBounds(activity?.window?.decorView, imageView)) imageView else null
     }
 
     /**
      * Returns true if {@param view} is contained within {@param container}'s bounds.
      */
-    private fun isViewInBounds(container: View, view: View): Boolean {
+    private fun isViewInBounds(container: View?, view: View): Boolean {
         val containerBounds = Rect()
-        container.getHitRect(containerBounds)
-        return view.getLocalVisibleRect(containerBounds)
+        if (container != null) {
+            container.getHitRect(containerBounds)
+            return view.getLocalVisibleRect(containerBounds)
+        }
+        return false
     }
 
     private fun handleTouchEvent() {

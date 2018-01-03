@@ -1,20 +1,21 @@
 package com.ashish.movieguide.utils
 
 import android.app.Activity
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import java.lang.Exception
 
-class StartTransitionListener<R>(private val activity: Activity) : RequestListener<String, R> {
+class StartTransitionListener<T>(private val activity: Activity) : RequestListener<T> {
 
-    override fun onException(e: Exception?, model: String?, target: Target<R>?,
-                             isFirstResource: Boolean): Boolean {
+    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<T>?,
+                              isFirstResource: Boolean): Boolean {
         activity.startPostponedEnterTransition()
         return false
     }
 
-    override fun onResourceReady(resource: R?, model: String?, target: Target<R>?,
-                                 isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
+    override fun onResourceReady(resource: T?, model: Any?, target: Target<T>?, dataSource: DataSource?,
+                                 isFirstResource: Boolean): Boolean {
         activity.startPostponedEnterTransition()
         return false
     }

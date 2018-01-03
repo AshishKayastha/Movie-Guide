@@ -30,18 +30,18 @@ import dagger.multibindings.IntoMap
  * This will bind all the Fragment's subcomponents that are part of MainActivity
  * into a map using multibindings.
  */
-@Module(subcomponents = arrayOf(
-        MovieComponent::class,
-        TVShowComponent::class,
-        PeopleComponent::class,
-        DiscoverMovieComponent::class,
-        DiscoverTVShowComponent::class,
-        PersonalMovieComponent::class,
-        PersonalTVShowComponent::class,
-        RatedMovieComponent::class,
-        RatedTVShowComponent::class,
-        RatedEpisodeComponent::class
-))
+@Module(subcomponents = [
+    MovieComponent::class,
+    TVShowComponent::class,
+    PeopleComponent::class,
+    DiscoverMovieComponent::class,
+    DiscoverTVShowComponent::class,
+    PersonalMovieComponent::class,
+    PersonalTVShowComponent::class,
+    RatedMovieComponent::class,
+    RatedTVShowComponent::class,
+    RatedEpisodeComponent::class
+])
 abstract class MainFragmentBinders {
 
     @Binds

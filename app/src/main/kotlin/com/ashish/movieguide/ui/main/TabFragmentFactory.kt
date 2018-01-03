@@ -53,11 +53,9 @@ object TabFragmentFactory {
         PersonalTVShowFragment.newInstance(type)
     }
 
-    private fun getRatedFragment(position: Int) = if (position == 0) {
-        RatedMovieFragment.newInstance()
-    } else if (position == 1) {
-        RatedTVShowFragment.newInstance()
-    } else {
-        RatedEpisodeFragment.newInstance()
+    private fun getRatedFragment(position: Int) = when (position) {
+        0 -> RatedMovieFragment.newInstance()
+        1 -> RatedTVShowFragment.newInstance()
+        else -> RatedEpisodeFragment.newInstance()
     }
 }

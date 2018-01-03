@@ -5,7 +5,7 @@ import com.ashish.movieguide.di.multibindings.AbstractComponent
 import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilder
 import dagger.Subcomponent
 
-@Subcomponent(modules = arrayOf(ActivityModule::class))
+@Subcomponent(modules = [ActivityModule::class])
 interface ReviewComponent : AbstractComponent<ReviewActivity> {
 
     @Subcomponent.Builder

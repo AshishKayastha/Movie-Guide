@@ -42,19 +42,21 @@ class PersonalMovieFragment : BaseRecyclerViewFragment<Movie,
 
     @Inject lateinit var statusObserver: PersonalContentStatusObserver
 
-    @JvmField @State var clickedItemPosition: Int = -1
+    @JvmField
+    @State
+    var clickedItemPosition: Int = -1
 
     private var disposable: Disposable? = null
 
     override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
         builderHost.getFragmentComponentBuilder(PersonalMovieFragment::class.java,
                 PersonalMovieComponent.Builder::class.java)
-                .withModule(FragmentModule(activity))
+                .withModule(FragmentModule(activity!!))
                 .build()
                 .inject(this)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observePersonalContentStatusChange()
     }
@@ -76,9 +78,13 @@ class PersonalMovieFragment : BaseRecyclerViewFragment<Movie,
     override fun getTransitionNameId(position: Int) = R.string.transition_movie_poster
 
     override fun getDetailIntent(position: Int): Intent? {
-        clickedItemPosition = position
-        val movie = recyclerViewAdapter.getItem<Movie>(position)
-        return MovieDetailActivity.createIntent(activity, movie)
+        return if (activity != null) {
+            clickedItemPosition = position
+            val movie = recyclerViewAdapter.getItem<Movie>(position)
+            MovieDetailActivity.createIntent(activity!!, movie)
+        } else {
+            return null
+        }
     }
 
     private fun observePersonalContentStatusChange() {

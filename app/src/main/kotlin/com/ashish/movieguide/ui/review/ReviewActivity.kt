@@ -35,7 +35,9 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
         }
     }
 
-    @JvmField @State var movieId: Long = 0L
+    @JvmField
+    @State
+    var movieId: Long = 0L
 
     private lateinit var reviewAdapter: RecyclerViewAdapter<Review>
 

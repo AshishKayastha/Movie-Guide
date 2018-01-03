@@ -49,7 +49,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     protected abstract fun getResults(type: String?, page: Int): Single<Results<I>>
 
-    protected fun showResults(data: Results<I>) {
+    private fun showResults(data: Results<I>) {
         currentPage = data.page
         itemList = ArrayList(data.results)
         showItemList()
@@ -71,7 +71,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         }
     }
 
-    protected fun addNewItemList(data: Results<I>?) {
+    private fun addNewItemList(data: Results<I>?) {
         getView()?.run {
             if (data != null) {
                 currentPage = data.page
@@ -84,7 +84,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         }
     }
 
-    protected fun handleLoadMoreError(t: Throwable) {
+    private fun handleLoadMoreError(t: Throwable) {
         Timber.e(t)
         getView()?.run {
             removeLoadingItem()
@@ -93,20 +93,18 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         }
     }
 
-    protected fun showErrorMessage(t: Throwable) {
+    private fun showErrorMessage(t: Throwable) {
         Timber.e(t)
         getView()?.run {
-            if (t is IOException) {
-                showNoInternetMessage()
-            } else if (t is AuthException) {
-                showMessage(R.string.error_not_logged_in)
-            } else {
-                showMessage(R.string.error_load_data)
+            when (t) {
+                is IOException -> showNoInternetMessage()
+                is AuthException -> showMessage(R.string.error_not_logged_in)
+                else -> showMessage(R.string.error_load_data)
             }
         }
     }
 
-    protected fun showNoInternetMessage() {
+    private fun showNoInternetMessage() {
         getView()?.showMessage(R.string.error_no_internet)
     }
 }
