@@ -15,7 +15,7 @@ class MovieDetailMapper @Inject constructor() : Function<FullDetailContent<Movie
 
     override fun apply(fullDetailContent: FullDetailContent<MovieDetail, TraktMovie>): Movie {
         val movieEntity = MovieEntity()
-        fullDetailContent.detailContent?.run {
+        fullDetailContent.detailContent?.apply {
             movieEntity.tmdbId = id!!
             movieEntity.title = title
             movieEntity.overview = overview

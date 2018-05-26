@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.di.modules.FragmentModule
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentStatusObserver
@@ -17,7 +15,7 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movieguide.utils.TMDbConstants.FAVORITES
 import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_TV
 import com.ashish.movieguide.utils.TMDbConstants.WATCHLIST
-import icepick.State
+import com.evernote.android.state.State
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -42,25 +40,18 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
     }
 
     @Inject lateinit var statusObserver: PersonalContentStatusObserver
+    @Inject lateinit var personalTvPresenter: PersonalTVShowPresenter
 
-    @JvmField
-    @State
-    var clickedItemPosition: Int = -1
+    @State var clickedItemPosition: Int = -1
 
     private var disposable: Disposable? = null
-
-    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(PersonalTVShowFragment::class.java,
-                PersonalTVShowComponent.Builder::class.java)
-                .withModule(FragmentModule(activity!!))
-                .build()
-                .inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observePersonalContentStatusChange()
     }
+
+    override fun providePresenter(): PersonalTVShowPresenter = personalTvPresenter
 
     override fun getFragmentArguments(arguments: Bundle?) {
         type = arguments?.getInt(ARG_PERSONAL_TV_SHOW_TYPE)
@@ -83,9 +74,7 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
             clickedItemPosition = position
             val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
             TVShowDetailActivity.createIntent(activity!!, tvShow)
-        } else {
-            return null
-        }
+        } else null
     }
 
     private fun observePersonalContentStatusChange() {

@@ -60,7 +60,7 @@ class GenreAdapter(
         private val genreText: FontTextView by bindView(R.id.genre_text)
 
         fun bindData() {
-            genreText.run {
+            genreText.apply {
                 text = genres[adapterPosition]
                 val genreId = genreIds[adapterPosition]
                 tag = genreId

@@ -3,12 +3,11 @@ package com.ashish.movieguide.ui.people.list
 import android.content.Intent
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Person
-import com.ashish.movieguide.di.modules.FragmentModule
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.people.detail.PersonDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_PERSON
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 31.
@@ -20,12 +19,9 @@ class PeopleFragment : BaseRecyclerViewFragment<Person,
         fun newInstance() = PeopleFragment()
     }
 
-    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(PeopleFragment::class.java, PeopleComponent.Builder::class.java)
-                .withModule(FragmentModule(activity!!))
-                .build()
-                .inject(this)
-    }
+    @Inject lateinit var peoplePresenter: PeoplePresenter
+
+    override fun providePresenter(): PeoplePresenter = peoplePresenter
 
     override fun getAdapterType() = ADAPTER_TYPE_PERSON
 
@@ -39,8 +35,6 @@ class PeopleFragment : BaseRecyclerViewFragment<Person,
         return if (activity != null) {
             val people = recyclerViewAdapter.getItem<Person>(position)
             PersonDetailActivity.createIntent(activity!!, people)
-        } else {
-            null
-        }
+        } else null
     }
 }

@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
@@ -37,6 +38,7 @@ class RatingCountLayout @JvmOverloads constructor(
         starCount = context.getString(R.string.star_count)
 
         if (attrs != null) {
+            @SuppressLint("Recycle")
             val ta = context.obtainStyledAttributes(attrs, R.styleable.RatingCountLayout)
             ratingsCount = ta.getString(R.styleable.RatingCountLayout_ratingCount)
             numOfRatings = ta.getString(R.styleable.RatingCountLayout_numRating)

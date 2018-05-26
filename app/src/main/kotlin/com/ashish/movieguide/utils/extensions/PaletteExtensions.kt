@@ -1,7 +1,6 @@
 package com.ashish.movieguide.utils.extensions
 
 import android.support.v7.graphics.Palette
-import com.ashish.movieguide.utils.glide.palette.PaletteBitmap
 
 /**
  * Created by Ashish on Dec 29.
@@ -18,6 +17,6 @@ fun Palette?.getSwatchWithMostPixels(): Palette.Swatch? {
     return mostPixelSwatch
 }
 
-fun PaletteBitmap?.setPaletteColor(func: (swatch: Palette.Swatch) -> Unit) {
-    this?.palette?.getSwatchWithMostPixels()?.run { func(this) }
+fun Palette?.setPaletteColor(func: (swatch: Palette.Swatch) -> Unit) {
+    this?.getSwatchWithMostPixels()?.run { func(this) }
 }

@@ -8,14 +8,22 @@ import com.bumptech.glide.request.target.Target
 
 class StartTransitionListener<T>(private val activity: Activity) : RequestListener<T> {
 
-    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<T>?,
-                              isFirstResource: Boolean): Boolean {
+    override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?, target: Target<T>?,
+            isFirstResource: Boolean
+    ): Boolean {
         activity.startPostponedEnterTransition()
         return false
     }
 
-    override fun onResourceReady(resource: T?, model: Any?, target: Target<T>?, dataSource: DataSource?,
-                                 isFirstResource: Boolean): Boolean {
+    override fun onResourceReady(
+            resource: T?,
+            model: Any?,
+            target: Target<T>?,
+            dataSource: DataSource?,
+            isFirstResource: Boolean
+    ): Boolean {
         activity.startPostponedEnterTransition()
         return false
     }

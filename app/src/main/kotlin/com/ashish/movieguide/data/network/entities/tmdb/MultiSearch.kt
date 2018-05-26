@@ -3,7 +3,9 @@ package com.ashish.movieguide.data.network.entities.tmdb
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class MultiSearch(
         val id: Long? = null,
         val name: String? = null,

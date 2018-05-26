@@ -1,7 +1,9 @@
 package com.ashish.movieguide.data.network.entities.trakt
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class TokenRequest(
         val code: String,
         @Json(name = "client_id") val clientId: String,

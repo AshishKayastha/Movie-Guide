@@ -1,7 +1,9 @@
 package com.ashish.movieguide.data.network.entities.trakt
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class Account(
         val timezone: String? = null,
         @Json(name = "cover_image") val coverImage: String? = null,

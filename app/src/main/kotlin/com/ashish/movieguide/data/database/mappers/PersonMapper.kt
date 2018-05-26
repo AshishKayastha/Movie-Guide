@@ -13,7 +13,7 @@ class PersonMapper @Inject constructor() : BiFunction<Person, TraktPerson, Local
 
     override fun apply(var1: Person, var2: TraktPerson?): LocalPerson {
         val personEntity = PersonEntity()
-        var1.run {
+        var1.apply {
             personEntity.tmdbId = id!!
             personEntity.name = name
             personEntity.profilePath = profilePath

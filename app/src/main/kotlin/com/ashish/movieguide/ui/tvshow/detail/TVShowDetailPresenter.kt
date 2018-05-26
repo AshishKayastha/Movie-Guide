@@ -7,7 +7,6 @@ import com.ashish.movieguide.data.network.entities.tmdb.TVShowDetail
 import com.ashish.movieguide.data.network.entities.trakt.SyncItems
 import com.ashish.movieguide.data.network.entities.trakt.SyncShow
 import com.ashish.movieguide.data.network.entities.trakt.TraktShow
-import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
 import com.ashish.movieguide.ui.common.rating.RatingManager
@@ -23,7 +22,6 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 03.
  */
-@ActivityScope
 class TVShowDetailPresenter @Inject constructor(
         private val tvShowInteractor: TVShowInteractor,
         private val personalContentManager: PersonalContentManager,
@@ -37,12 +35,12 @@ class TVShowDetailPresenter @Inject constructor(
         personalContentManager.setView(view)
     }
 
-    override fun getDetailContent(id: Long): Observable<FullDetailContent<TVShowDetail, TraktShow>>
-            = tvShowInteractor.getFullTVShowDetail(id)
+    override fun getDetailContent(id: Long): Observable<FullDetailContent<TVShowDetail, TraktShow>> =
+            tvShowInteractor.getFullTVShowDetail(id)
 
     override fun showDetailContent(fullDetailContent: FullDetailContent<TVShowDetail, TraktShow>) {
         super.showDetailContent(fullDetailContent)
-        getView()?.run {
+        view?.apply {
             hideProgress()
             val tvShowDetail = fullDetailContent.detailContent
             setTMDbRating(tvShowDetail?.voteAverage)
@@ -53,9 +51,9 @@ class TVShowDetailPresenter @Inject constructor(
 
     override fun getContentList(fullDetailContent: FullDetailContent<TVShowDetail, TraktShow>): List<String> {
         val contentList = ArrayList<String>()
-        fullDetailContent.detailContent?.run {
+        fullDetailContent.detailContent?.apply {
             val omdbDetail = fullDetailContent.omdbDetail
-            contentList.run {
+            contentList.apply {
                 add(overview ?: "")
                 add(genres.convertListToCommaSeparatedText { it.name.toString() })
                 add(omdbDetail?.Rated ?: "")
@@ -116,8 +114,8 @@ class TVShowDetailPresenter @Inject constructor(
 
     private fun getTvId() = fullDetailContent?.detailContent?.id!!
 
-    override fun detachView() {
-        super.detachView()
+    override fun onDetachView() {
+        super.onDetachView()
         ratingManager.setView(null)
         personalContentManager.setView(null)
     }

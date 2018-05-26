@@ -13,7 +13,7 @@ import com.ashish.movieguide.ui.widget.DepthPageTransformer
 import com.ashish.movieguide.utils.SystemUiHelper
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.transition.LeakFreeSupportSharedElementCallback
-import icepick.State
+import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.activity_image_viewer.*
 import java.util.ArrayList
 
@@ -41,18 +41,10 @@ class ImageViewerActivity : BaseActivity() {
         }
     }
 
-    @JvmField
-    @State
-    var title: String = ""
-    @JvmField
-    @State
-    var currentPosition: Int = 0
-    @JvmField
-    @State
-    var startingPosition: Int = 0
-    @JvmField
-    @State
-    var imageUrlList: ArrayList<String>? = null
+    @State var title: String = ""
+    @State var currentPosition: Int = 0
+    @State var startingPosition: Int = 0
+    @State var imageUrlList: ArrayList<String>? = null
 
     var systemUiHelper: SystemUiHelper? = null
 
@@ -89,7 +81,7 @@ class ImageViewerActivity : BaseActivity() {
                     names.clear()
                     sharedElements.clear()
                     names.add(sharedElement.transitionName)
-                    sharedElements.put(sharedElement.transitionName, sharedElement)
+                    sharedElements[sharedElement.transitionName] = sharedElement
                 }
             }
         }
@@ -112,7 +104,7 @@ class ImageViewerActivity : BaseActivity() {
         postponeEnterTransition()
         setEnterSharedElementCallback(callback)
 
-        supportActionBar?.run {
+        supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             if (this@ImageViewerActivity.title.isEmpty()) {
                 setImageCountTitle()
@@ -124,7 +116,7 @@ class ImageViewerActivity : BaseActivity() {
         toolbar?.changeViewGroupTextFont()
 
         imageViewerAdapter = ImageViewerAdapter(supportFragmentManager, imageUrlList!!)
-        viewPager.run {
+        viewPager.apply {
             adapter = imageViewerAdapter
             currentItem = currentPosition
             setPageTransformer(true, DepthPageTransformer())

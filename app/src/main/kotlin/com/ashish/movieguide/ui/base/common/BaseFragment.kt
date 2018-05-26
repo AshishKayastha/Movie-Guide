@@ -1,14 +1,15 @@
 package com.ashish.movieguide.ui.base.common
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ashish.movieguide.app.MovieGuideApp
 import com.ashish.movieguide.utils.extensions.getExtrasOrRestore
 import com.ashish.movieguide.utils.extensions.inflate
-import icepick.Icepick
+import com.ashish.movieguide.utils.extensions.watchFragmentLeaks
+import com.evernote.android.state.StateSaver
 
 /**
  * Created by Ashish on Jan 15.
@@ -30,18 +31,14 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun getFragmentArguments(arguments: Bundle?) {}
 
+    @SuppressLint("NonMatchingStateSaverCalls")
     override fun onSaveInstanceState(outState: Bundle) {
-        Icepick.saveInstanceState(this, outState)
+        StateSaver.saveInstanceState(this, outState)
         super.onSaveInstanceState(outState)
-    }
-
-    inline fun performAction(action: () -> Unit): Boolean {
-        action()
-        return true
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        activity?.run { MovieGuideApp.getRefWatcher(this).watch(this) }
+        activity.watchFragmentLeaks()
     }
 }

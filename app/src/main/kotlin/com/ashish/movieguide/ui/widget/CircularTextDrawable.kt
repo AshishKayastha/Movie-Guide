@@ -15,14 +15,17 @@ import com.ashish.movieguide.utils.extensions.dpToPx
 import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.spToPx
 
-class CircularTextDrawable(context: Context, private val text: String) : ShapeDrawable(OvalShape()) {
+class CircularTextDrawable(
+        context: Context,
+        private val text: String
+) : ShapeDrawable(OvalShape()) {
 
     private val borderWidth = 2f.dpToPx()
     private val textPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val borderPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     init {
-        textPaint.run {
+        textPaint.apply {
             color = Color.WHITE
             style = Paint.Style.FILL
             textSize = 18f.spToPx()
@@ -30,7 +33,7 @@ class CircularTextDrawable(context: Context, private val text: String) : ShapeDr
             typeface = FontUtils.getTypeface(context, FontUtils.MONTSERRAT_MEDIUM)
         }
 
-        borderPaint.run {
+        borderPaint.apply {
             color = Color.WHITE
             style = Paint.Style.STROKE
             strokeWidth = borderWidth

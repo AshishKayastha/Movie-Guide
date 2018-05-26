@@ -13,8 +13,6 @@ import com.ashish.movieguide.data.network.entities.tmdb.TVShow
 import com.ashish.movieguide.data.network.entities.tmdb.TVShowDetail
 import com.ashish.movieguide.data.network.entities.trakt.TraktShow
 import com.ashish.movieguide.data.preferences.PreferenceHelper
-import com.ashish.movieguide.di.modules.ActivityModule
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
@@ -29,13 +27,14 @@ import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
+import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.setFavoriteIcon
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
+import com.evernote.android.state.State
 import dagger.Lazy
-import icepick.State
 import kotlinx.android.synthetic.main.acivity_detail_tv_show.*
 import kotlinx.android.synthetic.main.layout_detail_app_bar.*
 import kotlinx.android.synthetic.main.layout_detail_similar_content_stub.*
@@ -59,10 +58,9 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
 
     @Inject lateinit var ratingDialog: Lazy<RatingDialog>
     @Inject lateinit var preferenceHelper: PreferenceHelper
+    @Inject lateinit var tvShowDetailPresenter: TVShowDetailPresenter
 
-    @JvmField
-    @State
-    var tvShow: TVShow? = null
+    @State var tvShow: TVShow? = null
 
     private var seasonsAdapter: RecyclerViewAdapter<Season>? = null
     private var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>? = null
@@ -87,15 +85,9 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
         }
     }
 
-    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(TVShowDetailActivity::class.java,
-                TVShowDetailComponent.Builder::class.java)
-                .withModule(ActivityModule(this))
-                .build()
-                .inject(this)
-    }
-
     override fun getLayoutId() = R.layout.acivity_detail_tv_show
+
+    override fun providePresenter(): TVShowDetailPresenter = tvShowDetailPresenter
 
     override fun getIntentExtras(extras: Bundle?) {
         tvShow = extras?.getParcelable(EXTRA_TV_SHOW)
@@ -104,7 +96,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
     override fun getTransitionNameId() = R.string.transition_tv_poster
 
     override fun loadDetailContent() {
-        presenter?.loadDetailContent(tvShow?.id)
+        tvShowDetailPresenter.loadDetailContent(tvShow?.id)
     }
 
     override fun getBackdropPath() = tvShow?.backdropPath.getBackdropUrl()
@@ -112,7 +104,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
     override fun getPosterPath() = tvShow?.posterPath.getPosterUrl()
 
     override fun showDetailContent(detailContent: TVShowDetail) {
-        detailContent.run {
+        detailContent.apply {
             if (getBackdropPath().isEmpty() && backdropPath.isNotNullOrEmpty()) {
                 showBackdropImage(backdropPath.getBackdropUrl())
             }
@@ -155,8 +147,8 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_favorite -> performAction { presenter?.markAsFavorite() }
-        R.id.action_watchlist -> performAction { presenter?.addToWatchlist() }
+        R.id.action_favorite -> performAction { tvShowDetailPresenter.markAsFavorite() }
+        R.id.action_watchlist -> performAction { tvShowDetailPresenter.addToWatchlist() }
 
         R.id.action_rating -> performAction {
             if (isLoggedIn) {
@@ -191,11 +183,11 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
     }
 
     override fun addRating(rating: Int) {
-        presenter?.addRating(rating)
+        tvShowDetailPresenter.addRating(rating)
     }
 
     override fun removeRating() {
-        presenter?.removeRating()
+        tvShowDetailPresenter.removeRating()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

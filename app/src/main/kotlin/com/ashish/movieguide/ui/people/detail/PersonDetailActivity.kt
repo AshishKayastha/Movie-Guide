@@ -12,8 +12,6 @@ import com.ashish.movieguide.data.network.entities.tmdb.PersonDetail
 import com.ashish.movieguide.data.network.entities.tmdb.ProfileImages
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
 import com.ashish.movieguide.data.network.entities.trakt.TraktPerson
-import com.ashish.movieguide.di.modules.ActivityModule
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.BaseDetailActivity
 import com.ashish.movieguide.ui.base.detail.BaseDetailView
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
@@ -28,9 +26,10 @@ import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getProfileUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.show
-import icepick.State
+import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.activity_detail_person.*
 import kotlinx.android.synthetic.main.layout_detail_app_bar.*
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 04.
@@ -47,9 +46,9 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, TraktPerson,
         }
     }
 
-    @JvmField
-    @State
-    var person: Person? = null
+    @Inject lateinit var personDetailPresenter: PersonDetailPresenter
+
+    @State var person: Person? = null
 
     private val onCastItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -79,15 +78,9 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, TraktPerson,
         }
     }
 
-    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(PersonDetailActivity::class.java,
-                PersonDetailComponent.Builder::class.java)
-                .withModule(ActivityModule(this))
-                .build()
-                .inject(this)
-    }
-
     override fun getLayoutId() = R.layout.activity_detail_person
+
+    override fun providePresenter(): PersonDetailPresenter = personDetailPresenter
 
     override fun getIntentExtras(extras: Bundle?) {
         person = extras?.getParcelable(EXTRA_PERSON)
@@ -96,7 +89,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, TraktPerson,
     override fun getTransitionNameId() = R.string.transition_person_profile
 
     override fun loadDetailContent() {
-        presenter?.loadDetailContent(person?.id)
+        personDetailPresenter.loadDetailContent(person?.id)
     }
 
     override fun getBackdropPath() = ""
@@ -104,7 +97,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, TraktPerson,
     override fun getPosterPath() = person?.profilePath.getProfileUrl()
 
     override fun showDetailContent(detailContent: PersonDetail) {
-        detailContent.run {
+        detailContent.apply {
             contentTitleText.text = name
             this@PersonDetailActivity.imdbId = imdbId
             showProfileBackdropImage(detailContent.images)

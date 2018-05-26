@@ -10,7 +10,7 @@ import android.view.View
 
 object TransitionUtils {
 
-    private val MAX_IMAGE_SIZE = (1024 * 1024).toFloat()
+    private const val MAX_IMAGE_SIZE = (1024 * 1024).toFloat()
 
     /**
      * Get a copy of bitmap of given drawable.

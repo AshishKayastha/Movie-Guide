@@ -4,30 +4,25 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import com.ashish.movieguide.di.component.DaggerAppComponent
-import com.ashish.movieguide.di.modules.AppModule
-import com.ashish.movieguide.di.multibindings.AbstractComponent
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilder
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import javax.inject.Inject
-import javax.inject.Provider
 
 /**
  * Created by Ashish on Dec 28.
  */
-class MovieGuideApp : BaseApp(), ActivityComponentBuilderHost {
+class MovieGuideApp : BaseApp(), HasActivityInjector {
 
     companion object {
-
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
 
         fun getRefWatcher(context: Context) = (context.applicationContext as MovieGuideApp).refWatcher
     }
 
-    @Inject
-    lateinit var componentBuilders: Map<Class<out Activity>, @JvmSuppressWildcards Provider<ActivityComponentBuilder<*, *>>>
+    @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
 
     private lateinit var refWatcher: RefWatcher
 
@@ -41,14 +36,12 @@ class MovieGuideApp : BaseApp(), ActivityComponentBuilderHost {
     }
 
     private fun initDagger() {
-        DaggerAppComponent.builder()
-                .appModule(AppModule(this))
+        val appComponent = DaggerAppComponent.builder()
+                .application(this)
                 .build()
-                .inject(this)
+
+        appComponent.inject(this)
     }
 
-    override fun <A : Activity, B : ActivityComponentBuilder<A, AbstractComponent<A>>>
-            getActivityComponentBuilder(activityKey: Class<A>, builderType: Class<B>): B {
-        return builderType.cast(componentBuilders[activityKey]!!.get())
-    }
+    override fun activityInjector() = dispatchingActivityInjector
 }

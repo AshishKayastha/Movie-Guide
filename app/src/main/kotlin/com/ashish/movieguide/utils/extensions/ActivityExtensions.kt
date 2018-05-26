@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.util.Pair
 import android.view.View
+import com.ashish.movieguide.app.MovieGuideApp
 import com.ashish.movieguide.utils.glide.palette.PaletteBitmap
 
 /**
@@ -24,8 +25,11 @@ fun Activity.startActivityWithTransition(viewPair: Pair<View, String>?, intent: 
     ActivityCompat.startActivity(this, intent, options.toBundle())
 }
 
-inline fun Activity.setTopBarColorAndAnimate(paletteBitmap: PaletteBitmap?, collapsingToolbar: CollapsingToolbarLayout,
-                                             tintIcons: () -> Unit) {
+inline fun Activity.setTopBarColorAndAnimate(
+        paletteBitmap: PaletteBitmap?,
+        collapsingToolbar: CollapsingToolbarLayout,
+        tintIcons: () -> Unit
+) {
     if (paletteBitmap != null) {
         val palette = paletteBitmap.palette
         val isDark = paletteBitmap.bitmap.isDark(palette)
@@ -49,4 +53,8 @@ inline fun Activity.setTopBarColorAndAnimate(paletteBitmap: PaletteBitmap?, coll
             }
         }
     }
+}
+
+fun Activity?.watchFragmentLeaks() {
+    this?.run { MovieGuideApp.getRefWatcher(this).watch(this) }
 }

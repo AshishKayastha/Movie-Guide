@@ -11,9 +11,6 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.FilterQuery
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.di.multibindings.AbstractComponent
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilder
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.discover.filter.FilterBottomSheetDialogFragment
@@ -21,15 +18,17 @@ import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
+import com.ashish.movieguide.utils.extensions.performAction
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
 import javax.inject.Inject
-import javax.inject.Provider
 
 /**
  * Created by Ashish on Jan 07.
  */
 abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
-    : BaseRecyclerViewFragment<I, DiscoverView<I>, P>(), DiscoverView<I>, FragmentComponentBuilderHost {
+    : BaseRecyclerViewFragment<I, DiscoverView<I>, P>(), DiscoverView<I>, HasSupportFragmentInjector {
 
     companion object {
         const val DISCOVER_MOVIE = 0
@@ -37,8 +36,7 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         private const val RC_FILTER_FRAGMENT = 1001
     }
 
-    @Inject
-    lateinit var componentBuilders: Map<Class<out Fragment>, @JvmSuppressWildcards Provider<FragmentComponentBuilder<*, *>>>
+    @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,12 +44,7 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         swipeRefresh.isEnabled = false
     }
 
-    override fun <F : Fragment, B : FragmentComponentBuilder<F, AbstractComponent<F>>>
-            getFragmentComponentBuilder(fragmentKey: Class<F>, builderType: Class<B>): B {
-        return builderType.cast(componentBuilders[fragmentKey]!!.get())
-    }
-
-    override fun loadData() = presenter?.filterContents()
+    override fun loadData() = presenter.filterContents()
 
     override fun getAdapterType(): Int {
         return if (isMovie()) ADAPTER_TYPE_MOVIE else ADAPTER_TYPE_TV_SHOW
@@ -102,4 +95,6 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         R.id.action_filter -> performAction { presenter?.onFilterMenuItemClick() }
         else -> super.onOptionsItemSelected(item)
     }
+
+    override fun supportFragmentInjector() = supportFragmentInjector
 }

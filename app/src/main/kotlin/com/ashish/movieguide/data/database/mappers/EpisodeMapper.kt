@@ -13,7 +13,7 @@ class EpisodeMapper @Inject constructor() : BiFunction<Episode, TraktEpisode, Lo
 
     override fun apply(var1: Episode, var2: TraktEpisode?): LocalEpisode {
         val episodeEntity = EpisodeEntity()
-        var1.run {
+        var1.apply {
             episodeEntity.tmdbId = id!!
             episodeEntity.name = name
             episodeEntity.overview = overview

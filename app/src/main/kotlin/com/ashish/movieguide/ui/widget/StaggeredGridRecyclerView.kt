@@ -26,11 +26,14 @@ class StaggeredGridRecyclerView @JvmOverloads constructor(
         }
     }
 
-    override fun attachLayoutAnimationParameters(child: View, params: ViewGroup.LayoutParams, index: Int, count: Int) {
+    override fun attachLayoutAnimationParameters(
+            child: View,
+            params: ViewGroup.LayoutParams,
+            index: Int,
+            count: Int
+    ) {
         if (adapter != null && layoutManager is StaggeredGridLayoutManager) {
-
-            var animParams: GridLayoutAnimationController.AnimationParameters?
-                    = params.layoutAnimationParameters as GridLayoutAnimationController.AnimationParameters?
+            var animParams: GridLayoutAnimationController.AnimationParameters? = params.layoutAnimationParameters as GridLayoutAnimationController.AnimationParameters?
 
             if (animParams == null) {
                 animParams = GridLayoutAnimationController.AnimationParameters()

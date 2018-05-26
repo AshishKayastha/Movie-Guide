@@ -25,8 +25,10 @@ fun String?.convertToDate(datePattern: String = DEFAULT_DATE_PATTERN): Date? {
     return null
 }
 
-fun String?.getFormattedDate(inputDateFormat: String = DEFAULT_DATE_PATTERN,
-                             outputDateFormat: String = MONTH_DAY_YEAR_PATTERN): String? {
+fun String?.getFormattedDate(
+        inputDateFormat: String = DEFAULT_DATE_PATTERN,
+        outputDateFormat: String = MONTH_DAY_YEAR_PATTERN
+): String? {
     if (isNotNullOrEmpty()) {
         try {
             val sdf = SimpleDateFormat(inputDateFormat, Locale.ENGLISH)
@@ -67,7 +69,8 @@ fun String?.getFormattedMediumDate(pattern: String = DEFAULT_DATE_PATTERN): Stri
     if (isNotNullOrEmpty()) {
         val parsedDate = this!!.getParsedDate(pattern)
         if (parsedDate != null) {
-            formattedReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(parsedDate)
+            formattedReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM)
+                    .format(parsedDate)
         }
     }
 

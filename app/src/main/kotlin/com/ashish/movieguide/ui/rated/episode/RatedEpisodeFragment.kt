@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Episode
-import com.ashish.movieguide.di.modules.FragmentModule
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.common.rating.RatingChangeObserver
 import com.ashish.movieguide.ui.episode.EpisodeDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
-import icepick.State
+import com.evernote.android.state.State
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -24,25 +22,18 @@ class RatedEpisodeFragment : BaseRecyclerViewFragment<Episode,
     }
 
     @Inject lateinit var ratingChangeObserver: RatingChangeObserver
+    @Inject lateinit var ratedEpisodePresenter: RatedEpisodePresenter
 
-    @JvmField
-    @State
-    var clickedItemPosition: Int = -1
+    @State var clickedItemPosition: Int = -1
 
     private var disposable: Disposable? = null
-
-    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(RatedEpisodeFragment::class.java,
-                RatedEpisodeComponent.Builder::class.java)
-                .withModule(FragmentModule(activity!!))
-                .build()
-                .inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeEpisodeRatingChanged()
     }
+
+    override fun providePresenter(): RatedEpisodePresenter = ratedEpisodePresenter
 
     override fun getAdapterType() = ADAPTER_TYPE_EPISODE
 
@@ -57,9 +48,7 @@ class RatedEpisodeFragment : BaseRecyclerViewFragment<Episode,
             clickedItemPosition = position
             val episode = recyclerViewAdapter.getItem<Episode>(position)
             EpisodeDetailActivity.createIntent(activity!!, episode.tvShowId, episode)
-        } else {
-            return null
-        }
+        } else null
     }
 
     private fun observeEpisodeRatingChanged() {

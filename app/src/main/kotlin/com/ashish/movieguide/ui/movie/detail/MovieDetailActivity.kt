@@ -12,8 +12,6 @@ import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.data.network.entities.tmdb.MovieDetail
 import com.ashish.movieguide.data.network.entities.trakt.TraktMovie
 import com.ashish.movieguide.data.preferences.PreferenceHelper
-import com.ashish.movieguide.di.modules.ActivityModule
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
@@ -26,13 +24,14 @@ import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
+import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.setFavoriteIcon
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.startFavoriteAnimation
+import com.evernote.android.state.State
 import dagger.Lazy
-import icepick.State
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import kotlinx.android.synthetic.main.layout_detail_app_bar.*
 import kotlinx.android.synthetic.main.layout_detail_read_reviews.*
@@ -57,10 +56,9 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
 
     @Inject lateinit var ratingDialog: Lazy<RatingDialog>
     @Inject lateinit var preferenceHelper: PreferenceHelper
+    @Inject lateinit var movieDetailPresenter: MovieDetailPresenter
 
-    @JvmField
-    @State
-    var movie: Movie? = null
+    @State var movie: Movie? = null
 
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
 
@@ -78,21 +76,14 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         readReviewsView.setOnClickListener {
             startActivity(ReviewActivity.createIntent(this, movie?.id))
         }
     }
 
-    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(MovieDetailActivity::class.java,
-                MovieDetailComponent.Builder::class.java)
-                .withModule(ActivityModule(this))
-                .build()
-                .inject(this)
-    }
-
     override fun getLayoutId() = R.layout.activity_detail_movie
+
+    override fun providePresenter(): MovieDetailPresenter = movieDetailPresenter
 
     override fun getIntentExtras(extras: Bundle?) {
         movie = extras?.getParcelable(EXTRA_MOVIE)
@@ -101,7 +92,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     override fun getTransitionNameId() = R.string.transition_movie_poster
 
     override fun loadDetailContent() {
-        presenter?.loadDetailContent(movie?.id)
+        movieDetailPresenter.loadDetailContent(movie?.id)
     }
 
     override fun getBackdropPath() = movie?.backdropPath.getBackdropUrl()
@@ -111,7 +102,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     override fun getItemTitle(): String = movie?.title ?: ""
 
     override fun showDetailContent(detailContent: MovieDetail) {
-        detailContent.run {
+        detailContent.apply {
             if (getBackdropPath().isEmpty() && backdropPath.isNotNullOrEmpty()) {
                 showBackdropImage(backdropPath.getBackdropUrl())
             }
@@ -140,8 +131,8 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_favorite -> performAction { presenter?.markAsFavorite() }
-        R.id.action_watchlist -> performAction { presenter?.addToWatchlist() }
+        R.id.action_favorite -> performAction { movieDetailPresenter.markAsFavorite() }
+        R.id.action_watchlist -> performAction { movieDetailPresenter.addToWatchlist() }
 
         R.id.action_rating -> performAction {
             if (isLoggedIn) {
@@ -176,11 +167,11 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     }
 
     override fun addRating(rating: Int) {
-        presenter?.addRating(rating)
+        movieDetailPresenter.addRating(rating)
     }
 
     override fun removeRating() {
-        presenter?.removeRating()
+        movieDetailPresenter.removeRating()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

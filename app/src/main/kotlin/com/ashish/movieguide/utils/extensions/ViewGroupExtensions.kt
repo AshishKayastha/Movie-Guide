@@ -15,13 +15,13 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View? {
     return LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 }
 
-fun ViewGroup.changeViewGroupTextFont() {
-    views.filterIsInstance<TextView>().forEach { it.changeTypeface() }
+fun ViewGroup.changeViewGroupTextFont(boldFont: Boolean = false) {
+    views.filterIsInstance<TextView>().forEach { it.changeTypeface(boldFont) }
 }
 
-fun TabLayout.changeTabFont() {
+fun TabLayout.changeTabFont(boldFont: Boolean = false) {
     val viewGroup = this[0] as ViewGroup
     (0 until viewGroup.childCount)
             .map { viewGroup[it] as ViewGroup }
-            .forEach { it.changeViewGroupTextFont() }
+            .forEach { it.changeViewGroupTextFont(boldFont) }
 }

@@ -4,12 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
-import com.ashish.movieguide.di.modules.FragmentModule
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 26.
@@ -27,14 +26,12 @@ class MovieFragment : BaseRecyclerViewFragment<Movie,
             fragment.arguments = extras
             return fragment
         }
+
     }
 
-    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(MovieFragment::class.java, MovieComponent.Builder::class.java)
-                .withModule(FragmentModule(activity!!))
-                .build()
-                .inject(this)
-    }
+    @Inject lateinit var moviePresenter: MoviePresenter
+
+    override fun providePresenter(): MoviePresenter = moviePresenter
 
     override fun getFragmentArguments(arguments: Bundle?) {
         type = arguments?.getInt(ARG_MOVIE_TYPE)
@@ -53,7 +50,7 @@ class MovieFragment : BaseRecyclerViewFragment<Movie,
         return if (activity != null) {
             MovieDetailActivity.createIntent(activity!!, movie)
         } else {
-            return null
+            null
         }
     }
 }

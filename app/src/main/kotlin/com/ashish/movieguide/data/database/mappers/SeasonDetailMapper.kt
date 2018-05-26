@@ -14,7 +14,7 @@ class SeasonDetailMapper @Inject constructor() : Function<FullDetailContent<Seas
 
     override fun apply(fullDetailContent: FullDetailContent<SeasonDetail, TraktSeason>): Season {
         val seasonEntity = SeasonEntity()
-        fullDetailContent.detailContent?.run {
+        fullDetailContent.detailContent?.apply {
             seasonEntity.tmdbId = id!!
             seasonEntity.name = name
             seasonEntity.overview = overview

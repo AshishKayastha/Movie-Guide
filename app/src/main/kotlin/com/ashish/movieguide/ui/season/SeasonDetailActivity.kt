@@ -9,8 +9,6 @@ import com.ashish.movieguide.data.network.entities.tmdb.Episode
 import com.ashish.movieguide.data.network.entities.tmdb.Season
 import com.ashish.movieguide.data.network.entities.tmdb.SeasonDetail
 import com.ashish.movieguide.data.network.entities.trakt.TraktSeason
-import com.ashish.movieguide.di.modules.ActivityModule
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
@@ -22,9 +20,10 @@ import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import com.ashish.movieguide.utils.extensions.show
-import icepick.State
+import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.activity_detail_season.*
 import kotlinx.android.synthetic.main.layout_detail_app_bar.*
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 07.
@@ -43,12 +42,10 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, TraktSeason
         }
     }
 
-    @JvmField
-    @State
-    var tvShowId: Long? = null
-    @JvmField
-    @State
-    var season: Season? = null
+    @Inject lateinit var seasonDetailPresenter: SeasonDetailPresenter
+
+    @State var tvShowId: Long? = null
+    @State var season: Season? = null
 
     private var episodesAdapter: RecyclerViewAdapter<Episode>? = null
 
@@ -60,15 +57,9 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, TraktSeason
         }
     }
 
-    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(SeasonDetailActivity::class.java,
-                SeasonDetailComponent.Builder::class.java)
-                .withModule(ActivityModule(this))
-                .build()
-                .inject(this)
-    }
-
     override fun getLayoutId() = R.layout.activity_detail_season
+
+    override fun providePresenter(): SeasonDetailPresenter = seasonDetailPresenter
 
     override fun getIntentExtras(extras: Bundle?) {
         tvShowId = extras?.getLong(EXTRA_TV_SHOW_ID)
@@ -78,8 +69,8 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, TraktSeason
     override fun getTransitionNameId() = R.string.transition_season_poster
 
     override fun loadDetailContent() {
-        presenter?.setSeasonNumber(season?.seasonNumber!!)
-        presenter?.loadDetailContent(tvShowId)
+        seasonDetailPresenter.setSeasonNumber(season?.seasonNumber!!)
+        seasonDetailPresenter.loadDetailContent(tvShowId)
     }
 
     override fun getBackdropPath() = season?.posterPath.getOriginalImageUrl()
@@ -87,7 +78,7 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, TraktSeason
     override fun getPosterPath() = season?.posterPath.getPosterUrl()
 
     override fun showDetailContent(detailContent: SeasonDetail) {
-        detailContent.run {
+        detailContent.apply {
             contentTitleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
         }

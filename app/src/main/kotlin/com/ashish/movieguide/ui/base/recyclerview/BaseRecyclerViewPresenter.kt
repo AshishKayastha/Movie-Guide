@@ -40,8 +40,8 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         addDisposable(getResults(getType(type), 1)
                 .doOnSuccess { totalPages = it.totalPages }
                 .observeOn(schedulerProvider.ui())
-                .doOnSubscribe { if (showProgress) getView()?.showProgress() }
-                .doFinally { getView()?.hideProgress() }
+                .doOnSubscribe { if (showProgress) view?.showProgress() }
+                .doFinally { view?.hideProgress() }
                 .subscribe({ showResults(it) }, { showErrorMessage(it) }))
     }
 
@@ -56,7 +56,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     private fun showItemList() {
-        getView()?.run {
+        view?.run {
             showItemList(itemList)
             setCurrentPage(currentPage)
         }
@@ -66,13 +66,13 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         if (page <= totalPages) {
             addDisposable(getResults(getType(type), page)
                     .observeOn(schedulerProvider.ui())
-                    .doOnSubscribe { getView()?.showLoadingItem() }
+                    .doOnSubscribe { view?.showLoadingItem() }
                     .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))
         }
     }
 
     private fun addNewItemList(data: Results<I>?) {
-        getView()?.run {
+        view?.run {
             if (data != null) {
                 currentPage = data.page
                 val newItemList = data.results
@@ -86,7 +86,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     private fun handleLoadMoreError(t: Throwable) {
         Timber.e(t)
-        getView()?.run {
+        view?.run {
             removeLoadingItem()
             resetLoading()
             showErrorView()
@@ -95,7 +95,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
 
     private fun showErrorMessage(t: Throwable) {
         Timber.e(t)
-        getView()?.run {
+        view?.run {
             when (t) {
                 is IOException -> showNoInternetMessage()
                 is AuthException -> showMessage(R.string.error_not_logged_in)
@@ -105,6 +105,6 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     private fun showNoInternetMessage() {
-        getView()?.showMessage(R.string.error_no_internet)
+        view?.showMessage(R.string.error_no_internet)
     }
 }

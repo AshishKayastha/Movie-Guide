@@ -15,8 +15,6 @@ import com.ashish.movieguide.data.network.entities.trakt.NetworkStats
 import com.ashish.movieguide.data.network.entities.trakt.RatingDistribution
 import com.ashish.movieguide.data.network.entities.trakt.UserProfile
 import com.ashish.movieguide.data.preferences.PreferenceHelper
-import com.ashish.movieguide.di.modules.ActivityModule
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.ui.widget.RatingCountLayout
 import com.ashish.movieguide.utils.Constants.GMT_ISO8601_FORMAT
@@ -32,6 +30,7 @@ import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.loadCircularImage
 import com.ashish.movieguide.utils.extensions.loadPaletteBitmap
+import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.setTopBarColorAndAnimate
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.tint
@@ -47,6 +46,7 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
 
     @Inject lateinit var dialogUtils: DialogUtils
     @Inject lateinit var preferenceHelper: PreferenceHelper
+    @Inject lateinit var profilePresenter: ProfilePresenter
 
     private var menu: Menu? = null
     private var totalRatings: Int = 0
@@ -63,16 +63,11 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
 
     override fun getLayoutId() = R.layout.activity_profile
 
-    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(ProfileActivity::class.java, ProfileComponent.Builder::class.java)
-                .withModule(ActivityModule(this))
-                .build()
-                .inject(this)
-    }
+    override fun providePresenter(): ProfilePresenter = profilePresenter
 
     override fun onStart() {
         super.onStart()
-        presenter?.loadUserProfile()
+        profilePresenter.loadUserProfile()
     }
 
     override fun showProgress() = progressBar.show()
@@ -144,13 +139,13 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
         }
     }
 
-    private fun getCountString(@PluralsRes pluralId: Int, count: Int): String
-            = resources.getQuantityString(pluralId, count, count)
+    private fun getCountString(@PluralsRes pluralId: Int, count: Int): String =
+            resources.getQuantityString(pluralId, count, count)
 
     override fun showRatings(ratingDistribution: RatingDistribution) {
         totalRatings = ratingDistribution.total ?: 0
         if (totalRatings > 0) {
-            ratingDistribution.distribution?.run {
+            ratingDistribution.distribution?.apply {
                 setRatingStars(tenStarView, ten)
                 setRatingStars(nineStarView, nine)
                 setRatingStars(eightStarView, eight)

@@ -1,14 +1,17 @@
 package com.ashish.movieguide.di.component
 
+import android.app.Application
 import com.ashish.movieguide.app.MovieGuideApp
-import com.ashish.movieguide.di.modules.ActivityBinders
+import com.ashish.movieguide.di.modules.ActivityBindingModule
 import com.ashish.movieguide.di.modules.ApiModule
 import com.ashish.movieguide.di.modules.AppModule
 import com.ashish.movieguide.di.modules.BuildTypeModule
 import com.ashish.movieguide.di.modules.NetModule
 import com.ashish.movieguide.di.modules.TraktApiModule
-import com.ashish.movieguide.di.multibindings.AbstractComponent
+import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 /**
@@ -21,6 +24,17 @@ import javax.inject.Singleton
     ApiModule::class,
     TraktApiModule::class,
     BuildTypeModule::class,
-    ActivityBinders::class
+    ActivityBindingModule::class,
+    AndroidInjectionModule::class
 ])
-interface AppComponent : AbstractComponent<MovieGuideApp>
+interface AppComponent : AndroidInjector<MovieGuideApp> {
+
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        fun build(): AppComponent
+    }
+}

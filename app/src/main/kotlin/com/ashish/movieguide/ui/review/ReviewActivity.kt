@@ -8,8 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Review
-import com.ashish.movieguide.di.modules.ActivityModule
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.animation.SlideInUpAnimator
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
@@ -19,9 +17,10 @@ import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_REVIEW
 import com.ashish.movieguide.utils.CustomTabsHelper
 import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
-import icepick.State
+import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.activity_review.*
 import kotlinx.android.synthetic.main.layout_empty_view.*
+import javax.inject.Inject
 
 class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresenter>(),
         BaseRecyclerViewMvpView<Review>, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
@@ -35,14 +34,16 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
         }
     }
 
-    @JvmField
-    @State
-    var movieId: Long = 0L
+    @Inject lateinit var reviewPresenter: ReviewPresenter
+
+    @State var movieId: Long = 0L
 
     private lateinit var reviewAdapter: RecyclerViewAdapter<Review>
 
     private val scrollListener: InfiniteScrollListener = InfiniteScrollListener { currentPage ->
-        if (currentPage > 1) reviewRecyclerView.post { presenter?.loadMoreData(null, currentPage) }
+        if (currentPage > 1) {
+            reviewRecyclerView.post { reviewPresenter.loadMoreData(null, currentPage) }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +58,7 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
 
         reviewAdapter = RecyclerViewAdapter(R.layout.list_item_detail_review, ADAPTER_TYPE_REVIEW, this)
 
-        reviewRecyclerView.run {
+        reviewRecyclerView.apply {
             setHasFixedSize(true)
             emptyView = emptyContentView
             itemAnimator = SlideInUpAnimator()
@@ -66,21 +67,15 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
             adapter = reviewAdapter
         }
 
-        swipeRefresh.run {
+        swipeRefresh.apply {
             setSwipeableViews(emptyContentView, reviewRecyclerView)
             setOnRefreshListener(this@ReviewActivity)
         }
     }
 
-    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(ReviewActivity::class.java,
-                ReviewComponent.Builder::class.java)
-                .withModule(ActivityModule(this))
-                .build()
-                .inject(this)
-    }
-
     override fun getLayoutId() = R.layout.activity_review
+
+    override fun providePresenter(): ReviewPresenter = reviewPresenter
 
     override fun getIntentExtras(extras: Bundle?) {
         movieId = extras?.getLong(EXTRA_MOVIE_ID) ?: 0L
@@ -88,13 +83,13 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
 
     override fun onStart() {
         super.onStart()
-        presenter?.setMovieId(movieId)
-        presenter?.loadData(null)
+        reviewPresenter.setMovieId(movieId)
+        reviewPresenter.loadData(null)
     }
 
     override fun onRefresh() {
         scrollListener.resetPageCount()
-        presenter?.loadFreshData(null, reviewAdapter.itemCount == 0)
+        reviewPresenter.loadFreshData(null, reviewAdapter.itemCount == 0)
     }
 
     override fun showProgress() {

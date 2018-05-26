@@ -3,9 +3,9 @@ package com.ashish.movieguide.ui.people.detail
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.PeopleInteractor
 import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
 import com.ashish.movieguide.data.network.entities.tmdb.PersonDetail
 import com.ashish.movieguide.data.network.entities.trakt.TraktPerson
-import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.BaseDetailPresenter
 import com.ashish.movieguide.ui.base.detail.BaseDetailView
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText
@@ -18,19 +18,18 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 04.
  */
-@ActivityScope
 class PersonDetailPresenter @Inject constructor(
         private val peopleInteractor: PeopleInteractor,
         schedulerProvider: BaseSchedulerProvider
 ) : BaseDetailPresenter<PersonDetail, TraktPerson, BaseDetailView<PersonDetail>>(schedulerProvider) {
 
-    override fun getDetailContent(id: Long): Observable<FullDetailContent<PersonDetail, TraktPerson>>
-            = peopleInteractor.getFullPersonDetail(id)
+    override fun getDetailContent(id: Long): Observable<FullDetailContent<PersonDetail, TraktPerson>> =
+            peopleInteractor.getFullPersonDetail(id)
 
     override fun getContentList(fullDetailContent: FullDetailContent<PersonDetail, TraktPerson>): List<String> {
         val contentList = ArrayList<String>()
-        fullDetailContent.detailContent?.run {
-            contentList.run {
+        fullDetailContent.detailContent?.apply {
+            contentList.apply {
                 add(biography ?: "")
                 add(birthday.getFormattedMediumDate())
                 add(placeOfBirth ?: "")
@@ -45,7 +44,7 @@ class PersonDetailPresenter @Inject constructor(
 
     override fun getBackdropImages(detailContent: PersonDetail) = detailContent.images?.profiles
 
-    override fun getPosterImages(detailContent: PersonDetail) = null
+    override fun getPosterImages(detailContent: PersonDetail): List<ImageItem>? = null
 
     override fun getCredits(detailContent: PersonDetail) = detailContent.credits
 

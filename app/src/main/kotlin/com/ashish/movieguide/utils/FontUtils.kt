@@ -32,7 +32,7 @@ object FontUtils {
 
     private fun setFontStyle(textView: TextView, fontName: String) {
         if (!TextUtils.isEmpty(fontName)) {
-            textView.run {
+            textView.apply {
                 paintFlags = textView.paintFlags or Paint.SUBPIXEL_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
                 typeface = getTypeface(textView.context, fontName)
             }

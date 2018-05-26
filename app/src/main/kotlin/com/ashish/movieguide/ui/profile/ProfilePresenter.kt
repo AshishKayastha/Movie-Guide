@@ -4,7 +4,6 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.api.trakt.UserApi
 import com.ashish.movieguide.data.network.entities.trakt.Stats
 import com.ashish.movieguide.data.preferences.PreferenceHelper
-import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
@@ -12,7 +11,6 @@ import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
-@ActivityScope
 class ProfilePresenter @Inject constructor(
         private val userApi: UserApi,
         private val preferenceHelper: PreferenceHelper,
@@ -21,7 +19,7 @@ class ProfilePresenter @Inject constructor(
 
     fun loadUserProfile() {
         val userProfile = preferenceHelper.getUserProfile()
-        getView()?.showUserProfile(userProfile, preferenceHelper.getCoverImageUrl())
+        view?.showUserProfile(userProfile, preferenceHelper.getCoverImageUrl())
         loadUserStats()
     }
 
@@ -35,7 +33,7 @@ class ProfilePresenter @Inject constructor(
     }
 
     private fun showUserStats(stats: Stats) {
-        getView()?.run {
+        view?.run {
             with(stats) {
                 movies?.let { showMovieStats(it) }
                 episodes?.let { showEpisodeStats(it) }
@@ -47,7 +45,7 @@ class ProfilePresenter @Inject constructor(
 
     private fun handleError(t: Throwable) {
         Timber.e(t)
-        getView()?.run {
+        view?.run {
             if (t is IOException) {
                 showMessage(R.string.error_no_internet)
             } else {

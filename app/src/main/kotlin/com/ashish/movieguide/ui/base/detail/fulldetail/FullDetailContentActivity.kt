@@ -83,7 +83,7 @@ abstract class FullDetailContentActivity<I, T, V : FullDetailContentView<I>,
     }
 
     override fun showTrailerFAB(trailerUrl: String) {
-        playTrailerFAB.run {
+        playTrailerFAB.apply {
             postDelayed({ animate().alpha(1f).scaleX(1f).scaleY(1f).start() }, 80L)
             setOnClickListener { openUrl(trailerUrl) }
         }
@@ -102,7 +102,7 @@ abstract class FullDetailContentActivity<I, T, V : FullDetailContentView<I>,
         super.onOffsetChanged(appBarLayout, verticalOffset)
 
         // Show or hide FAB depending upon whether appbar is collapsing or expanding
-        playTrailerFAB.run {
+        playTrailerFAB.apply {
             val isCollapsing = collapsingToolbar.height + verticalOffset <
                     2.4 * ViewCompat.getMinimumHeight(collapsingToolbar)
             if (isCollapsing) hide() else show()

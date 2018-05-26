@@ -8,8 +8,6 @@ import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.data.network.entities.tmdb.MultiSearch
 import com.ashish.movieguide.data.network.entities.tmdb.Person
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.di.modules.FragmentModule
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
@@ -20,6 +18,7 @@ import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_PERSON
 import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_TV
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 05.
@@ -27,16 +26,10 @@ import kotlinx.android.synthetic.main.fragment_recycler_view.*
 class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
         BaseRecyclerViewMvpView<MultiSearch>, MultiSearchPresenter>() {
 
+    @Inject lateinit var multiSearchPresenter: MultiSearchPresenter
+
     companion object {
         fun newInstance() = MultiSearchFragment()
-    }
-
-    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(MultiSearchFragment::class.java,
-                MultiSearchFragmentComponent.Builder::class.java)
-                .withModule(FragmentModule(activity!!))
-                .build()
-                .inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,14 +37,16 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
         swipeRefresh.isEnabled = false
     }
 
+    override fun providePresenter(): MultiSearchPresenter = multiSearchPresenter
+
     override fun loadData() {
         // no-op
     }
 
     fun searchQuery(query: String) {
         recyclerViewAdapter.clearAll()
-        presenter?.setSearchQuery(query)
-        presenter?.loadFreshData(null)
+        multiSearchPresenter.setSearchQuery(query)
+        multiSearchPresenter.loadFreshData(null)
     }
 
     override fun getAdapterType() = ADAPTER_TYPE_MULTI_SEARCH
@@ -80,14 +75,17 @@ class MultiSearchFragment : BaseRecyclerViewFragment<MultiSearch,
                         val movie = Movie(id, title, posterPath = posterPath)
                         MovieDetailActivity.createIntent(activity!!, movie)
                     }
+
                     MEDIA_TYPE_TV -> {
                         val tvShow = TVShow(id, name, posterPath = posterPath)
                         TVShowDetailActivity.createIntent(activity!!, tvShow)
                     }
+
                     MEDIA_TYPE_PERSON -> {
                         val people = Person(id, name, profilePath = profilePath)
                         PersonDetailActivity.createIntent(activity!!, people)
                     }
+
                     else -> null
                 }
             }

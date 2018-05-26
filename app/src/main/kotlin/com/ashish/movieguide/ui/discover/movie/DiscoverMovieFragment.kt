@@ -1,8 +1,8 @@
 package com.ashish.movieguide.ui.discover.movie
 
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.discover.base.BaseDiscoverFragment
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 06.
@@ -13,12 +13,9 @@ class DiscoverMovieFragment : BaseDiscoverFragment<Movie, DiscoverMoviePresenter
         fun newInstance() = DiscoverMovieFragment()
     }
 
-    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(DiscoverMovieFragment::class.java,
-                DiscoverMovieComponent.Builder::class.java)
-                .build()
-                .inject(this)
-    }
+    @Inject lateinit var discoverMoviePresenter: DiscoverMoviePresenter
+
+    override fun providePresenter(): DiscoverMoviePresenter = discoverMoviePresenter
 
     override fun getDiscoverMediaType() = DISCOVER_MOVIE
 }

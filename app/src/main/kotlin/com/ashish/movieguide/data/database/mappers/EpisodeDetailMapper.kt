@@ -14,7 +14,7 @@ class EpisodeDetailMapper @Inject constructor() : Function<FullDetailContent<Epi
 
     override fun apply(fullDetailContent: FullDetailContent<EpisodeDetail, TraktEpisode>): Episode {
         val episodeEntity = EpisodeEntity()
-        fullDetailContent.detailContent?.run {
+        fullDetailContent.detailContent?.apply {
             episodeEntity.tmdbId = id!!
             episodeEntity.name = name
             episodeEntity.overview = overview

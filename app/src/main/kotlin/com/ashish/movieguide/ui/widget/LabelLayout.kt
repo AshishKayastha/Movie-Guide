@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -45,6 +46,7 @@ class LabelLayout @JvmOverloads constructor(
     init {
         setWillNotDraw(false)
 
+        @SuppressLint("Recycle")
         val ta = context.obtainStyledAttributes(attrs, R.styleable.LabelLayout)
 
         labelBackground = ta.getDrawable(R.styleable.LabelLayout_labelBackground)
@@ -57,7 +59,7 @@ class LabelLayout @JvmOverloads constructor(
         labelTextSize = ta.getDimensionPixelSize(R.styleable.LabelLayout_android_textSize, 14f.spToPx().toInt())
         ta.recycle()
 
-        textPaint.run {
+        textPaint.apply {
             isDither = true
             isAntiAlias = true
             strokeCap = Paint.Cap.SQUARE
@@ -74,7 +76,7 @@ class LabelLayout @JvmOverloads constructor(
         val labelHalfWidth = calculateWidth(labelDistance, labelHeight) / 2
         val labelHalfHeight = labelHeight / 2
 
-        labelRect.run {
+        labelRect.apply {
             left = centerCoordinate[0] - labelHalfWidth
             right = centerCoordinate[0] + labelHalfWidth
             top = centerCoordinate[1] - labelHalfHeight
@@ -126,8 +128,8 @@ class LabelLayout @JvmOverloads constructor(
     fun getRating() = labelText.toDoubleOrNull()
 
     // Calculate the absolute position of point intersecting between canvas edge and bisector
-    private fun calculateBisectorIntersectAbsolutePosition(distance: Int, height: Int)
-            = (Math.sqrt(2.0) * (distance + height / 2)).toInt()
+    private fun calculateBisectorIntersectAbsolutePosition(distance: Int, height: Int) =
+            (Math.sqrt(2.0) * (distance + height / 2)).toInt()
 
     // Calculate the starting and ending points coordinates of bisector line
     private fun calculateBisectorCoordinates(distance: Int, height: Int, gravity: Gravity): IntArray {
@@ -238,7 +240,7 @@ class LabelLayout @JvmOverloads constructor(
 
             if (intrinsicWidth <= labelRectWidth && intrinsicHeight <= labelRectHeight) {
                 // No need to scale
-                backgroundRect.run {
+                backgroundRect.apply {
                     left = labelRect.centerX() - intrinsicWidth / 2
                     top = labelRect.centerY() - intrinsicHeight / 2
                     right = labelRect.centerX() + intrinsicWidth / 2
@@ -260,7 +262,7 @@ class LabelLayout @JvmOverloads constructor(
                     height = labelRectHeight
                 }
 
-                backgroundRect.run {
+                backgroundRect.apply {
                     with(labelRect) {
                         left = centerX() - width / 2
                         top = centerY() - height / 2

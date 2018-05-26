@@ -21,7 +21,7 @@ import com.ashish.movieguide.utils.glide.GlideApp
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import icepick.State
+import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_image_viewer.*
 
 /**
@@ -43,13 +43,8 @@ class ImageViewerFragment : BaseFragment() {
         }
     }
 
-    @JvmField
-    @State
-    var position: Int = 0
-
-    @JvmField
-    @State
-    var imageUrl: String? = null
+    @State var position: Int = 0
+    @State var imageUrl: String? = null
 
     private var sharedElementEnterTransition: Transition? = null
     private var fullBitmap: RequestBuilder<Bitmap>? = null

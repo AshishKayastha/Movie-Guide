@@ -7,7 +7,6 @@ import com.ashish.movieguide.data.network.entities.tmdb.MovieDetail
 import com.ashish.movieguide.data.network.entities.trakt.SyncItems
 import com.ashish.movieguide.data.network.entities.trakt.SyncMovie
 import com.ashish.movieguide.data.network.entities.trakt.TraktMovie
-import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
 import com.ashish.movieguide.ui.common.rating.RatingManager
@@ -25,7 +24,6 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 31.
  */
-@ActivityScope
 class MovieDetailPresenter @Inject constructor(
         private val movieInteractor: MovieInteractor,
         private val personalContentManager: PersonalContentManager,
@@ -39,12 +37,12 @@ class MovieDetailPresenter @Inject constructor(
         personalContentManager.setView(view)
     }
 
-    override fun getDetailContent(id: Long): Observable<FullDetailContent<MovieDetail, TraktMovie>>
-            = movieInteractor.getMovieDetail(id)
+    override fun getDetailContent(id: Long): Observable<FullDetailContent<MovieDetail, TraktMovie>> =
+            movieInteractor.getMovieDetail(id)
 
     override fun showDetailContent(fullDetailContent: FullDetailContent<MovieDetail, TraktMovie>) {
         super.showDetailContent(fullDetailContent)
-        getView()?.run {
+        view?.run {
             hideProgress()
             val movieDetail = fullDetailContent.detailContent
             setTMDbRating(movieDetail?.voteAverage)
@@ -54,9 +52,9 @@ class MovieDetailPresenter @Inject constructor(
 
     override fun getContentList(fullDetailContent: FullDetailContent<MovieDetail, TraktMovie>): List<String> {
         val contentList = ArrayList<String>()
-        fullDetailContent.detailContent?.run {
+        fullDetailContent.detailContent?.apply {
             val omdbDetail = fullDetailContent.omdbDetail
-            contentList.run {
+            contentList.apply {
                 add(overview ?: "")
                 add(tagline ?: "")
                 add(genres.convertListToCommaSeparatedText { it.name.toString() })
@@ -117,8 +115,8 @@ class MovieDetailPresenter @Inject constructor(
 
     private fun getMovieId() = fullDetailContent?.detailContent?.id!!
 
-    override fun detachView() {
-        super.detachView()
+    override fun onDetachView() {
+        super.onDetachView()
         ratingManager.setView(null)
         personalContentManager.setView(null)
     }

@@ -1,7 +1,9 @@
 package com.ashish.movieguide.data.network.entities.trakt
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class Distribution(
         @Json(name = "1") val one: Int? = null,
         @Json(name = "2") val two: Int? = null,

@@ -27,6 +27,6 @@ class MoviePresenter @Inject constructor(
 
     override fun getType(type: Int?) = MOVIE_TYPES[type ?: 0]
 
-    override fun getResults(type: String?, page: Int): Single<Results<Movie>>
-            = movieInteractor.getMoviesByType(type, page)
+    override fun getResults(type: String?, page: Int): Single<Results<Movie>> =
+            movieInteractor.getMoviesByType(type, page)
 }

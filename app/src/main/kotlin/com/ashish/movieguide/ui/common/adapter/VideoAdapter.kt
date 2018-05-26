@@ -18,8 +18,8 @@ class VideoAdapter(
         private var onItemClickListener: OnItemClickListener?
 ) : RecyclerView.Adapter<VideoAdapter.VideoHolder>(), RemoveListener {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): VideoHolder {
-        return VideoHolder(parent?.inflate(R.layout.list_item_detail_video)!!)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoHolder {
+        return VideoHolder(parent.inflate(R.layout.list_item_detail_video)!!)
     }
 
     override fun onBindViewHolder(holder: VideoHolder, position: Int) {

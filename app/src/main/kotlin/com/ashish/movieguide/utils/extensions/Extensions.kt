@@ -1,5 +1,6 @@
 package com.ashish.movieguide.utils.extensions
 
+import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -7,7 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.ColorInt
 import android.support.v4.graphics.drawable.DrawableCompat
-import icepick.Icepick
+import com.evernote.android.state.StateSaver
 
 /**
  * Created by Ashish on Dec 31.
@@ -50,7 +51,7 @@ fun <T> MutableCollection<T>.addOrRemove(item: T) {
 /**
  * An extension function which will either get extras from the [Bundle] passed
  * through [android.content.Intent] or as an arguments for [android.support.v4.app.Fragment]
- * or restore the saved data from the given [Bundle] using [Icepick] depending upon
+ * or restore the saved data from the given [Bundle] using [StateSaver] depending upon
  * whether the savedInstanceState is null or not.
  *
  * @param target type of object to restore data from; most likely [android.app.Activity]
@@ -58,11 +59,12 @@ fun <T> MutableCollection<T>.addOrRemove(item: T) {
  * @param getExtras a function to handle getting data passed through [android.content.Intent]
  * or as an arguments for [android.support.v4.app.Fragment]
  */
+@SuppressLint("NonMatchingStateSaverCalls")
 inline fun <T> Bundle?.getExtrasOrRestore(target: T, getExtras: () -> Unit) {
     if (this == null) {
         getExtras()
     } else {
-        Icepick.restoreInstanceState(target, this)
+        StateSaver.restoreInstanceState(target, this)
     }
 }
 
@@ -79,4 +81,9 @@ fun Int?.getDayHourMinutes(): Triple<String, String, String> {
     }
 
     return Triple("0", "0", "0")
+}
+
+inline fun performAction(action: () -> Unit): Boolean {
+    action()
+    return true
 }

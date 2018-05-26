@@ -28,8 +28,12 @@ object CustomToast {
         toast.show()
     }
 
-    private fun createCustomToast(context: Context, message: CharSequence,
-                                  @DrawableRes drawableId: Int, @ColorInt tintColor: Int): Toast {
+    private fun createCustomToast(
+            context: Context,
+            message: CharSequence,
+            @DrawableRes drawableId: Int,
+            @ColorInt tintColor: Int
+    ): Toast {
 
         val toast = Toast(context)
         val toastLayout = context.inflateLayout(R.layout.view_toast)

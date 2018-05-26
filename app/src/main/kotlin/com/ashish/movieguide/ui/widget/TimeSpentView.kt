@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
@@ -28,6 +29,7 @@ class TimeSpentView @JvmOverloads constructor(
         gravity = Gravity.CENTER
 
         if (attrs != null) {
+            @SuppressLint("Recycle")
             val ta = context.obtainStyledAttributes(attrs, R.styleable.TimeSpentView)
             timeSpentType = ta.getString(R.styleable.TimeSpentView_timeSpentTypeText)
             timeSpent = ta.getString(R.styleable.TimeSpentView_timeSpentTypeCount)

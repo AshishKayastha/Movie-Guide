@@ -39,8 +39,12 @@ fun View.hide(viewGone: Boolean = true) {
     visibility = if (viewGone) GONE else INVISIBLE
 }
 
-fun View.showSnackBar(messageId: Int, duration: Int = Snackbar.LENGTH_LONG,
-                      @StringRes actionBtnTextId: Int = android.R.string.ok, action: (() -> Unit)? = null) {
+fun View.showSnackBar(
+        messageId: Int,
+        duration: Int = Snackbar.LENGTH_LONG,
+        @StringRes actionBtnTextId: Int = android.R.string.ok,
+        action: (() -> Unit)? = null
+) {
 
     val snackbar = Snackbar.make(this, messageId, duration)
             .setAction(actionBtnTextId, { action?.invoke() })
@@ -58,11 +62,15 @@ fun View.animateBackgroundColorChange(startColor: Int, endColor: Int) {
     animateColorChange(startColor, endColor, onAnimationUpdate = { setBackgroundColor(it) })
 }
 
-inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 800L,
-                              crossinline onAnimationUpdate: (color: Int) -> Unit) {
+inline fun animateColorChange(
+        startColor: Int,
+        endColor: Int,
+        duration: Long = 800L,
+        crossinline onAnimationUpdate: (color: Int) -> Unit
+) {
     if (startColor != endColor) {
         val colorAnimator = ValueAnimator.ofArgb(startColor, endColor)
-        colorAnimator.run {
+        colorAnimator.apply {
             this.duration = duration
             interpolator = FastOutSlowInInterpolator()
             addUpdateListener { animation -> onAnimationUpdate(animation.animatedValue as Int) }
@@ -73,7 +81,7 @@ inline fun animateColorChange(startColor: Int, endColor: Int, duration: Long = 8
 
 fun View.getPosterImagePair(@StringRes transitionNameId: Int): Pair<View, String>? {
     val posterImageView = find<ImageView>(R.id.poster_image)
-    return if (posterImageView != null) Pair.create(posterImageView, context.getString(transitionNameId)) else null
+    return Pair.create(posterImageView, context.getString(transitionNameId))
 }
 
 @SuppressLint("InlinedApi")
@@ -103,8 +111,14 @@ fun View?.showKeyboard() {
     }
 }
 
-inline fun View.startCircularRevealAnimation(cx: Int, cy: Int, startRadius: Float, endRadius: Float,
-                                             duration: Long = 400L, crossinline animationEnd: () -> Unit) {
+inline fun View.startCircularRevealAnimation(
+        cx: Int,
+        cy: Int,
+        startRadius: Float,
+        endRadius: Float,
+        duration: Long = 400L,
+        crossinline animationEnd: () -> Unit
+) {
     val animator = ViewAnimationUtils.createCircularReveal(this, cx, cy, startRadius, endRadius)
     animator.duration = duration
     animator.addListener(object : Animator.AnimatorListener {

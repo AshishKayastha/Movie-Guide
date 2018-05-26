@@ -42,18 +42,18 @@ class MovieInteractor @Inject constructor(
     private fun convertToFullMovieDetail(movieDetail: MovieDetail)
             : Observable<FullDetailContent<MovieDetail, TraktMovie>> {
         val imdbId = movieDetail.imdbId
-        if (imdbId.isNotNullOrEmpty()) {
+        return if (imdbId.isNotNullOrEmpty()) {
             val traktMovieSingle = traktMovieApi.getMovieDetail(imdbId!!)
                     .onErrorReturnItem(TraktMovie())
 
             val omdbDetailSingle = omDbApi.getOMDbDetail(imdbId)
                     .onErrorReturnItem(OMDbDetail())
 
-            return Observable.zip(traktMovieSingle, omdbDetailSingle, BiFunction { traktMovie, omDbDetail ->
+            Observable.zip(traktMovieSingle, omdbDetailSingle, BiFunction { traktMovie, omDbDetail ->
                 FullDetailContent(movieDetail, omDbDetail, traktMovie)
             })
         } else {
-            return Observable.just(FullDetailContent(movieDetail))
+            Observable.just(FullDetailContent(movieDetail))
         }
     }
 

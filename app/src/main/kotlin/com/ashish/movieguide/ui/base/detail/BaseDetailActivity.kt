@@ -58,6 +58,7 @@ import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.loadPaletteBitmap
 import com.ashish.movieguide.utils.extensions.openUrl
+import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.setOverflowMenuColor
 import com.ashish.movieguide.utils.extensions.setPaletteColor
 import com.ashish.movieguide.utils.extensions.setTopBarColorAndAnimate
@@ -230,7 +231,7 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
             // start postponed shared element transition
             startPostponedEnterTransition()
 
-            paletteBitmap.setPaletteColor { swatch ->
+            paletteBitmap?.palette.setPaletteColor { swatch ->
                 contentTitleText.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
                 contentTitleText.animateTextColorChange(getColorCompat(R.color.primary_text_light),
                         swatch.bodyTextColor)
@@ -263,7 +264,7 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
     abstract fun getDetailContentType(): Int
 
     private fun setDetailContentAdapter(contentTitleId: Int, contentList: List<String>) {
-        detailContentRecyclerView.run {
+        detailContentRecyclerView.apply {
             setHasFixedSize(true)
             isNestedScrollingEnabled = false
             layoutManager = LinearLayoutManager(this@BaseDetailActivity)
@@ -312,7 +313,7 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
         val inflatedView = viewStub.inflate()
         val recyclerView = inflatedView.find<RecyclerView>(viewId)
 
-        recyclerView.run {
+        recyclerView.apply {
             setHasFixedSize(true)
             addItemDecoration(ItemOffsetDecoration())
             layoutManager = LinearLayoutManager(this@BaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)

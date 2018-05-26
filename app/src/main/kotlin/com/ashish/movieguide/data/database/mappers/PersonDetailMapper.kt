@@ -15,7 +15,7 @@ class PersonDetailMapper @Inject constructor() : Function<FullDetailContent<Pers
 
     override fun apply(fullDetailContent: FullDetailContent<PersonDetail, TraktPerson>): Person {
         val personEntity = PersonEntity()
-        fullDetailContent.detailContent?.run {
+        fullDetailContent.detailContent?.apply {
             personEntity.tmdbId = id!!
             personEntity.name = name
             personEntity.birthday = birthday

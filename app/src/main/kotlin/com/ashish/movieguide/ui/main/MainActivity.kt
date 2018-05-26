@@ -15,11 +15,6 @@ import android.view.View
 import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.preferences.PreferenceHelper
-import com.ashish.movieguide.di.modules.ActivityModule
-import com.ashish.movieguide.di.multibindings.AbstractComponent
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilder
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.common.BaseActivity
 import com.ashish.movieguide.ui.login.LoginActivity
 import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_DISCOVER
@@ -42,22 +37,23 @@ import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getStringArray
 import com.ashish.movieguide.utils.extensions.loadCircularImage
 import com.ashish.movieguide.utils.extensions.loadImage
+import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.runDelayed
 import com.ashish.movieguide.utils.extensions.setVisibility
+import dagger.android.AndroidInjection
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
-import javax.inject.Provider
 
-class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
+class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     companion object {
         private const val RC_CONNECT_TRAKT = 99
     }
 
     @Inject lateinit var preferenceHelper: PreferenceHelper
-
-    @Inject
-    lateinit var componentBuilders: Map<Class<out Fragment>, @JvmSuppressWildcards Provider<FragmentComponentBuilder<*, *>>>
+    @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
 
     private lateinit var userImage: ImageView
     private lateinit var headerImage: ImageView
@@ -74,10 +70,11 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
     private lateinit var tabPagerAdapter: TabPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         setTheme(R.style.AppTheme_TransparentStatusBar)
         super.onCreate(savedInstanceState)
 
-        supportActionBar?.run {
+        supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
         }
@@ -96,18 +93,6 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
         tabLayout.changeTabFont()
         toolbar?.changeViewGroupTextFont()
         setupNavigationView()
-    }
-
-    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(MainActivity::class.java, MainComponent.Builder::class.java)
-                .withModule(ActivityModule(this))
-                .build()
-                .inject(this)
-    }
-
-    override fun <F : Fragment, B : FragmentComponentBuilder<F, AbstractComponent<F>>>
-            getFragmentComponentBuilder(fragmentKey: Class<F>, builderType: Class<B>): B {
-        return builderType.cast(componentBuilders[fragmentKey]!!.get())
     }
 
     override fun getLayoutId() = R.layout.activity_main
@@ -146,7 +131,7 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
     }
 
     private fun showUserProfile() {
-        preferenceHelper.run {
+        preferenceHelper.apply {
             if (isLoggedIn()) {
                 nameText.applyText(getName())
             } else {
@@ -164,7 +149,7 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
         tabLayout.setVisibility(contentType != CONTENT_TYPE_PEOPLE)
 
         tabPagerAdapter = TabPagerAdapter(contentType, supportFragmentManager, titleArray)
-        viewPager.run {
+        viewPager.apply {
             adapter = tabPagerAdapter
             offscreenPageLimit = tabPagerAdapter.count - 1
         }
@@ -236,4 +221,6 @@ class MainActivity : BaseActivity(), FragmentComponentBuilderHost {
         navigationView.setNavigationItemSelectedListener(null)
         super.onDestroy()
     }
+
+    override fun supportFragmentInjector() = supportFragmentInjector
 }

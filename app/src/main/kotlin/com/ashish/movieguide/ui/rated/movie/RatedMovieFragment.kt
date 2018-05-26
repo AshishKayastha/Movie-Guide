@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
-import com.ashish.movieguide.di.modules.FragmentModule
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.common.rating.RatingChangeObserver
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
-import icepick.State
+import com.evernote.android.state.State
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -23,26 +21,19 @@ class RatedMovieFragment : BaseRecyclerViewFragment<Movie,
         fun newInstance() = RatedMovieFragment()
     }
 
+    @Inject lateinit var ratedMoviePresenter: RatedMoviePresenter
     @Inject lateinit var ratingChangeObserver: RatingChangeObserver
 
-    @JvmField
-    @State
-    var clickedItemPosition: Int = -1
+    @State var clickedItemPosition: Int = -1
 
     private var disposable: Disposable? = null
-
-    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(RatedMovieFragment::class.java,
-                RatedMovieComponent.Builder::class.java)
-                .withModule(FragmentModule(activity!!))
-                .build()
-                .inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeMovieRatingChanged()
     }
+
+    override fun providePresenter(): RatedMoviePresenter = ratedMoviePresenter
 
     override fun getAdapterType() = ADAPTER_TYPE_MOVIE
 
@@ -57,9 +48,7 @@ class RatedMovieFragment : BaseRecyclerViewFragment<Movie,
             clickedItemPosition = position
             val movie = recyclerViewAdapter.getItem<Movie>(position)
             MovieDetailActivity.createIntent(activity!!, movie)
-        } else {
-            null
-        }
+        } else null
     }
 
     private fun observeMovieRatingChanged() {

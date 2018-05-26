@@ -2,11 +2,9 @@ package com.ashish.movieguide.utils.extensions
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.Uri
-import android.preference.PreferenceManager
 import android.support.annotation.ArrayRes
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
@@ -41,9 +39,6 @@ val Context.inputMethodManager: InputMethodManager?
 
 val Context.connectivityManager: ConnectivityManager
     get() = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-val Context.defaultSharedPreferences: SharedPreferences
-    get() = PreferenceManager.getDefaultSharedPreferences(this)
 
 fun Context.getStringArray(@ArrayRes arrayId: Int): Array<String> = resources.getStringArray(arrayId)
 

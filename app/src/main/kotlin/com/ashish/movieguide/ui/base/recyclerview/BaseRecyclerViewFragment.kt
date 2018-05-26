@@ -18,7 +18,7 @@ import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.ERROR_VIEW
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
-import icepick.State
+import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
 import kotlinx.android.synthetic.main.layout_empty_view.*
 
@@ -29,14 +29,12 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         P : BaseRecyclerViewPresenter<I, V>> : MvpFragment<V, P>(), BaseRecyclerViewMvpView<I>,
         SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
-    @JvmField
-    @State
-    var type: Int? = null
+    @State var type: Int? = null
 
     protected lateinit var recyclerViewAdapter: RecyclerViewAdapter<I>
 
     private val scrollListener: InfiniteScrollListener = InfiniteScrollListener { currentPage ->
-        if (currentPage > 1) recyclerView.post { presenter?.loadMoreData(type, currentPage) }
+        if (currentPage > 1) recyclerView.post { presenter.loadMoreData(type, currentPage) }
     }
 
     override fun getLayoutId() = R.layout.fragment_recycler_view
@@ -52,7 +50,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
         recyclerViewAdapter = RecyclerViewAdapter(R.layout.list_item_content, getAdapterType(), this)
 
-        recyclerView.run {
+        recyclerView.apply {
             setHasFixedSize(true)
             emptyView = emptyContentView
             itemAnimator = SlideInUpAnimator()
@@ -63,7 +61,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
             adapter = recyclerViewAdapter
         }
 
-        swipeRefresh.run {
+        swipeRefresh.apply {
             setSwipeableViews(emptyContentView, recyclerView)
             setOnRefreshListener(this@BaseRecyclerViewFragment)
         }
@@ -74,7 +72,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         loadData()
     }
 
-    protected open fun loadData() = presenter?.loadData(type)
+    protected open fun loadData() = presenter.loadData(type)
 
     abstract fun getAdapterType(): Int
 
@@ -86,7 +84,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     override fun onRefresh() {
         scrollListener.resetPageCount()
-        presenter?.loadFreshData(type, recyclerViewAdapter.itemCount == 0)
+        presenter.loadFreshData(type, recyclerViewAdapter.itemCount == 0)
     }
 
     override fun showProgress() {
@@ -120,7 +118,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         if (viewType == ERROR_VIEW) {
             recyclerViewAdapter.removeErrorItem()
             scrollListener.shouldLoadMore = true
-            presenter?.loadMoreData(type, scrollListener.currentPage)
+            presenter.loadMoreData(type, scrollListener.currentPage)
 
         } else {
             val intent = getDetailIntent(position)

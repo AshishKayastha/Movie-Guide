@@ -24,8 +24,11 @@ abstract class LeakFreeSupportSharedElementCallback : SharedElementCallback() {
 
     private var tempMatrix: Matrix? = null
 
-    override fun onCaptureSharedElementSnapshot(sharedElement: View, viewToGlobalMatrix: Matrix,
-                                                screenBounds: RectF): Parcelable {
+    override fun onCaptureSharedElementSnapshot(
+            sharedElement: View,
+            viewToGlobalMatrix: Matrix,
+            screenBounds: RectF
+    ): Parcelable {
         if (sharedElement is ImageView) {
             val drawable = sharedElement.drawable
             val bg = sharedElement.background

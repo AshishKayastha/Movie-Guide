@@ -5,7 +5,6 @@ import com.ashish.movieguide.data.interactors.TVShowInteractor
 import com.ashish.movieguide.data.network.entities.common.FullDetailContent
 import com.ashish.movieguide.data.network.entities.tmdb.SeasonDetail
 import com.ashish.movieguide.data.network.entities.trakt.TraktSeason
-import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
@@ -16,7 +15,6 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 07.
  */
-@ActivityScope
 class SeasonDetailPresenter @Inject constructor(
         private val tvShowInteractor: TVShowInteractor,
         schedulerProvider: BaseSchedulerProvider
@@ -28,12 +26,12 @@ class SeasonDetailPresenter @Inject constructor(
         this.seasonNumber = seasonNumber
     }
 
-    override fun getDetailContent(id: Long): Observable<FullDetailContent<SeasonDetail, TraktSeason>>
-            = tvShowInteractor.getFullSeasonDetail(id, seasonNumber)
+    override fun getDetailContent(id: Long): Observable<FullDetailContent<SeasonDetail, TraktSeason>> =
+            tvShowInteractor.getFullSeasonDetail(id, seasonNumber)
 
     override fun showDetailContent(fullDetailContent: FullDetailContent<SeasonDetail, TraktSeason>) {
         super.showDetailContent(fullDetailContent)
-        getView()?.run {
+        view?.run {
             hideProgress()
             val seasonDetail = fullDetailContent.detailContent
             showItemList(seasonDetail?.episodes) { showEpisodeList(it) }
@@ -42,9 +40,9 @@ class SeasonDetailPresenter @Inject constructor(
 
     override fun getContentList(fullDetailContent: FullDetailContent<SeasonDetail, TraktSeason>): List<String> {
         val contentList = ArrayList<String>()
-        fullDetailContent.detailContent?.run {
+        fullDetailContent.detailContent?.apply {
             val omdbDetail = fullDetailContent.omdbDetail
-            contentList.run {
+            contentList.apply {
                 add(overview ?: "")
                 add(omdbDetail?.Rated ?: "")
                 add(omdbDetail?.Awards ?: "")

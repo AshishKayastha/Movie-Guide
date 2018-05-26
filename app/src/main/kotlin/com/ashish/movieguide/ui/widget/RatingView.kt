@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.annotation.DrawableRes
@@ -29,6 +30,7 @@ class RatingView @JvmOverloads constructor(
         inflate(context, R.layout.view_rating, this)
 
         if (attrs != null) {
+            @SuppressLint("Recycle")
             val ta = context.obtainStyledAttributes(attrs, R.styleable.RatingView)
             text = ta.getString(R.styleable.RatingView_android_text)
             drawable = ta.getDrawable(R.styleable.RatingView_android_src)

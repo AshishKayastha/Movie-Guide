@@ -46,7 +46,7 @@ class RecyclerViewAdapter<in I : ViewType>(
 
     override fun getItemViewType(position: Int) = itemList[position].getViewType()
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         super.onViewRecycled(holder)
         if (holder is BaseContentHolder<*>) {
             GlideApp.with(holder.posterImage.context).clear(holder.posterImage)

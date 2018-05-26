@@ -16,6 +16,7 @@ android {
         versionName version
         versionCode buildVersionCode()
 
+        buildConfigField 'String', 'OMDB_API_KEY', OMDB_API_KEY
         buildConfigField 'String', 'TMDB_API_KEY', TMDB_API_KEY
         buildConfigField 'String', 'TRAKT_CLIENT_ID', TRAKT_CLIENT_ID
         buildConfigField 'String', 'TRAKT_CLIENT_SECRET', TRAKT_CLIENT_SECRET
@@ -107,10 +108,6 @@ dexcount {
     orderByMethodCount = true
 }
 
-repositories {
-    maven { url "https://clojars.org/repo/" }
-}
-
 dependencies {
     // Support Libraries
     implementation "com.android.support:design:$versions.supportLibVersion"
@@ -141,6 +138,10 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofitVersion"
 
+    // Moshi
+    implementation "com.squareup.moshi:moshi:$versions.moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshiVersion"
+
     // Network Logging Interceptor
     implementation("com.github.ihsanbal:LoggingInterceptor:$versions.loggingInterceptorVersion") {
         exclude group: 'org.json', module: 'json'
@@ -154,13 +155,21 @@ dependencies {
     implementation "com.google.dagger:dagger:$versions.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$versions.daggerVersion"
 
-    // IcePick
-    implementation "frankiesardo:icepick:$versions.icepickVersion"
-    kapt "frankiesardo:icepick-processor:$versions.icepickVersion"
+    // Dagger Android
+    implementation "com.google.dagger:dagger-android:$versions.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$versions.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$versions.daggerVersion"
+
+    // Android-State
+    implementation "com.evernote:android-state:$versions.androidStateVersion"
+    kapt "com.evernote:android-state-processor:$versions.androidStateVersion"
 
     // Paper Parcel
     implementation "nz.bradcampbell:paperparcel:$versions.paperParcelVersion"
     kapt "nz.bradcampbell:paperparcel-compiler:$versions.paperParcelVersion"
+
+    // Thirtyinch MVP
+    implementation "net.grandcentrix.thirtyinch:thirtyinch:$versions.thirtyinchVersion"
 
     // Leak Canary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanaryVersion"

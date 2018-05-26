@@ -1,5 +1,8 @@
 package com.ashish.movieguide.data.network.entities.tmdb
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class VideoItem(
         val id: String? = null,
         val name: String? = null,

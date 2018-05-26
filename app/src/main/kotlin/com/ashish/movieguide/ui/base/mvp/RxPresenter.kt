@@ -1,33 +1,24 @@
 package com.ashish.movieguide.ui.base.mvp
 
-import android.support.annotation.CallSuper
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import net.grandcentrix.thirtyinch.TiPresenter
 
 /**
  * This is a base presenter class which handles attaching/detaching presenter from view and
  * will also clear any network request when the presenter is completely destroyed.
  */
-abstract class RxPresenter<V : MvpView>(protected val schedulerProvider: BaseSchedulerProvider) {
+abstract class RxPresenter<V : MvpView>(
+        protected val schedulerProvider: BaseSchedulerProvider
+) : TiPresenter<V>() {
 
-    private var view: V? = null
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-
-    @CallSuper
-    open fun attachView(view: V) {
-        this.view = view
-    }
-
-    protected fun getView() = view
 
     protected fun addDisposable(disposable: Disposable) = compositeDisposable.add(disposable)
 
-    @CallSuper
-    open fun detachView() {
-        view = null
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
     }
-
-    @CallSuper
-    open fun onDestroy() = compositeDisposable.clear()
 }

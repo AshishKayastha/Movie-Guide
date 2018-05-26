@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.di.modules.FragmentModule
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.common.rating.RatingChangeObserver
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
-import icepick.State
+import com.evernote.android.state.State
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -23,26 +21,19 @@ class RatedTVShowFragment : BaseRecyclerViewFragment<TVShow,
         fun newInstance() = RatedTVShowFragment()
     }
 
+    @Inject lateinit var ratedTvPresenter: RatedTVShowPresenter
     @Inject lateinit var ratingChangeObserver: RatingChangeObserver
 
-    @JvmField
-    @State
-    var clickedItemPosition: Int = -1
+    @State var clickedItemPosition: Int = -1
 
     private var disposable: Disposable? = null
-
-    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(RatedTVShowFragment::class.java,
-                RatedTVShowComponent.Builder::class.java)
-                .withModule(FragmentModule(activity!!))
-                .build()
-                .inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeTVRatingChanged()
     }
+
+    override fun providePresenter(): RatedTVShowPresenter = ratedTvPresenter
 
     override fun getAdapterType() = ADAPTER_TYPE_TV_SHOW
 
@@ -57,9 +48,7 @@ class RatedTVShowFragment : BaseRecyclerViewFragment<TVShow,
             clickedItemPosition = position
             val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
             TVShowDetailActivity.createIntent(activity!!, tvShow)
-        } else {
-            return null
-        }
+        } else null
     }
 
     private fun observeTVRatingChanged() {

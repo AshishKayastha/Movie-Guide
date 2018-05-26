@@ -61,10 +61,10 @@ class AuthInteractor @Inject constructor(
 
     private fun <T> callApiIfLoggedIn(actionIfLoggedIn: (accountId: Long) -> Single<T>): Single<T> {
         val accountId = preferenceHelper.getId()
-        if (accountId > 0) {
-            return actionIfLoggedIn(accountId)
+        return if (accountId > 0) {
+            actionIfLoggedIn(accountId)
         } else {
-            return Single.error(AuthException())
+            Single.error(AuthException())
         }
     }
 }

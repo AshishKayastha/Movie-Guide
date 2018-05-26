@@ -13,7 +13,7 @@ class SeasonMapper @Inject constructor() : BiFunction<Season, TraktSeason, Local
 
     override fun apply(var1: Season, var2: TraktSeason?): LocalSeason {
         val seasonEntity = SeasonEntity()
-        var1.run {
+        var1.apply {
             seasonEntity.tmdbId = id!!
             seasonEntity.airDate = airDate
             seasonEntity.posterPath = posterPath

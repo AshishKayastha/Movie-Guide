@@ -1,10 +1,12 @@
 package com.ashish.movieguide.data.network.entities.tmdb
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 /**
  * Created by Ashish on Jan 04.
  */
+@JsonClass(generateAdapter = true)
 data class PersonDetail(
         val id: Long? = null,
         val name: String? = null,

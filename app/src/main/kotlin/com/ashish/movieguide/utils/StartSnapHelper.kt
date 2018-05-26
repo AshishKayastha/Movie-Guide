@@ -11,7 +11,10 @@ class StartSnapHelper : LinearSnapHelper() {
     private var verticalHelper: OrientationHelper? = null
     private var horizontalHelper: OrientationHelper? = null
 
-    override fun calculateDistanceToFinalSnap(layoutManager: RecyclerView.LayoutManager, targetView: View): IntArray? {
+    override fun calculateDistanceToFinalSnap(
+            layoutManager: RecyclerView.LayoutManager,
+            targetView: View
+    ): IntArray? {
         val out = IntArray(2)
         if (layoutManager.canScrollHorizontally()) {
             val helper = getHorizontalHelper(layoutManager)
@@ -51,7 +54,10 @@ class StartSnapHelper : LinearSnapHelper() {
      * @param helper        orientation helper to calculate view sizes
      * @return the first view in the LayoutManager to snap to
      */
-    private fun findStartView(layoutManager: RecyclerView.LayoutManager, helper: OrientationHelper): View? {
+    private fun findStartView(
+            layoutManager: RecyclerView.LayoutManager,
+            helper: OrientationHelper
+    ): View? {
         if (layoutManager is LinearLayoutManager) {
             val firstChild = layoutManager.findFirstVisibleItemPosition()
             if (firstChild == RecyclerView.NO_POSITION) return null

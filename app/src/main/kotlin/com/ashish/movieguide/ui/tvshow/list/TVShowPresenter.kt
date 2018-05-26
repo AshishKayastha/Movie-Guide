@@ -27,6 +27,6 @@ class TVShowPresenter @Inject constructor(
 
     override fun getType(type: Int?) = TV_SHOW_TYPES[type ?: 0]
 
-    override fun getResults(type: String?, page: Int): Single<Results<TVShow>>
-            = tvShowInteractor.getTVShowsByType(type, page)
+    override fun getResults(type: String?, page: Int): Single<Results<TVShow>> =
+            tvShowInteractor.getTVShowsByType(type, page)
 }

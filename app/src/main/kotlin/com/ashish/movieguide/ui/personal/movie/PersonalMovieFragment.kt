@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
-import com.ashish.movieguide.di.modules.FragmentModule
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentStatusObserver
@@ -16,7 +14,7 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movieguide.utils.TMDbConstants.FAVORITES
 import com.ashish.movieguide.utils.TMDbConstants.MEDIA_TYPE_MOVIE
 import com.ashish.movieguide.utils.TMDbConstants.WATCHLIST
-import icepick.State
+import com.evernote.android.state.State
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -41,25 +39,18 @@ class PersonalMovieFragment : BaseRecyclerViewFragment<Movie,
     }
 
     @Inject lateinit var statusObserver: PersonalContentStatusObserver
+    @Inject lateinit var personalMoviePresenter: PersonalMoviePresenter
 
-    @JvmField
-    @State
-    var clickedItemPosition: Int = -1
+    @State var clickedItemPosition: Int = -1
 
     private var disposable: Disposable? = null
-
-    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(PersonalMovieFragment::class.java,
-                PersonalMovieComponent.Builder::class.java)
-                .withModule(FragmentModule(activity!!))
-                .build()
-                .inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observePersonalContentStatusChange()
     }
+
+    override fun providePresenter(): PersonalMoviePresenter = personalMoviePresenter
 
     override fun getFragmentArguments(arguments: Bundle?) {
         type = arguments?.getInt(ARG_PERSONAL_MOVIE_TYPE)
@@ -82,9 +73,7 @@ class PersonalMovieFragment : BaseRecyclerViewFragment<Movie,
             clickedItemPosition = position
             val movie = recyclerViewAdapter.getItem<Movie>(position)
             MovieDetailActivity.createIntent(activity!!, movie)
-        } else {
-            return null
-        }
+        } else null
     }
 
     private fun observePersonalContentStatusChange() {

@@ -7,7 +7,6 @@ import com.ashish.movieguide.data.network.entities.trakt.Settings
 import com.ashish.movieguide.data.network.entities.trakt.TokenRequest
 import com.ashish.movieguide.data.network.entities.trakt.TraktToken
 import com.ashish.movieguide.data.preferences.PreferenceHelper
-import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.TraktConstants.GRANT_TYPE_AUTHORIZATION_CODE
 import com.ashish.movieguide.utils.TraktConstants.REDIRECT_URI
@@ -18,7 +17,6 @@ import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
-@ActivityScope
 class LoginPresenter @Inject constructor(
         private val traktAuthApi: TraktAuthApi,
         private val userApi: UserApi,
@@ -27,8 +25,13 @@ class LoginPresenter @Inject constructor(
 ) : RxPresenter<LoginView>(schedulerProvider) {
 
     fun exchangeAccessToken(code: String) {
-        val tokenRequest = TokenRequest(code, TRAKT_CLIENT_ID, TRAKT_CLIENT_SECRET,
-                REDIRECT_URI, GRANT_TYPE_AUTHORIZATION_CODE)
+        val tokenRequest = TokenRequest(
+                code,
+                TRAKT_CLIENT_ID,
+                TRAKT_CLIENT_SECRET,
+                REDIRECT_URI,
+                GRANT_TYPE_AUTHORIZATION_CODE
+        )
 
         addDisposable(traktAuthApi.getAccessToken(tokenRequest)
                 .doOnSuccess { saveAccessToken(it) }
@@ -38,7 +41,7 @@ class LoginPresenter @Inject constructor(
     }
 
     private fun saveAccessToken(traktToken: TraktToken) {
-        preferenceHelper.run {
+        preferenceHelper.apply {
             setAccessToken(traktToken.accessToken)
             setRefreshToken(traktToken.refreshToken)
         }
@@ -47,17 +50,17 @@ class LoginPresenter @Inject constructor(
     private fun onLoginSuccess(settings: Settings) {
         preferenceHelper.saveUserProfile(settings.user)
         preferenceHelper.setCoverImageUrl(settings.account?.coverImage)
-        getView()?.onLoginSuccess()
+        view?.onLoginSuccess()
     }
 
     private fun handleError(t: Throwable) {
         Timber.e(t)
-        preferenceHelper.run {
+        preferenceHelper.apply {
             setAccessToken(null)
             setRefreshToken(null)
         }
 
-        getView()?.run {
+        view?.run {
             if (t is IOException) {
                 showMessage(R.string.error_no_internet)
             } else {

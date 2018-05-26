@@ -114,7 +114,7 @@ class PreferenceHelper @Inject constructor(private val sharedPrefs: SharedPrefer
     private fun putBoolean(key: String, value: Boolean) = sharedPrefs.edit().putBoolean(key, value).apply()
 
     fun saveUserProfile(userProfile: UserProfile?) {
-        userProfile?.run {
+        userProfile?.apply {
             setName(name)
             setUserName(username)
             setSlug(userProfile.ids?.slug)

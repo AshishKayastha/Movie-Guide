@@ -2,12 +2,12 @@ buildscript {
     apply from: 'tools/versioning.gradle'
 
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0-alpha06'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha15'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlinVersion"
         classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$versions.dexCountPluginVersion"
     }
@@ -15,16 +15,13 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
         google()
+        jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.google.com' }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = "4.4.1"
 }

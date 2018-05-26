@@ -16,7 +16,7 @@ class ShowDetailMapper @Inject constructor() : Function<FullDetailContent<TVShow
 
     override fun apply(fullDetailContent: FullDetailContent<TVShowDetail, TraktShow>): Show {
         val showEntity = ShowEntity()
-        fullDetailContent.detailContent?.run {
+        fullDetailContent.detailContent?.apply {
             showEntity.tmdbId = id!!
             showEntity.name = name
             showEntity.type = type

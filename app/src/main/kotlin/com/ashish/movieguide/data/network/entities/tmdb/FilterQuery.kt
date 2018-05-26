@@ -2,12 +2,14 @@ package com.ashish.movieguide.data.network.entities.tmdb
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import paperparcel.PaperParcel
 
 /**
  * Created by Ashish on Jan 24.
  */
 @PaperParcel
+@JsonClass(generateAdapter = true)
 data class FilterQuery(
         var sortBy: String = "popularity.desc",
         var genreIds: String? = null,

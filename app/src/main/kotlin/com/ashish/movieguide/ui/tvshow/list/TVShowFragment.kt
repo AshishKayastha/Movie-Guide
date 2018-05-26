@@ -4,12 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.di.modules.FragmentModule
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
+import javax.inject.Inject
 
 /**
  * Created by Ashish on Dec 29.
@@ -29,12 +28,9 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow,
         }
     }
 
-    override fun injectDependencies(builderHost: FragmentComponentBuilderHost) {
-        builderHost.getFragmentComponentBuilder(TVShowFragment::class.java, TVShowComponent.Builder::class.java)
-                .withModule(FragmentModule(activity!!))
-                .build()
-                .inject(this)
-    }
+    @Inject lateinit var tvShowPresenter: TVShowPresenter
+
+    override fun providePresenter(): TVShowPresenter = tvShowPresenter
 
     override fun getFragmentArguments(arguments: Bundle?) {
         type = arguments?.getInt(ARG_TV_SHOW_TYPE)
@@ -52,8 +48,6 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow,
         return if (activity != null) {
             val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
             TVShowDetailActivity.createIntent(activity!!, tvShow)
-        } else {
-            return null
-        }
+        } else null
     }
 }

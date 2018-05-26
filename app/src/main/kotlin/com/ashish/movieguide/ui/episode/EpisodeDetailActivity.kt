@@ -10,19 +10,18 @@ import com.ashish.movieguide.data.network.entities.tmdb.Episode
 import com.ashish.movieguide.data.network.entities.tmdb.EpisodeDetail
 import com.ashish.movieguide.data.network.entities.trakt.TraktEpisode
 import com.ashish.movieguide.data.preferences.PreferenceHelper
-import com.ashish.movieguide.di.modules.ActivityModule
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.rating.RatingDialog
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
 import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getStillImageUrl
+import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.setRatingItemTitle
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import com.ashish.movieguide.utils.extensions.show
+import com.evernote.android.state.State
 import dagger.Lazy
-import icepick.State
 import kotlinx.android.synthetic.main.activity_detail_episode.*
 import kotlinx.android.synthetic.main.layout_detail_app_bar.*
 import javax.inject.Inject
@@ -47,27 +46,18 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
 
     @Inject lateinit var ratingDialog: Lazy<RatingDialog>
     @Inject lateinit var preferenceHelper: PreferenceHelper
+    @Inject lateinit var episodeDetailPresenter: EpisodeDetailPresenter
 
-    @JvmField
-    @State
-    var tvShowId: Long? = null
-    @JvmField
-    @State
-    var episode: Episode? = null
+    @State var tvShowId: Long? = null
+    @State var episode: Episode? = null
 
     private val isLoggedIn: Boolean by lazy {
         preferenceHelper.getId() > 0
     }
 
-    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(EpisodeDetailActivity::class.java,
-                EpisodeDetailComponent.Builder::class.java)
-                .withModule(ActivityModule(this))
-                .build()
-                .inject(this)
-    }
-
     override fun getLayoutId() = R.layout.activity_detail_episode
+
+    override fun providePresenter(): EpisodeDetailPresenter = episodeDetailPresenter
 
     override fun getIntentExtras(extras: Bundle?) {
         tvShowId = extras?.getLong(EXTRA_TV_SHOW_ID)
@@ -77,8 +67,8 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
     override fun getTransitionNameId() = R.string.transition_episode_image
 
     override fun loadDetailContent() {
-        presenter?.setSeasonAndEpisodeNumber(episode?.seasonNumber!!, episode?.episodeNumber!!)
-        presenter?.loadDetailContent(tvShowId)
+        episodeDetailPresenter.setSeasonAndEpisodeNumber(episode?.seasonNumber!!, episode?.episodeNumber!!)
+        episodeDetailPresenter.loadDetailContent(tvShowId)
     }
 
     override fun getBackdropPath() = episode?.stillPath.getOriginalImageUrl()
@@ -86,7 +76,7 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
     override fun getPosterPath() = episode?.stillPath.getStillImageUrl()
 
     override fun showDetailContent(detailContent: EpisodeDetail) {
-        detailContent.run {
+        detailContent.apply {
             contentTitleText.setTitleAndYear(name, airDate)
             imdbId = detailContent.externalIds?.imdbId
         }
@@ -124,11 +114,11 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
     }
 
     override fun addRating(rating: Int) {
-        presenter?.addRating(rating)
+        episodeDetailPresenter.addRating(rating)
     }
 
     override fun removeRating() {
-        presenter?.removeRating()
+        episodeDetailPresenter.removeRating()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

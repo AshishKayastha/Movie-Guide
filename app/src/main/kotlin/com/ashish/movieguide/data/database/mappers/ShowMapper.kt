@@ -13,7 +13,7 @@ class ShowMapper @Inject constructor() : BiFunction<TVShow, TraktShow, Show> {
 
     override fun apply(var1: TVShow, var2: TraktShow?): Show {
         val showEntity = ShowEntity()
-        var1.run {
+        var1.apply {
             showEntity.tmdbId = id!!
             showEntity.name = name
             showEntity.overview = overview

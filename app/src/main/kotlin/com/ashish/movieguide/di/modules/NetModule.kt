@@ -64,8 +64,11 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideBaseOkHttpClient(cache: Cache, loggingInterceptor: LoggingInterceptor,
-                                offlineCacheInterceptor: OfflineCacheInterceptor): OkHttpClient.Builder {
+    fun provideBaseOkHttpClient(
+            cache: Cache,
+            loggingInterceptor: LoggingInterceptor,
+            offlineCacheInterceptor: OfflineCacheInterceptor
+    ): OkHttpClient.Builder {
         return OkHttpClient.Builder()
                 .connectTimeout(20, SECONDS)
                 .readTimeout(20, SECONDS)
@@ -78,8 +81,10 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideTMDbClient(@BaseOkHttp okHttpClient: OkHttpClient,
-                          apiKeyInterceptor: TMDbApiKeyInterceptor): OkHttpClient {
+    fun provideTMDbClient(
+            @BaseOkHttp okHttpClient: OkHttpClient,
+            apiKeyInterceptor: TMDbApiKeyInterceptor
+    ): OkHttpClient {
         return okHttpClient.newBuilder()
                 .addInterceptor(apiKeyInterceptor)
                 .build()
@@ -93,19 +98,23 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
-    fun provideMoshiConverterFactory(moshi: Moshi): MoshiConverterFactory = MoshiConverterFactory.create(moshi)
+    fun provideMoshiConverterFactory(moshi: Moshi): MoshiConverterFactory =
+            MoshiConverterFactory.create(moshi)
 
     @Provides
     @Singleton
     @JvmStatic
-    fun provideRxJavaCallAdapterFactory(): CallAdapter.Factory
-            = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
+    fun provideRxJavaCallAdapterFactory(): CallAdapter.Factory =
+            RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
 
     @Provides
     @Singleton
     @JvmStatic
-    fun provideTMDbRetrofit(client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
-                            callAdapterFactory: CallAdapter.Factory): Retrofit {
+    fun provideTMDbRetrofit(
+            client: OkHttpClient,
+            moshiConverterFactory: MoshiConverterFactory,
+            callAdapterFactory: CallAdapter.Factory
+    ): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(TMDB_API_BASE_URL)
                 .client(client)
@@ -118,8 +127,11 @@ object NetModule {
     @Singleton
     @JvmStatic
     @OMDb
-    fun provideOMDbRetrofit(@BaseOkHttp client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
-                            callAdapterFactory: CallAdapter.Factory): Retrofit {
+    fun provideOMDbRetrofit(
+            @BaseOkHttp client: OkHttpClient,
+            moshiConverterFactory: MoshiConverterFactory,
+            callAdapterFactory: CallAdapter.Factory
+    ): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(OMDB_API_BASE_URL)
                 .client(client)
@@ -132,8 +144,11 @@ object NetModule {
     @Singleton
     @JvmStatic
     @Trakt
-    fun provideTraktClient(@BaseOkHttp okHttpClient: OkHttpClient, traktnterceptor: Traktnterceptor,
-                           traktAuthenticator: TraktAuthenticator): OkHttpClient {
+    fun provideTraktClient(
+            @BaseOkHttp okHttpClient: OkHttpClient,
+            traktnterceptor: Traktnterceptor,
+            traktAuthenticator: TraktAuthenticator
+    ): OkHttpClient {
         return okHttpClient.newBuilder()
                 .addNetworkInterceptor(traktnterceptor)
                 .authenticator(traktAuthenticator)
@@ -144,8 +159,11 @@ object NetModule {
     @Singleton
     @JvmStatic
     @Trakt
-    fun provideTraktRetrofit(@Trakt client: OkHttpClient, moshiConverterFactory: MoshiConverterFactory,
-                             callAdapterFactory: CallAdapter.Factory): Retrofit {
+    fun provideTraktRetrofit(
+            @Trakt client: OkHttpClient,
+            moshiConverterFactory: MoshiConverterFactory,
+            callAdapterFactory: CallAdapter.Factory
+    ): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(TRAKT_API_BASE_URL)
                 .client(client)

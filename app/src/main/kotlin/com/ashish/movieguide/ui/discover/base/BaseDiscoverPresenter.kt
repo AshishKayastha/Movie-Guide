@@ -29,7 +29,7 @@ abstract class BaseDiscoverPresenter<I : ViewType> constructor(
                     this.maxDate = maxDate
                     this.genreIds = genreIds
 
-                    getView()?.clearFilteredData()
+                    view?.clearFilteredData()
                     loadFreshData(null, true)
                 })
     }
@@ -44,6 +44,6 @@ abstract class BaseDiscoverPresenter<I : ViewType> constructor(
 
     fun onFilterMenuItemClick() {
         val filterQuery = FilterQuery(sortBy, genreIds, minDate, maxDate)
-        getView()?.showFilterBottomSheetDialog(filterQuery)
+        view?.showFilterBottomSheetDialog(filterQuery)
     }
 }

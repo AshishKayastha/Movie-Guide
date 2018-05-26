@@ -5,9 +5,11 @@ import android.os.Parcelable
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import paperparcel.PaperParcel
 
 @PaperParcel
+@JsonClass(generateAdapter = true)
 data class Season(
         val id: Long? = null,
         @Json(name = "air_date") val airDate: String? = null,

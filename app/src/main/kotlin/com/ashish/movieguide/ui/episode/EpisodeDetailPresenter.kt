@@ -7,7 +7,6 @@ import com.ashish.movieguide.data.network.entities.tmdb.EpisodeDetail
 import com.ashish.movieguide.data.network.entities.trakt.SyncEpisode
 import com.ashish.movieguide.data.network.entities.trakt.SyncItems
 import com.ashish.movieguide.data.network.entities.trakt.TraktEpisode
-import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.rating.RatingManager
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
@@ -20,7 +19,6 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 08.
  */
-@ActivityScope
 class EpisodeDetailPresenter @Inject constructor(
         private val tvShowInteractor: TVShowInteractor,
         private val ratingManager: RatingManager,
@@ -51,9 +49,9 @@ class EpisodeDetailPresenter @Inject constructor(
 
     override fun getContentList(fullDetailContent: FullDetailContent<EpisodeDetail, TraktEpisode>): List<String> {
         val contentList = ArrayList<String>()
-        fullDetailContent.detailContent?.run {
+        fullDetailContent.detailContent?.apply {
             val omdbDetail = fullDetailContent.omdbDetail
-            contentList.run {
+            contentList.apply {
                 add(overview ?: "")
                 add(omdbDetail?.Rated ?: "")
                 add(omdbDetail?.Awards ?: "")
@@ -102,8 +100,8 @@ class EpisodeDetailPresenter @Inject constructor(
 
     private fun getEpisodeId() = fullDetailContent?.detailContent?.id!!
 
-    override fun detachView() {
-        super.detachView()
+    override fun onDetachView() {
+        super.onDetachView()
         ratingManager.setView(null)
     }
 

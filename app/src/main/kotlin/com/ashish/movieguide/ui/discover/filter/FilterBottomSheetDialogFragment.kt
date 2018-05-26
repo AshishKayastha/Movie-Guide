@@ -1,6 +1,8 @@
 package com.ashish.movieguide.ui.discover.filter
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v7.widget.GridLayoutManager
@@ -10,9 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import com.ashish.movieguide.R
-import com.ashish.movieguide.app.MovieGuideApp
 import com.ashish.movieguide.data.network.entities.tmdb.FilterQuery
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.Constants.DATE_PICKER_FORMAT
 import com.ashish.movieguide.utils.TMDbConstants.SORT_BY_MOVIE
@@ -26,8 +26,10 @@ import com.ashish.movieguide.utils.extensions.getFormattedDate
 import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isValidDate
 import com.ashish.movieguide.utils.extensions.showToast
-import icepick.Icepick
-import icepick.State
+import com.ashish.movieguide.utils.extensions.watchFragmentLeaks
+import com.evernote.android.state.State
+import com.evernote.android.state.StateSaver
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_bottom_sheet_filter.*
 import java.util.Calendar
 import java.util.Date
@@ -55,13 +57,8 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     @Inject lateinit var filterQueryModel: FilterQueryModel
 
-    @JvmField
-    @State
-    var isMovie: Boolean = true
-
-    @JvmField
-    @State
-    var filterQuery: FilterQuery? = null
+    @State var isMovie: Boolean = true
+    @State var filterQuery: FilterQuery? = null
 
     private val calendar = Calendar.getInstance()
     private lateinit var genreAdapter: GenreAdapter
@@ -76,13 +73,9 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         setFormattedDate(year, month, dayOfMonth, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (targetFragment as FragmentComponentBuilderHost)
-                .getFragmentComponentBuilder(FilterBottomSheetDialogFragment::class.java,
-                        FilterComponent.Builder::class.java)
-                .build()
-                .inject(this)
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -103,7 +96,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
                     filterQuery?.genreIds)
         }
 
-        genreRecyclerView.run {
+        genreRecyclerView.apply {
             addItemDecoration(ItemOffsetDecoration(8f.dpToPx().toInt()))
             layoutManager = StaggeredGridLayoutManager(2, GridLayoutManager.HORIZONTAL)
             adapter = genreAdapter
@@ -139,7 +132,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun getFragmentArguments() {
-        arguments?.run {
+        arguments?.apply {
             isMovie = getBoolean(ARG_IS_MOVIE)
             filterQuery = getParcelable(ARG_FILTER_QUERY)
         }
@@ -186,9 +179,10 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         filterQuery?.genreIds = genreAdapter.getSelectedGenreIds()
     }
 
+    @SuppressLint("NonMatchingStateSaverCalls")
     override fun onSaveInstanceState(outState: Bundle) {
         updateFilterQuery()
-        Icepick.saveInstanceState(this, outState)
+        StateSaver.saveInstanceState(this, outState)
         super.onSaveInstanceState(outState)
     }
 
@@ -199,6 +193,6 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        activity?.run { MovieGuideApp.getRefWatcher(this).watch(this) }
+        activity.watchFragmentLeaks()
     }
 }

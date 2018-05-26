@@ -1,7 +1,9 @@
 package com.ashish.movieguide.utils.extensions
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.support.v7.graphics.Palette
 import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.utils.glide.GlideApp
@@ -11,21 +13,28 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.ImageViewTarget
 
 @SuppressLint("CheckResult")
-inline fun ImageView.loadPaletteBitmap(imageUrl: String?, width: Int = 0, height: Int = 0,
-                                       crossinline action: ((PaletteBitmap?) -> Unit)) {
+inline fun ImageView.loadPaletteBitmap(
+        imageUrl: String?,
+        width: Int = 0,
+        height: Int = 0,
+        crossinline action: ((PaletteBitmap?) -> Unit)
+) {
     if (imageUrl.isNotNullOrEmpty()) {
         val builder = GlideApp.with(context)
-                .`as`(PaletteBitmap::class.java)
+                .asBitmap()
                 .load(imageUrl)
 
         if (width > 0 && height > 0) {
             builder.apply(RequestOptions().override(width, height))
         }
 
-        builder.into(object : ImageViewTarget<PaletteBitmap>(this) {
-            override fun setResource(paletteBitmap: PaletteBitmap?) {
-                setImageBitmap(paletteBitmap?.bitmap)
-                action.invoke(paletteBitmap)
+        builder.into(object : ImageViewTarget<Bitmap>(this) {
+            override fun setResource(bitmap: Bitmap?) {
+                if (bitmap != null) {
+                    setImageBitmap(bitmap)
+                    val palette = Palette.from(bitmap).generate()
+                    action.invoke(PaletteBitmap(bitmap, palette))
+                }
             }
         })
     } else {

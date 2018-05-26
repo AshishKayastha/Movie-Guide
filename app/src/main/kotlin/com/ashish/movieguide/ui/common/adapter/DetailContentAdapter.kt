@@ -18,8 +18,8 @@ class DetailContentAdapter(
         private var detailContentList: List<String>
 ) : RecyclerView.Adapter<DetailContentAdapter.DetailContentHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): DetailContentHolder {
-        return DetailContentHolder(parent?.inflate(R.layout.list_item_detail_content)!!)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailContentHolder {
+        return DetailContentHolder(parent.inflate(R.layout.list_item_detail_content)!!)
     }
 
     override fun onBindViewHolder(holder: DetailContentHolder, position: Int) {

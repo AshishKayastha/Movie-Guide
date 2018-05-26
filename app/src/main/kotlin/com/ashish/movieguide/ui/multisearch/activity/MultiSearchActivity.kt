@@ -12,11 +12,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 import com.ashish.movieguide.R
-import com.ashish.movieguide.di.modules.ActivityModule
-import com.ashish.movieguide.di.multibindings.AbstractComponent
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilder
-import com.ashish.movieguide.di.multibindings.fragment.FragmentComponentBuilderHost
 import com.ashish.movieguide.ui.base.common.BaseActivity
 import com.ashish.movieguide.ui.multisearch.fragment.MultiSearchFragment
 import com.ashish.movieguide.utils.Utils
@@ -29,19 +24,19 @@ import com.ashish.movieguide.utils.extensions.onLayoutLaid
 import com.ashish.movieguide.utils.extensions.showKeyboard
 import com.ashish.movieguide.utils.extensions.startCircularRevealAnimation
 import com.ashish.movieguide.utils.keyboardwatcher.KeyboardWatcher
+import dagger.android.AndroidInjection
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_multi_search.*
 import javax.inject.Inject
-import javax.inject.Provider
 
 /**
  * Created by Ashish on Jan 05.
  */
-class MultiSearchActivity : BaseActivity(), FragmentComponentBuilderHost {
+class MultiSearchActivity : BaseActivity(), HasSupportFragmentInjector {
 
     @Inject lateinit var keyboardWatcher: KeyboardWatcher
-
-    @Inject
-    lateinit var componentBuilders: Map<Class<out Fragment>, @JvmSuppressWildcards Provider<FragmentComponentBuilder<*, *>>>
+    @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
 
     private val rootView: View by bindView(R.id.content_layout)
 
@@ -49,6 +44,7 @@ class MultiSearchActivity : BaseActivity(), FragmentComponentBuilderHost {
     private var multiSearchFragment: MultiSearchFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
@@ -63,19 +59,6 @@ class MultiSearchActivity : BaseActivity(), FragmentComponentBuilderHost {
         setupSearchView()
         handleVoiceSearchIntent(intent)
         backIcon.setOnClickListener { onBackPressed() }
-    }
-
-    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(MultiSearchActivity::class.java,
-                MultiSearchComponent.Builder::class.java)
-                .withModule(ActivityModule(this))
-                .build()
-                .inject(this)
-    }
-
-    override fun <F : Fragment, B : FragmentComponentBuilder<F, AbstractComponent<F>>>
-            getFragmentComponentBuilder(fragmentKey: Class<F>, builderType: Class<B>): B {
-        return builderType.cast(componentBuilders[fragmentKey]!!.get())
     }
 
     override fun getLayoutId() = R.layout.activity_multi_search
@@ -95,7 +78,7 @@ class MultiSearchActivity : BaseActivity(), FragmentComponentBuilderHost {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
         val searchText = searchView.find<TextView>(android.support.v7.appcompat.R.id.search_src_text)
-        searchText.run {
+        searchText.apply {
             changeTypeface()
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
@@ -133,6 +116,8 @@ class MultiSearchActivity : BaseActivity(), FragmentComponentBuilderHost {
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         return keyboardWatcher.dispatchEditTextTouchEvent(event, super.dispatchTouchEvent(event))
     }
+
+    override fun supportFragmentInjector() = supportFragmentInjector
 
     override fun onBackPressed() {
         hideKeyboard()

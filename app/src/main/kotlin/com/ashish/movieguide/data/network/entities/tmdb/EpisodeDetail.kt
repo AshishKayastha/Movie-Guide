@@ -1,7 +1,9 @@
 package com.ashish.movieguide.data.network.entities.tmdb
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class EpisodeDetail(
         val id: Long? = null,
         val name: String? = null,

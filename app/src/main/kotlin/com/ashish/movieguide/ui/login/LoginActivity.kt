@@ -9,8 +9,6 @@ import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.ashish.movieguide.R
-import com.ashish.movieguide.di.modules.ActivityModule
-import com.ashish.movieguide.di.multibindings.activity.ActivityComponentBuilderHost
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.utils.TraktConstants.REDIRECT_URI
 import com.ashish.movieguide.utils.TraktConstants.TRAKT_CLIENT_ID
@@ -23,14 +21,16 @@ import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.show
 import com.ashish.movieguide.utils.extensions.showOrHideWithAnimation
-import icepick.State
+import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.activity_login.*
 import java.math.BigInteger
 import java.security.SecureRandom
+import javax.inject.Inject
 
 class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
 
-    @JvmField
+    @Inject lateinit var loginPresenter: LoginPresenter
+
     @State
     var state: String = BigInteger(130, SecureRandom()).toString(32)
 
@@ -89,14 +89,9 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
         }
     }
 
-    override fun injectDependencies(builderHost: ActivityComponentBuilderHost) {
-        builderHost.getActivityComponentBuilder(LoginActivity::class.java, LoginComponent.Builder::class.java)
-                .withModule(ActivityModule(this))
-                .build()
-                .inject(this)
-    }
-
     override fun getLayoutId() = R.layout.activity_login
+
+    override fun providePresenter(): LoginPresenter = loginPresenter
 
     private fun getAuthUrl(): String {
         return "https://trakt.tv/oauth/authorize" +
@@ -109,7 +104,7 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
     private fun exchangeToken(code: String?, returnedState: String?) {
         if (code.isNotNullOrEmpty() && returnedState == state) {
             webView.hideWithAnimation()
-            presenter?.exchangeAccessToken(code!!)
+            loginPresenter.exchangeAccessToken(code!!)
             showStatusText(getString(R.string.trakt_logging_in), true)
         } else {
             showOrHideConnectBtn(true)

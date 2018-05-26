@@ -39,24 +39,24 @@ class TVShowInteractor @Inject constructor(
     }
 
     fun getFullTVShowDetail(tvId: Long): Observable<FullDetailContent<TVShowDetail, TraktShow>> {
-        return tvShowApi.getTVShowDetail(tvId, "similar," + APPENDED_RESPONSE)
+        return tvShowApi.getTVShowDetail(tvId, "similar,$APPENDED_RESPONSE")
                 .flatMap { convertToFullShowDetail(it) }
     }
 
     private fun convertToFullShowDetail(tvShowDetail: TVShowDetail)
             : Observable<FullDetailContent<TVShowDetail, TraktShow>> {
         val imdbId = tvShowDetail.externalIds?.imdbId
-        if (imdbId.isNotNullOrEmpty()) {
+        return if (imdbId.isNotNullOrEmpty()) {
             val traktShowSingle = traktShowApi.getShowDetail(imdbId!!)
                     .onErrorReturnItem(TraktShow())
 
             val omdbDetailSingle = getOMDbSingle(imdbId)
 
-            return Observable.zip(traktShowSingle, omdbDetailSingle, BiFunction { traktShow, omDbDetail ->
+            Observable.zip(traktShowSingle, omdbDetailSingle, BiFunction { traktShow, omDbDetail ->
                 FullDetailContent(tvShowDetail, omDbDetail, traktShow)
             })
         } else {
-            return Observable.just(FullDetailContent(tvShowDetail))
+            Observable.just(FullDetailContent(tvShowDetail))
         }
     }
 
@@ -68,17 +68,17 @@ class TVShowInteractor @Inject constructor(
     private fun convertToFullSeasonDetail(seasonDetail: SeasonDetail, seasonNumber: Int)
             : Observable<FullDetailContent<SeasonDetail, TraktSeason>> {
         val imdbId = seasonDetail.externalIds?.imdbId
-        if (imdbId.isNotNullOrEmpty()) {
+        return if (imdbId.isNotNullOrEmpty()) {
             val traktSeasonSingle = traktShowApi.getSeasonDetail(imdbId!!, seasonNumber)
                     .onErrorReturnItem(TraktSeason())
 
             val omdbDetailSingle = getOMDbSingle(imdbId)
 
-            return Observable.zip(traktSeasonSingle, omdbDetailSingle, BiFunction { traktSeason, omDbDetail ->
+            Observable.zip(traktSeasonSingle, omdbDetailSingle, BiFunction { traktSeason, omDbDetail ->
                 FullDetailContent(seasonDetail, omDbDetail, traktSeason)
             })
         } else {
-            return Observable.just(FullDetailContent(seasonDetail))
+            Observable.just(FullDetailContent(seasonDetail))
         }
     }
 
@@ -92,17 +92,17 @@ class TVShowInteractor @Inject constructor(
                                            episodeNumber: Int)
             : Observable<FullDetailContent<EpisodeDetail, TraktEpisode>> {
         val imdbId = episodeDetail.externalIds?.imdbId
-        if (imdbId.isNotNullOrEmpty()) {
+        return if (imdbId.isNotNullOrEmpty()) {
             val traktEpisodeSingle = traktShowApi.getEpisodeDetail(imdbId!!, seasonNumber, episodeNumber)
                     .onErrorReturnItem(TraktEpisode())
 
             val omdbDetailSingle = getOMDbSingle(imdbId)
 
-            return Observable.zip(traktEpisodeSingle, omdbDetailSingle, BiFunction { traktEpisode, omDbDetail ->
+            Observable.zip(traktEpisodeSingle, omdbDetailSingle, BiFunction { traktEpisode, omDbDetail ->
                 FullDetailContent(episodeDetail, omDbDetail, traktEpisode)
             })
         } else {
-            return Observable.just(FullDetailContent(episodeDetail))
+            Observable.just(FullDetailContent(episodeDetail))
         }
     }
 

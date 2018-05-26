@@ -16,10 +16,9 @@ import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.glide.GlideApp
-import com.ashish.movieguide.utils.glide.PaletteBitmapTransitionOptions
-import com.ashish.movieguide.utils.glide.palette.PaletteBitmap
 import com.ashish.movieguide.utils.glide.palette.PaletteImageViewTarget
-import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 
 /**
@@ -36,15 +35,10 @@ abstract class BaseContentHolder<in I : ViewType>(
     val posterImage: AspectRatioImageView by bindView(R.id.poster_image)
     val ratingLabel: LabelLayout? by bindOptionalView(R.id.rating_label)
 
-    private val requestBuilder: RequestBuilder<PaletteBitmap>
-
     init {
         itemView.setOnClickListener { view ->
             getItemClickListener()?.onItemClick(adapterPosition, view)
         }
-
-        requestBuilder = GlideApp.with(itemView.context)
-                .`as`(PaletteBitmap::class.java)
     }
 
     open fun bindData(item: I) {
@@ -54,8 +48,11 @@ abstract class BaseContentHolder<in I : ViewType>(
     private fun loadImage(item: I) {
         val imageUrl = getImageUrl(item)
         if (imageUrl.isNotNullOrEmpty()) {
-            requestBuilder.load(imageUrl)
-                    .transition(PaletteBitmapTransitionOptions.crossFade())
+            GlideApp.with(itemView.context)
+                    .asBitmap()
+                    .load(imageUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .transition(BitmapTransitionOptions.withCrossFade())
                     .apply(RequestOptions().override(LIST_THUMBNAIL_WIDTH, LIST_THUMBNAIL_HEIGHT))
                     .into(PaletteImageViewTarget(this))
         } else {

@@ -34,7 +34,7 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
 
     private fun loadFreshData(id: Long?) {
         if (id != null) {
-            getView()?.showProgress()
+            view?.showProgress()
             addDisposable(getDetailContent(id)
                     .doOnNext { fullDetailContent = it }
                     .observeOn(schedulerProvider.ui())
@@ -45,7 +45,7 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
     abstract fun getDetailContent(id: Long): Observable<FullDetailContent<I, T>>
 
     protected open fun showDetailContent(fullDetailContent: FullDetailContent<I, T>) {
-        getView()?.run {
+        view?.run {
             val contentList = getContentList(fullDetailContent)
             showDetailContentList(contentList)
 
@@ -67,7 +67,7 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
         addImages(imageUrlList, getBackdropImages(detailContent)) { it.getBackdropUrl() }
 
         if (imageUrlList.isNotEmpty()) {
-            getView()?.showImageList(imageUrlList)
+            view?.showImageList(imageUrlList)
         }
     }
 
@@ -90,7 +90,7 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
     abstract fun getCredits(detailContent: I): CreditResults?
 
     private fun showCredits(creditResults: CreditResults?) {
-        getView()?.run {
+        view?.run {
             showItemList(creditResults?.cast) { showCastList(it) }
             showItemList(creditResults?.crew) { showCrewList(it) }
         }
@@ -98,7 +98,7 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
 
     private fun onLoadDetailError(t: Throwable, messageId: Int) {
         Timber.e(t)
-        getView()?.run {
+        view?.run {
             showErrorToast(t, messageId)
             finishActivity()
         }
@@ -107,7 +107,7 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
     abstract fun getErrorMessageId(): Int
 
     private fun showErrorToast(t: Throwable, messageId: Int) {
-        getView()?.run {
+        view?.run {
             when (t) {
                 is IOException -> showToastMessage(R.string.error_no_internet)
                 is AuthException -> showToastMessage(R.string.error_not_logged_in)

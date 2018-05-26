@@ -2,9 +2,11 @@ package com.ashish.movieguide.di.modules
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import com.ashish.movieguide.data.database.entities.Models
 import com.ashish.movieguide.di.qualifiers.ApplicationContext
-import com.ashish.movieguide.utils.extensions.defaultSharedPreferences
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import io.requery.Persistable
@@ -18,27 +20,33 @@ import javax.inject.Singleton
  * Created by Ashish on Jan 02.
  */
 @Module
-class AppModule(private val application: Application) {
+abstract class AppModule {
 
+    @Binds
+    @Singleton
+    @ApplicationContext
+    abstract fun provideAppContext(application: Application): Context
+
+    @Module
     companion object {
+
         private const val DATABASE_VERSION = 3
         private const val DATABASE_NAME = "MovieGuide.db"
-    }
 
-    @Provides
-    @ApplicationContext
-    fun provideAppContext(): Context = application
+        @Provides
+        @JvmStatic
+        @Singleton
+        fun provideSharedPrefs(@ApplicationContext context: Context): SharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(context)
 
-    @Provides
-    @Singleton
-    fun provideSharedPrefs(@ApplicationContext context: Context) = context.defaultSharedPreferences
-
-    @Provides
-    @Singleton
-    fun provideDataStore(@ApplicationContext context: Context): KotlinReactiveEntityStore<Persistable> {
-        val source = DatabaseSource(context, Models.DEFAULT, DATABASE_NAME, DATABASE_VERSION)
-        source.setTableCreationMode(TableCreationMode.DROP_CREATE)
-        source.setLoggingEnabled(true)
-        return KotlinReactiveEntityStore(KotlinEntityDataStore(source.configuration))
+        @Provides
+        @JvmStatic
+        @Singleton
+        fun provideDataStore(@ApplicationContext context: Context): KotlinReactiveEntityStore<Persistable> {
+            val source = DatabaseSource(context, Models.DEFAULT, DATABASE_NAME, DATABASE_VERSION)
+            source.setTableCreationMode(TableCreationMode.DROP_CREATE)
+            source.setLoggingEnabled(true)
+            return KotlinReactiveEntityStore(KotlinEntityDataStore(source.configuration))
+        }
     }
 }
