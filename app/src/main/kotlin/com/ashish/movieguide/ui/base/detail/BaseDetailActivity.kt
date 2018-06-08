@@ -49,12 +49,12 @@ import com.ashish.movieguide.utils.extensions.animateBackgroundColorChange
 import com.ashish.movieguide.utils.extensions.animateTextColorChange
 import com.ashish.movieguide.utils.extensions.changeMenuAndSubMenuFont
 import com.ashish.movieguide.utils.extensions.changeTitleTypeface
+import com.ashish.movieguide.utils.extensions.dpToPx
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
 import com.ashish.movieguide.utils.extensions.getStringArray
-import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.loadPaletteBitmap
 import com.ashish.movieguide.utils.extensions.openUrl
@@ -63,7 +63,7 @@ import com.ashish.movieguide.utils.extensions.setOverflowMenuColor
 import com.ashish.movieguide.utils.extensions.setPaletteColor
 import com.ashish.movieguide.utils.extensions.setTopBarColorAndAnimate
 import com.ashish.movieguide.utils.extensions.setTransitionName
-import com.ashish.movieguide.utils.extensions.show
+import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
 import com.ashish.movieguide.utils.extensions.startCircularRevealAnimation
 import com.ashish.movieguide.utils.extensions.tint
@@ -203,8 +203,13 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
         val cy = backdropImage.bottom - contentTitleText.height
         val endRadius = Math.max(backdropImage.width, backdropImage.height).toFloat()
 
-        backdropImage.startCircularRevealAnimation(cx = cx, cy = cy, startRadius = 0f, endRadius = endRadius,
-                animationEnd = this::removeSharedElementTransitionListener)
+        backdropImage.startCircularRevealAnimation(
+                cx = cx,
+                cy = cy,
+                startRadius = 0f,
+                endRadius = endRadius,
+                animationEnd = this::removeSharedElementTransitionListener
+        )
     }
 
     private fun removeSharedElementTransitionListener() {
@@ -233,17 +238,19 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
 
             paletteBitmap?.palette.setPaletteColor { swatch ->
                 contentTitleText.animateBackgroundColorChange(Color.TRANSPARENT, swatch.rgb)
-                contentTitleText.animateTextColorChange(getColorCompat(R.color.primary_text_light),
-                        swatch.bodyTextColor)
+                contentTitleText.animateTextColorChange(
+                        getColorCompat(R.color.primary_text_light),
+                        swatch.bodyTextColor
+                )
             }
         }
     }
 
     abstract fun getPosterPath(): String
 
-    override fun showProgress() = progressBar.show()
-
-    override fun hideProgress() = progressBar.hide()
+    override fun setLoadingIndicator(showIndicator: Boolean) {
+        progressBar.setVisibility(showIndicator)
+    }
 
     override fun showDetailContent(detailContent: I) {
         appBar.addOnOffsetChangedListener(this)
@@ -274,8 +281,11 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
 
     override fun showImageList(imageUrlList: ArrayList<String>) {
         imageAdapter = ImageAdapter(imageUrlList, onImageItemClickListener)
-        imagesRecyclerView = inflateViewStubRecyclerView(imagesViewStub, R.id.detailImagesRecyclerView,
-                imageAdapter!!)
+        imagesRecyclerView = inflateViewStubRecyclerView(
+                imagesViewStub,
+                R.id.detailImagesRecyclerView,
+                imageAdapter!!
+        )
     }
 
     @CallSuper
@@ -291,8 +301,11 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
     }
 
     override fun showCastList(castList: List<Credit>) {
-        castAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT,
-                getCastItemClickListener())
+        castAdapter = RecyclerViewAdapter(
+                R.layout.list_item_content_alt,
+                ADAPTER_TYPE_CREDIT,
+                getCastItemClickListener()
+        )
 
         inflateViewStubRecyclerView(castViewStub, R.id.castRecyclerView, castAdapter!!, castList)
     }
@@ -300,24 +313,30 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
     abstract fun getCastItemClickListener(): OnItemClickListener?
 
     override fun showCrewList(crewList: List<Credit>) {
-        crewAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_CREDIT,
-                getCrewItemClickListener())
+        crewAdapter = RecyclerViewAdapter(
+                R.layout.list_item_content_alt,
+                ADAPTER_TYPE_CREDIT,
+                getCrewItemClickListener()
+        )
 
         inflateViewStubRecyclerView(crewViewStub, R.id.crewRecyclerView, crewAdapter!!, crewList)
     }
 
     abstract fun getCrewItemClickListener(): OnItemClickListener?
 
-    protected fun inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
-                                              adapter: RecyclerView.Adapter<*>): RecyclerView {
+    protected fun inflateViewStubRecyclerView(
+            viewStub: ViewStub,
+            @IdRes viewId: Int,
+            recyclerAdapter: RecyclerView.Adapter<*>
+    ): RecyclerView {
         val inflatedView = viewStub.inflate()
         val recyclerView = inflatedView.find<RecyclerView>(viewId)
 
         recyclerView.apply {
             setHasFixedSize(true)
-            addItemDecoration(ItemOffsetDecoration())
+            addItemDecoration(ItemOffsetDecoration(6f.dpToPx().toInt()))
             layoutManager = LinearLayoutManager(this@BaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)
-            this.adapter = adapter
+            adapter = recyclerAdapter
             val snapHelper = StartSnapHelper()
             snapHelper.attachToRecyclerView(this)
         }
@@ -325,9 +344,12 @@ abstract class BaseDetailActivity<I, T, V : BaseDetailView<I>, P : BaseDetailPre
         return recyclerView
     }
 
-    protected fun <I : ViewType> inflateViewStubRecyclerView(viewStub: ViewStub, @IdRes viewId: Int,
-                                                             adapter: RecyclerViewAdapter<I>,
-                                                             itemList: List<I>): RecyclerView {
+    protected fun <I : ViewType> inflateViewStubRecyclerView(
+            viewStub: ViewStub,
+            @IdRes viewId: Int,
+            adapter: RecyclerViewAdapter<I>,
+            itemList: List<I>
+    ): RecyclerView {
         val recyclerView = inflateViewStubRecyclerView(viewStub, viewId, adapter)
         adapter.showItemList(itemList)
         return recyclerView

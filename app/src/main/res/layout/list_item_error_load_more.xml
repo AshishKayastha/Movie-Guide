@@ -11,7 +11,7 @@
     android:paddingTop="@dimen/spacing_medium">
 
     <com.ashish.movieguide.ui.widget.FontTextView
-        android:id="@+id/loadMoreErrorText"
+        android:id="@+id/load_more_error_text"
         style="@style/PrimaryText"
         android:layout_width="0dp"
         android:layout_marginEnd="@dimen/spacing_micro"
@@ -21,7 +21,7 @@
         android:textSize="@dimen/text_size_normal" />
 
     <com.ashish.movieguide.ui.widget.FontButton
-        android:id="@+id/retryBtn"
+        android:id="@+id/retry_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_medium"

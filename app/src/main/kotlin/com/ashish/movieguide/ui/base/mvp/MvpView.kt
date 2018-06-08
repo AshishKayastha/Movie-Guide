@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.base.mvp
 
+import com.ashish.movieguide.ui.widget.CustomToast
 import net.grandcentrix.thirtyinch.TiView
 
 /**
@@ -7,7 +8,7 @@ import net.grandcentrix.thirtyinch.TiView
  */
 interface MvpView : TiView {
 
-    fun showToastMessage(messageId: Int)
-
     fun showMessage(messageId: Int)
+
+    fun showToastMessage(messageId: Int, msgType: Int = CustomToast.TOAST_TYPE_ERROR)
 }

@@ -8,7 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.util.Pair
 import android.view.View
 import com.ashish.movieguide.app.MovieGuideApp
-import com.ashish.movieguide.utils.glide.palette.PaletteBitmap
+import com.ashish.movieguide.utils.glide.PaletteBitmap
 
 /**
  * Created by Ashish on Jan 03.
@@ -28,7 +28,7 @@ fun Activity.startActivityWithTransition(viewPair: Pair<View, String>?, intent: 
 inline fun Activity.setTopBarColorAndAnimate(
         paletteBitmap: PaletteBitmap?,
         collapsingToolbar: CollapsingToolbarLayout,
-        tintIcons: () -> Unit
+        crossinline tintIcons: () -> Unit
 ) {
     if (paletteBitmap != null) {
         val palette = paletteBitmap.palette

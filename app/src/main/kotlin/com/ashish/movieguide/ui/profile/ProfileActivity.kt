@@ -26,13 +26,12 @@ import com.ashish.movieguide.utils.extensions.get
 import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.getDayHourMinutes
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
-import com.ashish.movieguide.utils.extensions.hide
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.loadCircularImage
 import com.ashish.movieguide.utils.extensions.loadPaletteBitmap
 import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.setTopBarColorAndAnimate
-import com.ashish.movieguide.utils.extensions.show
+import com.ashish.movieguide.utils.extensions.setVisibility
 import com.ashish.movieguide.utils.extensions.tint
 import kotlinx.android.synthetic.main.layout_profile_app_bar.*
 import kotlinx.android.synthetic.main.layout_profile_episode_stats.*
@@ -70,9 +69,9 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
         profilePresenter.loadUserProfile()
     }
 
-    override fun showProgress() = progressBar.show()
-
-    override fun hideProgress() = progressBar.hide()
+    override fun setLoadingIndicator(showIndicator: Boolean) {
+        progressBar.setVisibility(showIndicator)
+    }
 
     override fun showUserProfile(userProfile: UserProfile, coverImageUrl: String?) {
         with(userProfile) {

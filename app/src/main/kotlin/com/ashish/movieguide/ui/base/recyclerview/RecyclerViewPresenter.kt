@@ -12,42 +12,34 @@ import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayList
 
-/**
- * Created by Ashish on Dec 31.
- */
-abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpView<I>>(
+abstract class RecyclerViewPresenter<I : ViewType, V : RecyclerViewMvpView<I>>(
         schedulerProvider: BaseSchedulerProvider
 ) : RxPresenter<V>(schedulerProvider) {
 
     private var totalPages = 1
-    private var isFirstStart = true
     private var currentPage: Int = 1
     private var itemList: ArrayList<I>? = null
 
     fun loadData(type: Int?, showProgress: Boolean = true) {
-        if (isFirstStart) {
-            if (itemList.isNotNullOrEmpty()) {
-                showItemList()
-            } else {
-                loadFreshData(type, showProgress)
-            }
-
-            isFirstStart = false
+        if (itemList.isNotNullOrEmpty()) {
+            showItemList()
+        } else {
+            fetchFreshData(type, showProgress)
         }
     }
 
-    fun loadFreshData(type: Int?, showProgress: Boolean = true) {
+    fun fetchFreshData(type: Int?, showProgress: Boolean = true) {
         addDisposable(getResults(getType(type), 1)
                 .doOnSuccess { totalPages = it.totalPages }
                 .observeOn(schedulerProvider.ui())
-                .doOnSubscribe { if (showProgress) view?.showProgress() }
-                .doFinally { view?.hideProgress() }
+                .doOnSubscribe { if (showProgress) view?.setLoadingIndicator(true) }
+                .doFinally { view?.setLoadingIndicator(false) }
                 .subscribe({ showResults(it) }, { showErrorMessage(it) }))
     }
 
-    protected open fun getType(type: Int?): String? = null
+    abstract fun getResults(type: String?, page: Int): Single<Results<I>>
 
-    protected abstract fun getResults(type: String?, page: Int): Single<Results<I>>
+    protected open fun getType(type: Int?): String? = null
 
     private fun showResults(data: Results<I>) {
         currentPage = data.page
@@ -85,7 +77,7 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
     }
 
     private fun handleLoadMoreError(t: Throwable) {
-        Timber.e(t)
+        showErrorMessage(t)
         view?.run {
             removeLoadingItem()
             resetLoading()
@@ -97,14 +89,10 @@ abstract class BaseRecyclerViewPresenter<I : ViewType, V : BaseRecyclerViewMvpVi
         Timber.e(t)
         view?.run {
             when (t) {
-                is IOException -> showNoInternetMessage()
+                is IOException -> showMessage(R.string.error_no_internet)
                 is AuthException -> showMessage(R.string.error_not_logged_in)
                 else -> showMessage(R.string.error_load_data)
             }
         }
-    }
-
-    private fun showNoInternetMessage() {
-        view?.showMessage(R.string.error_no_internet)
     }
 }

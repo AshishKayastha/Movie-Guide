@@ -160,7 +160,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
     }
 
     override fun getShareText(): CharSequence {
-        return tvShow!!.name + "\n\n" + TMDB_URL + "tv/" + tvShow!!.id
+        return "${tvShow!!.name}\n\n${TMDB_URL}tv/${tvShow!!.id}"
     }
 
     override fun setFavoriteIcon(isFavorite: Boolean) {

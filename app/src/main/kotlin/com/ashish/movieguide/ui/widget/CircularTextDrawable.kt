@@ -39,7 +39,7 @@ class CircularTextDrawable(
             strokeWidth = borderWidth
         }
 
-        paint.color = context.getColorCompat(R.color.colorPrimary)
+        paint.color = context.getColorCompat(R.color.app_color_primary)
     }
 
     override fun draw(canvas: Canvas) {

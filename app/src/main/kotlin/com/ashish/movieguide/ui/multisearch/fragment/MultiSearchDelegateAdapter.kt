@@ -4,10 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.ashish.movieguide.data.network.entities.tmdb.MultiSearch
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
+import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
-import com.ashish.movieguide.ui.common.adapter.RemoveListener
 import com.ashish.movieguide.ui.common.adapter.ViewType
-import com.ashish.movieguide.ui.common.adapter.ViewTypeDelegateAdapter
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.getProfileUrl
@@ -18,48 +17,40 @@ import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
  * Created by Ashish on Jan 05.
  */
 class MultiSearchDelegateAdapter(
-        private val layoutId: Int,
-        private var onItemClickListener: OnItemClickListener?
-) : ViewTypeDelegateAdapter, RemoveListener {
+        layoutId: Int,
+        onItemClickListener: OnItemClickListener?
+) : ContentDelegateAdapter(layoutId, onItemClickListener) {
 
-    override fun onCreateViewHolder(parent: ViewGroup) = MultiSearchHolder(parent)
+    override fun getHolder(parent: ViewGroup, layoutId: Int) = MultiSearchHolder(parent, layoutId)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
         (holder as MultiSearchHolder).bindData(item as MultiSearch)
     }
 
-    override fun removeListener() {
-        onItemClickListener = null
-    }
+    class MultiSearchHolder(parent: ViewGroup, layoutId: Int) : BaseContentHolder<MultiSearch>(parent, layoutId) {
 
-    inner class MultiSearchHolder(parent: ViewGroup) : BaseContentHolder<MultiSearch>(parent, layoutId) {
-
-        override fun bindData(item: MultiSearch) = with(item) {
-            contentTitle.applyText(if (title.isNotNullOrEmpty()) title else name)
-            contentSubtitle.applyText(getSubtitle(this))
-            ratingLabel?.setRating(voteAverage)
-            super.bindData(item)
-        }
-
-        private fun getSubtitle(multiSearch: MultiSearch): String {
-            with(multiSearch) {
-                return if (releaseDate.isNotNullOrEmpty()) {
-                    releaseDate.getYearOnly()
-                } else {
-                    firstAirDate.getYearOnly()
-                }
+        override fun bindData(item: MultiSearch) {
+            with(item) {
+                super.bindData(item)
+                contentTitle.applyText(if (title.isNotNullOrEmpty()) title else name)
+                contentSubtitle.applyText(getSubtitle(this))
+                ratingLabel?.setRating(voteAverage)
             }
         }
 
-        override fun getItemClickListener() = onItemClickListener
+        private fun getSubtitle(multiSearch: MultiSearch): String = with(multiSearch) {
+            if (releaseDate.isNotNullOrEmpty()) {
+                releaseDate.getYearOnly()
+            } else {
+                firstAirDate.getYearOnly()
+            }
+        }
 
-        override fun getImageUrl(item: MultiSearch): String? {
-            with(item) {
-                return if (profilePath.isNotNullOrEmpty()) {
-                    profilePath.getProfileUrl()
-                } else {
-                    posterPath.getPosterUrl()
-                }
+        override fun getImageUrl(item: MultiSearch): String? = with(item) {
+            if (profilePath.isNotNullOrEmpty()) {
+                profilePath.getProfileUrl()
+            } else {
+                posterPath.getPosterUrl()
             }
         }
     }

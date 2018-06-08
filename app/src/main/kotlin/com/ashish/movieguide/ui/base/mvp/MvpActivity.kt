@@ -35,10 +35,12 @@ abstract class MvpActivity<V : MvpView, P : RxPresenter<V>> : TiActivity<P, V>()
 
     protected open fun getIntentExtras(extras: Bundle?) {}
 
-    override fun showToastMessage(messageId: Int) = showToast(messageId)
-
     override fun showMessage(messageId: Int) {
         rootView?.showSnackBar(messageId)
+    }
+
+    override fun showToastMessage(messageId: Int, msgType: Int) {
+        showToast(messageId, msgType)
     }
 
     @SuppressLint("NonMatchingStateSaverCalls")

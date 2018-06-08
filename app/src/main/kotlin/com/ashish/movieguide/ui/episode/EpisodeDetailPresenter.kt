@@ -3,7 +3,10 @@ package com.ashish.movieguide.ui.episode
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.TVShowInteractor
 import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
 import com.ashish.movieguide.data.network.entities.tmdb.EpisodeDetail
+import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
+import com.ashish.movieguide.data.network.entities.tmdb.Videos
 import com.ashish.movieguide.data.network.entities.trakt.SyncEpisode
 import com.ashish.movieguide.data.network.entities.trakt.SyncItems
 import com.ashish.movieguide.data.network.entities.trakt.TraktEpisode
@@ -67,13 +70,13 @@ class EpisodeDetailPresenter @Inject constructor(
         return contentList
     }
 
-    override fun getBackdropImages(detailContent: EpisodeDetail) = detailContent.images?.backdrops
+    override fun getBackdropImages(detailContent: EpisodeDetail): List<ImageItem>? = detailContent.images?.backdrops
 
-    override fun getPosterImages(detailContent: EpisodeDetail) = detailContent.images?.posters
+    override fun getPosterImages(detailContent: EpisodeDetail): List<ImageItem>? = detailContent.images?.posters
 
-    override fun getVideos(detailContent: EpisodeDetail) = detailContent.videos
+    override fun getVideos(detailContent: EpisodeDetail): Videos? = detailContent.videos
 
-    override fun getCredits(detailContent: EpisodeDetail) = detailContent.credits
+    override fun getCredits(detailContent: EpisodeDetail): CreditResults? = detailContent.credits
 
     override fun getErrorMessageId() = R.string.error_load_episode_detail
 

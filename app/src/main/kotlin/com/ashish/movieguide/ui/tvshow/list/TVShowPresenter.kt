@@ -7,8 +7,8 @@ import com.ashish.movieguide.data.network.api.tmdb.TVShowApi.Companion.POPULAR
 import com.ashish.movieguide.data.network.api.tmdb.TVShowApi.Companion.TOP_RATED
 import com.ashish.movieguide.data.network.entities.tmdb.Results
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
 import javax.inject.Inject
@@ -19,13 +19,13 @@ import javax.inject.Inject
 class TVShowPresenter @Inject constructor(
         private val tvShowInteractor: TVShowInteractor,
         schedulerProvider: BaseSchedulerProvider
-) : BaseRecyclerViewPresenter<TVShow, BaseRecyclerViewMvpView<TVShow>>(schedulerProvider) {
+) : RecyclerViewPresenter<TVShow, RecyclerViewMvpView<TVShow>>(schedulerProvider) {
 
     companion object {
         private val TV_SHOW_TYPES = arrayOf(ON_THE_AIR, POPULAR, TOP_RATED, AIRING_TODAY)
     }
 
-    override fun getType(type: Int?) = TV_SHOW_TYPES[type ?: 0]
+    override fun getType(type: Int?): String? = TV_SHOW_TYPES[type ?: 0]
 
     override fun getResults(type: String?, page: Int): Single<Results<TVShow>> =
             tvShowInteractor.getTVShowsByType(type, page)

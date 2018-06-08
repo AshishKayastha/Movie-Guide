@@ -10,6 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
+import com.ashish.movieguide.ui.widget.CustomToast
 import com.ashish.movieguide.utils.TraktConstants.REDIRECT_URI
 import com.ashish.movieguide.utils.TraktConstants.TRAKT_CLIENT_ID
 import com.ashish.movieguide.utils.Utils
@@ -48,7 +49,7 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
         @Suppress("OverridingDeprecatedMember")
         override fun onReceivedError(view: WebView, errorCode: Int, description: String?, failingUrl: String?) {
             showOrHideConnectBtn(true)
-            showStatusText(getString(R.string.error_trakt_login) + "\n\n(" + errorCode + " " + description + ")")
+            showStatusText("${getString(R.string.error_trakt_login)}\n\n($errorCode $description)")
         }
 
         @Suppress("OverridingDeprecatedMember")
@@ -94,11 +95,8 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
     override fun providePresenter(): LoginPresenter = loginPresenter
 
     private fun getAuthUrl(): String {
-        return "https://trakt.tv/oauth/authorize" +
-                "?response_type=code" +
-                "&client_id=" + TRAKT_CLIENT_ID +
-                "&redirect_uri=" + REDIRECT_URI +
-                "&state=" + state
+        return "https://trakt.tv/oauth/authorize?response_type=code&client_id=" +
+                "$TRAKT_CLIENT_ID&redirect_uri=$REDIRECT_URI&state=$state"
     }
 
     private fun exchangeToken(code: String?, returnedState: String?) {
@@ -126,7 +124,7 @@ class LoginActivity : MvpActivity<LoginView, LoginPresenter>(), LoginView {
 
     override fun onLoginSuccess() {
         setResult(Activity.RESULT_OK)
-        showToastMessage(R.string.success_trakt_login)
+        showToastMessage(R.string.success_trakt_login, CustomToast.TOAST_TYPE_SUCCESS)
         finish()
     }
 

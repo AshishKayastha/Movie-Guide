@@ -5,9 +5,9 @@ import com.ashish.movieguide.data.network.entities.trakt.MovieStats
 import com.ashish.movieguide.data.network.entities.trakt.NetworkStats
 import com.ashish.movieguide.data.network.entities.trakt.RatingDistribution
 import com.ashish.movieguide.data.network.entities.trakt.UserProfile
-import com.ashish.movieguide.ui.base.mvp.ProgressView
+import com.ashish.movieguide.ui.base.mvp.ProgressMvpView
 
-interface ProfileView : ProgressView {
+interface ProfileView : ProgressMvpView {
 
     fun showUserProfile(userProfile: UserProfile, coverImageUrl: String?)
 

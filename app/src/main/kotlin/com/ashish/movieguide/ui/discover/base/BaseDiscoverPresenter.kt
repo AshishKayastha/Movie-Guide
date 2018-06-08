@@ -1,7 +1,7 @@
 package com.ashish.movieguide.ui.discover.base
 
 import com.ashish.movieguide.data.network.entities.tmdb.FilterQuery
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewPresenter
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.discover.filter.FilterQueryModel
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
@@ -13,7 +13,7 @@ import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 abstract class BaseDiscoverPresenter<I : ViewType> constructor(
         private val filterQueryModel: FilterQueryModel,
         schedulerProvider: BaseSchedulerProvider
-) : BaseRecyclerViewPresenter<I, DiscoverView<I>>(schedulerProvider) {
+) : RecyclerViewPresenter<I, DiscoverView<I>>(schedulerProvider) {
 
     protected var minDate: String? = null
     protected var maxDate: String? = null
@@ -30,7 +30,7 @@ abstract class BaseDiscoverPresenter<I : ViewType> constructor(
                     this.genreIds = genreIds
 
                     view?.clearFilteredData()
-                    loadFreshData(null, true)
+                    fetchFreshData(null, true)
                 })
     }
 
@@ -39,8 +39,6 @@ abstract class BaseDiscoverPresenter<I : ViewType> constructor(
                 || filterQuery.minDate.isNotNullOrEmpty()
                 || filterQuery.maxDate.isNotNullOrEmpty()
     }
-
-    override fun getType(type: Int?) = null
 
     fun onFilterMenuItemClick() {
         val filterQuery = FilterQuery(sortBy, genreIds, minDate, maxDate)

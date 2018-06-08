@@ -7,7 +7,7 @@ import android.support.v7.graphics.Palette
 import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.utils.glide.GlideApp
-import com.ashish.movieguide.utils.glide.palette.PaletteBitmap
+import com.ashish.movieguide.utils.glide.PaletteBitmap
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.ImageViewTarget

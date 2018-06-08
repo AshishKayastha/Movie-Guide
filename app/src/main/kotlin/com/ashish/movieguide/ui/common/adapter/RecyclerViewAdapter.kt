@@ -20,16 +20,17 @@ class RecyclerViewAdapter<in I : ViewType>(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
 
     private val loadingItem = object : ViewType {
-        override fun getViewType() = LOADING_VIEW
+        override fun getViewType(): Int = LOADING_VIEW
     }
 
     private val errorItem = object : ViewType {
-        override fun getViewType() = ERROR_VIEW
+        override fun getViewType(): Int = ERROR_VIEW
     }
 
     private var itemList: ArrayList<ViewType> = ArrayList()
     private var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()
-    private val contentAdapter = AdapterFactory.getAdapter(layoutId, adapterType, onItemClickListener)
+    private val contentAdapter =
+            AdapterFactory.getDelegateAdapter(layoutId, adapterType, onItemClickListener)
 
     init {
         delegateAdapters.put(LOADING_VIEW, LoadingDelegateAdapter())
@@ -37,14 +38,17 @@ class RecyclerViewAdapter<in I : ViewType>(
         delegateAdapters.put(ERROR_VIEW, LoadMoreErrorDelegateAdapter(onItemClickListener))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            = delegateAdapters.get(viewType).onCreateViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return delegateAdapters.get(viewType).onCreateViewHolder(parent)
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, itemList[position])
     }
 
-    override fun getItemViewType(position: Int) = itemList[position].getViewType()
+    override fun getItemCount() = itemList.size
+
+    override fun getItemViewType(position: Int): Int = itemList[position].getViewType()
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         super.onViewRecycled(holder)
@@ -52,10 +56,6 @@ class RecyclerViewAdapter<in I : ViewType>(
             GlideApp.with(holder.posterImage.context).clear(holder.posterImage)
         }
     }
-
-    override fun getItemCount() = itemList.size
-
-    fun getViewType(position: Int) = itemList[position].getViewType()
 
     @Suppress("UNCHECKED_CAST")
     fun <I> getItem(position: Int) = itemList[position] as I
@@ -73,7 +73,7 @@ class RecyclerViewAdapter<in I : ViewType>(
         notifyItemInserted(itemCount - 1)
     }
 
-    fun showErrorItem() {
+    fun addErrorItem() {
         itemList.add(errorItem)
         notifyItemInserted(itemCount - 1)
     }
@@ -116,5 +116,7 @@ class RecyclerViewAdapter<in I : ViewType>(
         }
     }
 
-    override fun removeListener() = (contentAdapter as RemoveListener).removeListener()
+    override fun removeListener() {
+        (contentAdapter as RemoveListener).removeListener()
+    }
 }

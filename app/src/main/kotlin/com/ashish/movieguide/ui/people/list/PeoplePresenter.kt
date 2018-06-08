@@ -3,8 +3,8 @@ package com.ashish.movieguide.ui.people.list
 import com.ashish.movieguide.data.interactors.PeopleInteractor
 import com.ashish.movieguide.data.network.entities.tmdb.Person
 import com.ashish.movieguide.data.network.entities.tmdb.Results
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
 import javax.inject.Inject
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class PeoplePresenter @Inject constructor(
         private val peopleInteractor: PeopleInteractor,
         schedulerProvider: BaseSchedulerProvider
-) : BaseRecyclerViewPresenter<Person, BaseRecyclerViewMvpView<Person>>(schedulerProvider) {
+) : RecyclerViewPresenter<Person, RecyclerViewMvpView<Person>>(schedulerProvider) {
 
     override fun getResults(type: String?, page: Int): Single<Results<Person>>
             = peopleInteractor.getPopularPeople(page)

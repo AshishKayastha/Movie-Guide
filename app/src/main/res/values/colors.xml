@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App's Branding Colors -->
-    <color name="colorPrimary">#673AB7</color>
-    <color name="colorPrimaryDark">#512DA8</color>
-    <color name="colorAccent">#5DFCAE</color>
-
-    <!-- Gradient Colors -->
-    <color name="primary_gradient_start_color">#32283D</color>
-    <color name="primary_gradient_center_color">#292233</color>
-    <color name="primary_gradient_end_color">#1E1F2D</color>
+    <color name="app_color_primary">#673AB7</color>
+    <color name="app_color_primary_dark">#512DA8</color>
+    <color name="app_color_accent">#69F0AE</color>
+    <color name="app_bg_color">#292233</color>
 
     <color name="accent_gradient_start_color">#84FFC3</color>
     <color name="accent_gradient_center_color">#26FF96</color>

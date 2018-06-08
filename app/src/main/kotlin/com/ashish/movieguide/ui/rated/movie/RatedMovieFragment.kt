@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewFragment
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.common.rating.RatingChangeObserver
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
@@ -14,8 +14,7 @@ import com.evernote.android.state.State
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class RatedMovieFragment : BaseRecyclerViewFragment<Movie,
-        BaseRecyclerViewMvpView<Movie>, RatedMoviePresenter>() {
+class RatedMovieFragment : RecyclerViewFragment<Movie, RecyclerViewMvpView<Movie>, RatedMoviePresenter>() {
 
     companion object {
         fun newInstance() = RatedMovieFragment()
@@ -35,21 +34,19 @@ class RatedMovieFragment : BaseRecyclerViewFragment<Movie,
 
     override fun providePresenter(): RatedMoviePresenter = ratedMoviePresenter
 
-    override fun getAdapterType() = ADAPTER_TYPE_MOVIE
+    override fun getEmptyTextId(): Int = R.string.no_rated_movies_available
 
-    override fun getEmptyTextId() = R.string.no_rated_movies_available
+    override fun getEmptyImageId(): Int = R.drawable.ic_movie_white_100dp
 
-    override fun getEmptyImageId() = R.drawable.ic_movie_white_100dp
-
-    override fun getTransitionNameId(position: Int) = R.string.transition_movie_poster
+    override fun getAdapterType(): Int = ADAPTER_TYPE_MOVIE
 
     override fun getDetailIntent(position: Int): Intent? {
-        return if (activity != null) {
-            clickedItemPosition = position
-            val movie = recyclerViewAdapter.getItem<Movie>(position)
-            MovieDetailActivity.createIntent(activity!!, movie)
-        } else null
+        clickedItemPosition = position
+        val movie = recyclerViewAdapter.getItem<Movie>(position)
+        return MovieDetailActivity.createIntent(activity!!, movie)
     }
+
+    override fun getTransitionNameId(position: Int): Int = R.string.transition_movie_poster
 
     private fun observeMovieRatingChanged() {
         disposable = ratingChangeObserver.getRatingObservable()
@@ -61,8 +58,10 @@ class RatedMovieFragment : BaseRecyclerViewFragment<Movie,
                 .subscribe({ (_, rating) ->
                     if (rating > 0) {
                         val movie = recyclerViewAdapter.getItem<Movie>(clickedItemPosition)
-                        recyclerViewAdapter.replaceItem(clickedItemPosition,
-                                movie.copy(rating = rating.toDouble()))
+                        recyclerViewAdapter.replaceItem(
+                                clickedItemPosition,
+                                movie.copy(rating = rating.toDouble())
+                        )
                     } else {
                         recyclerViewAdapter.removeItem(clickedItemPosition)
                     }

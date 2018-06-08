@@ -10,7 +10,7 @@
 
     <!-- Changes the background color of the title bar -->
     <style name="PlaceholderWindowTitleBackground">
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@color/app_color_primary</item>
     </style>
 
     <!-- Set the theme for the window title -->

@@ -3,7 +3,10 @@ package com.ashish.movieguide.ui.season
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.TVShowInteractor
 import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
+import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
 import com.ashish.movieguide.data.network.entities.tmdb.SeasonDetail
+import com.ashish.movieguide.data.network.entities.tmdb.Videos
 import com.ashish.movieguide.data.network.entities.trakt.TraktSeason
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
@@ -32,7 +35,7 @@ class SeasonDetailPresenter @Inject constructor(
     override fun showDetailContent(fullDetailContent: FullDetailContent<SeasonDetail, TraktSeason>) {
         super.showDetailContent(fullDetailContent)
         view?.run {
-            hideProgress()
+            setLoadingIndicator(false)
             val seasonDetail = fullDetailContent.detailContent
             showItemList(seasonDetail?.episodes) { showEpisodeList(it) }
         }
@@ -58,13 +61,13 @@ class SeasonDetailPresenter @Inject constructor(
         return contentList
     }
 
-    override fun getBackdropImages(detailContent: SeasonDetail) = detailContent.images?.backdrops
+    override fun getBackdropImages(detailContent: SeasonDetail): List<ImageItem>? = detailContent.images?.backdrops
 
-    override fun getPosterImages(detailContent: SeasonDetail) = detailContent.images?.posters
+    override fun getPosterImages(detailContent: SeasonDetail): List<ImageItem>? = detailContent.images?.posters
 
-    override fun getVideos(detailContent: SeasonDetail) = detailContent.videos
+    override fun getVideos(detailContent: SeasonDetail): Videos? = detailContent.videos
 
-    override fun getCredits(detailContent: SeasonDetail) = detailContent.credits
+    override fun getCredits(detailContent: SeasonDetail): CreditResults? = detailContent.credits
 
     override fun getErrorMessageId() = R.string.error_load_season_detail
 }

@@ -4,8 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.ViewGroup
 import com.ashish.movieguide.R
-import com.ashish.movieguide.utils.extensions.inflate
-import kotlinx.android.synthetic.main.list_item_error_load_more.view.*
+import com.ashish.movieguide.ui.base.recyclerview.BaseHolder
+import com.ashish.movieguide.ui.widget.FontButton
+import com.ashish.movieguide.utils.extensions.bindView
 
 class LoadMoreErrorDelegateAdapter(
         private var onItemClickListener: OnItemClickListener?
@@ -25,11 +26,14 @@ class LoadMoreErrorDelegateAdapter(
         onItemClickListener = null
     }
 
-    inner class LoadMoreErrorViewHolder(parent: ViewGroup)
-        : RecyclerView.ViewHolder(parent.inflate(R.layout.list_item_error_load_more)) {
+    private class LoadMoreErrorViewHolder(
+            parent: ViewGroup
+    ) : BaseHolder(parent, R.layout.list_item_error_load_more) {
 
-        init {
-            itemView.retryBtn.setOnClickListener {
+        private val retryBtn: FontButton by bindView(R.id.retry_btn)
+
+        override fun attachListener(onItemClickListener: OnItemClickListener?) {
+            retryBtn.setOnClickListener {
                 onItemClickListener?.onItemClick(adapterPosition, it)
             }
         }

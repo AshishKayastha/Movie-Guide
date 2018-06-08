@@ -49,8 +49,8 @@ abstract class MvpFragment<V : MvpView, P : RxPresenter<V>> : TiFragment<P, V>()
         super.onSaveInstanceState(outState)
     }
 
-    override fun showToastMessage(messageId: Int) {
-        activity?.showToast(messageId)
+    override fun showToastMessage(messageId: Int, msgType: Int) {
+        activity?.showToast(messageId, msgType)
     }
 
     override fun showMessage(messageId: Int) {

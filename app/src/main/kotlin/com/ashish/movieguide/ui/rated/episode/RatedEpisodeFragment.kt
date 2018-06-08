@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Episode
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewFragment
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.common.rating.RatingChangeObserver
 import com.ashish.movieguide.ui.episode.EpisodeDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE
@@ -14,8 +14,7 @@ import com.evernote.android.state.State
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class RatedEpisodeFragment : BaseRecyclerViewFragment<Episode,
-        BaseRecyclerViewMvpView<Episode>, RatedEpisodePresenter>() {
+class RatedEpisodeFragment : RecyclerViewFragment<Episode, RecyclerViewMvpView<Episode>, RatedEpisodePresenter>() {
 
     companion object {
         fun newInstance() = RatedEpisodeFragment()
@@ -35,21 +34,19 @@ class RatedEpisodeFragment : BaseRecyclerViewFragment<Episode,
 
     override fun providePresenter(): RatedEpisodePresenter = ratedEpisodePresenter
 
-    override fun getAdapterType() = ADAPTER_TYPE_EPISODE
+    override fun getEmptyTextId(): Int = R.string.no_rated_episodes_available
 
-    override fun getEmptyTextId() = R.string.no_rated_episodes_available
+    override fun getEmptyImageId(): Int = R.drawable.ic_tv_white_100dp
 
-    override fun getEmptyImageId() = R.drawable.ic_tv_white_100dp
-
-    override fun getTransitionNameId(position: Int) = R.string.transition_episode_image
+    override fun getAdapterType(): Int = ADAPTER_TYPE_EPISODE
 
     override fun getDetailIntent(position: Int): Intent? {
-        return if (activity != null) {
-            clickedItemPosition = position
-            val episode = recyclerViewAdapter.getItem<Episode>(position)
-            EpisodeDetailActivity.createIntent(activity!!, episode.tvShowId, episode)
-        } else null
+        clickedItemPosition = position
+        val episode = recyclerViewAdapter.getItem<Episode>(position)
+        return EpisodeDetailActivity.createIntent(activity!!, episode.tvShowId, episode)
     }
+
+    override fun getTransitionNameId(position: Int): Int = R.string.transition_episode_image
 
     private fun observeEpisodeRatingChanged() {
         disposable = ratingChangeObserver.getRatingObservable()

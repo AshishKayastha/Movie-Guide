@@ -19,8 +19,11 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
  */
 object AdapterFactory {
 
-    fun getAdapter(layoutId: Int, adapterType: Int, onItemClickListener: OnItemClickListener?)
-            : ViewTypeDelegateAdapter = when (adapterType) {
+    fun getDelegateAdapter(
+            layoutId: Int,
+            adapterType: Int,
+            onItemClickListener: OnItemClickListener?
+    ): ViewTypeDelegateAdapter = when (adapterType) {
         ADAPTER_TYPE_MOVIE -> MovieDelegateAdapter(layoutId, onItemClickListener)
         ADAPTER_TYPE_TV_SHOW -> TVShowDelegateAdapter(layoutId, onItemClickListener)
         ADAPTER_TYPE_PERSON -> PersonDelegateAdapter(layoutId, onItemClickListener)

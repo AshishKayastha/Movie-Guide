@@ -18,8 +18,19 @@ class DetailContentAdapter(
         private var detailContentList: List<String>
 ) : RecyclerView.Adapter<DetailContentAdapter.DetailContentHolder>() {
 
+    companion object {
+        private const val SINGLE_ROW_VIEW_TYPE = 0
+        private const val MULTI_ROW_VIEW_TYPE = 1
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailContentHolder {
-        return DetailContentHolder(parent.inflate(R.layout.list_item_detail_content)!!)
+        val layoutId = if (viewType == SINGLE_ROW_VIEW_TYPE) {
+            R.layout.list_item_detail_content
+        } else {
+            R.layout.list_item_detail_content_alt
+        }
+
+        return DetailContentHolder(parent.inflate(layoutId)!!)
     }
 
     override fun onBindViewHolder(holder: DetailContentHolder, position: Int) {
@@ -28,7 +39,11 @@ class DetailContentAdapter(
 
     override fun getItemCount() = detailContentList.size
 
-    inner class DetailContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    override fun getItemViewType(position: Int): Int {
+        return if (detailContentList[position].length < 30) SINGLE_ROW_VIEW_TYPE else MULTI_ROW_VIEW_TYPE
+    }
+
+    class DetailContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val contentText: FontTextView by bindView(R.id.content_text)
         private val contentTitle: FontTextView by bindView(R.id.content_title)

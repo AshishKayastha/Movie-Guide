@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
+import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.getYearOnly
@@ -12,31 +13,27 @@ import com.ashish.movieguide.utils.extensions.getYearOnly
  * Created by Ashish on Dec 30.
  */
 class MovieDelegateAdapter(
-        private val layoutId: Int,
-        private var onItemClickListener: OnItemClickListener?
-) : ViewTypeDelegateAdapter, RemoveListener {
+        layoutId: Int,
+        onItemClickListener: OnItemClickListener?
+) : ContentDelegateAdapter(layoutId, onItemClickListener) {
 
-    override fun onCreateViewHolder(parent: ViewGroup) = MovieHolder(parent)
+    override fun getHolder(parent: ViewGroup, layoutId: Int) = MovieHolder(parent, layoutId)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
         (holder as MovieHolder).bindData(item as Movie)
     }
 
-    override fun removeListener() {
-        onItemClickListener = null
-    }
+    class MovieHolder(parent: ViewGroup, layoutId: Int) : BaseContentHolder<Movie>(parent, layoutId) {
 
-    inner class MovieHolder(parent: ViewGroup) : BaseContentHolder<Movie>(parent, layoutId) {
-
-        override fun bindData(item: Movie) = with(item) {
-            contentTitle.applyText(title)
-            contentSubtitle.applyText(releaseDate.getYearOnly())
-            ratingLabel?.setRating(if (rating != null && rating > 0) rating else voteAverage)
-            super.bindData(item)
+        override fun bindData(item: Movie) {
+            with(item) {
+                super.bindData(item)
+                contentTitle.applyText(title)
+                contentSubtitle.applyText(releaseDate.getYearOnly())
+                ratingLabel?.setRating(if (rating != null && rating > 0) rating else voteAverage)
+            }
         }
 
-        override fun getItemClickListener() = onItemClickListener
-
-        override fun getImageUrl(item: Movie) = item.posterPath.getPosterUrl()
+        override fun getImageUrl(item: Movie): String? = item.posterPath.getPosterUrl()
     }
 }

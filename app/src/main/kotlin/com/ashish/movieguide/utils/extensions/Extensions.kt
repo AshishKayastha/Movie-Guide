@@ -19,11 +19,9 @@ fun Float.spToPx() = this * Resources.getSystem().displayMetrics.scaledDensity
 
 fun isApiOrAbove(version: Int) = Build.VERSION.SDK_INT >= version
 
-inline fun isMarshmallowOrAbove(func: () -> Unit) {
+inline fun isMarshmallowOrAbove(crossinline func: () -> Unit) {
     if (isApiOrAbove(23)) func()
 }
-
-fun <T> Collection<T>?.isNotNullOrEmpty() = this != null && size != 0
 
 fun runDelayed(delayMillis: Long, action: () -> Unit) {
     Handler().postDelayed(Runnable(action), delayMillis)
@@ -38,6 +36,8 @@ fun Drawable?.tint(@ColorInt color: Int): Drawable? {
     return this
 }
 
+fun <T> Collection<T>?.isNotNullOrEmpty() = this != null && size != 0
+
 /**
  * An extension function to either add or remove an item from [MutableCollection].
  * It will remove given item if the item is already in the collection else it will
@@ -46,6 +46,10 @@ fun Drawable?.tint(@ColorInt color: Int): Drawable? {
  */
 fun <T> MutableCollection<T>.addOrRemove(item: T) {
     if (contains(item)) remove(item) else add(item)
+}
+
+fun <T> MutableCollection<T>.addAllIfNotNull(item: Collection<T>?) {
+    if (item.isNotNullOrEmpty()) addAll(item!!)
 }
 
 /**
@@ -60,7 +64,7 @@ fun <T> MutableCollection<T>.addOrRemove(item: T) {
  * or as an arguments for [android.support.v4.app.Fragment]
  */
 @SuppressLint("NonMatchingStateSaverCalls")
-inline fun <T> Bundle?.getExtrasOrRestore(target: T, getExtras: () -> Unit) {
+inline fun <T> Bundle?.getExtrasOrRestore(target: T, crossinline getExtras: () -> Unit) {
     if (this == null) {
         getExtras()
     } else {
@@ -83,7 +87,7 @@ fun Int?.getDayHourMinutes(): Triple<String, String, String> {
     return Triple("0", "0", "0")
 }
 
-inline fun performAction(action: () -> Unit): Boolean {
+inline fun performAction(crossinline action: () -> Unit): Boolean {
     action()
     return true
 }

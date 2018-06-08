@@ -40,7 +40,7 @@ object CustomTabsHelper {
     private fun buildCustomTabsIntent(activity: Activity): Intent {
         val customTabsIntent = CustomTabsIntent.Builder()
                 .setShowTitle(true)
-                .setToolbarColor(activity.getColorCompat(R.color.colorPrimary))
+                .setToolbarColor(activity.getColorCompat(R.color.app_color_primary))
                 .setStartAnimations(activity, R.anim.slide_in_right, R.anim.slide_out_left)
                 .setExitAnimations(activity, R.anim.slide_in_left, R.anim.slide_out_right)
                 .build()

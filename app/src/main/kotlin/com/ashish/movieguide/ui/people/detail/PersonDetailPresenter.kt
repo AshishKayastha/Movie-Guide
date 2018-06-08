@@ -3,6 +3,7 @@ package com.ashish.movieguide.ui.people.detail
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.PeopleInteractor
 import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
 import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
 import com.ashish.movieguide.data.network.entities.tmdb.PersonDetail
 import com.ashish.movieguide.data.network.entities.trakt.TraktPerson
@@ -42,11 +43,11 @@ class PersonDetailPresenter @Inject constructor(
         return contentList
     }
 
-    override fun getBackdropImages(detailContent: PersonDetail) = detailContent.images?.profiles
+    override fun getBackdropImages(detailContent: PersonDetail): List<ImageItem>? = detailContent.images?.profiles
 
     override fun getPosterImages(detailContent: PersonDetail): List<ImageItem>? = null
 
-    override fun getCredits(detailContent: PersonDetail) = detailContent.credits
+    override fun getCredits(detailContent: PersonDetail): CreditResults? = detailContent.credits
 
     override fun getErrorMessageId() = R.string.error_load_person_detail
 }

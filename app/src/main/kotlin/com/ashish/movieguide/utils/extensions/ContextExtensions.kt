@@ -26,12 +26,8 @@ fun Context.getDrawableCompat(@DrawableRes drawableResId: Int): Drawable? {
     return ContextCompat.getDrawable(this, drawableResId)
 }
 
-fun Context.showToast(messageId: Int, isError: Boolean = true) {
-    if (isError) {
-        CustomToast.showErrorToast(this, getString(messageId))
-    } else {
-        CustomToast.showSuccessToast(this, getString(messageId))
-    }
+fun Context.showToast(messageId: Int, msgType: Int = CustomToast.TOAST_TYPE_ERROR) {
+    CustomToast.showToast(this, getString(messageId), msgType)
 }
 
 val Context.inputMethodManager: InputMethodManager?

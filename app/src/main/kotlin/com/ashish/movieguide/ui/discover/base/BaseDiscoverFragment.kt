@@ -11,7 +11,7 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.FilterQuery
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewFragment
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.discover.filter.FilterBottomSheetDialogFragment
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
@@ -28,7 +28,7 @@ import javax.inject.Inject
  * Created by Ashish on Jan 07.
  */
 abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
-    : BaseRecyclerViewFragment<I, DiscoverView<I>, P>(), DiscoverView<I>, HasSupportFragmentInjector {
+    : RecyclerViewFragment<I, DiscoverView<I>, P>(), DiscoverView<I>, HasSupportFragmentInjector {
 
     companion object {
         const val DISCOVER_MOVIE = 0
@@ -44,11 +44,9 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         swipeRefresh.isEnabled = false
     }
 
-    override fun loadData() = presenter.filterContents()
+    override fun supportFragmentInjector() = supportFragmentInjector
 
-    override fun getAdapterType(): Int {
-        return if (isMovie()) ADAPTER_TYPE_MOVIE else ADAPTER_TYPE_TV_SHOW
-    }
+    override fun loadData() = presenter.filterContents()
 
     override fun getEmptyTextId(): Int {
         return if (isMovie()) R.string.no_movies_available else R.string.no_tv_shows_available
@@ -58,20 +56,22 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         return if (isMovie()) R.drawable.ic_movie_white_100dp else R.drawable.ic_tv_white_100dp
     }
 
-    override fun getTransitionNameId(position: Int): Int {
-        return if (isMovie()) R.string.transition_movie_poster else R.string.transition_tv_poster
+    override fun getAdapterType(): Int {
+        return if (isMovie()) ADAPTER_TYPE_MOVIE else ADAPTER_TYPE_TV_SHOW
     }
 
     override fun getDetailIntent(position: Int): Intent? {
-        return if (activity != null) {
-            if (isMovie()) {
-                val movie = recyclerViewAdapter.getItem<Movie>(position)
-                MovieDetailActivity.createIntent(activity!!, movie)
-            } else {
-                val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
-                TVShowDetailActivity.createIntent(activity!!, tvShow)
-            }
-        } else null
+        return if (isMovie()) {
+            val movie = recyclerViewAdapter.getItem<Movie>(position)
+            MovieDetailActivity.createIntent(activity!!, movie)
+        } else {
+            val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
+            TVShowDetailActivity.createIntent(activity!!, tvShow)
+        }
+    }
+
+    override fun getTransitionNameId(position: Int): Int {
+        return if (isMovie()) R.string.transition_movie_poster else R.string.transition_tv_poster
     }
 
     abstract fun getDiscoverMediaType(): Int
@@ -79,12 +79,6 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
     private fun isMovie() = getDiscoverMediaType() == DISCOVER_MOVIE
 
     override fun clearFilteredData() = recyclerViewAdapter.clearAll()
-
-    override fun showFilterBottomSheetDialog(filterQuery: FilterQuery) {
-        val filterBottomSheetFragment = FilterBottomSheetDialogFragment.newInstance(isMovie(), filterQuery)
-        filterBottomSheetFragment.setTargetFragment(this, RC_FILTER_FRAGMENT)
-        filterBottomSheetFragment.show(fragmentManager, filterBottomSheetFragment.tag)
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -96,5 +90,9 @@ abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
         else -> super.onOptionsItemSelected(item)
     }
 
-    override fun supportFragmentInjector() = supportFragmentInjector
+    override fun showFilterBottomSheetDialog(filterQuery: FilterQuery) {
+        val filterBottomSheetFragment = FilterBottomSheetDialogFragment.newInstance(isMovie(), filterQuery)
+        filterBottomSheetFragment.setTargetFragment(this, RC_FILTER_FRAGMENT)
+        filterBottomSheetFragment.show(fragmentManager, filterBottomSheetFragment.tag)
+    }
 }

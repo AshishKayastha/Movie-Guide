@@ -13,10 +13,9 @@ class TabPagerAdapter(
         private val tabTitles: Array<String>
 ) : FragmentStatePagerAdapter(fragmentManager) {
 
-    override fun getItem(position: Int): Fragment
-            = TabFragmentFactory.getFragment(contentType, position)
+    override fun getItem(position: Int): Fragment = TabFragmentFactory.getFragment(contentType, position)
 
     override fun getCount() = tabTitles.size
 
-    override fun getPageTitle(position: Int) = tabTitles[position]
+    override fun getPageTitle(position: Int): CharSequence? = tabTitles[position]
 }

@@ -97,6 +97,8 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     override fun getLayoutId() = R.layout.activity_main
 
+    override fun supportFragmentInjector() = supportFragmentInjector
+
     private fun initDrawerHeader() {
         navigationView.getHeaderView(0).run {
             nameText = find(R.id.name_text)
@@ -221,6 +223,4 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         navigationView.setNavigationItemSelectedListener(null)
         super.onDestroy()
     }
-
-    override fun supportFragmentInjector() = supportFragmentInjector
 }

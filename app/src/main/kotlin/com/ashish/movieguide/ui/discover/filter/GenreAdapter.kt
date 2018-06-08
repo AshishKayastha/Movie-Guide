@@ -38,9 +38,7 @@ class GenreAdapter(
 
         selectedGenreIdList = if (selectedGenreIds.isNotNullOrEmpty()) {
             ArrayList(selectedGenreIds!!.split(SEPARATOR))
-        } else {
-            ArrayList()
-        }
+        } else ArrayList()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreHolder {
@@ -53,7 +51,7 @@ class GenreAdapter(
 
     override fun getItemCount() = genres.size
 
-    fun getSelectedGenreIds() = selectedGenreIdList.joinToString(SEPARATOR)
+    fun getSelectedGenreIds(): String = selectedGenreIdList.joinToString(SEPARATOR)
 
     inner class GenreHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

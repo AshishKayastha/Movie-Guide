@@ -78,7 +78,5 @@ fun CharSequence?.getTextWithCustomTypeface(typefaceSpan: TypefaceSpan): Spannab
         val spannableString = SpannableString(this)
         spannableString.setSpan(typefaceSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannableString
-    } else {
-        null
-    }
+    } else null
 }

@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Match.Width"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    style="@style/Match.Width">
 
     <com.ashish.movieguide.ui.widget.FontTextView
         android:id="@+id/content_title"
         style="@style/PrimaryText.Title"
-        android:layout_width="0dp"
-        android:layout_marginBottom="@dimen/spacing_micro"
-        android:layout_weight="0.75"
         tools:text="@string/runtime_title" />
 
     <com.ashish.movieguide.ui.widget.FontTextView
         android:id="@+id/content_text"
         style="@style/SecondaryText.Title"
-        android:layout_width="0dp"
         android:layout_marginBottom="@dimen/spacing_micro"
-        android:layout_marginTop="@dimen/spacing_medium"
-        android:layout_weight="1.25"
         tools:text="2h 30min" />
 
 </LinearLayout>

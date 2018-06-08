@@ -51,9 +51,7 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
     @State var tvShowId: Long? = null
     @State var episode: Episode? = null
 
-    private val isLoggedIn: Boolean by lazy {
-        preferenceHelper.getId() > 0
-    }
+    private val isLoggedIn: Boolean by lazy { preferenceHelper.getId() > 0 }
 
     override fun getLayoutId() = R.layout.activity_detail_episode
 
@@ -81,8 +79,8 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
             imdbId = detailContent.externalIds?.imdbId
         }
 
-        if (isLoggedIn) {
-            ratingDialog.get().setRatingListener(this)
+        performActionIfLoggedIn {
+            it.setRatingListener(this)
             menu?.setRatingItemTitle(R.string.title_rate_episode)
         }
 
@@ -96,17 +94,14 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_rating -> performAction {
-            if (isLoggedIn) {
-                ratingDialog.get().showRatingDialog(myRatingLabel.getRating())
-            }
+            performActionIfLoggedIn { it.showRatingDialog(myRatingLabel.getRating()) }
         }
 
         else -> super.onOptionsItemSelected(item)
     }
 
     override fun getShareText(): CharSequence {
-        return TMDB_URL + "tv/" + tvShowId + "season/" + episode!!.seasonNumber +
-                "episode/" + episode!!.episodeNumber
+        return "${TMDB_URL}tv/${tvShowId}season/${episode!!.seasonNumber}episode/${episode!!.episodeNumber}"
     }
 
     override fun showSavedRating(rating: Int?) {
@@ -122,17 +117,21 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
-        if (isLoggedIn) ratingDialog.get().dismissDialog()
+        performActionIfLoggedIn { it.dismissDialog() }
         super.onConfigurationChanged(newConfig)
     }
 
     override fun onStop() {
-        if (isLoggedIn) ratingDialog.get().dismissDialog()
+        performActionIfLoggedIn { it.dismissDialog() }
         super.onStop()
     }
 
     override fun performCleanup() {
         super.performCleanup()
-        if (isLoggedIn) ratingDialog.get().setRatingListener(null)
+        performActionIfLoggedIn { it.setRatingListener(null) }
+    }
+
+    private fun performActionIfLoggedIn(action: (RatingDialog) -> Unit) {
+        if (isLoggedIn) action(ratingDialog.get())
     }
 }

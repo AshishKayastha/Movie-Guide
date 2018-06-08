@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewFragment
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentStatusObserver
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.ui.personal.movie.PersonalMovieFragment.Companion.newInstance
@@ -23,8 +23,7 @@ import javax.inject.Inject
  * It will be determined by movieType passed to [newInstance].
  * The movieType should be either [FAVORITES] or [WATCHLIST]
  */
-class PersonalMovieFragment : BaseRecyclerViewFragment<Movie,
-        BaseRecyclerViewMvpView<Movie>, PersonalMoviePresenter>() {
+class PersonalMovieFragment : RecyclerViewFragment<Movie, RecyclerViewMvpView<Movie>, PersonalMoviePresenter>() {
 
     companion object {
         private const val ARG_PERSONAL_MOVIE_TYPE = "personal_movie_type"
@@ -56,25 +55,23 @@ class PersonalMovieFragment : BaseRecyclerViewFragment<Movie,
         type = arguments?.getInt(ARG_PERSONAL_MOVIE_TYPE)
     }
 
-    override fun getAdapterType() = ADAPTER_TYPE_MOVIE
-
-    override fun getEmptyTextId() = if (type == FAVORITES) {
+    override fun getEmptyTextId(): Int = if (type == FAVORITES) {
         R.string.no_fav_movies_available
     } else {
         R.string.no_movies_watchlist_available
     }
 
-    override fun getEmptyImageId() = R.drawable.ic_movie_white_100dp
+    override fun getEmptyImageId(): Int = R.drawable.ic_movie_white_100dp
 
-    override fun getTransitionNameId(position: Int) = R.string.transition_movie_poster
+    override fun getAdapterType(): Int = ADAPTER_TYPE_MOVIE
 
     override fun getDetailIntent(position: Int): Intent? {
-        return if (activity != null) {
-            clickedItemPosition = position
-            val movie = recyclerViewAdapter.getItem<Movie>(position)
-            MovieDetailActivity.createIntent(activity!!, movie)
-        } else null
+        clickedItemPosition = position
+        val movie = recyclerViewAdapter.getItem<Movie>(position)
+        return MovieDetailActivity.createIntent(activity!!, movie)
     }
+
+    override fun getTransitionNameId(position: Int): Int = R.string.transition_movie_poster
 
     private fun observePersonalContentStatusChange() {
         disposable = statusObserver.getContentStatusObservable()

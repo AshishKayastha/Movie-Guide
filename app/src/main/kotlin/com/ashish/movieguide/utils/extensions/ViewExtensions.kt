@@ -51,7 +51,7 @@ fun View.showSnackBar(
 
     snackbar.changeSnackBarFont(android.support.design.R.id.snackbar_text)
     snackbar.changeSnackBarFont(android.support.design.R.id.snackbar_action)
-    snackbar.view.setBackgroundColor(context.getColorCompat(R.color.primary_gradient_end_color))
+    snackbar.view.setBackgroundColor(context.getColorCompat(R.color.app_bg_color))
 
     snackbar.show()
 }

@@ -22,12 +22,8 @@ import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
 import kotlinx.android.synthetic.main.layout_empty_view.*
 
-/**
- * Created by Ashish on Dec 30.
- */
-abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpView<I>,
-        P : BaseRecyclerViewPresenter<I, V>> : MvpFragment<V, P>(), BaseRecyclerViewMvpView<I>,
-        SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
+abstract class RecyclerViewFragment<I : ViewType, V : RecyclerViewMvpView<I>, P : RecyclerViewPresenter<I, V>>
+    : MvpFragment<V, P>(), RecyclerViewMvpView<I>, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
     @State var type: Int? = null
 
@@ -41,10 +37,7 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
-    }
 
-    private fun initViews() {
         emptyText.setText(getEmptyTextId())
         emptyImage.setImageResource(getEmptyImageId())
 
@@ -63,9 +56,17 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
         swipeRefresh.apply {
             setSwipeableViews(emptyContentView, recyclerView)
-            setOnRefreshListener(this@BaseRecyclerViewFragment)
+            setOnRefreshListener(this@RecyclerViewFragment)
         }
     }
+
+    @StringRes
+    abstract fun getEmptyTextId(): Int
+
+    @DrawableRes
+    abstract fun getEmptyImageId(): Int
+
+    abstract fun getAdapterType(): Int
 
     override fun onResume() {
         super.onResume()
@@ -74,25 +75,13 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
 
     protected open fun loadData() = presenter.loadData(type)
 
-    abstract fun getAdapterType(): Int
-
-    @StringRes
-    abstract fun getEmptyTextId(): Int
-
-    @DrawableRes
-    abstract fun getEmptyImageId(): Int
-
     override fun onRefresh() {
         scrollListener.resetPageCount()
-        presenter.loadFreshData(type, recyclerViewAdapter.itemCount == 0)
+        presenter.fetchFreshData(type, false)
     }
 
-    override fun showProgress() {
-        swipeRefresh.isRefreshing = true
-    }
-
-    override fun hideProgress() {
-        swipeRefresh.isRefreshing = false
+    override fun setLoadingIndicator(showIndicator: Boolean) {
+        swipeRefresh.isRefreshing = showIndicator
     }
 
     override fun setCurrentPage(currentPage: Int) {
@@ -109,19 +98,19 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         recyclerViewAdapter.removeLoadingItem()
     }
 
-    override fun showErrorView() = recyclerViewAdapter.showErrorItem()
+    override fun showErrorView() = recyclerViewAdapter.addErrorItem()
 
     override fun resetLoading() = scrollListener.stopLoading()
 
     override fun onItemClick(position: Int, view: View) {
-        val viewType = recyclerViewAdapter.getViewType(position)
+        val viewType = recyclerViewAdapter.getItemViewType(position)
         if (viewType == ERROR_VIEW) {
             recyclerViewAdapter.removeErrorItem()
             scrollListener.shouldLoadMore = true
             presenter.loadMoreData(type, scrollListener.currentPage)
 
         } else {
-            val intent = getDetailIntent(position)
+            val intent = if (activity != null) getDetailIntent(position) else null
             if (intent != null) {
                 val posterImagePair = view.getPosterImagePair(getTransitionNameId(position))
                 activity?.startActivityWithTransition(posterImagePair, intent)
@@ -129,9 +118,9 @@ abstract class BaseRecyclerViewFragment<I : ViewType, V : BaseRecyclerViewMvpVie
         }
     }
 
-    abstract fun getTransitionNameId(position: Int): Int
-
     abstract fun getDetailIntent(position: Int): Intent?
+
+    abstract fun getTransitionNameId(position: Int): Int
 
     override fun onDestroyView() {
         recyclerViewAdapter.removeListener()

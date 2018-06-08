@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/detail_content_image"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="@dimen/detail_image_width"
+        android:layout_height="@dimen/detail_image_height"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription"
         tools:src="@drawable/bg_drawer_header" />

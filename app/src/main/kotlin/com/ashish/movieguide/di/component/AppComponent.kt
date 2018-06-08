@@ -5,13 +5,12 @@ import com.ashish.movieguide.app.MovieGuideApp
 import com.ashish.movieguide.di.modules.ActivityBindingModule
 import com.ashish.movieguide.di.modules.ApiModule
 import com.ashish.movieguide.di.modules.AppModule
-import com.ashish.movieguide.di.modules.BuildTypeModule
 import com.ashish.movieguide.di.modules.NetModule
 import com.ashish.movieguide.di.modules.TraktApiModule
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 /**
@@ -23,9 +22,8 @@ import javax.inject.Singleton
     NetModule::class,
     ApiModule::class,
     TraktApiModule::class,
-    BuildTypeModule::class,
     ActivityBindingModule::class,
-    AndroidInjectionModule::class
+    AndroidSupportInjectionModule::class
 ])
 interface AppComponent : AndroidInjector<MovieGuideApp> {
 

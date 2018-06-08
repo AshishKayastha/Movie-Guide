@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewFragment
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import javax.inject.Inject
@@ -13,8 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 29.
  */
-class TVShowFragment : BaseRecyclerViewFragment<TVShow,
-        BaseRecyclerViewMvpView<TVShow>, TVShowPresenter>() {
+class TVShowFragment : RecyclerViewFragment<TVShow, RecyclerViewMvpView<TVShow>, TVShowPresenter>() {
 
     companion object {
         private const val ARG_TV_SHOW_TYPE = "tv_show_type"
@@ -36,18 +35,16 @@ class TVShowFragment : BaseRecyclerViewFragment<TVShow,
         type = arguments?.getInt(ARG_TV_SHOW_TYPE)
     }
 
-    override fun getAdapterType() = ADAPTER_TYPE_TV_SHOW
+    override fun getEmptyTextId(): Int = R.string.no_tv_shows_available
 
-    override fun getEmptyTextId() = R.string.no_tv_shows_available
+    override fun getEmptyImageId(): Int = R.drawable.ic_tv_white_100dp
 
-    override fun getEmptyImageId() = R.drawable.ic_tv_white_100dp
-
-    override fun getTransitionNameId(position: Int) = R.string.transition_tv_poster
+    override fun getAdapterType(): Int = ADAPTER_TYPE_TV_SHOW
 
     override fun getDetailIntent(position: Int): Intent? {
-        return if (activity != null) {
-            val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
-            TVShowDetailActivity.createIntent(activity!!, tvShow)
-        } else null
+        val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
+        return TVShowDetailActivity.createIntent(activity!!, tvShow)
     }
+
+    override fun getTransitionNameId(position: Int): Int = R.string.transition_tv_poster
 }

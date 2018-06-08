@@ -10,7 +10,7 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Review
 import com.ashish.movieguide.ui.animation.SlideInUpAnimator
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.common.adapter.InfiniteScrollListener
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
@@ -22,8 +22,8 @@ import kotlinx.android.synthetic.main.activity_review.*
 import kotlinx.android.synthetic.main.layout_empty_view.*
 import javax.inject.Inject
 
-class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresenter>(),
-        BaseRecyclerViewMvpView<Review>, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
+class ReviewActivity : MvpActivity<RecyclerViewMvpView<Review>, ReviewPresenter>(),
+        RecyclerViewMvpView<Review>, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
     companion object {
         private const val EXTRA_MOVIE_ID = "movie_id"
@@ -89,15 +89,11 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
 
     override fun onRefresh() {
         scrollListener.resetPageCount()
-        reviewPresenter.loadFreshData(null, reviewAdapter.itemCount == 0)
+        reviewPresenter.fetchFreshData(null, reviewAdapter.itemCount == 0)
     }
 
-    override fun showProgress() {
-        swipeRefresh.isRefreshing = false
-    }
-
-    override fun hideProgress() {
-        swipeRefresh.isRefreshing = false
+    override fun setLoadingIndicator(showIndicator: Boolean) {
+        swipeRefresh.isRefreshing = showIndicator
     }
 
     override fun setCurrentPage(currentPage: Int) {
@@ -114,7 +110,7 @@ class ReviewActivity : MvpActivity<BaseRecyclerViewMvpView<Review>, ReviewPresen
         reviewAdapter.removeLoadingItem()
     }
 
-    override fun showErrorView() = reviewAdapter.showErrorItem()
+    override fun showErrorView() = reviewAdapter.addErrorItem()
 
     override fun resetLoading() = scrollListener.stopLoading()
 

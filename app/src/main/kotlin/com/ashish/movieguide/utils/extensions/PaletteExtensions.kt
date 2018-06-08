@@ -17,6 +17,6 @@ fun Palette?.getSwatchWithMostPixels(): Palette.Swatch? {
     return mostPixelSwatch
 }
 
-fun Palette?.setPaletteColor(func: (swatch: Palette.Swatch) -> Unit) {
+inline fun Palette?.setPaletteColor(crossinline func: (swatch: Palette.Swatch) -> Unit) {
     this?.getSwatchWithMostPixels()?.run { func(this) }
 }

@@ -1,13 +1,12 @@
 package com.ashish.movieguide.ui.common.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.ashish.movieguide.R
+import com.ashish.movieguide.ui.base.recyclerview.BaseHolder
 import com.ashish.movieguide.utils.Constants.DETAIL_IMAGE_THUMBNAIL_SIZE
 import com.ashish.movieguide.utils.extensions.bindView
-import com.ashish.movieguide.utils.extensions.inflate
 import com.ashish.movieguide.utils.glide.GlideApp
 import com.bumptech.glide.request.RequestOptions
 
@@ -20,7 +19,7 @@ class ImageAdapter(
 ) : RecyclerView.Adapter<ImageAdapter.ImageHolder>(), RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
-        return ImageHolder(parent.inflate(R.layout.list_item_detail_image)!!)
+        return ImageHolder(parent).also { it.attachListener(onItemClickListener) }
     }
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
@@ -29,19 +28,18 @@ class ImageAdapter(
 
     override fun getItemCount() = imageUrlList.size
 
+    override fun onViewRecycled(holder: ImageHolder) {
+        super.onViewRecycled(holder)
+        GlideApp.with(holder.imageView.context).clear(holder.imageView)
+    }
+
     override fun removeListener() {
         onItemClickListener = null
     }
 
-    inner class ImageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ImageHolder(parent: ViewGroup) : BaseHolder(parent, R.layout.list_item_detail_image) {
 
         val imageView: ImageView by bindView(R.id.detail_content_image)
-
-        init {
-            itemView.setOnClickListener { view ->
-                onItemClickListener?.onItemClick(adapterPosition, view)
-            }
-        }
 
         fun bindData(imageUrl: String, position: Int) {
             GlideApp.with(imageView.context)

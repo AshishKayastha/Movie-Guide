@@ -3,8 +3,8 @@ package com.ashish.movieguide.ui.multisearch.fragment
 import com.ashish.movieguide.data.network.api.tmdb.SearchApi
 import com.ashish.movieguide.data.network.entities.tmdb.MultiSearch
 import com.ashish.movieguide.data.network.entities.tmdb.Results
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewPresenter
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
 import javax.inject.Inject
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class MultiSearchPresenter @Inject constructor(
         private val searchApi: SearchApi,
         schedulerProvider: BaseSchedulerProvider
-) : BaseRecyclerViewPresenter<MultiSearch, BaseRecyclerViewMvpView<MultiSearch>>(schedulerProvider) {
+) : RecyclerViewPresenter<MultiSearch, RecyclerViewMvpView<MultiSearch>>(schedulerProvider) {
 
     private var searchQuery = ""
 
@@ -23,8 +23,8 @@ class MultiSearchPresenter @Inject constructor(
         this.searchQuery = searchQuery
     }
 
-    override fun getType(type: Int?) = searchQuery
+    override fun getType(type: Int?): String? = searchQuery
 
-    override fun getResults(type: String?, page: Int): Single<Results<MultiSearch>>
-            = searchApi.getMultiSearchResults(type!!, page)
+    override fun getResults(type: String?, page: Int): Single<Results<MultiSearch>> =
+            searchApi.getMultiSearchResults(type!!, page)
 }

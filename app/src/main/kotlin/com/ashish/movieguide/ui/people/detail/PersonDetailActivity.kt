@@ -128,6 +128,6 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, TraktPerson,
     override fun getCrewItemClickListener() = onCrewItemClickListener
 
     override fun getShareText(): CharSequence {
-        return person!!.name + "\n\n" + TMDB_URL + "person/" + person!!.id
+        return "${person!!.name}\n\n${TMDB_URL}person/${person!!.id}"
     }
 }

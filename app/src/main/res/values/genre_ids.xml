@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Genres Id -->
+    <string name="genre_action_id">28</string>
+    <string name="genre_adventure_id">12</string>
+    <string name="genre_animation_id">16</string>
+    <string name="genre_comedy_id">35</string>
+    <string name="genre_crime_id">80</string>
+    <string name="genre_documentary_id">99</string>
+    <string name="genre_drama_id">18</string>
+    <string name="genre_family_id">10751</string>
+    <string name="genre_fantasy_id">14</string>
+    <string name="genre_history_id">36</string>
+    <string name="genre_horror_id">27</string>
+    <string name="genre_music_id">10402</string>
+    <string name="genre_mystery_id">9648</string>
+    <string name="genre_romance_id">10749</string>
+    <string name="genre_sci_fi_id">878</string>
+    <string name="genre_thriller_id">53</string>
+    <string name="genre_war_id">10752</string>
+    <string name="genre_western_id">37</string>
+
+    <!-- TV Show Genres Id -->
+    <string name="genre_action_adventure_id">10759</string>
+    <string name="genre_scifi_fantasy_id">10765</string>
+    <string name="genre_reality_id">10764</string>
+    <string name="genre_war_politics_id">10768</string>
+</resources>

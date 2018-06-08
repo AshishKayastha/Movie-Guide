@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/Match.Width"
-    android:background="@drawable/bg_primary_gradient">
+    android:background="@color/app_bg_color">
 
     <com.ashish.movieguide.ui.widget.FontTextView
         android:id="@+id/sortByTitle"

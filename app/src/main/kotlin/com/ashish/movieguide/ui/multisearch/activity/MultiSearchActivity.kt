@@ -63,6 +63,8 @@ class MultiSearchActivity : BaseActivity(), HasSupportFragmentInjector {
 
     override fun getLayoutId() = R.layout.activity_multi_search
 
+    override fun supportFragmentInjector() = supportFragmentInjector
+
     private fun performRevealAnimation() {
         rootView.onLayoutLaid {
             val right = rootView.right
@@ -87,19 +89,16 @@ class MultiSearchActivity : BaseActivity(), HasSupportFragmentInjector {
 
         searchView.maxWidth = Utils.getScreenWidth()
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                performSearch(query)
-                return true
-            }
-
             override fun onQueryTextChange(query: String) = true
+            override fun onQueryTextSubmit(query: String) = performSearch(query)
         })
     }
 
-    private fun performSearch(query: String) {
+    private fun performSearch(query: String): Boolean {
         hideKeyboard()
         searchView.clearFocus()
         multiSearchFragment?.searchQuery(query)
+        return true
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -116,8 +115,6 @@ class MultiSearchActivity : BaseActivity(), HasSupportFragmentInjector {
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         return keyboardWatcher.dispatchEditTextTouchEvent(event, super.dispatchTouchEvent(event))
     }
-
-    override fun supportFragmentInjector() = supportFragmentInjector
 
     override fun onBackPressed() {
         hideKeyboard()

@@ -1,31 +1,17 @@
 package com.ashish.movieguide.data.network.entities.tmdb
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass
-import paperparcel.PaperParcel
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by Ashish on Jan 24.
  */
-@PaperParcel
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class FilterQuery(
         var sortBy: String = "popularity.desc",
         var genreIds: String? = null,
         var minDate: String? = null,
         var maxDate: String? = null
-) : Parcelable {
-
-    companion object {
-        @JvmField
-        @Suppress("unused")
-        val CREATOR = PaperParcelFilterQuery.CREATOR
-    }
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        PaperParcelFilterQuery.writeToParcel(this, dest, flags)
-    }
-}
+) : Parcelable

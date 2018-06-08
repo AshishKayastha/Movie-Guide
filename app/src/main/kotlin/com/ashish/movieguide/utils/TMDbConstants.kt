@@ -4,17 +4,17 @@ object TMDbConstants {
 
     const val TMDB_URL = "https://www.themoviedb.org/"
     const val TMDB_API_BASE_URL = "https://api.themoviedb.org/3/"
-    const val TMDB_BASE_IMAGE_URL = "https://image.tmdb.org/t/p/"
 
     // Image Url Configurations
-    const val STILL_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w300"
-    const val POSTER_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w342"
-    const val PROFILE_URL_PREFIX = TMDB_BASE_IMAGE_URL + "h632"
-    const val BACKDROP_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w780"
-    const val ORIGINAL_IMAGE_URL_PREFIX = TMDB_BASE_IMAGE_URL + "original"
+    private const val TMDB_BASE_IMAGE_URL = "https://image.tmdb.org/t/p/"
+    const val STILL_URL_PREFIX = "${TMDB_BASE_IMAGE_URL}w300"
+    const val POSTER_URL_PREFIX = "${TMDB_BASE_IMAGE_URL}w342"
+    const val PROFILE_URL_PREFIX = "${TMDB_BASE_IMAGE_URL}h632"
+    const val BACKDROP_URL_PREFIX = "${TMDB_BASE_IMAGE_URL}w780"
+    const val ORIGINAL_IMAGE_URL_PREFIX = "${TMDB_BASE_IMAGE_URL}original"
 
-    const val LARGE_POSTER_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w500"
-    const val LARGE_BACKDROP_URL_PREFIX = TMDB_BASE_IMAGE_URL + "w1280"
+    const val LARGE_POSTER_URL_PREFIX = "${TMDB_BASE_IMAGE_URL}w500"
+    const val LARGE_BACKDROP_URL_PREFIX = "${TMDB_BASE_IMAGE_URL}w1280"
 
     const val MEDIA_TYPE_TV = "tv"
     const val MEDIA_TYPE_MOVIE = "movie"

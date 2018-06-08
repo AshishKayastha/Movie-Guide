@@ -4,6 +4,7 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.api.trakt.SyncApi
 import com.ashish.movieguide.data.network.entities.trakt.SyncItems
 import com.ashish.movieguide.di.scopes.ActivityScope
+import com.ashish.movieguide.ui.widget.CustomToast
 import com.ashish.movieguide.utils.Utils
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -35,7 +36,7 @@ class RatingManager @Inject constructor(
     private fun onAddRatingSuccess(mediaId: Long, rating: Int) {
         view?.run {
             showSavedRating(rating)
-            showToastMessage(R.string.success_save_rating)
+            showToastMessage(R.string.success_save_rating, CustomToast.TOAST_TYPE_SUCCESS)
         }
 
         ratingChangeObserver.notifyRatingChanged(mediaId, rating)
@@ -57,7 +58,7 @@ class RatingManager @Inject constructor(
     private fun onRemoveRatingSuccess(mediaId: Long) {
         view?.run {
             showSavedRating(0)
-            showToastMessage(R.string.success_delete_rating)
+            showToastMessage(R.string.success_delete_rating, CustomToast.TOAST_TYPE_SUCCESS)
         }
 
         ratingChangeObserver.notifyRatingChanged(mediaId, 0)

@@ -6,6 +6,7 @@ import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
 import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.AuthException
+import com.ashish.movieguide.utils.extensions.addAllIfNotNull
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
@@ -34,7 +35,7 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
 
     private fun loadFreshData(id: Long?) {
         if (id != null) {
-            view?.showProgress()
+            view?.setLoadingIndicator(true)
             addDisposable(getDetailContent(id)
                     .doOnNext { fullDetailContent = it }
                     .observeOn(schedulerProvider.ui())
@@ -57,35 +58,35 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
             }
 
             fullDetailContent.omdbDetail?.let { showOMDbDetail(it) }
-            hideProgress()
+            setLoadingIndicator(false)
         }
     }
 
+    abstract fun getContentList(fullDetailContent: FullDetailContent<I, T>): List<String>
+
     private fun showAllImages(detailContent: I) {
         val imageUrlList = ArrayList<String>()
-        addImages(imageUrlList, getPosterImages(detailContent)) { it.getPosterUrl() }
-        addImages(imageUrlList, getBackdropImages(detailContent)) { it.getBackdropUrl() }
+
+        val posterUrlList = getImageUrlList(getPosterImages(detailContent)) { it.getPosterUrl() }
+        imageUrlList.addAllIfNotNull(posterUrlList)
+
+        val backdropUrlList = getImageUrlList(getBackdropImages(detailContent)) { it.getBackdropUrl() }
+        imageUrlList.addAllIfNotNull(backdropUrlList)
 
         if (imageUrlList.isNotEmpty()) {
             view?.showImageList(imageUrlList)
         }
     }
 
-    private fun addImages(urlList: ArrayList<String>, imageItemList: List<ImageItem>?,
-                          getImageUrl: (String?) -> String?) {
-        if (imageItemList.isNotNullOrEmpty()) {
-            val posterImageUrlList = imageItemList!!
-                    .mapNotNull { getImageUrl(it.filePath) }
-                    .toList()
-            urlList.addAll(posterImageUrlList)
-        }
-    }
-
-    abstract fun getContentList(fullDetailContent: FullDetailContent<I, T>): List<String>
-
     abstract fun getBackdropImages(detailContent: I): List<ImageItem>?
 
     abstract fun getPosterImages(detailContent: I): List<ImageItem>?
+
+    private fun getImageUrlList(imageItemList: List<ImageItem>?, getImageUrl: (String?) -> String?): List<String>? {
+        return if (imageItemList.isNotNullOrEmpty()) {
+            imageItemList!!.mapNotNull { getImageUrl(it.filePath) }.toList()
+        } else null
+    }
 
     abstract fun getCredits(detailContent: I): CreditResults?
 
@@ -94,6 +95,10 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
             showItemList(creditResults?.cast) { showCastList(it) }
             showItemList(creditResults?.crew) { showCrewList(it) }
         }
+    }
+
+    protected fun <T> showItemList(itemList: List<T>?, showData: (List<T>) -> Unit) {
+        if (itemList.isNotNullOrEmpty()) showData(itemList!!)
     }
 
     private fun onLoadDetailError(t: Throwable, messageId: Int) {
@@ -114,9 +119,5 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
                 else -> showToastMessage(messageId)
             }
         }
-    }
-
-    protected fun <T> showItemList(itemList: List<T>?, showData: (List<T>) -> Unit) {
-        if (itemList != null && itemList.isNotEmpty()) showData(itemList)
     }
 }

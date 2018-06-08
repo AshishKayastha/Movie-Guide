@@ -144,7 +144,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     }
 
     override fun getShareText(): CharSequence {
-        return movie!!.title + "\n\n" + TMDB_URL + "movie/" + movie!!.id
+        return "${movie!!.title}\n\n${TMDB_URL}movie/${movie!!.id}"
     }
 
     override fun setFavoriteIcon(isFavorite: Boolean) {

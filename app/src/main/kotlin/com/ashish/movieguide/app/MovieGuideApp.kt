@@ -43,5 +43,5 @@ class MovieGuideApp : BaseApp(), HasActivityInjector {
         appComponent.inject(this)
     }
 
-    override fun activityInjector() = dispatchingActivityInjector
+    override fun activityInjector(): DispatchingAndroidInjector<Activity> = dispatchingActivityInjector
 }

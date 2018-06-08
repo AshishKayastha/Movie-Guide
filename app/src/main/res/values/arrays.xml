@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer-array name="swipe_refresh_colors">
-        <item>@color/colorAccent</item>
+        <item>@color/app_color_accent</item>
         <item>@android:color/holo_red_dark</item>
         <item>@android:color/holo_blue_bright</item>
     </integer-array>

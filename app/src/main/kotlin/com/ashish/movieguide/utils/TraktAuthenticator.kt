@@ -29,7 +29,7 @@ class TraktAuthenticator @Inject constructor(
 ) : Authenticator {
 
     companion object {
-        private const val REFRESH_TOKEN_URL = TRAKT_API_BASE_URL + "oauth/token"
+        private const val REFRESH_TOKEN_URL = "${TRAKT_API_BASE_URL}oauth/token"
     }
 
     @Throws(IOException::class)

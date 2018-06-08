@@ -1,10 +1,9 @@
 package com.ashish.movieguide.ui.base.recyclerview
 
-import android.support.v7.widget.RecyclerView
+import android.support.annotation.CallSuper
 import android.view.View
 import android.view.ViewGroup
 import com.ashish.movieguide.R
-import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.ViewType
 import com.ashish.movieguide.ui.widget.AspectRatioImageView
 import com.ashish.movieguide.ui.widget.FontTextView
@@ -13,10 +12,9 @@ import com.ashish.movieguide.utils.Constants.LIST_THUMBNAIL_HEIGHT
 import com.ashish.movieguide.utils.Constants.LIST_THUMBNAIL_WIDTH
 import com.ashish.movieguide.utils.extensions.bindOptionalView
 import com.ashish.movieguide.utils.extensions.bindView
-import com.ashish.movieguide.utils.extensions.inflate
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.glide.GlideApp
-import com.ashish.movieguide.utils.glide.palette.PaletteImageViewTarget
+import com.ashish.movieguide.utils.glide.PaletteImageViewTarget
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.request.RequestOptions
@@ -26,8 +24,8 @@ import com.bumptech.glide.request.RequestOptions
  */
 abstract class BaseContentHolder<in I : ViewType>(
         parent: ViewGroup,
-        layoutId: Int = R.layout.list_item_content
-) : RecyclerView.ViewHolder(parent.inflate(layoutId)) {
+        layoutId: Int
+) : BaseHolder(parent, layoutId) {
 
     val contentView: View by bindView(R.id.content_view)
     val contentTitle: FontTextView by bindView(R.id.content_title)
@@ -35,12 +33,7 @@ abstract class BaseContentHolder<in I : ViewType>(
     val posterImage: AspectRatioImageView by bindView(R.id.poster_image)
     val ratingLabel: LabelLayout? by bindOptionalView(R.id.rating_label)
 
-    init {
-        itemView.setOnClickListener { view ->
-            getItemClickListener()?.onItemClick(adapterPosition, view)
-        }
-    }
-
+    @CallSuper
     open fun bindData(item: I) {
         loadImage(item)
     }
@@ -59,8 +52,6 @@ abstract class BaseContentHolder<in I : ViewType>(
             GlideApp.with(itemView.context).clear(posterImage)
         }
     }
-
-    abstract fun getItemClickListener(): OnItemClickListener?
 
     abstract fun getImageUrl(item: I): String?
 }

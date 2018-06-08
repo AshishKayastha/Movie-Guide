@@ -106,7 +106,7 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, TraktSeason
     }
 
     override fun getShareText(): CharSequence {
-        return TMDB_URL + "tv/" + tvShowId + "season/" + season!!.seasonNumber
+        return "${TMDB_URL}tv/${tvShowId}season/${season!!.seasonNumber}"
     }
 
     override fun performCleanup() {

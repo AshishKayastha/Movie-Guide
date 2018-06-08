@@ -3,7 +3,10 @@ package com.ashish.movieguide.ui.tvshow.detail
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.TVShowInteractor
 import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
+import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
 import com.ashish.movieguide.data.network.entities.tmdb.TVShowDetail
+import com.ashish.movieguide.data.network.entities.tmdb.Videos
 import com.ashish.movieguide.data.network.entities.trakt.SyncItems
 import com.ashish.movieguide.data.network.entities.trakt.SyncShow
 import com.ashish.movieguide.data.network.entities.trakt.TraktShow
@@ -41,7 +44,7 @@ class TVShowDetailPresenter @Inject constructor(
     override fun showDetailContent(fullDetailContent: FullDetailContent<TVShowDetail, TraktShow>) {
         super.showDetailContent(fullDetailContent)
         view?.apply {
-            hideProgress()
+            setLoadingIndicator(false)
             val tvShowDetail = fullDetailContent.detailContent
             setTMDbRating(tvShowDetail?.voteAverage)
             showItemList(tvShowDetail?.seasons) { showSeasonsList(it) }
@@ -73,13 +76,13 @@ class TVShowDetailPresenter @Inject constructor(
         return contentList
     }
 
-    override fun getBackdropImages(detailContent: TVShowDetail) = detailContent.images?.backdrops
+    override fun getBackdropImages(detailContent: TVShowDetail): List<ImageItem>? = detailContent.images?.backdrops
 
-    override fun getPosterImages(detailContent: TVShowDetail) = detailContent.images?.posters
+    override fun getPosterImages(detailContent: TVShowDetail): List<ImageItem>? = detailContent.images?.posters
 
-    override fun getVideos(detailContent: TVShowDetail) = detailContent.videos
+    override fun getVideos(detailContent: TVShowDetail): Videos? = detailContent.videos
 
-    override fun getCredits(detailContent: TVShowDetail) = detailContent.credits
+    override fun getCredits(detailContent: TVShowDetail): CreditResults? = detailContent.credits
 
     override fun getErrorMessageId() = R.string.error_load_tv_detail
 

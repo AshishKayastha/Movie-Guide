@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewFragment
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentStatusObserver
 import com.ashish.movieguide.ui.personal.movie.PersonalMovieFragment.Companion.newInstance
 import com.ashish.movieguide.ui.personal.tvshow.PersonalTVShowFragment.Companion.newInstance
@@ -24,8 +24,7 @@ import javax.inject.Inject
  * It will be determined by tvShowType passed to [newInstance].
  * The tvShowType should be either [FAVORITES] or [WATCHLIST]
  */
-class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
-        BaseRecyclerViewMvpView<TVShow>, PersonalTVShowPresenter>() {
+class PersonalTVShowFragment : RecyclerViewFragment<TVShow, RecyclerViewMvpView<TVShow>, PersonalTVShowPresenter>() {
 
     companion object {
         private const val ARG_PERSONAL_TV_SHOW_TYPE = "personal_tv_show_type"
@@ -57,25 +56,23 @@ class PersonalTVShowFragment : BaseRecyclerViewFragment<TVShow,
         type = arguments?.getInt(ARG_PERSONAL_TV_SHOW_TYPE)
     }
 
-    override fun getAdapterType() = ADAPTER_TYPE_TV_SHOW
-
-    override fun getEmptyTextId() = if (type == FAVORITES) {
+    override fun getEmptyTextId(): Int = if (type == FAVORITES) {
         R.string.no_fav_tv_shows_available
     } else {
         R.string.no_tv_shows_watchlist_available
     }
 
-    override fun getEmptyImageId() = R.drawable.ic_tv_white_100dp
+    override fun getEmptyImageId(): Int = R.drawable.ic_tv_white_100dp
 
-    override fun getTransitionNameId(position: Int) = R.string.transition_tv_poster
+    override fun getAdapterType(): Int = ADAPTER_TYPE_TV_SHOW
 
     override fun getDetailIntent(position: Int): Intent? {
-        return if (activity != null) {
-            clickedItemPosition = position
-            val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
-            TVShowDetailActivity.createIntent(activity!!, tvShow)
-        } else null
+        clickedItemPosition = position
+        val tvShow = recyclerViewAdapter.getItem<TVShow>(position)
+        return TVShowDetailActivity.createIntent(activity!!, tvShow)
     }
+
+    override fun getTransitionNameId(position: Int): Int = R.string.transition_tv_poster
 
     private fun observePersonalContentStatusChange() {
         disposable = statusObserver.getContentStatusObservable()

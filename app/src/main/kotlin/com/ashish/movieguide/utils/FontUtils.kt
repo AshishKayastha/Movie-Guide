@@ -4,10 +4,10 @@ import android.content.Context
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.support.v4.util.SimpleArrayMap
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.TextView
 import com.ashish.movieguide.R
+import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 
 /**
  * Created by Ashish on Dec 29.
@@ -30,11 +30,11 @@ object FontUtils {
         }
     }
 
-    private fun setFontStyle(textView: TextView, fontName: String) {
-        if (!TextUtils.isEmpty(fontName)) {
+    private fun setFontStyle(textView: TextView, fontName: String?) {
+        if (fontName.isNotNullOrEmpty()) {
             textView.apply {
                 paintFlags = textView.paintFlags or Paint.SUBPIXEL_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-                typeface = getTypeface(textView.context, fontName)
+                typeface = getTypeface(textView.context, fontName!!)
             }
         }
     }

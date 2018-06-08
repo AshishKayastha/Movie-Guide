@@ -1,4 +1,4 @@
-package com.ashish.movieguide.utils.glide.palette
+package com.ashish.movieguide.utils.glide
 
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -19,8 +19,8 @@ class PaletteImageViewTarget(
         private val holder: BaseContentHolder<*>
 ) : ImageViewTarget<Bitmap>(holder.posterImage) {
 
-    private val primaryTextColor = holder.itemView.context.getColorCompat(R.color.primary_text_light)
-    private val secondaryTextColor = holder.itemView.context.getColorCompat(R.color.secondary_text_light)
+    private val primaryTextColor = getColor(R.color.primary_text_light)
+    private val secondaryTextColor = getColor(R.color.secondary_text_light)
 
     override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>?) {
         super.onResourceReady(bitmap, transition)
@@ -35,5 +35,7 @@ class PaletteImageViewTarget(
         }
     }
 
-    override fun setResource(bitmap: Bitmap?) {}
+    override fun setResource(bitmap: Bitmap?) = Unit
+
+    private fun getColor(colorRes: Int): Int = holder.itemView.context.getColorCompat(colorRes)
 }

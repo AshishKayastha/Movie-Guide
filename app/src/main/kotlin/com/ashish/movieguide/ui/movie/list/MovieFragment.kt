@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewFragment
-import com.ashish.movieguide.ui.base.recyclerview.BaseRecyclerViewMvpView
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewFragment
+import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import javax.inject.Inject
@@ -13,8 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Dec 26.
  */
-class MovieFragment : BaseRecyclerViewFragment<Movie,
-        BaseRecyclerViewMvpView<Movie>, MoviePresenter>() {
+class MovieFragment : RecyclerViewFragment<Movie, RecyclerViewMvpView<Movie>, MoviePresenter>() {
 
     companion object {
         private const val ARG_MOVIE_TYPE = "movie_type"
@@ -37,20 +36,16 @@ class MovieFragment : BaseRecyclerViewFragment<Movie,
         type = arguments?.getInt(ARG_MOVIE_TYPE)
     }
 
-    override fun getAdapterType() = ADAPTER_TYPE_MOVIE
+    override fun getEmptyTextId(): Int = R.string.no_movies_available
 
-    override fun getEmptyTextId() = R.string.no_movies_available
+    override fun getEmptyImageId(): Int = R.drawable.ic_movie_white_100dp
 
-    override fun getEmptyImageId() = R.drawable.ic_movie_white_100dp
-
-    override fun getTransitionNameId(position: Int) = R.string.transition_movie_poster
+    override fun getAdapterType(): Int = ADAPTER_TYPE_MOVIE
 
     override fun getDetailIntent(position: Int): Intent? {
         val movie = recyclerViewAdapter.getItem<Movie>(position)
-        return if (activity != null) {
-            MovieDetailActivity.createIntent(activity!!, movie)
-        } else {
-            null
-        }
+        return MovieDetailActivity.createIntent(activity!!, movie)
     }
+
+    override fun getTransitionNameId(position: Int): Int = R.string.transition_movie_poster
 }

@@ -43,15 +43,21 @@
     @retrofit2.http.* <methods>;
 }
 
+# Moshi
+-dontwarn javax.annotation.**
+-keepclasseswithmembers class * {
+    @com.squareup.moshi.* <methods>;
+}
+-keep @com.squareup.moshi.JsonQualifier interface *
+
+-keep class **JsonAdapter {
+    <init>(...);
+    <fields>;
+}
+-keepnames @com.squareup.moshi.JsonClass class *
+
 # RxJava 2
 -dontnote io.reactivex.**
-
-# IcePick
--dontwarn icepick.**
--keep class **$$Icepick { *; }
--keepclasseswithmembernames class * {
-    @icepick.* <fields>;
-}
 
 # Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule

@@ -97,22 +97,23 @@ abstract class FullDetailContentPresenter<I, T, V : FullDetailContentView<I>>(
     private fun handleVideoContents(detailContent: I) {
         val videoResults = getVideos(detailContent)?.results
         if (videoResults.isNotNullOrEmpty()) {
-            showYouTubeTrailer(videoResults)
+            showYouTubeTrailer(videoResults!!)
             showYouTubeVideos(videoResults)
         }
     }
 
-    private fun showYouTubeTrailer(videoResults: List<VideoItem>?) {
-        val youtubeTrailerUrl = videoResults!!.firstOrNull { it.site == YOUTUBE_SITE }?.key
+    abstract fun getVideos(detailContent: I): Videos?
+
+    private fun showYouTubeTrailer(videoResults: List<VideoItem>) {
+        val youtubeTrailerUrl = videoResults.firstOrNull { it.site == YOUTUBE_SITE }?.key
         if (youtubeTrailerUrl.isNotNullOrEmpty()) {
             view?.showTrailerFAB(YOUTUBE_BASE_URL + youtubeTrailerUrl!!)
         }
     }
 
-    private fun showYouTubeVideos(videoResults: List<VideoItem>?) {
+    private fun showYouTubeVideos(videoResults: List<VideoItem>) {
         val youTubeVideos = ArrayList<YouTubeVideo>()
-
-        videoResults!!.filter { (_, _, site, _, key) ->
+        videoResults.filter { (_, _, site, _, key) ->
             site == YOUTUBE_SITE && key.isNotNullOrEmpty()
         }.forEach { (_, name, _, _, key) ->
             val imageUrl = YOUTUBE_THUMB_URL.replace("{id}", key!!)
@@ -121,6 +122,4 @@ abstract class FullDetailContentPresenter<I, T, V : FullDetailContentView<I>>(
 
         view?.showYouTubeVideos(youTubeVideos)
     }
-
-    abstract fun getVideos(detailContent: I): Videos?
 }

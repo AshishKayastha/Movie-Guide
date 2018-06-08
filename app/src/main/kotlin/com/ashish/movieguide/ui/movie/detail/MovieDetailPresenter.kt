@@ -3,7 +3,10 @@ package com.ashish.movieguide.ui.movie.detail
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.MovieInteractor
 import com.ashish.movieguide.data.network.entities.common.FullDetailContent
+import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
+import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
 import com.ashish.movieguide.data.network.entities.tmdb.MovieDetail
+import com.ashish.movieguide.data.network.entities.tmdb.Videos
 import com.ashish.movieguide.data.network.entities.trakt.SyncItems
 import com.ashish.movieguide.data.network.entities.trakt.SyncMovie
 import com.ashish.movieguide.data.network.entities.trakt.TraktMovie
@@ -43,7 +46,7 @@ class MovieDetailPresenter @Inject constructor(
     override fun showDetailContent(fullDetailContent: FullDetailContent<MovieDetail, TraktMovie>) {
         super.showDetailContent(fullDetailContent)
         view?.run {
-            hideProgress()
+            setLoadingIndicator(false)
             val movieDetail = fullDetailContent.detailContent
             setTMDbRating(movieDetail?.voteAverage)
             showItemList(movieDetail?.similarMovieResults?.results) { showSimilarMoviesList(it) }
@@ -74,13 +77,13 @@ class MovieDetailPresenter @Inject constructor(
         return contentList
     }
 
-    override fun getBackdropImages(detailContent: MovieDetail) = detailContent.images?.backdrops
+    override fun getBackdropImages(detailContent: MovieDetail): List<ImageItem>? = detailContent.images?.backdrops
 
-    override fun getPosterImages(detailContent: MovieDetail) = detailContent.images?.posters
+    override fun getPosterImages(detailContent: MovieDetail): List<ImageItem>? = detailContent.images?.posters
 
-    override fun getVideos(detailContent: MovieDetail) = detailContent.videos
+    override fun getVideos(detailContent: MovieDetail): Videos? = detailContent.videos
 
-    override fun getCredits(detailContent: MovieDetail) = detailContent.credits
+    override fun getCredits(detailContent: MovieDetail): CreditResults? = detailContent.credits
 
     override fun getErrorMessageId() = R.string.error_load_movie_detail
 

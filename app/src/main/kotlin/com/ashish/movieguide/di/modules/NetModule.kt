@@ -64,11 +64,12 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
+    @BaseOkHttp
     fun provideBaseOkHttpClient(
             cache: Cache,
             loggingInterceptor: LoggingInterceptor,
             offlineCacheInterceptor: OfflineCacheInterceptor
-    ): OkHttpClient.Builder {
+    ): OkHttpClient {
         return OkHttpClient.Builder()
                 .connectTimeout(20, SECONDS)
                 .readTimeout(20, SECONDS)
@@ -76,17 +77,6 @@ object NetModule {
                 .cache(cache)
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(offlineCacheInterceptor)
-    }
-
-    @Provides
-    @Singleton
-    @JvmStatic
-    fun provideTMDbClient(
-            @BaseOkHttp okHttpClient: OkHttpClient,
-            apiKeyInterceptor: TMDbApiKeyInterceptor
-    ): OkHttpClient {
-        return okHttpClient.newBuilder()
-                .addInterceptor(apiKeyInterceptor)
                 .build()
     }
 
@@ -110,6 +100,24 @@ object NetModule {
     @Provides
     @Singleton
     @JvmStatic
+    fun provideschedulers(schedulerProvider: SchedulerProvider): BaseSchedulerProvider = schedulerProvider
+
+    // TMDB
+    @Provides
+    @Singleton
+    @JvmStatic
+    fun provideTMDbClient(
+            @BaseOkHttp okHttpClient: OkHttpClient,
+            apiKeyInterceptor: TMDbApiKeyInterceptor
+    ): OkHttpClient {
+        return okHttpClient.newBuilder()
+                .addInterceptor(apiKeyInterceptor)
+                .build()
+    }
+
+    @Provides
+    @Singleton
+    @JvmStatic
     fun provideTMDbRetrofit(
             client: OkHttpClient,
             moshiConverterFactory: MoshiConverterFactory,
@@ -123,6 +131,7 @@ object NetModule {
                 .build()
     }
 
+    // OMDB
     @Provides
     @Singleton
     @JvmStatic
@@ -140,6 +149,7 @@ object NetModule {
                 .build()
     }
 
+    // Trakt
     @Provides
     @Singleton
     @JvmStatic
@@ -171,9 +181,4 @@ object NetModule {
                 .addCallAdapterFactory(callAdapterFactory)
                 .build()
     }
-
-    @Provides
-    @Singleton
-    @JvmStatic
-    fun provideschedulers(schedulerProvider: SchedulerProvider): BaseSchedulerProvider = schedulerProvider
 }
