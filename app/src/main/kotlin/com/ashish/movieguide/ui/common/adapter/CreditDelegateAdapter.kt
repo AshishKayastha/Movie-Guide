@@ -1,7 +1,7 @@
 package com.ashish.movieguide.ui.common.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
+import android.view.View
 import com.ashish.movieguide.data.network.entities.tmdb.Credit
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
@@ -18,13 +18,13 @@ class CreditDelegateAdapter(
         onItemClickListener: OnItemClickListener?
 ) : ContentDelegateAdapter(layoutId, onItemClickListener) {
 
-    override fun getHolder(parent: ViewGroup, layoutId: Int) = CreditHolder(parent, layoutId)
+    override fun getHolder(view: View) = CreditHolder(view)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: RecyclerViewItem) {
         (holder as CreditHolder).bindData(item as Credit)
     }
 
-    class CreditHolder(parent: ViewGroup, layoutId: Int) : BaseContentHolder<Credit>(parent, layoutId) {
+    class CreditHolder(view: View) : BaseContentHolder<Credit>(view) {
 
         override fun bindData(item: Credit) {
             with(item) {

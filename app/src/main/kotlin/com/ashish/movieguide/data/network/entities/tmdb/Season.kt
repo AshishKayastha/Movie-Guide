@@ -1,8 +1,8 @@
 package com.ashish.movieguide.data.network.entities.tmdb
 
 import android.os.Parcelable
-import com.ashish.movieguide.ui.common.adapter.ViewType
-import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.CONTENT_VIEW
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
@@ -15,7 +15,7 @@ data class Season(
         @Json(name = "poster_path") val posterPath: String? = null,
         @Json(name = "season_number") val seasonNumber: Int? = null,
         @Json(name = "episode_count") val episodeCount: Int? = null
-) : ViewType, Parcelable {
+) : RecyclerViewItem, Parcelable {
 
     override fun getViewType() = CONTENT_VIEW
 }

@@ -30,7 +30,7 @@ class DetailContentAdapter(
             R.layout.list_item_detail_content_alt
         }
 
-        return DetailContentHolder(parent.inflate(layoutId)!!)
+        return DetailContentHolder(parent.inflate(layoutId))
     }
 
     override fun onBindViewHolder(holder: DetailContentHolder, position: Int) {

@@ -24,7 +24,9 @@ abstract class FullDetailContentPresenter<I, T, V : FullDetailContentView<I>>(
 
     override fun showDetailContent(fullDetailContent: FullDetailContent<I, T>) {
         fullDetailContent.omdbDetail?.apply {
-            if (isValidRating(imdbRating) || isValidRating(tomatoRating) || isValidRating(tomatoUserRating)
+            if (isValidRating(imdbRating)
+                    || isValidRating(tomatoRating)
+                    || isValidRating(tomatoUserRating)
                     || isValidRating(Metascore)) {
                 view?.showRatingCard()
                 setMetaScore(Metascore)

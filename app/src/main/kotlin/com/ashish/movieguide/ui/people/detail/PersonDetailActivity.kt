@@ -121,7 +121,7 @@ class PersonDetailActivity : BaseDetailActivity<PersonDetail, TraktPerson,
 
     override fun getDetailContentType() = ADAPTER_TYPE_PERSON
 
-    override fun getItemTitle() = person?.name ?: ""
+    override fun getItemTitle(): String = person?.name ?: ""
 
     override fun getCastItemClickListener() = onCastItemClickListener
 

@@ -32,14 +32,14 @@ import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.changeMenuAndSubMenuFont
 import com.ashish.movieguide.utils.extensions.changeTabFont
-import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getStringArray
-import com.ashish.movieguide.utils.extensions.loadCircularImage
 import com.ashish.movieguide.utils.extensions.loadImage
+import com.ashish.movieguide.utils.extensions.loadProfileImage
 import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.runDelayed
 import com.ashish.movieguide.utils.extensions.setVisibility
+import com.evernote.android.state.State
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -54,6 +54,8 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     @Inject lateinit var preferenceHelper: PreferenceHelper
     @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+
+    @State var selectedItemId: Int = R.id.drawer_discover
 
     private lateinit var userImage: ImageView
     private lateinit var headerImage: ImageView
@@ -87,12 +89,11 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         ratedTabTitles = getStringArray(R.array.rated_type_array)
 
         initDrawerHeader()
-        showViewPagerFragment(CONTENT_TYPE_DISCOVER, discoverTabTitles)
-        tabLayout.setupWithViewPager(viewPager)
+        setupNavigationView()
+        handleNavigationItemClick()
 
         tabLayout.changeTabFont()
-        toolbar?.changeViewGroupTextFont()
-        setupNavigationView()
+        tabLayout.setupWithViewPager(viewPager)
     }
 
     override fun getLayoutId() = R.layout.activity_main
@@ -117,6 +118,20 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         }
     }
 
+    private fun showUserProfile() {
+        preferenceHelper.apply {
+            if (isLoggedIn()) {
+                nameText.applyText(getName())
+            } else {
+                nameText.setText(R.string.connect_to_trakt)
+            }
+
+            userNameText.applyText(getUserName())
+            userImage.loadProfileImage(getImageUrl())
+            headerImage.loadImage(getCoverImageUrl())
+        }
+    }
+
     private fun startLoginActivity() {
         drawerLayout.closeDrawers()
         runDelayed(250L) {
@@ -132,17 +147,29 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         ActivityCompat.startActivityForResult(this, intent, RC_CONNECT_TRAKT, options.toBundle())
     }
 
-    private fun showUserProfile() {
-        preferenceHelper.apply {
-            if (isLoggedIn()) {
-                nameText.applyText(getName())
-            } else {
-                nameText.setText(R.string.connect_to_trakt)
-            }
+    private fun setupNavigationView() {
+        val typeface = FontUtils.getTypeface(this)
+        navigationView.menu.changeMenuAndSubMenuFont(CustomTypefaceSpan(typeface))
 
-            userNameText.applyText(getUserName())
-            userImage.loadCircularImage(getImageUrl())
-            headerImage.loadImage(getCoverImageUrl())
+        navigationView.setNavigationItemSelectedListener { item ->
+            item.isChecked = true
+            selectedItemId = item.itemId
+            drawerLayout.closeDrawers()
+            handleNavigationItemClick()
+            tabLayout.changeTabFont()
+            true
+        }
+    }
+
+    private fun handleNavigationItemClick() {
+        when (selectedItemId) {
+            R.id.drawer_movies -> showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
+            R.id.drawer_tv_shows -> showViewPagerFragment(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
+            R.id.drawer_people -> showViewPagerFragment(CONTENT_TYPE_PEOPLE, peopleTabTitles)
+            R.id.drawer_discover -> showViewPagerFragment(CONTENT_TYPE_DISCOVER, discoverTabTitles)
+            R.id.drawer_favorites -> showViewPagerFragment(CONTENT_TYPE_FAVORITES, discoverTabTitles)
+            R.id.drawer_watchlist -> showViewPagerFragment(CONTENT_TYPE_WATCHLIST, discoverTabTitles)
+            R.id.drawer_rated -> showViewPagerFragment(CONTENT_TYPE_RATED, ratedTabTitles)
         }
     }
 
@@ -156,35 +183,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             offscreenPageLimit = tabPagerAdapter.count - 1
         }
 
-        if (titleArray.size <= 3) {
-            tabLayout.tabMode = TabLayout.MODE_FIXED
-        } else {
-            tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
-        }
-    }
-
-    private fun setupNavigationView() {
-        val typeface = FontUtils.getTypeface(this, FontUtils.MONTSERRAT_REGULAR)
-        val customTypefaceSpan = CustomTypefaceSpan(typeface)
-        navigationView.menu.changeMenuAndSubMenuFont(customTypefaceSpan)
-
-        navigationView.setNavigationItemSelectedListener { item ->
-            item.isChecked = true
-            drawerLayout.closeDrawers()
-
-            when (item.itemId) {
-                R.id.drawer_movies -> showViewPagerFragment(CONTENT_TYPE_MOVIE, movieTabTitles)
-                R.id.drawer_tv_shows -> showViewPagerFragment(CONTENT_TYPE_TV_SHOW, tvShowTabTitles)
-                R.id.drawer_people -> showViewPagerFragment(CONTENT_TYPE_PEOPLE, peopleTabTitles)
-                R.id.drawer_discover -> showViewPagerFragment(CONTENT_TYPE_DISCOVER, discoverTabTitles)
-                R.id.drawer_favorites -> showViewPagerFragment(CONTENT_TYPE_FAVORITES, discoverTabTitles)
-                R.id.drawer_watchlist -> showViewPagerFragment(CONTENT_TYPE_WATCHLIST, discoverTabTitles)
-                R.id.drawer_rated -> showViewPagerFragment(CONTENT_TYPE_RATED, ratedTabTitles)
-            }
-
-            tabLayout.changeTabFont()
-            true
-        }
+        tabLayout.tabMode = if (titleArray.size <= 3) TabLayout.MODE_FIXED else TabLayout.MODE_SCROLLABLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

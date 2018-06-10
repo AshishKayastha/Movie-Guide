@@ -1,7 +1,7 @@
 package com.ashish.movieguide.data.network.entities.tmdb
 
-import com.ashish.movieguide.ui.common.adapter.ViewType
-import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.CONTENT_VIEW
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -19,7 +19,7 @@ data class Credit(
         @Json(name = "poster_path") val posterPath: String? = null,
         @Json(name = "release_date") val releaseDate: String? = null,
         @Json(name = "profile_path") val profilePath: String? = null
-) : ViewType {
+) : RecyclerViewItem {
 
     override fun getViewType() = CONTENT_VIEW
 }

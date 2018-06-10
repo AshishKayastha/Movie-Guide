@@ -42,7 +42,7 @@ class GenreAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreHolder {
-        return GenreHolder(parent.inflate(R.layout.list_item_filter_genre)!!)
+        return GenreHolder(parent.inflate(R.layout.list_item_filter_genre))
     }
 
     override fun onBindViewHolder(holder: GenreHolder, position: Int) {

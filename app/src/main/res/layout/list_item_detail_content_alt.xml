@@ -5,13 +5,16 @@
 
     <com.ashish.movieguide.ui.widget.FontTextView
         android:id="@+id/content_title"
-        style="@style/PrimaryText.Title"
+        style="@style/PrimaryText.Medium"
+        android:textSize="@dimen/text_size_large"
         tools:text="@string/runtime_title" />
 
     <com.ashish.movieguide.ui.widget.FontTextView
         android:id="@+id/content_text"
-        style="@style/SecondaryText.Title"
+        style="@style/SecondaryText"
         android:layout_marginBottom="@dimen/spacing_micro"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:lineSpacingExtra="@dimen/line_spacing"
         tools:text="2h 30min" />
 
 </LinearLayout>

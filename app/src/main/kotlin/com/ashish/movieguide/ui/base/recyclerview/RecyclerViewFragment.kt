@@ -13,8 +13,8 @@ import com.ashish.movieguide.ui.base.mvp.MvpFragment
 import com.ashish.movieguide.ui.common.adapter.InfiniteScrollListener
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
-import com.ashish.movieguide.ui.common.adapter.ViewType
-import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.ERROR_VIEW
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.ERROR_VIEW
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
@@ -22,7 +22,7 @@ import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
 import kotlinx.android.synthetic.main.layout_empty_view.*
 
-abstract class RecyclerViewFragment<I : ViewType, V : RecyclerViewMvpView<I>, P : RecyclerViewPresenter<I, V>>
+abstract class RecyclerViewFragment<I : RecyclerViewItem, V : RecyclerViewMvpView<I>, P : RecyclerViewPresenter<I, V>>
     : MvpFragment<V, P>(), RecyclerViewMvpView<I>, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
 
     @State var type: Int? = null

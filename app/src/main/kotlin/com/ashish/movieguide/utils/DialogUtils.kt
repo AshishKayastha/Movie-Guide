@@ -11,7 +11,6 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.FontUtils.MONTSERRAT_MEDIUM
-import com.ashish.movieguide.utils.FontUtils.MONTSERRAT_REGULAR
 import com.ashish.movieguide.utils.FontUtils.getTypeface
 import com.ashish.movieguide.utils.extensions.changeDialogButtonTypeface
 import com.ashish.movieguide.utils.extensions.find
@@ -28,8 +27,8 @@ class DialogUtils @Inject constructor(private val context: Context) {
     @SuppressLint("InflateParams")
     private val contentView: View = context.inflateLayout(R.layout.dialog_loading)
 
+    private val regularTypefaceSpan: TypefaceSpan = CustomTypefaceSpan(getTypeface(context))
     private val mediumTypefaceSpan: TypefaceSpan = CustomTypefaceSpan(getTypeface(context, MONTSERRAT_MEDIUM))
-    private val regularTypefaceSpan: TypefaceSpan = CustomTypefaceSpan(getTypeface(context, MONTSERRAT_REGULAR))
 
     private val contentText: FontTextView
     private var messageDialog: AlertDialog? = null

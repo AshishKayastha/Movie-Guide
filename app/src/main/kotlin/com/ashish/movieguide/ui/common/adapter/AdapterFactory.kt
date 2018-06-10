@@ -23,7 +23,7 @@ object AdapterFactory {
             layoutId: Int,
             adapterType: Int,
             onItemClickListener: OnItemClickListener?
-    ): ViewTypeDelegateAdapter = when (adapterType) {
+    ): RecyclerViewDelegateAdapter = when (adapterType) {
         ADAPTER_TYPE_MOVIE -> MovieDelegateAdapter(layoutId, onItemClickListener)
         ADAPTER_TYPE_TV_SHOW -> TVShowDelegateAdapter(layoutId, onItemClickListener)
         ADAPTER_TYPE_PERSON -> PersonDelegateAdapter(layoutId, onItemClickListener)

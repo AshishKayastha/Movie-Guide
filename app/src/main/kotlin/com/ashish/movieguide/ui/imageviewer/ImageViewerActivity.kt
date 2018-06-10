@@ -11,7 +11,6 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.common.BaseActivity
 import com.ashish.movieguide.ui.widget.DepthPageTransformer
 import com.ashish.movieguide.utils.SystemUiHelper
-import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.transition.LeakFreeSupportSharedElementCallback
 import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.activity_image_viewer.*
@@ -26,22 +25,17 @@ class ImageViewerActivity : BaseActivity() {
         const val SHOW_UI_MILLIS = 4000L
         const val EXTRA_CURRENT_POSITION = "current_position"
         const val EXTRA_STARTING_POSITION = "starting_position"
-
-        private const val EXTRA_TITLE = "title"
         private const val EXTRA_IMAGE_URL_LIST = "image_url_list"
 
-        private val INTERPOLATOR = FastOutSlowInInterpolator()
-
-        fun createIntent(context: Context, title: String, startingPosition: Int,
-                         imageUrlList: ArrayList<String>): Intent {
-            return Intent(context, ImageViewerActivity::class.java)
-                    .putExtra(EXTRA_TITLE, title)
-                    .putExtra(EXTRA_IMAGE_URL_LIST, imageUrlList)
-                    .putExtra(EXTRA_STARTING_POSITION, startingPosition)
-        }
+        fun createIntent(
+                context: Context,
+                startingPosition: Int,
+                imageUrlList: ArrayList<String>
+        ): Intent = Intent(context, ImageViewerActivity::class.java)
+                .putExtra(EXTRA_IMAGE_URL_LIST, imageUrlList)
+                .putExtra(EXTRA_STARTING_POSITION, startingPosition)
     }
 
-    @State var title: String = ""
     @State var currentPosition: Int = 0
     @State var startingPosition: Int = 0
     @State var imageUrlList: ArrayList<String>? = null
@@ -56,7 +50,7 @@ class ImageViewerActivity : BaseActivity() {
                                           sharedElementSnapshots: MutableList<View>?) {
             super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)
             if (isReturning) {
-                imageViewerAdapter.getRegisteredFragment(currentPosition)?.loadThumbnail(false)
+                imageViewerAdapter.getRegisteredFragment(currentPosition)?.loadThumbnail()
             }
         }
 
@@ -94,7 +88,7 @@ class ImageViewerActivity : BaseActivity() {
                     .alpha(if (visible) 1f else 0f)
                     .translationY(if (visible) 0f else -appBar.bottom.toFloat())
                     .setDuration(400L)
-                    .setInterpolator(INTERPOLATOR)
+                    .setInterpolator(FastOutSlowInInterpolator())
                     .start()
         }
     }
@@ -106,14 +100,8 @@ class ImageViewerActivity : BaseActivity() {
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            if (this@ImageViewerActivity.title.isEmpty()) {
-                setImageCountTitle()
-            } else {
-                title = this@ImageViewerActivity.title
-            }
+            setImageCountTitle()
         }
-
-        toolbar?.changeViewGroupTextFont()
 
         imageViewerAdapter = ImageViewerAdapter(supportFragmentManager, imageUrlList!!)
         viewPager.apply {
@@ -123,13 +111,13 @@ class ImageViewerActivity : BaseActivity() {
         }
 
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
             override fun onPageSelected(position: Int) {
                 currentPosition = position
                 setImageCountTitle()
             }
-
-            override fun onPageScrollStateChanged(state: Int) {}
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
         })
 
         systemUiHelper = SystemUiHelper(this, listener = visibilityChangeListener)
@@ -138,16 +126,13 @@ class ImageViewerActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_image_viewer
 
     override fun getIntentExtras(extras: Bundle?) {
-        title = extras?.getString(EXTRA_TITLE) ?: ""
         startingPosition = extras?.getInt(EXTRA_STARTING_POSITION) ?: 0
         currentPosition = startingPosition
         imageUrlList = extras?.getStringArrayList(EXTRA_IMAGE_URL_LIST)
     }
 
     private fun setImageCountTitle() {
-        if (title.isEmpty()) {
-            supportActionBar?.title = "${currentPosition + 1} of ${imageUrlList!!.size}"
-        }
+        supportActionBar?.title = "${currentPosition + 1} of ${imageUrlList!!.size}"
     }
 
     override fun onStart() {

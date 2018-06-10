@@ -3,7 +3,7 @@ package com.ashish.movieguide.ui.base.recyclerview
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Results
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
-import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
@@ -12,7 +12,7 @@ import timber.log.Timber
 import java.io.IOException
 import java.util.ArrayList
 
-abstract class RecyclerViewPresenter<I : ViewType, V : RecyclerViewMvpView<I>>(
+abstract class RecyclerViewPresenter<I : RecyclerViewItem, V : RecyclerViewMvpView<I>>(
         schedulerProvider: BaseSchedulerProvider
 ) : RxPresenter<V>(schedulerProvider) {
 
@@ -20,11 +20,11 @@ abstract class RecyclerViewPresenter<I : ViewType, V : RecyclerViewMvpView<I>>(
     private var currentPage: Int = 1
     private var itemList: ArrayList<I>? = null
 
-    fun loadData(type: Int?, showProgress: Boolean = true) {
+    fun loadData(type: Int?) {
         if (itemList.isNotNullOrEmpty()) {
             showItemList()
         } else {
-            fetchFreshData(type, showProgress)
+            fetchFreshData(type)
         }
     }
 
@@ -34,7 +34,7 @@ abstract class RecyclerViewPresenter<I : ViewType, V : RecyclerViewMvpView<I>>(
                 .observeOn(schedulerProvider.ui())
                 .doOnSubscribe { if (showProgress) view?.setLoadingIndicator(true) }
                 .doFinally { view?.setLoadingIndicator(false) }
-                .subscribe({ showResults(it) }, { showErrorMessage(it) }))
+                .subscribe(::showResults, ::showErrorMessage))
     }
 
     abstract fun getResults(type: String?, page: Int): Single<Results<I>>
@@ -59,7 +59,7 @@ abstract class RecyclerViewPresenter<I : ViewType, V : RecyclerViewMvpView<I>>(
             addDisposable(getResults(getType(type), page)
                     .observeOn(schedulerProvider.ui())
                     .doOnSubscribe { view?.showLoadingItem() }
-                    .subscribe({ addNewItemList(it) }, { handleLoadMoreError(it) }))
+                    .subscribe(::addNewItemList, ::handleLoadMoreError))
         }
     }
 

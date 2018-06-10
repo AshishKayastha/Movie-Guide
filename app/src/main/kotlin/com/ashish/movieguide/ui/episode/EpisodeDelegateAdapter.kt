@@ -1,13 +1,13 @@
 package com.ashish.movieguide.ui.episode
 
 import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
+import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Episode
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
-import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.getStillImageUrl
 
@@ -19,13 +19,13 @@ class EpisodeDelegateAdapter(
         onItemClickListener: OnItemClickListener?
 ) : ContentDelegateAdapter(layoutId, onItemClickListener) {
 
-    override fun getHolder(parent: ViewGroup, layoutId: Int) = EpisodeHolder(parent, layoutId)
+    override fun getHolder(view: View) = EpisodeHolder(view)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: RecyclerViewItem) {
         (holder as EpisodeHolder).bindData(item as Episode)
     }
 
-    class EpisodeHolder(parent: ViewGroup, layoutId: Int) : BaseContentHolder<Episode>(parent, layoutId) {
+    class EpisodeHolder(view: View) : BaseContentHolder<Episode>(view) {
 
         override fun bindData(item: Episode) {
             with(item) {

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/spacing_medium"
+    android:layout_marginTop="@dimen/spacing_normal"
     android:clipToPadding="false"
     android:paddingEnd="@dimen/first_keyline"
     android:paddingStart="@dimen/first_keyline"

@@ -1,12 +1,12 @@
-package com.ashish.movieguide.utils
+package com.ashish.movieguide.utils.glide
 
-import android.app.Activity
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import timber.log.Timber
 
-class StartTransitionListener<T>(private val activity: Activity) : RequestListener<T> {
+class LoggingListener<T> : RequestListener<T> {
 
     override fun onLoadFailed(
             e: GlideException?,
@@ -14,7 +14,7 @@ class StartTransitionListener<T>(private val activity: Activity) : RequestListen
             target: Target<T>?,
             isFirstResource: Boolean
     ): Boolean {
-        activity.startPostponedEnterTransition()
+        Timber.e(e)
         return false
     }
 
@@ -25,7 +25,7 @@ class StartTransitionListener<T>(private val activity: Activity) : RequestListen
             dataSource: DataSource?,
             isFirstResource: Boolean
     ): Boolean {
-        activity.startPostponedEnterTransition()
+        Timber.v("onResourceReady Called")
         return false
     }
 }

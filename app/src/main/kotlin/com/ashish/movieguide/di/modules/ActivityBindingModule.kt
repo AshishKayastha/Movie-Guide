@@ -11,10 +11,12 @@ import com.ashish.movieguide.ui.movie.detail.MovieDetailModule
 import com.ashish.movieguide.ui.multisearch.activity.MultiSearchActivity
 import com.ashish.movieguide.ui.multisearch.activity.MultiSearchModule
 import com.ashish.movieguide.ui.people.detail.PersonDetailActivity
+import com.ashish.movieguide.ui.people.detail.PersonDetailModule
 import com.ashish.movieguide.ui.profile.ProfileActivity
 import com.ashish.movieguide.ui.profile.ProfileModule
 import com.ashish.movieguide.ui.review.ReviewActivity
 import com.ashish.movieguide.ui.season.SeasonDetailActivity
+import com.ashish.movieguide.ui.season.SeasonDetailModule
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailModule
 import dagger.Module
@@ -45,7 +47,7 @@ abstract class ActivityBindingModule {
     abstract fun contributeTVShowDetailActivity(): TVShowDetailActivity
 
     @ActivityScope
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [SeasonDetailModule::class])
     abstract fun contributeSeasonDetailActivity(): SeasonDetailActivity
 
     @ActivityScope
@@ -53,7 +55,7 @@ abstract class ActivityBindingModule {
     abstract fun contributeEpisodeDetailActivity(): EpisodeDetailActivity
 
     @ActivityScope
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [PersonDetailModule::class])
     abstract fun contributePersonDetailActivity(): PersonDetailActivity
 
     @ActivityScope

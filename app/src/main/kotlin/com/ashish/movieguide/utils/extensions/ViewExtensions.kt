@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.support.annotation.StringRes
-import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
@@ -20,7 +19,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.ashish.movieguide.R
-import com.ashish.movieguide.utils.FontUtils
 
 /**
  * Created by Ashish on Dec 27.
@@ -168,10 +166,4 @@ fun View.hideWithAnimation(viewGone: Boolean = true) {
                 })
                 .start()
     }
-}
-
-fun CollapsingToolbarLayout.changeTitleTypeface() {
-    val regularFont = FontUtils.getTypeface(context, FontUtils.MONTSERRAT_REGULAR)
-    setExpandedTitleTypeface(regularFont)
-    setCollapsedTitleTypeface(regularFont)
 }

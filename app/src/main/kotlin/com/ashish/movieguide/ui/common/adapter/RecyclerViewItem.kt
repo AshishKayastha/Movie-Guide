@@ -1,9 +1,6 @@
 package com.ashish.movieguide.ui.common.adapter
 
-/**
- * Created by Ashish on Dec 30.
- */
-interface ViewType {
+interface RecyclerViewItem {
 
     companion object {
         const val LOADING_VIEW = 0

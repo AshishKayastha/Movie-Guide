@@ -2,7 +2,7 @@ package com.ashish.movieguide.ui.discover.base
 
 import com.ashish.movieguide.data.network.entities.tmdb.FilterQuery
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewPresenter
-import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.discover.filter.FilterQueryModel
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
@@ -10,7 +10,7 @@ import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider
 /**
  * Created by Ashish on Jan 24.
  */
-abstract class BaseDiscoverPresenter<I : ViewType> constructor(
+abstract class BaseDiscoverPresenter<I : RecyclerViewItem> constructor(
         private val filterQueryModel: FilterQueryModel,
         schedulerProvider: BaseSchedulerProvider
 ) : RecyclerViewPresenter<I, DiscoverView<I>>(schedulerProvider) {
@@ -30,7 +30,7 @@ abstract class BaseDiscoverPresenter<I : ViewType> constructor(
                     this.genreIds = genreIds
 
                     view?.clearFilteredData()
-                    fetchFreshData(null, true)
+                    fetchFreshData(null)
                 })
     }
 

@@ -7,7 +7,6 @@ import android.support.annotation.PluralsRes
 import android.support.design.widget.AppBarLayout
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageButton
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.trakt.EpisodeStats
 import com.ashish.movieguide.data.network.entities.trakt.MovieStats
@@ -22,17 +21,14 @@ import com.ashish.movieguide.utils.DialogUtils
 import com.ashish.movieguide.utils.StartTransitionListener
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.changeTitleTypeface
-import com.ashish.movieguide.utils.extensions.get
-import com.ashish.movieguide.utils.extensions.getColorCompat
 import com.ashish.movieguide.utils.extensions.getDayHourMinutes
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
-import com.ashish.movieguide.utils.extensions.loadCircularImage
 import com.ashish.movieguide.utils.extensions.loadPaletteBitmap
+import com.ashish.movieguide.utils.extensions.loadProfileImage
 import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.setTopBarColorAndAnimate
 import com.ashish.movieguide.utils.extensions.setVisibility
-import com.ashish.movieguide.utils.extensions.tint
 import kotlinx.android.synthetic.main.layout_profile_app_bar.*
 import kotlinx.android.synthetic.main.layout_profile_episode_stats.*
 import kotlinx.android.synthetic.main.layout_profile_movie_stats.*
@@ -91,20 +87,13 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
 
     private fun loadCoverImage(coverImageUrl: String?) {
         coverImage.loadPaletteBitmap(coverImageUrl) { paletteBitmap ->
-            setTopBarColorAndAnimate(paletteBitmap, collapsingToolbar) {
-                val primaryBlack = getColorCompat(R.color.primary_text_dark)
-
-                menu?.tint(primaryBlack)
-                val backButton = toolbar[0] as ImageButton?
-                backButton?.setColorFilter(primaryBlack)
-                collapsingToolbar.setCollapsedTitleTextColor(primaryBlack)
-            }
+            setTopBarColorAndAnimate(paletteBitmap, collapsingToolbar, menu, toolbar)
         }
     }
 
     private fun loadProfileImage(imageUrl: String?) {
         if (imageUrl.isNotNullOrEmpty()) {
-            userImage.loadCircularImage(imageUrl, StartTransitionListener(this))
+            userImage.loadProfileImage(imageUrl, StartTransitionListener(this))
         } else {
             startPostponedEnterTransition()
         }
@@ -169,11 +158,9 @@ class ProfileActivity : MvpActivity<ProfileView, ProfilePresenter>(), ProfileVie
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-        if (appBarLayout.totalScrollRange + verticalOffset == 0) {
-            collapsingToolbar.title = displayName
-        } else {
-            collapsingToolbar.title = ""
-        }
+        collapsingToolbar.title = if (appBarLayout.totalScrollRange + verticalOffset == 0) {
+            displayName
+        } else ""
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

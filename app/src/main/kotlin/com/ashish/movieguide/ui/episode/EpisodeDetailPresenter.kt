@@ -101,15 +101,15 @@ class EpisodeDetailPresenter @Inject constructor(
         }
     }
 
-    private fun getEpisodeId() = fullDetailContent?.detailContent?.id!!
+    private fun getEpisodeId(): Long = fullDetailContent?.detailContent?.id!!
 
     override fun onDetachView() {
-        super.onDetachView()
         ratingManager.setView(null)
+        super.onDetachView()
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         ratingManager.unsubscribe()
+        super.onDestroy()
     }
 }

@@ -1,6 +1,7 @@
 package com.ashish.movieguide.ui.common.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.ashish.movieguide.R
@@ -9,6 +10,7 @@ import com.ashish.movieguide.ui.base.recyclerview.BaseHolder
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.bindView
+import com.ashish.movieguide.utils.extensions.inflate
 import com.ashish.movieguide.utils.extensions.loadImage
 import com.ashish.movieguide.utils.glide.GlideApp
 
@@ -18,7 +20,8 @@ class VideoAdapter(
 ) : RecyclerView.Adapter<VideoAdapter.VideoHolder>(), RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoHolder {
-        return VideoHolder(parent).also { it.attachListener(onItemClickListener) }
+        return VideoHolder(parent.inflate(R.layout.list_item_detail_video))
+                .also { it.attachListener(onItemClickListener) }
     }
 
     override fun onBindViewHolder(holder: VideoHolder, position: Int) {
@@ -36,7 +39,7 @@ class VideoAdapter(
         onItemClickListener = null
     }
 
-    class VideoHolder(parent: ViewGroup) : BaseHolder(parent, R.layout.list_item_detail_video) {
+    class VideoHolder(view: View) : BaseHolder(view) {
 
         val imageView: ImageView by bindView(R.id.detail_content_video)
         private val videoNameText: FontTextView by bindView(R.id.video_name_text)

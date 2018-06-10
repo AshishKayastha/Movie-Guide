@@ -13,11 +13,11 @@ import com.evernote.android.state.StateSaver
 /**
  * Created by Ashish on Dec 31.
  */
-fun Float.dpToPx() = this * Resources.getSystem().displayMetrics.density
+fun Float.dpToPx(): Float = this * Resources.getSystem().displayMetrics.density
 
-fun Float.spToPx() = this * Resources.getSystem().displayMetrics.scaledDensity
+fun Float.spToPx(): Float = this * Resources.getSystem().displayMetrics.scaledDensity
 
-fun isApiOrAbove(version: Int) = Build.VERSION.SDK_INT >= version
+fun isApiOrAbove(version: Int): Boolean = Build.VERSION.SDK_INT >= version
 
 inline fun isMarshmallowOrAbove(crossinline func: () -> Unit) {
     if (isApiOrAbove(23)) func()
@@ -36,7 +36,7 @@ fun Drawable?.tint(@ColorInt color: Int): Drawable? {
     return this
 }
 
-fun <T> Collection<T>?.isNotNullOrEmpty() = this != null && size != 0
+fun <T> Collection<T>?.isNotNullOrEmpty(): Boolean = this != null && size != 0
 
 /**
  * An extension function to either add or remove an item from [MutableCollection].
@@ -76,15 +76,15 @@ inline fun <T> Bundle?.getExtrasOrRestore(target: T, crossinline getExtras: () -
  * Convert minutes to day, hour, minutes
  */
 fun Int?.getDayHourMinutes(): Triple<String, String, String> {
-    if (this != null && this > 0) {
+    return if (this != null && this > 0) {
         val oneDay = 24 * 60
         val day = this / oneDay
         val hour = this % oneDay / 60
         val minute = this % oneDay % 60
-        return Triple(day.toString(), hour.toString(), minute.toString())
+        Triple(day.toString(), hour.toString(), minute.toString())
+    } else {
+        Triple("0", "0", "0")
     }
-
-    return Triple("0", "0", "0")
 }
 
 inline fun performAction(crossinline action: () -> Unit): Boolean {

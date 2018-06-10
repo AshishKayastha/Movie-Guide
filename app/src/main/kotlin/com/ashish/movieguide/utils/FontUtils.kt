@@ -19,7 +19,7 @@ object FontUtils {
 
     private val TYPEFACE_CACHE = SimpleArrayMap<String, Typeface>()
 
-    fun getTypeface(context: Context, fontName: String): Typeface {
+    fun getTypeface(context: Context, fontName: String = MONTSERRAT_REGULAR): Typeface {
         synchronized(TYPEFACE_CACHE) {
             if (!TYPEFACE_CACHE.containsKey(fontName)) {
                 val tf = Typeface.createFromAsset(context.assets, "fonts/$fontName.ttf")

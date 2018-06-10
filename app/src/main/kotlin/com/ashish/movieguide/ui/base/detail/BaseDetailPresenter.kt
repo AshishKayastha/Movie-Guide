@@ -29,17 +29,17 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
         if (fullDetailContent != null) {
             showDetailContent(fullDetailContent!!)
         } else {
-            loadFreshData(id)
+            fetchFreshData(id)
         }
     }
 
-    private fun loadFreshData(id: Long?) {
+    private fun fetchFreshData(id: Long?) {
         if (id != null) {
             view?.setLoadingIndicator(true)
             addDisposable(getDetailContent(id)
                     .doOnNext { fullDetailContent = it }
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ showDetailContent(it) }, { onLoadDetailError(it, getErrorMessageId()) }))
+                    .subscribe(::showDetailContent, ::onLoadDetailError))
         }
     }
 
@@ -54,7 +54,7 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
             if (detailContent != null) {
                 showDetailContent(detailContent)
                 showAllImages(detailContent)
-                showCredits(getCredits(detailContent))
+                showCredits(detailContent)
             }
 
             fullDetailContent.omdbDetail?.let { showOMDbDetail(it) }
@@ -90,8 +90,9 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
 
     abstract fun getCredits(detailContent: I): CreditResults?
 
-    private fun showCredits(creditResults: CreditResults?) {
+    private fun showCredits(detailContent: I) {
         view?.run {
+            val creditResults = getCredits(detailContent)
             showItemList(creditResults?.cast) { showCastList(it) }
             showItemList(creditResults?.crew) { showCrewList(it) }
         }
@@ -101,22 +102,22 @@ abstract class BaseDetailPresenter<I, T, V : BaseDetailView<I>>(
         if (itemList.isNotNullOrEmpty()) showData(itemList!!)
     }
 
-    private fun onLoadDetailError(t: Throwable, messageId: Int) {
+    private fun onLoadDetailError(t: Throwable) {
         Timber.e(t)
         view?.run {
-            showErrorToast(t, messageId)
+            showErrorToast(t)
             finishActivity()
         }
     }
 
     abstract fun getErrorMessageId(): Int
 
-    private fun showErrorToast(t: Throwable, messageId: Int) {
+    private fun showErrorToast(t: Throwable) {
         view?.run {
             when (t) {
                 is IOException -> showToastMessage(R.string.error_no_internet)
                 is AuthException -> showToastMessage(R.string.error_not_logged_in)
-                else -> showToastMessage(messageId)
+                else -> showToastMessage(getErrorMessageId())
             }
         }
     }

@@ -4,31 +4,31 @@ import android.support.v7.widget.RecyclerView
 import android.util.SparseArray
 import android.view.ViewGroup
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
-import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
-import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.ERROR_VIEW
-import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.LOADING_VIEW
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.CONTENT_VIEW
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.ERROR_VIEW
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.LOADING_VIEW
 import com.ashish.movieguide.utils.glide.GlideApp
 import java.util.ArrayList
 
 /**
  * Created by Ashish on Dec 30.
  */
-class RecyclerViewAdapter<in I : ViewType>(
+class RecyclerViewAdapter<in I : RecyclerViewItem>(
         layoutId: Int,
         adapterType: Int,
-        onItemClickListener: OnItemClickListener?
+        private var onItemClickListener: OnItemClickListener?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RemoveListener {
 
-    private val loadingItem = object : ViewType {
+    private val loadingItem = object : RecyclerViewItem {
         override fun getViewType(): Int = LOADING_VIEW
     }
 
-    private val errorItem = object : ViewType {
+    private val errorItem = object : RecyclerViewItem {
         override fun getViewType(): Int = ERROR_VIEW
     }
 
-    private var itemList: ArrayList<ViewType> = ArrayList()
-    private var delegateAdapters = SparseArray<ViewTypeDelegateAdapter>()
+    private var itemList: ArrayList<RecyclerViewItem> = ArrayList()
+    private var delegateAdapters = SparseArray<RecyclerViewDelegateAdapter>()
     private val contentAdapter =
             AdapterFactory.getDelegateAdapter(layoutId, adapterType, onItemClickListener)
 
@@ -117,6 +117,7 @@ class RecyclerViewAdapter<in I : ViewType>(
     }
 
     override fun removeListener() {
+        onItemClickListener = null
         (contentAdapter as RemoveListener).removeListener()
     }
 }

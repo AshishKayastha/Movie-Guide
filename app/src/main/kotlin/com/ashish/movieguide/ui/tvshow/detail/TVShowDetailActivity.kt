@@ -26,6 +26,7 @@ import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
+import com.ashish.movieguide.utils.extensions.inflateToRecyclerView
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.setFavoriteIcon
@@ -44,8 +45,7 @@ import javax.inject.Inject
  * Created by Ashish on Jan 03.
  */
 class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
-        TVShowDetailView, TVShowDetailPresenter>(),
-        TVShowDetailView, RatingDialog.UpdateRatingListener {
+        TVShowDetailView, TVShowDetailPresenter>(), TVShowDetailView, RatingDialog.UpdateRatingListener {
 
     companion object {
         private const val EXTRA_TV_SHOW = "tv_show"
@@ -64,10 +64,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
 
     private var seasonsAdapter: RecyclerViewAdapter<Season>? = null
     private var similarTVShowsAdapter: RecyclerViewAdapter<TVShow>? = null
-
-    private val isLoggedIn: Boolean by lazy {
-        preferenceHelper.getId() > 0
-    }
+    private val isLoggedIn: Boolean by lazy { preferenceHelper.getId() > 0 }
 
     private val onSeasonItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -113,8 +110,8 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
             contentTitleText.setTitleAndYear(name, firstAirDate)
         }
 
-        if (isLoggedIn) {
-            ratingDialog.get().setRatingListener(this)
+        performActionIfLoggedIn {
+            it.setRatingListener(this)
             menu?.setRatingItemTitle(R.string.title_rate_tv_show)
         }
 
@@ -127,23 +124,36 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
     override fun getItemTitle(): String = tvShow?.name ?: ""
 
     override fun showSeasonsList(seasonsList: List<Season>) {
-        seasonsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_SEASON,
-                onSeasonItemClickLitener)
+        seasonsAdapter = RecyclerViewAdapter(
+                R.layout.list_item_content_alt,
+                ADAPTER_TYPE_SEASON,
+                onSeasonItemClickLitener
+        )
 
-        inflateViewStubRecyclerView(seasonsViewStub, R.id.seasonsRecyclerView, seasonsAdapter!!, seasonsList)
+        seasonsViewStub.inflateToRecyclerView(this,
+                R.id.seasonsRecyclerView,
+                seasonsAdapter!!,
+                seasonsList
+        )
     }
 
     override fun showSimilarTVShowList(similarTVShowList: List<TVShow>) {
-        similarTVShowsAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_TV_SHOW,
-                onSimilarTVShowItemClickLitener)
+        similarTVShowsAdapter = RecyclerViewAdapter(
+                R.layout.list_item_content_alt,
+                ADAPTER_TYPE_TV_SHOW,
+                onSimilarTVShowItemClickLitener
+        )
 
         similarContentViewStub.setOnInflateListener { _, view ->
             val textView = view.find<FontTextView>(R.id.similarContentTitle)
             textView.setText(R.string.similar_tv_shows_title)
         }
 
-        inflateViewStubRecyclerView(similarContentViewStub, R.id.similarContentRecyclerView,
-                similarTVShowsAdapter!!, similarTVShowList)
+        similarContentViewStub.inflateToRecyclerView(this,
+                R.id.similarContentRecyclerView,
+                similarTVShowsAdapter!!,
+                similarTVShowList
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -151,9 +161,7 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
         R.id.action_watchlist -> performAction { tvShowDetailPresenter.addToWatchlist() }
 
         R.id.action_rating -> performAction {
-            if (isLoggedIn) {
-                ratingDialog.get().showRatingDialog(myRatingLabel.getRating())
-            }
+            performActionIfLoggedIn { it.showRatingDialog(myRatingLabel.getRating()) }
         }
 
         else -> super.onOptionsItemSelected(item)
@@ -191,19 +199,27 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
-        if (isLoggedIn) ratingDialog.get().dismissDialog()
+        dismissDialog()
         super.onConfigurationChanged(newConfig)
     }
 
     override fun onStop() {
-        if (isLoggedIn) ratingDialog.get().dismissDialog()
+        dismissDialog()
         super.onStop()
+    }
+
+    private fun dismissDialog() {
+        performActionIfLoggedIn { if (isFinishing) it.dismissDialog() }
+    }
+
+    private fun performActionIfLoggedIn(action: (RatingDialog) -> Unit) {
+        if (isLoggedIn) action(ratingDialog.get())
     }
 
     override fun performCleanup() {
         super.performCleanup()
         seasonsAdapter?.removeListener()
         similarTVShowsAdapter?.removeListener()
-        if (isLoggedIn) ratingDialog.get().setRatingListener(null)
+        performActionIfLoggedIn { it.setRatingListener(null) }
     }
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import com.ashish.movieguide.R
 import com.ashish.movieguide.utils.extensions.bindOptionalView
+import com.ashish.movieguide.utils.extensions.changeViewGroupTextFont
 import com.ashish.movieguide.utils.extensions.getExtrasOrRestore
 import com.ashish.movieguide.utils.extensions.performAction
 import com.evernote.android.state.StateSaver
@@ -21,7 +22,9 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
+
         setSupportActionBar(toolbar)
+        toolbar?.changeViewGroupTextFont()
 
         savedInstanceState.getExtrasOrRestore(this) {
             getIntentExtras(intent.extras)

@@ -42,7 +42,7 @@ inline fun ImageView.loadPaletteBitmap(
     }
 }
 
-fun ImageView.loadCircularImage(imageUrl: String?, listener: RequestListener<Drawable>? = null) {
+fun ImageView.loadProfileImage(imageUrl: String?, listener: RequestListener<Drawable>? = null) {
     if (imageUrl.isNotNullOrEmpty()) {
         val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_person_white_80dp)

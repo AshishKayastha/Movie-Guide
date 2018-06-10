@@ -87,19 +87,13 @@
         <item name="fontName">@string/font_montserrat_regular</item>
     </style>
 
-    <style name="PrimaryText.Title">
-        <item name="android:textSize">@dimen/text_size_xlarge</item>
+    <style name="PrimaryText.Medium">
         <item name="android:layout_marginTop">@dimen/spacing_medium</item>
         <item name="fontName">@string/font_montserrat_medium</item>
     </style>
 
     <style name="SecondaryText" parent="PrimaryText">
         <item name="android:textColor">@color/secondary_text_light</item>
-    </style>
-
-    <style name="SecondaryText.Title">
-        <item name="android:lineSpacingExtra">@dimen/line_spacing</item>
-        <item name="android:layout_marginTop">@dimen/spacing_normal</item>
     </style>
 
     <style name="Toolbar">
@@ -139,7 +133,7 @@
         <item name="layout_behavior">@string/appbar_scrolling_view_behavior</item>
     </style>
 
-    <style name="DetailTitle" parent="PrimaryText.Title">
+    <style name="DetailTitle" parent="PrimaryText.Medium">
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:paddingStart">@dimen/first_keyline</item>
@@ -219,7 +213,7 @@
         <item name="android:background">@drawable/selector_sort_last_rb</item>
     </style>
 
-    <style name="FilterTitleText" parent="PrimaryText.Title">
+    <style name="FilterTitleText" parent="PrimaryText.Medium">
         <item name="android:layout_marginStart">@dimen/first_keyline</item>
         <item name="android:layout_marginEnd">@dimen/first_keyline</item>
     </style>
@@ -260,7 +254,7 @@
         <item name="fontName">@string/font_montserrat_regular</item>
     </style>
 
-    <style name="StatsTitleText" parent="PrimaryText.Title">
+    <style name="StatsTitleText" parent="PrimaryText.Medium">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">24sp</item>
         <item name="android:layout_marginTop">0dp</item>

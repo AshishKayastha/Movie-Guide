@@ -90,7 +90,7 @@ class EpisodeDetailActivity : FullDetailContentActivity<EpisodeDetail, TraktEpis
 
     override fun getDetailContentType() = ADAPTER_TYPE_EPISODE
 
-    override fun getItemTitle() = episode?.name ?: ""
+    override fun getItemTitle(): String = episode?.name ?: ""
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_rating -> performAction {

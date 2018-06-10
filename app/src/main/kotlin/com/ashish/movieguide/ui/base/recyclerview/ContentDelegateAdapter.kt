@@ -1,21 +1,24 @@
 package com.ashish.movieguide.ui.base.recyclerview
 
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewGroup
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewDelegateAdapter
 import com.ashish.movieguide.ui.common.adapter.RemoveListener
-import com.ashish.movieguide.ui.common.adapter.ViewTypeDelegateAdapter
+import com.ashish.movieguide.utils.extensions.inflate
 
 abstract class ContentDelegateAdapter(
         private val layoutId: Int,
         private var onItemClickListener: OnItemClickListener?
-) : ViewTypeDelegateAdapter, RemoveListener {
+) : RecyclerViewDelegateAdapter, RemoveListener {
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        return getHolder(parent, layoutId).also { it.attachListener(onItemClickListener) }
+        return getHolder(parent.inflate(layoutId))
+                .also { it.attachListener(onItemClickListener) }
     }
 
-    abstract fun getHolder(parent: ViewGroup, layoutId: Int): BaseHolder
+    abstract fun getHolder(view: View): BaseHolder
 
     override fun removeListener() {
         onItemClickListener = null

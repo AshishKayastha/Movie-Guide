@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ashish.movieguide.ui.widget.TouchImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/imageView"
-    style="@style/Match" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imageContainer"
+    style="@style/Match">
+
+    <com.ashish.movieguide.ui.widget.TouchImageView
+        android:id="@+id/imageView"
+        style="@style/Match" />
+
+</FrameLayout>

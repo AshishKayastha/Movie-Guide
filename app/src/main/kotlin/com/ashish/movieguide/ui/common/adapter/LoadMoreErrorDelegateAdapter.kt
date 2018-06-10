@@ -1,34 +1,25 @@
 package com.ashish.movieguide.ui.common.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
-import android.view.ViewGroup
+import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.recyclerview.BaseHolder
+import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
 import com.ashish.movieguide.ui.widget.FontButton
 import com.ashish.movieguide.utils.extensions.bindView
+import com.ashish.movieguide.utils.extensions.convertToFullSpan
 
 class LoadMoreErrorDelegateAdapter(
-        private var onItemClickListener: OnItemClickListener?
-) : ViewTypeDelegateAdapter, RemoveListener {
+        onItemClickListener: OnItemClickListener?
+) : ContentDelegateAdapter(R.layout.list_item_error_load_more, onItemClickListener) {
 
-    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val holder = LoadMoreErrorViewHolder(parent)
-        val params = holder.itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
-        params.isFullSpan = true
-        holder.itemView.layoutParams = params
-        return holder
+    override fun getHolder(view: View): BaseHolder {
+        return LoadMoreErrorViewHolder(view).also { it.convertToFullSpan() }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {}
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: RecyclerViewItem) {}
 
-    override fun removeListener() {
-        onItemClickListener = null
-    }
-
-    private class LoadMoreErrorViewHolder(
-            parent: ViewGroup
-    ) : BaseHolder(parent, R.layout.list_item_error_load_more) {
+    private class LoadMoreErrorViewHolder(view: View) : BaseHolder(view) {
 
         private val retryBtn: FontButton by bindView(R.id.retry_btn)
 

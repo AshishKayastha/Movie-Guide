@@ -1,7 +1,7 @@
 package com.ashish.movieguide.ui.common.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
+import android.view.View
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
@@ -17,13 +17,13 @@ class MovieDelegateAdapter(
         onItemClickListener: OnItemClickListener?
 ) : ContentDelegateAdapter(layoutId, onItemClickListener) {
 
-    override fun getHolder(parent: ViewGroup, layoutId: Int) = MovieHolder(parent, layoutId)
+    override fun getHolder(view: View) = MovieHolder(view)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: RecyclerViewItem) {
         (holder as MovieHolder).bindData(item as Movie)
     }
 
-    class MovieHolder(parent: ViewGroup, layoutId: Int) : BaseContentHolder<Movie>(parent, layoutId) {
+    class MovieHolder(view: View) : BaseContentHolder<Movie>(view) {
 
         override fun bindData(item: Movie) {
             with(item) {

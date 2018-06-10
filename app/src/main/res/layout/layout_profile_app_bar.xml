@@ -37,7 +37,7 @@
 
             <com.ashish.movieguide.ui.widget.FontTextView
                 android:id="@+id/displayNameText"
-                style="@style/PrimaryText.Title"
+                style="@style/PrimaryText.Medium"
                 android:layout_marginBottom="@dimen/spacing_normal"
                 android:layout_marginTop="@dimen/spacing_medium"
                 android:gravity="center_horizontal"

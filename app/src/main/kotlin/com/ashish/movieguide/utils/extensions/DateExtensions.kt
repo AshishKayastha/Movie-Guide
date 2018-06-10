@@ -10,9 +10,6 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-/**
- * Created by Ashish Kayastha on Jan 26.
- */
 fun String?.convertToDate(datePattern: String = DEFAULT_DATE_PATTERN): Date? {
     if (isNotNullOrEmpty()) {
         try {
@@ -45,11 +42,7 @@ fun String?.getFormattedDate(
 fun isValidDate(startDateString: String?, endDateString: String?): Boolean {
     val startDate = startDateString.convertToDate()
     val endDate = endDateString.convertToDate()
-    if (startDate != null && endDate != null) {
-        return startDate.before(endDate)
-    }
-
-    return true
+    return if (startDate != null && endDate != null) startDate.before(endDate) else true
 }
 
 fun String.getParsedDate(pattern: String = DEFAULT_DATE_PATTERN): Date? {
@@ -65,14 +58,13 @@ fun String.getParsedDate(pattern: String = DEFAULT_DATE_PATTERN): Date? {
 }
 
 fun String?.getFormattedMediumDate(pattern: String = DEFAULT_DATE_PATTERN): String {
-    var formattedReleaseDate = ""
+    var formattedDate = ""
     if (isNotNullOrEmpty()) {
         val parsedDate = this!!.getParsedDate(pattern)
         if (parsedDate != null) {
-            formattedReleaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM)
-                    .format(parsedDate)
+            formattedDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(parsedDate)
         }
     }
 
-    return formattedReleaseDate
+    return formattedDate
 }

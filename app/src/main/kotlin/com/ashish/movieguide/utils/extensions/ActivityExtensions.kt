@@ -6,7 +6,11 @@ import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.util.Pair
+import android.support.v7.widget.Toolbar
+import android.view.Menu
 import android.view.View
+import android.widget.ImageButton
+import com.ashish.movieguide.R
 import com.ashish.movieguide.app.MovieGuideApp
 import com.ashish.movieguide.utils.glide.PaletteBitmap
 
@@ -25,10 +29,11 @@ fun Activity.startActivityWithTransition(viewPair: Pair<View, String>?, intent: 
     ActivityCompat.startActivity(this, intent, options.toBundle())
 }
 
-inline fun Activity.setTopBarColorAndAnimate(
+fun Activity.setTopBarColorAndAnimate(
         paletteBitmap: PaletteBitmap?,
         collapsingToolbar: CollapsingToolbarLayout,
-        crossinline tintIcons: () -> Unit
+        menu: Menu?,
+        toolbar: Toolbar?
 ) {
     if (paletteBitmap != null) {
         val palette = paletteBitmap.palette
@@ -36,7 +41,14 @@ inline fun Activity.setTopBarColorAndAnimate(
 
         if (!isDark) {
             window.decorView.setLightStatusBar()
-            tintIcons()
+
+            // Tint toolbar icons and text to black if the image is light colored
+            val primaryBlack = getColorCompat(R.color.primary_text_dark)
+            val backButton = toolbar[0] as ImageButton?
+            backButton?.setColorFilter(primaryBlack)
+            menu?.tint(primaryBlack)
+            setOverflowMenuColor(primaryBlack)
+            collapsingToolbar.setCollapsedTitleTextColor(primaryBlack)
         }
 
         val rgbColor = palette.getSwatchWithMostPixels()?.rgb

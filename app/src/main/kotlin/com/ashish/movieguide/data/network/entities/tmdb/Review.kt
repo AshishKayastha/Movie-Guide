@@ -1,6 +1,6 @@
 package com.ashish.movieguide.data.network.entities.tmdb
 
-import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -9,7 +9,7 @@ data class Review(
         val author: String? = null,
         val content: String? = null,
         val url: String? = null
-) : ViewType {
+) : RecyclerViewItem {
 
-    override fun getViewType() = ViewType.CONTENT_VIEW
+    override fun getViewType() = RecyclerViewItem.CONTENT_VIEW
 }

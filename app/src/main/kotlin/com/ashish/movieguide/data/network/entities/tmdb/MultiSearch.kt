@@ -1,7 +1,7 @@
 package com.ashish.movieguide.data.network.entities.tmdb
 
-import com.ashish.movieguide.ui.common.adapter.ViewType
-import com.ashish.movieguide.ui.common.adapter.ViewType.Companion.CONTENT_VIEW
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.CONTENT_VIEW
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -17,7 +17,7 @@ data class MultiSearch(
         @Json(name = "profile_path") val profilePath: String? = null,
         @Json(name = "backdrop_path") val backdropPath: String? = null,
         @Json(name = "first_air_date") val firstAirDate: String? = null
-) : ViewType {
+) : RecyclerViewItem {
 
     override fun getViewType() = CONTENT_VIEW
 }

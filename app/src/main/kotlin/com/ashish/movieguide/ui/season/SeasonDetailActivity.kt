@@ -18,6 +18,7 @@ import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_SEASON
 import com.ashish.movieguide.utils.TMDbConstants.TMDB_URL
 import com.ashish.movieguide.utils.extensions.getOriginalImageUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
+import com.ashish.movieguide.utils.extensions.inflateToRecyclerView
 import com.ashish.movieguide.utils.extensions.setTitleAndYear
 import com.ashish.movieguide.utils.extensions.show
 import com.evernote.android.state.State
@@ -92,17 +93,25 @@ class SeasonDetailActivity : FullDetailContentActivity<SeasonDetail, TraktSeason
         return if (seasonNumber > 0) {
             String.format(getString(R.string.season_number_format), seasonNumber)
         } else {
-            return getString(R.string.season_specials)
+            getString(R.string.season_specials)
         }
     }
 
     override fun getDetailContentType() = ADAPTER_TYPE_SEASON
 
     override fun showEpisodeList(episodeList: List<Episode>) {
-        episodesAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_EPISODE,
-                onEpisodeItemClickLitener)
+        episodesAdapter = RecyclerViewAdapter(
+                R.layout.list_item_content_alt,
+                ADAPTER_TYPE_EPISODE,
+                onEpisodeItemClickLitener
+        )
 
-        inflateViewStubRecyclerView(episodesViewStub, R.id.episodesRecyclerView, episodesAdapter!!, episodeList)
+        episodesViewStub.inflateToRecyclerView(
+                this,
+                R.id.episodesRecyclerView,
+                episodesAdapter!!,
+                episodeList
+        )
     }
 
     override fun getShareText(): CharSequence {

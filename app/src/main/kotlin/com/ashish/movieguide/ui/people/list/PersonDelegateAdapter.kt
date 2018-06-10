@@ -1,12 +1,12 @@
 package com.ashish.movieguide.ui.people.list
 
 import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
+import android.view.View
 import com.ashish.movieguide.data.network.entities.tmdb.Person
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
-import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.utils.extensions.getProfileUrl
 import com.ashish.movieguide.utils.extensions.hide
 
@@ -18,13 +18,13 @@ class PersonDelegateAdapter(
         onItemClickListener: OnItemClickListener?
 ) : ContentDelegateAdapter(layoutId, onItemClickListener) {
 
-    override fun getHolder(parent: ViewGroup, layoutId: Int) = PersonHolder(parent, layoutId)
+    override fun getHolder(view: View) = PersonHolder(view)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: RecyclerViewItem) {
         (holder as PersonHolder).bindData(item as Person)
     }
 
-    class PersonHolder(parent: ViewGroup, layoutId: Int) : BaseContentHolder<Person>(parent, layoutId) {
+    class PersonHolder(view: View) : BaseContentHolder<Person>(view) {
 
         override fun bindData(item: Person) {
             with(item) {

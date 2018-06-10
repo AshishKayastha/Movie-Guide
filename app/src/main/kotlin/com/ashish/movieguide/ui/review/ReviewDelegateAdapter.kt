@@ -1,14 +1,14 @@
 package com.ashish.movieguide.ui.review
 
 import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
+import android.view.View
 import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Review
 import com.ashish.movieguide.ui.base.recyclerview.BaseHolder
 import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
-import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.widget.CircularTextDrawable
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.extensions.applyText
@@ -22,13 +22,13 @@ class ReviewDelegateAdapter(
         onItemClickListener: OnItemClickListener?
 ) : ContentDelegateAdapter(layoutId, onItemClickListener) {
 
-    override fun getHolder(parent: ViewGroup, layoutId: Int) = ReviewHolder(parent, layoutId)
+    override fun getHolder(view: View) = ReviewHolder(view)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: RecyclerViewItem) {
         (holder as ReviewHolder).bindData(item as Review)
     }
 
-    class ReviewHolder(parent: ViewGroup, layoutId: Int) : BaseHolder(parent, layoutId) {
+    class ReviewHolder(view: View) : BaseHolder(view) {
 
         private val reviewAuthorText: FontTextView by bindView(R.id.review_author)
         private val reviewContentText: FontTextView by bindView(R.id.review_content)

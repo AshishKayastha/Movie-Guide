@@ -23,6 +23,7 @@ import com.ashish.movieguide.utils.extensions.changeWatchlistMenuItem
 import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.getBackdropUrl
 import com.ashish.movieguide.utils.extensions.getPosterUrl
+import com.ashish.movieguide.utils.extensions.inflateToRecyclerView
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.performAction
 import com.ashish.movieguide.utils.extensions.setFavoriteIcon
@@ -38,12 +39,8 @@ import kotlinx.android.synthetic.main.layout_detail_read_reviews.*
 import kotlinx.android.synthetic.main.layout_detail_similar_content_stub.*
 import javax.inject.Inject
 
-/**
- * Created by Ashish on Dec 31.
- */
 class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
-        MovieDetailView, MovieDetailPresenter>(),
-        MovieDetailView, RatingDialog.UpdateRatingListener {
+        MovieDetailView, MovieDetailPresenter>(), MovieDetailView, RatingDialog.UpdateRatingListener {
 
     companion object {
         private const val EXTRA_MOVIE = "movie"
@@ -61,10 +58,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     @State var movie: Movie? = null
 
     private var similarMoviesAdapter: RecyclerViewAdapter<Movie>? = null
-
-    private val isLoggedIn: Boolean by lazy {
-        preferenceHelper.isLoggedIn()
-    }
+    private val isLoggedIn: Boolean by lazy { preferenceHelper.isLoggedIn() }
 
     private val onSimilarMovieItemClickLitener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
@@ -95,9 +89,9 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
         movieDetailPresenter.loadDetailContent(movie?.id)
     }
 
-    override fun getBackdropPath() = movie?.backdropPath.getBackdropUrl()
+    override fun getBackdropPath(): String = movie?.backdropPath.getBackdropUrl()
 
-    override fun getPosterPath() = movie?.posterPath.getPosterUrl()
+    override fun getPosterPath(): String = movie?.posterPath.getPosterUrl()
 
     override fun getItemTitle(): String = movie?.title ?: ""
 
@@ -111,8 +105,8 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
             contentTitleText.setTitleAndYear(title, releaseDate)
         }
 
-        if (isLoggedIn) {
-            ratingDialog.get().setRatingListener(this)
+        performActionIfLoggedIn {
+            it.setRatingListener(this)
             menu?.setRatingItemTitle(R.string.title_rate_movie)
         }
 
@@ -123,11 +117,17 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     override fun getDetailContentType() = ADAPTER_TYPE_MOVIE
 
     override fun showSimilarMoviesList(similarMoviesList: List<Movie>) {
-        similarMoviesAdapter = RecyclerViewAdapter(R.layout.list_item_content_alt, ADAPTER_TYPE_MOVIE,
-                onSimilarMovieItemClickLitener)
+        similarMoviesAdapter = RecyclerViewAdapter(
+                R.layout.list_item_content_alt,
+                ADAPTER_TYPE_MOVIE,
+                onSimilarMovieItemClickLitener
+        )
 
-        inflateViewStubRecyclerView(similarContentViewStub, R.id.similarContentRecyclerView,
-                similarMoviesAdapter!!, similarMoviesList)
+        similarContentViewStub.inflateToRecyclerView(this,
+                R.id.similarContentRecyclerView,
+                similarMoviesAdapter!!,
+                similarMoviesList
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -135,9 +135,7 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
         R.id.action_watchlist -> performAction { movieDetailPresenter.addToWatchlist() }
 
         R.id.action_rating -> performAction {
-            if (isLoggedIn) {
-                ratingDialog.get().showRatingDialog(myRatingLabel.getRating())
-            }
+            performActionIfLoggedIn { it.showRatingDialog(myRatingLabel.getRating()) }
         }
 
         else -> super.onOptionsItemSelected(item)
@@ -185,14 +183,16 @@ class MovieDetailActivity : FullDetailContentActivity<MovieDetail, TraktMovie,
     }
 
     private fun dismissDialog() {
-        if (isLoggedIn && isFinishing) {
-            ratingDialog.get().dismissDialog()
-        }
+        performActionIfLoggedIn { if (isFinishing) it.dismissDialog() }
+    }
+
+    private fun performActionIfLoggedIn(action: (RatingDialog) -> Unit) {
+        if (isLoggedIn) action(ratingDialog.get())
     }
 
     override fun performCleanup() {
         super.performCleanup()
         similarMoviesAdapter?.removeListener()
-        if (isLoggedIn) ratingDialog.get().setRatingListener(null)
+        performActionIfLoggedIn { it.setRatingListener(null) }
     }
 }

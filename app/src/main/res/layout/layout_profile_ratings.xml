@@ -11,7 +11,7 @@
     <LinearLayout style="@style/StatsContainerView">
 
         <com.ashish.movieguide.ui.widget.FontTextView
-            style="@style/PrimaryText.Title"
+            style="@style/PrimaryText.Medium"
             android:layout_marginBottom="@dimen/spacing_large"
             android:layout_marginTop="0dp"
             android:gravity="center"

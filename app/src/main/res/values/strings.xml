@@ -68,7 +68,7 @@
     <string name="episodes_title">Episodes:</string>
     <string name="first_air_date_title">First Air Date:</string>
     <string name="last_air_date_title">Last Air Date:</string>
-    <string name="similar_tv_shows_title">Simiilar Television Shows</string>
+    <string name="similar_tv_shows_title">Similar TV Shows</string>
     <string name="error_load_tv_detail">An error occurred while trying to load tv show detail</string>
 
     <!-- Season -->

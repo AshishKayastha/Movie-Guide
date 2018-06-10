@@ -12,7 +12,7 @@ import com.ashish.movieguide.data.network.entities.tmdb.FilterQuery
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewFragment
-import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.discover.filter.FilterBottomSheetDialogFragment
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
@@ -27,7 +27,7 @@ import javax.inject.Inject
 /**
  * Created by Ashish on Jan 07.
  */
-abstract class BaseDiscoverFragment<I : ViewType, P : BaseDiscoverPresenter<I>>
+abstract class BaseDiscoverFragment<I : RecyclerViewItem, P : BaseDiscoverPresenter<I>>
     : RecyclerViewFragment<I, DiscoverView<I>, P>(), DiscoverView<I>, HasSupportFragmentInjector {
 
     companion object {

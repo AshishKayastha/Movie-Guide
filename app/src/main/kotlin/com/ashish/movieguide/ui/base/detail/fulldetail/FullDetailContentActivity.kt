@@ -12,6 +12,7 @@ import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
 import com.ashish.movieguide.ui.common.adapter.VideoAdapter
 import com.ashish.movieguide.ui.people.detail.PersonDetailActivity
+import com.ashish.movieguide.utils.extensions.inflateToRecyclerView
 import com.ashish.movieguide.utils.extensions.openUrl
 import com.ashish.movieguide.utils.extensions.show
 import kotlinx.android.synthetic.main.layout_detail_app_bar.*
@@ -91,7 +92,7 @@ abstract class FullDetailContentActivity<I, T, V : FullDetailContentView<I>,
 
     override fun showYouTubeVideos(youTubeVideos: List<YouTubeVideo>) {
         videoAdapter = VideoAdapter(youTubeVideos, onVideoItemClickListener)
-        inflateViewStubRecyclerView(videosViewStub, R.id.detailVideosRecyclerView, videoAdapter!!)
+        videosViewStub.inflateToRecyclerView(this, R.id.detailVideosRecyclerView, videoAdapter!!)
     }
 
     override fun getCastItemClickListener() = onCastItemClickListener

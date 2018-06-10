@@ -1,12 +1,12 @@
 package com.ashish.movieguide.ui.multisearch.fragment
 
 import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
+import android.view.View
 import com.ashish.movieguide.data.network.entities.tmdb.MultiSearch
 import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
 import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
-import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.getProfileUrl
@@ -21,13 +21,13 @@ class MultiSearchDelegateAdapter(
         onItemClickListener: OnItemClickListener?
 ) : ContentDelegateAdapter(layoutId, onItemClickListener) {
 
-    override fun getHolder(parent: ViewGroup, layoutId: Int) = MultiSearchHolder(parent, layoutId)
+    override fun getHolder(view: View) = MultiSearchHolder(view)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: RecyclerViewItem) {
         (holder as MultiSearchHolder).bindData(item as MultiSearch)
     }
 
-    class MultiSearchHolder(parent: ViewGroup, layoutId: Int) : BaseContentHolder<MultiSearch>(parent, layoutId) {
+    class MultiSearchHolder(view: View) : BaseContentHolder<MultiSearch>(view) {
 
         override fun bindData(item: MultiSearch) {
             with(item) {

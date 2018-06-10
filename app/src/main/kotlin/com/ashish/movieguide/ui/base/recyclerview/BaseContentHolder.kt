@@ -2,9 +2,8 @@ package com.ashish.movieguide.ui.base.recyclerview
 
 import android.support.annotation.CallSuper
 import android.view.View
-import android.view.ViewGroup
 import com.ashish.movieguide.R
-import com.ashish.movieguide.ui.common.adapter.ViewType
+import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.widget.AspectRatioImageView
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.LabelLayout
@@ -22,16 +21,16 @@ import com.bumptech.glide.request.RequestOptions
 /**
  * Created by Ashish on Dec 30.
  */
-abstract class BaseContentHolder<in I : ViewType>(
-        parent: ViewGroup,
-        layoutId: Int
-) : BaseHolder(parent, layoutId) {
+abstract class BaseContentHolder<in I : RecyclerViewItem>(view: View) : BaseHolder(view) {
 
     val contentView: View by bindView(R.id.content_view)
     val contentTitle: FontTextView by bindView(R.id.content_title)
     val contentSubtitle: FontTextView by bindView(R.id.content_subtitle)
     val posterImage: AspectRatioImageView by bindView(R.id.poster_image)
     val ratingLabel: LabelLayout? by bindOptionalView(R.id.rating_label)
+
+    private val options = RequestOptions()
+            .override(LIST_THUMBNAIL_WIDTH, LIST_THUMBNAIL_HEIGHT)
 
     @CallSuper
     open fun bindData(item: I) {
@@ -46,7 +45,7 @@ abstract class BaseContentHolder<in I : ViewType>(
                     .load(imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .transition(BitmapTransitionOptions.withCrossFade())
-                    .apply(RequestOptions().override(LIST_THUMBNAIL_WIDTH, LIST_THUMBNAIL_HEIGHT))
+                    .apply(options)
                     .into(PaletteImageViewTarget(this))
         } else {
             GlideApp.with(itemView.context).clear(posterImage)

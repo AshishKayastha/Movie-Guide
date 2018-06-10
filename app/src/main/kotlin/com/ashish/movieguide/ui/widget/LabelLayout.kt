@@ -64,7 +64,7 @@ class LabelLayout @JvmOverloads constructor(
             isAntiAlias = true
             strokeCap = Paint.Cap.SQUARE
             strokeJoin = Paint.Join.ROUND
-            typeface = FontUtils.getTypeface(context, FontUtils.MONTSERRAT_REGULAR)
+            typeface = FontUtils.getTypeface(context)
         }
     }
 

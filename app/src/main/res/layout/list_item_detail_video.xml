@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/detail_content_video"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/detail_image_height"
+        android:layout_height="135dp"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription"
         tools:src="@drawable/bg_drawer_header" />
@@ -19,7 +19,7 @@
         android:id="@+id/video_name_text"
         style="@style/PrimaryText"
         android:layout_gravity="bottom"
-        android:background="#96212121"
+        android:background="#AA212121"
         android:gravity="center"
         android:maxLines="2"
         android:padding="@dimen/spacing_micro"
@@ -27,10 +27,10 @@
         tools:text="Video Name" />
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_play_circle_outline_white_60dp"
+        app:srcCompat="@drawable/ic_youtube_red_48dp"
         tools:ignore="ContentDescription" />
 
 </FrameLayout>

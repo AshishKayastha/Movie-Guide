@@ -89,7 +89,7 @@ class ReviewActivity : MvpActivity<RecyclerViewMvpView<Review>, ReviewPresenter>
 
     override fun onRefresh() {
         scrollListener.resetPageCount()
-        reviewPresenter.fetchFreshData(null, reviewAdapter.itemCount == 0)
+        reviewPresenter.fetchFreshData(null, false)
     }
 
     override fun setLoadingIndicator(showIndicator: Boolean) {

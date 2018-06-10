@@ -23,12 +23,18 @@ class AspectRatioImageView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        if (heightRatio > 0.0f) {
-            val width = MeasureSpec.getSize(widthMeasureSpec)
-            val height = (width * heightRatio).toInt()
-            setMeasuredDimension(width, height)
-        } else {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        when {
+            heightRatio > 0.0f -> {
+                val width = MeasureSpec.getSize(widthMeasureSpec)
+                val height = (width * heightRatio).toInt()
+                setMeasuredDimension(width, height)
+            }
+            drawable != null -> {
+                val w = MeasureSpec.getSize(widthMeasureSpec)
+                val h = w * drawable.intrinsicHeight / drawable.intrinsicWidth
+                setMeasuredDimension(w, h)
+            }
+            else -> super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         }
     }
 }

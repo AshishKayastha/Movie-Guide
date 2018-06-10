@@ -1,11 +1,9 @@
 package com.ashish.movieguide.ui.imageviewer
 
 import android.annotation.SuppressLint
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.os.Bundle
-import android.transition.Transition
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -15,14 +13,15 @@ import com.ashish.movieguide.ui.base.common.BaseFragment
 import com.ashish.movieguide.utils.Constants.DETAIL_IMAGE_THUMBNAIL_SIZE
 import com.ashish.movieguide.utils.StartTransitionListener
 import com.ashish.movieguide.utils.SystemUiHelper
-import com.ashish.movieguide.utils.TransitionListenerAdapter
-import com.ashish.movieguide.utils.extensions.getLargeImageUrl
+import com.ashish.movieguide.utils.extensions.convertToOriginalImageUrl
 import com.ashish.movieguide.utils.glide.GlideApp
+import com.ashish.movieguide.utils.glide.LoggingListener
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_image_viewer.*
+import timber.log.Timber
 
 /**
  * Created by Ashish on Jan 08.
@@ -46,14 +45,8 @@ class ImageViewerFragment : BaseFragment() {
     @State var position: Int = 0
     @State var imageUrl: String? = null
 
-    private var sharedElementEnterTransition: Transition? = null
-    private var fullBitmap: RequestBuilder<Bitmap>? = null
-    private var thumbBitmap: RequestBuilder<Bitmap>? = null
-
-    private val transitionListener = object : TransitionListenerAdapter() {
-        override fun onTransitionEnd(transition: Transition) = loadFullImage()
-        override fun onTransitionCancel(transition: Transition) = loadFullImage()
-    }
+    private var fullBitmapRequest: RequestBuilder<Bitmap>? = null
+    private var thumbBitmapRequest: RequestBuilder<Bitmap>? = null
 
     override fun getLayoutId() = R.layout.fragment_image_viewer
 
@@ -70,41 +63,36 @@ class ImageViewerFragment : BaseFragment() {
     }
 
     private fun setupGlide() {
-        thumbBitmap = GlideApp.with(this)
+        thumbBitmapRequest = GlideApp.with(this)
                 .asBitmap()
                 .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .apply(RequestOptions().override(DETAIL_IMAGE_THUMBNAIL_SIZE, DETAIL_IMAGE_THUMBNAIL_SIZE))
 
-        fullBitmap = GlideApp.with(this)
+        fullBitmapRequest = GlideApp.with(this)
                 .asBitmap()
-                .load(imageUrl!!.getLargeImageUrl())
-                .apply(RequestOptions().override(Resources.getSystem().displayMetrics.widthPixels,
-                        Target.SIZE_ORIGINAL))
-    }
-
-    @SuppressLint("CheckResult")
-    fun loadThumbnail(startTransition: Boolean) {
-        if (thumbBitmap != null) {
-            if (startTransition && activity != null) {
-                thumbBitmap!!.listener(StartTransitionListener<Bitmap>(activity!!))
-            }
-
-            thumbBitmap!!.into(imageView)
-        }
-    }
-
-    private fun loadFullImage() {
-        fullBitmap?.thumbnail(thumbBitmap)?.into(imageView)
+                .load(imageUrl!!.convertToOriginalImageUrl())
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
     }
 
     private fun setupImage() {
         imageView.transitionName = "image_$position"
+        loadThumbnail()
+        fullBitmapRequest?.preload()
+        loadFullImage()
+    }
 
-        sharedElementEnterTransition = activity?.window?.sharedElementEnterTransition
-        sharedElementEnterTransition?.addListener(transitionListener)
+    @SuppressLint("CheckResult")
+    fun loadThumbnail() {
+        thumbBitmapRequest?.listener(StartTransitionListener<Bitmap>(activity!!))
+        thumbBitmapRequest?.into(imageView)
+    }
 
-        loadThumbnail(true)
-        fullBitmap?.preload()
+    private fun loadFullImage() {
+        fullBitmapRequest
+                ?.thumbnail(thumbBitmapRequest)
+                ?.listener(LoggingListener<Bitmap>())
+                ?.into(imageView)
     }
 
     /**
@@ -133,12 +121,16 @@ class ImageViewerFragment : BaseFragment() {
                 override fun onDown(event: MotionEvent) = true
 
                 override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
+                    Timber.v("onSingleTapConfirmed")
                     toggleSystemUiVisibility()
                     return true
                 }
             })
 
-            imageView.setOnTouchListener { _, event -> detector.onTouchEvent(event) }
+            imageContainer.setOnTouchListener { _, event ->
+                Timber.v("setOnTouchListener")
+                detector.onTouchEvent(event)
+            }
         }
     }
 
@@ -160,7 +152,6 @@ class ImageViewerFragment : BaseFragment() {
 
     override fun onDestroyView() {
         imageView.setOnTouchListener(null)
-        sharedElementEnterTransition?.removeListener(transitionListener)
         super.onDestroyView()
     }
 }
