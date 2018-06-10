@@ -21,7 +21,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_image_viewer.*
-import timber.log.Timber
 
 /**
  * Created by Ashish on Jan 08.
@@ -121,14 +120,12 @@ class ImageViewerFragment : BaseFragment() {
                 override fun onDown(event: MotionEvent) = true
 
                 override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
-                    Timber.v("onSingleTapConfirmed")
                     toggleSystemUiVisibility()
                     return true
                 }
             })
 
-            imageContainer.setOnTouchListener { _, event ->
-                Timber.v("setOnTouchListener")
+            imageView.setOnTouchListener { _, event ->
                 detector.onTouchEvent(event)
             }
         }
