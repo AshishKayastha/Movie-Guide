@@ -15,7 +15,6 @@ import com.ashish.movieguide.utils.StartTransitionListener
 import com.ashish.movieguide.utils.SystemUiHelper
 import com.ashish.movieguide.utils.extensions.convertToOriginalImageUrl
 import com.ashish.movieguide.utils.glide.GlideApp
-import com.ashish.movieguide.utils.glide.LoggingListener
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -90,7 +89,6 @@ class ImageViewerFragment : BaseFragment() {
     private fun loadFullImage() {
         fullBitmapRequest
                 ?.thumbnail(thumbBitmapRequest)
-                ?.listener(LoggingListener<Bitmap>())
                 ?.into(imageView)
     }
 

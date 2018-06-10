@@ -18,15 +18,15 @@
 
             <ImageView
                 android:id="@+id/review_author_icon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="@dimen/spacing_large"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="@dimen/spacing_medium"
                 tools:ignore="ContentDescription" />
 
             <com.ashish.movieguide.ui.widget.FontTextView
                 android:id="@+id/review_author"
                 style="@style/PrimaryText"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_size_xlarge"
                 app:fontName="@string/font_montserrat_medium"
                 tools:text="Author Name" />
 
@@ -37,7 +37,7 @@
             style="@style/PrimaryText"
             android:layout_marginTop="@dimen/spacing_large"
             android:lineSpacingExtra="@dimen/line_spacing"
-            tools:text="This is a randow review." />
+            tools:text="This is a random review." />
 
     </LinearLayout>
 

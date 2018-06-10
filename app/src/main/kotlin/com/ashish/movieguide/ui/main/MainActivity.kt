@@ -90,10 +90,8 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
         initDrawerHeader()
         setupNavigationView()
-        handleNavigationItemClick()
-
-        tabLayout.changeTabFont()
         tabLayout.setupWithViewPager(viewPager)
+        handleNavigationItemClick()
     }
 
     override fun getLayoutId() = R.layout.activity_main
@@ -156,7 +154,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             selectedItemId = item.itemId
             drawerLayout.closeDrawers()
             handleNavigationItemClick()
-            tabLayout.changeTabFont()
             true
         }
     }
@@ -184,6 +181,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         }
 
         tabLayout.tabMode = if (titleArray.size <= 3) TabLayout.MODE_FIXED else TabLayout.MODE_SCROLLABLE
+        tabLayout.changeTabFont()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

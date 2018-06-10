@@ -7,14 +7,8 @@
         style="@style/DetailTitle"
         android:text="@string/images_title" />
 
-    <android.support.v7.widget.CardView style="@style/DetailCard">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/detailImagesRecyclerView"
-            style="@style/DetailRecyclerView"
-            android:paddingBottom="@dimen/spacing_normal"
-            android:paddingTop="@dimen/spacing_normal" />
-
-    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/detailImagesRecyclerView"
+        style="@style/DetailRecyclerView" />
 
 </LinearLayout>

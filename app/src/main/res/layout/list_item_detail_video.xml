@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/detail_content_video"
         android:layout_width="match_parent"
-        android:layout_height="135dp"
+        android:layout_height="125dp"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription"
         tools:src="@drawable/bg_drawer_header" />

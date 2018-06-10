@@ -20,7 +20,7 @@ class CircularTextDrawable(
         private val text: String
 ) : ShapeDrawable(OvalShape()) {
 
-    private val borderWidth = 2f.dpToPx()
+    private val borderWidth = 1f.dpToPx()
     private val textPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val borderPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 

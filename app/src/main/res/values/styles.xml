@@ -138,7 +138,7 @@
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:paddingStart">@dimen/first_keyline</item>
         <item name="android:paddingEnd">@dimen/first_keyline</item>
-        <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_normal</item>
     </style>
 
     <style name="DetailRecyclerView" parent="Wrap">

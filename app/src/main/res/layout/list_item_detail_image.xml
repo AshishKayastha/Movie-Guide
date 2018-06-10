@@ -7,9 +7,10 @@
 
     <ImageView
         android:id="@+id/detail_content_image"
-        android:layout_width="@dimen/detail_image_width"
+        android:layout_width="wrap_content"
         android:layout_height="170dp"
-        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
         tools:ignore="ContentDescription"
         tools:src="@drawable/bg_drawer_header" />
 
