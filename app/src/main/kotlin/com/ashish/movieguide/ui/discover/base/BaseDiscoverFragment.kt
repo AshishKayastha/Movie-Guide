@@ -2,7 +2,6 @@ package com.ashish.movieguide.ui.discover.base
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -19,10 +18,8 @@ import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_MOVIE
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_TV_SHOW
 import com.ashish.movieguide.utils.extensions.performAction
-import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
-import javax.inject.Inject
 
 /**
  * Created by Ashish on Jan 07.
@@ -33,18 +30,13 @@ abstract class BaseDiscoverFragment<I : RecyclerViewItem, P : BaseDiscoverPresen
     companion object {
         const val DISCOVER_MOVIE = 0
         const val DISCOVER_TV_SHOW = 1
-        private const val RC_FILTER_FRAGMENT = 1001
     }
-
-    @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         swipeRefresh.isEnabled = false
     }
-
-    override fun supportFragmentInjector() = supportFragmentInjector
 
     override fun loadData() = presenter.filterContents()
 
@@ -91,8 +83,7 @@ abstract class BaseDiscoverFragment<I : RecyclerViewItem, P : BaseDiscoverPresen
     }
 
     override fun showFilterBottomSheetDialog(filterQuery: FilterQuery) {
-        val filterBottomSheetFragment = FilterBottomSheetDialogFragment.newInstance(isMovie(), filterQuery)
-        filterBottomSheetFragment.setTargetFragment(this, RC_FILTER_FRAGMENT)
-        filterBottomSheetFragment.show(fragmentManager, filterBottomSheetFragment.tag)
+        val filterFragment = FilterBottomSheetDialogFragment.newInstance(isMovie(), filterQuery)
+        filterFragment.show(childFragmentManager, filterFragment.tag)
     }
 }

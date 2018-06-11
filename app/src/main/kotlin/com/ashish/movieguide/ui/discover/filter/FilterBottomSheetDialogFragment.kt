@@ -60,8 +60,8 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     @State var isMovie: Boolean = true
     @State var filterQuery: FilterQuery? = null
 
-    private val calendar = Calendar.getInstance()
     private lateinit var genreAdapter: GenreAdapter
+    private val calendar = Calendar.getInstance()
     private var endDatePickerDialog: DatePickerDialog? = null
     private var startDatePickerDialog: DatePickerDialog? = null
 
