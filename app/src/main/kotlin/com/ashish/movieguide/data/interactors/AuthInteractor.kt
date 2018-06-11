@@ -24,15 +24,11 @@ class AuthInteractor @Inject constructor(
 ) {
 
     fun markAsFavorite(favorite: Favorite): Single<Status> {
-        return callApiIfLoggedIn { accountId ->
-            authApi.markAsFavorite(accountId, favorite)
-        }
+        return callApiIfLoggedIn { accountId -> authApi.markAsFavorite(accountId, favorite) }
     }
 
     fun addToWatchlist(watchlist: Watchlist): Single<Status> {
-        return callApiIfLoggedIn { accountId ->
-            authApi.addToWatchlist(accountId, watchlist)
-        }
+        return callApiIfLoggedIn { accountId -> authApi.addToWatchlist(accountId, watchlist) }
     }
 
     fun getPersonalMoviesByType(type: String, page: Int): Single<Results<Movie>> {

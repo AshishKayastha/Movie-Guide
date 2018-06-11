@@ -34,10 +34,10 @@ class LoginPresenter @Inject constructor(
         )
 
         addDisposable(traktAuthApi.getAccessToken(tokenRequest)
-                .doOnSuccess { saveAccessToken(it) }
+                .doOnSuccess(::saveAccessToken)
                 .flatMap { userApi.getUserSettings() }
                 .observeOn(schedulerProvider.ui())
-                .subscribe({ onLoginSuccess(it) }, { handleError(it) }))
+                .subscribe(::onLoginSuccess, ::handleError))
     }
 
     private fun saveAccessToken(traktToken: TraktToken) {

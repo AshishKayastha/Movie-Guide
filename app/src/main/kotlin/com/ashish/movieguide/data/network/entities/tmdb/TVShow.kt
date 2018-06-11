@@ -1,8 +1,8 @@
 package com.ashish.movieguide.data.network.entities.tmdb
 
 import android.os.Parcelable
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.CONTENT_VIEW
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem.Companion.CONTENT_VIEW
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize

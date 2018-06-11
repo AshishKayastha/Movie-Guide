@@ -1,4 +1,4 @@
-package com.ashish.movieguide.ui.common.adapter
+package com.ashish.movieguide.ui.base.adapter
 
 interface RecyclerViewItem {
 

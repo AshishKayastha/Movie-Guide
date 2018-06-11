@@ -67,11 +67,11 @@
 
                 <com.ashish.movieguide.ui.widget.FontTextView
                     android:id="@+id/friendCountText"
-                    style="@style/SmallText"
+                    style="@style/PrimaryText.Normal"
                     android:text="@string/friend_count" />
 
                 <com.ashish.movieguide.ui.widget.FontTextView
-                    style="@style/SmallText"
+                    style="@style/PrimaryText.Normal"
                     android:layout_marginEnd="@dimen/line_spacing"
                     android:layout_marginStart="@dimen/line_spacing"
                     android:text="|"
@@ -79,11 +79,11 @@
 
                 <com.ashish.movieguide.ui.widget.FontTextView
                     android:id="@+id/followerCountText"
-                    style="@style/SmallText"
+                    style="@style/PrimaryText.Normal"
                     android:text="@string/follower_count" />
 
                 <com.ashish.movieguide.ui.widget.FontTextView
-                    style="@style/SmallText"
+                    style="@style/PrimaryText.Normal"
                     android:layout_marginEnd="@dimen/line_spacing"
                     android:layout_marginStart="@dimen/line_spacing"
                     android:text="|"
@@ -91,7 +91,7 @@
 
                 <com.ashish.movieguide.ui.widget.FontTextView
                     android:id="@+id/followingCountText"
-                    style="@style/SmallText"
+                    style="@style/PrimaryText.Normal"
                     android:text="@string/following_count" />
 
             </LinearLayout>

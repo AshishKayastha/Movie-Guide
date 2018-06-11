@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.support.v7.graphics.Palette
 import com.ashish.movieguide.R
-import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
+import com.ashish.movieguide.ui.base.adapter.BaseContentHolder
 import com.ashish.movieguide.utils.extensions.animateBackgroundColorChange
 import com.ashish.movieguide.utils.extensions.animateTextColorChange
 import com.ashish.movieguide.utils.extensions.getColorCompat

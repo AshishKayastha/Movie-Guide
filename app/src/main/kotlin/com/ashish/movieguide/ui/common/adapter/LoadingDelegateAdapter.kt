@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.ashish.movieguide.R
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewDelegateAdapter
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
 import com.ashish.movieguide.utils.extensions.convertToFullSpan
 import com.ashish.movieguide.utils.extensions.inflate
 

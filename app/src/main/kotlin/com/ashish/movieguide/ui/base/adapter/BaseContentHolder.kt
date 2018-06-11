@@ -1,9 +1,8 @@
-package com.ashish.movieguide.ui.base.recyclerview
+package com.ashish.movieguide.ui.base.adapter
 
 import android.support.annotation.CallSuper
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.widget.AspectRatioImageView
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.ui.widget.LabelLayout

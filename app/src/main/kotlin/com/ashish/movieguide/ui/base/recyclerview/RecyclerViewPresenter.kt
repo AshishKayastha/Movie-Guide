@@ -2,8 +2,8 @@ package com.ashish.movieguide.ui.base.recyclerview
 
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Results
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider

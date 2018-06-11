@@ -1,11 +1,9 @@
-package com.ashish.movieguide.ui.base.recyclerview
+package com.ashish.movieguide.ui.base.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewDelegateAdapter
-import com.ashish.movieguide.ui.common.adapter.RemoveListener
 import com.ashish.movieguide.utils.extensions.inflate
 
 abstract class ContentDelegateAdapter(

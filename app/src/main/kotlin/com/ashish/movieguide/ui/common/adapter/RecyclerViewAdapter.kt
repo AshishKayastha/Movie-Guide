@@ -3,10 +3,13 @@ package com.ashish.movieguide.ui.common.adapter
 import android.support.v7.widget.RecyclerView
 import android.util.SparseArray
 import android.view.ViewGroup
-import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.CONTENT_VIEW
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.ERROR_VIEW
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.LOADING_VIEW
+import com.ashish.movieguide.ui.base.adapter.BaseContentHolder
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewDelegateAdapter
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem.Companion.CONTENT_VIEW
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem.Companion.ERROR_VIEW
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem.Companion.LOADING_VIEW
+import com.ashish.movieguide.ui.base.adapter.RemoveListener
 import com.ashish.movieguide.utils.glide.GlideApp
 import java.util.ArrayList
 

@@ -10,8 +10,8 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.FilterQuery
 import com.ashish.movieguide.data.network.entities.tmdb.Movie
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewFragment
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.discover.filter.FilterBottomSheetDialogFragment
 import com.ashish.movieguide.ui.movie.detail.MovieDetailActivity
 import com.ashish.movieguide.ui.tvshow.detail.TVShowDetailActivity

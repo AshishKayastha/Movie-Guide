@@ -5,7 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.ashish.movieguide.R
-import com.ashish.movieguide.ui.base.recyclerview.BaseHolder
+import com.ashish.movieguide.ui.base.adapter.BaseHolder
+import com.ashish.movieguide.ui.base.adapter.RemoveListener
 import com.ashish.movieguide.utils.Constants.DETAIL_IMAGE_THUMBNAIL_SIZE
 import com.ashish.movieguide.utils.extensions.bindView
 import com.ashish.movieguide.utils.extensions.inflate

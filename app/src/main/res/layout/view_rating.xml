@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/ratingImage"
         style="@style/RatingImage"
-        android:src="@drawable/ic_rt_certified"
+        android:src="@drawable/ic_rt_fresh"
         tools:ignore="ContentDescription" />
 
     <com.ashish.movieguide.ui.widget.FontTextView

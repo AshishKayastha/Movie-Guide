@@ -2,19 +2,17 @@ package com.ashish.movieguide.ui.base.recyclerview
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.animation.SlideInUpAnimator
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem.Companion.ERROR_VIEW
 import com.ashish.movieguide.ui.base.mvp.MvpFragment
 import com.ashish.movieguide.ui.common.adapter.InfiniteScrollListener
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem.Companion.ERROR_VIEW
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.extensions.getPosterImagePair
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
@@ -60,10 +58,8 @@ abstract class RecyclerViewFragment<I : RecyclerViewItem, V : RecyclerViewMvpVie
         }
     }
 
-    @StringRes
     abstract fun getEmptyTextId(): Int
 
-    @DrawableRes
     abstract fun getEmptyImageId(): Int
 
     abstract fun getAdapterType(): Int
@@ -73,7 +69,9 @@ abstract class RecyclerViewFragment<I : RecyclerViewItem, V : RecyclerViewMvpVie
         loadData()
     }
 
-    protected open fun loadData() = presenter.loadData(type)
+    protected open fun loadData() {
+        presenter.loadData(type)
+    }
 
     override fun onRefresh() {
         scrollListener.resetPageCount()
@@ -88,19 +86,29 @@ abstract class RecyclerViewFragment<I : RecyclerViewItem, V : RecyclerViewMvpVie
         scrollListener.currentPage = currentPage
     }
 
-    override fun showItemList(itemList: List<I>?) = recyclerViewAdapter.showItemList(itemList)
+    override fun showItemList(itemList: List<I>?) {
+        recyclerViewAdapter.showItemList(itemList)
+    }
 
-    override fun showLoadingItem() = recyclerViewAdapter.addLoadingItem()
+    override fun showLoadingItem() {
+        recyclerViewAdapter.addLoadingItem()
+    }
 
-    override fun addNewItemList(itemList: List<I>?) = recyclerViewAdapter.addNewItemList(itemList)
+    override fun addNewItemList(itemList: List<I>?) {
+        recyclerViewAdapter.addNewItemList(itemList)
+    }
 
     override fun removeLoadingItem() {
         recyclerViewAdapter.removeLoadingItem()
     }
 
-    override fun showErrorView() = recyclerViewAdapter.addErrorItem()
+    override fun showErrorView() {
+        recyclerViewAdapter.addErrorItem()
+    }
 
-    override fun resetLoading() = scrollListener.stopLoading()
+    override fun resetLoading() {
+        scrollListener.stopLoading()
+    }
 
     override fun onItemClick(position: Int, view: View) {
         val viewType = recyclerViewAdapter.getItemViewType(position)

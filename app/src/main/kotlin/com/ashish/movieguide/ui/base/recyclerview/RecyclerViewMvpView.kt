@@ -1,7 +1,7 @@
 package com.ashish.movieguide.ui.base.recyclerview
 
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.base.mvp.ProgressMvpView
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import net.grandcentrix.thirtyinch.distinctuntilchanged.DistinctUntilChanged
 
 interface RecyclerViewMvpView<in I : RecyclerViewItem> : ProgressMvpView {

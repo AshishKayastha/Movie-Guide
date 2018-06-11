@@ -1,6 +1,6 @@
 package com.ashish.movieguide.data.network.entities.tmdb
 
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

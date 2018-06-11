@@ -5,10 +5,10 @@ import android.view.View
 import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.tmdb.Review
-import com.ashish.movieguide.ui.base.recyclerview.BaseHolder
-import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
+import com.ashish.movieguide.ui.base.adapter.BaseHolder
+import com.ashish.movieguide.ui.base.adapter.ContentDelegateAdapter
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.widget.CircularTextDrawable
 import com.ashish.movieguide.ui.widget.FontTextView
 import com.ashish.movieguide.utils.extensions.applyText

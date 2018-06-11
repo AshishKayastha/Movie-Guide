@@ -1,5 +1,6 @@
 package com.ashish.movieguide.ui.common.adapter
 
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewDelegateAdapter
 import com.ashish.movieguide.ui.episode.EpisodeDelegateAdapter
 import com.ashish.movieguide.ui.multisearch.fragment.MultiSearchDelegateAdapter
 import com.ashish.movieguide.ui.people.list.PersonDelegateAdapter

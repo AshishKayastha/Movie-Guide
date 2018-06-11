@@ -12,8 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewStub
 import android.widget.TextView
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter
-import com.ashish.movieguide.ui.common.adapter.RecyclerViewItem
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.FontUtils
 import com.ashish.movieguide.utils.StartSnapHelper

@@ -149,7 +149,8 @@ class TVShowDetailActivity : FullDetailContentActivity<TVShowDetail, TraktShow,
             textView.setText(R.string.similar_tv_shows_title)
         }
 
-        similarContentViewStub.inflateToRecyclerView(this,
+        similarContentViewStub.inflateToRecyclerView(
+                this,
                 R.id.similarContentRecyclerView,
                 similarTVShowsAdapter!!,
                 similarTVShowList

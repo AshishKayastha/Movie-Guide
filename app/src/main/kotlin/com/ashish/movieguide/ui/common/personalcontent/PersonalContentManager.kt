@@ -4,7 +4,6 @@ import com.ashish.movieguide.R
 import com.ashish.movieguide.data.interactors.AuthInteractor
 import com.ashish.movieguide.data.network.entities.tmdb.Favorite
 import com.ashish.movieguide.data.network.entities.tmdb.Watchlist
-import com.ashish.movieguide.data.preferences.PreferenceHelper
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.Utils
@@ -20,7 +19,6 @@ import javax.inject.Inject
 @ActivityScope
 class PersonalContentManager @Inject constructor(
         private val authInteractor: AuthInteractor,
-        private val preferenceHelper: PreferenceHelper,
         private val schedulerProvider: BaseSchedulerProvider,
         private val contentStatusObserver: PersonalContentStatusObserver
 ) {
@@ -44,7 +42,7 @@ class PersonalContentManager @Inject constructor(
                 val favorite = Favorite(isFavorite, mediaId, mediaType)
                 compositeDisposable.add(authInteractor.markAsFavorite(favorite)
                         .observeOn(schedulerProvider.ui())
-                        .subscribe({ onMarkAsFavoriteSuccesss(mediaId, mediaType) }, { onMarkAsFavoriteError(it) }))
+                        .subscribe({ onMarkAsFavoriteSuccesss(mediaId, mediaType) }, ::onMarkAsFavoriteError))
             }
         }
     }
@@ -58,16 +56,15 @@ class PersonalContentManager @Inject constructor(
 
     private fun onMarkAsFavoriteError(t: Throwable) {
         Timber.e(t)
+        isFavorite = !isFavorite
         view?.run {
+            setFavoriteIcon(isFavorite)
             if (t is AuthException) {
                 showMessage(R.string.error_not_logged_in)
             } else {
                 showMessage(R.string.error_mark_favorite)
             }
         }
-
-        isFavorite = !isFavorite
-        view?.setFavoriteIcon(isFavorite)
     }
 
     fun addToWatchlist(mediaId: Long?, mediaType: String) {
@@ -79,7 +76,7 @@ class PersonalContentManager @Inject constructor(
                 val watchlist = Watchlist(isInWatchlist, mediaId, mediaType)
                 compositeDisposable.add(authInteractor.addToWatchlist(watchlist)
                         .observeOn(schedulerProvider.ui())
-                        .subscribe({ onAddToWatchlistSuccess(mediaId, mediaType) }, { onAddToWatchlistError(it) }))
+                        .subscribe({ onAddToWatchlistSuccess(mediaId, mediaType) }, ::onAddToWatchlistError))
             }
         }
     }
@@ -95,16 +92,15 @@ class PersonalContentManager @Inject constructor(
 
     private fun onAddToWatchlistError(t: Throwable) {
         Timber.e(t)
+        isInWatchlist = !isInWatchlist
         view?.run {
+            changeWatchlistMenuItem(isInWatchlist)
             if (t is AuthException) {
                 showMessage(R.string.error_not_logged_in)
             } else {
                 showWatchlistMessage(R.string.error_add_to_watchlist, R.string.error_remove_watchlist)
             }
         }
-
-        isInWatchlist = !isInWatchlist
-        view?.changeWatchlistMenuItem(isInWatchlist)
     }
 
     private fun showWatchlistMessage(addMessage: Int, removeMessage: Int) {

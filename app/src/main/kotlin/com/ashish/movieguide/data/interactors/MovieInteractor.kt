@@ -10,7 +10,6 @@ import com.ashish.movieguide.data.network.entities.tmdb.MovieDetail
 import com.ashish.movieguide.data.network.entities.tmdb.Results
 import com.ashish.movieguide.data.network.entities.tmdb.Review
 import com.ashish.movieguide.data.network.entities.trakt.TraktMovie
-import com.ashish.movieguide.data.repository.local.LocalMovieRepository
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -25,8 +24,7 @@ import javax.inject.Singleton
 class MovieInteractor @Inject constructor(
         private val movieApi: MovieApi,
         private val omDbApi: OMDbApi,
-        private val traktMovieApi: TraktMovieApi,
-        private val localMovieRepository: LocalMovieRepository
+        private val traktMovieApi: TraktMovieApi
 ) {
 
     fun getMoviesByType(movieType: String?, page: Int = 1): Single<Results<Movie>> {
@@ -39,17 +37,18 @@ class MovieInteractor @Inject constructor(
         //                .doOnNext { localMovieRepository.putMovieDetailBlocking(it) }
     }
 
-    private fun convertToFullMovieDetail(movieDetail: MovieDetail)
-            : Observable<FullDetailContent<MovieDetail, TraktMovie>> {
+    private fun convertToFullMovieDetail(
+            movieDetail: MovieDetail
+    ): Observable<FullDetailContent<MovieDetail, TraktMovie>> {
         val imdbId = movieDetail.imdbId
         return if (imdbId.isNotNullOrEmpty()) {
-            val traktMovieSingle = traktMovieApi.getMovieDetail(imdbId!!)
+            val traktMovieObservable = traktMovieApi.getMovieDetail(imdbId!!)
                     .onErrorReturnItem(TraktMovie())
 
-            val omdbDetailSingle = omDbApi.getOMDbDetail(imdbId)
+            val omdbDetailObservable = omDbApi.getOMDbDetail(imdbId)
                     .onErrorReturnItem(OMDbDetail())
 
-            Observable.zip(traktMovieSingle, omdbDetailSingle, BiFunction { traktMovie, omDbDetail ->
+            Observable.zip(traktMovieObservable, omdbDetailObservable, BiFunction { traktMovie, omDbDetail ->
                 FullDetailContent(movieDetail, omDbDetail, traktMovie)
             })
         } else {
@@ -61,8 +60,13 @@ class MovieInteractor @Inject constructor(
         return movieApi.getMovieReviews(movieId, page)
     }
 
-    fun discoverMovie(sortBy: String, minReleaseDate: String?, maxReleaseDate: String?, genreIds: String?,
-                      page: Int): Single<Results<Movie>> {
+    fun discoverMovie(
+            sortBy: String,
+            minReleaseDate: String?,
+            maxReleaseDate: String?,
+            genreIds: String?,
+            page: Int
+    ): Single<Results<Movie>> {
         return movieApi.discoverMovie(sortBy, minReleaseDate, maxReleaseDate, genreIds, page)
     }
 }

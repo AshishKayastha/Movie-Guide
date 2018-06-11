@@ -29,7 +29,7 @@ class RatingManager @Inject constructor(
         performActionIfOnline {
             compositeDisposable.add(syncApi.addRatings(syncItems)
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ onAddRatingSuccess(mediaId, rating) }, { onAddRatingFailed(it) }))
+                    .subscribe({ onAddRatingSuccess(mediaId, rating) }, ::onAddRatingFailed))
         }
     }
 
@@ -51,7 +51,7 @@ class RatingManager @Inject constructor(
         performActionIfOnline {
             compositeDisposable.add(syncApi.removeRatings(syncItems)
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ onRemoveRatingSuccess(mediaId) }, { onRemoveRatingFailed(it) }))
+                    .subscribe({ onRemoveRatingSuccess(mediaId) }, ::onRemoveRatingFailed))
         }
     }
 

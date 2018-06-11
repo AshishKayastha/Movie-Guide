@@ -1,4 +1,4 @@
-package com.ashish.movieguide.ui.base.recyclerview
+package com.ashish.movieguide.ui.base.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

@@ -115,7 +115,7 @@ class TVShowDetailPresenter @Inject constructor(
         }
     }
 
-    private fun getTvId() = fullDetailContent?.detailContent?.id!!
+    private fun getTvId(): Long = fullDetailContent?.detailContent?.id!!
 
     override fun onDetachView() {
         super.onDetachView()

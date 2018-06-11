@@ -28,7 +28,7 @@ class ProfilePresenter @Inject constructor(
         if (slug.isNotNullOrEmpty()) {
             addDisposable(userApi.getUserStats(slug!!)
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ showUserStats(it) }, { handleError(it) }))
+                    .subscribe(::showUserStats, ::handleError))
         }
     }
 

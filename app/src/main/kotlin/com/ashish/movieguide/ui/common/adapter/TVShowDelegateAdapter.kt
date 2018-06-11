@@ -3,8 +3,9 @@ package com.ashish.movieguide.ui.common.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.ui.base.recyclerview.BaseContentHolder
-import com.ashish.movieguide.ui.base.recyclerview.ContentDelegateAdapter
+import com.ashish.movieguide.ui.base.adapter.BaseContentHolder
+import com.ashish.movieguide.ui.base.adapter.ContentDelegateAdapter
+import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem
 import com.ashish.movieguide.utils.extensions.applyText
 import com.ashish.movieguide.utils.extensions.getPosterUrl
 import com.ashish.movieguide.utils.extensions.getYearOnly
