@@ -12,9 +12,7 @@ interface FullDetailContentView<in I> : BaseDetailView<I> {
 
     fun showImdbRating(imdbRating: String)
 
-    fun showRottenTomatoesRating(tomatoMeter: String, drawableResId: Int)
-
-    fun showAudienceScore(audienceScore: String, drawableResId: Int)
+    fun showRottenTomatoesRating(rtRating: String)
 
     fun showMetaScore(metaScore: String, color: Int)
 

@@ -63,14 +63,8 @@ abstract class FullDetailContentActivity<I, T, V : FullDetailContentView<I>,
         imdbRatingView.setText(imdbRating)
     }
 
-    override fun showRottenTomatoesRating(tomatoMeter: String, drawableResId: Int) {
-        tomatoRatingView.setDrawableResource(drawableResId)
-        tomatoRatingView.setText(String.format(getString(R.string.meter_count_format), tomatoMeter))
-    }
-
-    override fun showAudienceScore(audienceScore: String, drawableResId: Int) {
-        audienceScoreView.setDrawableResource(drawableResId)
-        audienceScoreView.setText(String.format(getString(R.string.meter_count_format), audienceScore))
+    override fun showRottenTomatoesRating(rtRating: String) {
+        tomatoRatingView.setText(rtRating)
     }
 
     override fun showMetaScore(metaScore: String, color: Int) {

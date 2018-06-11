@@ -30,15 +30,8 @@
             <com.ashish.movieguide.ui.widget.RatingView
                 android:id="@+id/tomatoRatingView"
                 style="@style/RatingView"
-                android:src="@drawable/ic_rt_certified"
+                android:src="@drawable/ic_rt_fresh"
                 tools:text="95%"
-                tools:visibility="visible" />
-
-            <com.ashish.movieguide.ui.widget.RatingView
-                android:id="@+id/audienceScoreView"
-                style="@style/RatingView"
-                android:src="@drawable/ic_audience_score_good"
-                tools:text="90%"
                 tools:visibility="visible" />
 
             <LinearLayout

@@ -11,6 +11,7 @@ import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
 import android.support.v4.content.ContextCompat
+import android.support.v7.content.res.AppCompatResources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -23,7 +24,7 @@ import com.ashish.movieguide.ui.widget.CustomToast
 fun Context.getColorCompat(@ColorRes colorResId: Int) = ContextCompat.getColor(this, colorResId)
 
 fun Context.getDrawableCompat(@DrawableRes drawableResId: Int): Drawable? {
-    return ContextCompat.getDrawable(this, drawableResId)
+    return AppCompatResources.getDrawable(this, drawableResId)
 }
 
 fun Context.showToast(messageId: Int, msgType: Int = CustomToast.TOAST_TYPE_ERROR) {

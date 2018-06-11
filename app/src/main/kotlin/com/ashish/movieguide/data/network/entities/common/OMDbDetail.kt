@@ -13,11 +13,6 @@ data class OMDbDetail(
         val Metascore: String? = null,
         val imdbRating: String? = null,
         val imdbVotes: String? = null,
-        val tomatoMeter: String? = null,
-        val tomatoImage: String? = null,
-        val tomatoRating: String? = null,
         val tomatoURL: String? = null,
-        val tomatoUserMeter: String? = null,
-        val tomatoUserRating: String? = null,
         val Production: String? = null
 )

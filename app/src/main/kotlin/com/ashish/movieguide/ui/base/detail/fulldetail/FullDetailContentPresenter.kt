@@ -1,6 +1,5 @@
 package com.ashish.movieguide.ui.base.detail.fulldetail
 
-import com.ashish.movieguide.R
 import com.ashish.movieguide.data.network.entities.common.FullDetailContent
 import com.ashish.movieguide.data.network.entities.tmdb.VideoItem
 import com.ashish.movieguide.data.network.entities.tmdb.Videos
@@ -24,15 +23,12 @@ abstract class FullDetailContentPresenter<I, T, V : FullDetailContentView<I>>(
 
     override fun showDetailContent(fullDetailContent: FullDetailContent<I, T>) {
         fullDetailContent.omdbDetail?.apply {
-            if (isValidRating(imdbRating)
-                    || isValidRating(tomatoRating)
-                    || isValidRating(tomatoUserRating)
-                    || isValidRating(Metascore)) {
-                view?.showRatingCard()
-                setMetaScore(Metascore)
-                setIMDbRating(imdbRating)
-                setTomatoRating(tomatoMeter, tomatoImage)
-                setAudienceScore(tomatoUserRating, tomatoUserMeter)
+            Ratings?.forEach {
+                when (it.source) {
+                    "Internet Movie Database" -> setIMDbRating(it.getRatingValue())
+                    "Rotten Tomatoes" -> setRottenTomatoesRating(it.value)
+                    "Metacritic" -> setMetaScore(it.getRatingValue())
+                }
             }
         }
 
@@ -51,30 +47,19 @@ abstract class FullDetailContentPresenter<I, T, V : FullDetailContentView<I>>(
     }
 
     private fun setIMDbRating(imdbRating: String?) {
-        if (isValidRating(imdbRating)) view?.showImdbRating(imdbRating!!)
-    }
-
-    private fun setTomatoRating(tomatoRating: String?, tomatoImage: String?) {
-        if (isValidRating(tomatoRating)) {
+        if (isValidRating(imdbRating)) {
             view?.run {
-                when (tomatoImage) {
-                    "certified" -> showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_certified)
-                    "fresh" -> showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_fresh)
-                    "rotten" -> showRottenTomatoesRating(tomatoRating!!, R.drawable.ic_rt_rotten)
-                }
+                showRatingCard()
+                showImdbRating(imdbRating!!)
             }
         }
     }
 
-    private fun setAudienceScore(tomatoUserRating: String?, tomatoUserMeter: String?) {
-        if (isValidRating(tomatoUserRating)) {
+    private fun setRottenTomatoesRating(rtRating: String?) {
+        if (isValidRating(rtRating)) {
             view?.run {
-                val flixterScore = tomatoUserRating!!.toFloat()
-                if (flixterScore >= 3.5) {
-                    showAudienceScore(tomatoUserMeter!!, R.drawable.ic_audience_score_good)
-                } else {
-                    showAudienceScore(tomatoUserMeter!!, R.drawable.ic_audience_score_bad)
-                }
+                showRatingCard()
+                showRottenTomatoesRating(rtRating!!)
             }
         }
     }
@@ -82,6 +67,7 @@ abstract class FullDetailContentPresenter<I, T, V : FullDetailContentView<I>>(
     private fun setMetaScore(metaScore: String?) {
         if (isValidRating(metaScore)) {
             view?.run {
+                showRatingCard()
                 val metaScoreInt = metaScore!!.toInt()
                 when {
                     metaScoreInt > 60 -> showMetaScore(metaScore, 0xFF66CC33.toInt())

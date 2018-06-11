@@ -78,12 +78,7 @@ fun OMDbDetail.toEntity(): OMDb? {
             omdbEntity.mediaLanguage = Language
             omdbEntity.imdbRating = imdbRating
             omdbEntity.imdbVotes = imdbVotes
-            omdbEntity.tomatoImage = tomatoImage
-            omdbEntity.tomatoMeter = tomatoMeter
-            omdbEntity.tomatoRating = tomatoRating
             omdbEntity.tomatoURL = tomatoURL
-            omdbEntity.tomatoUserMeter = tomatoUserMeter
-            omdbEntity.tomatoUserRating = tomatoUserRating
             omdbEntity.metascore = Metascore
             omdbEntity.production = Production
         }

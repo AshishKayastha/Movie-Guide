@@ -7,4 +7,7 @@ import com.squareup.moshi.JsonClass
 data class Ratings(
         @Json(name = "Source") val source: String? = null,
         @Json(name = "Value") val value: String? = null
-)
+) {
+
+    fun getRatingValue(): String? = value?.substringBefore("/")
+}
