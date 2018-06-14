@@ -7,7 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.entities.tmdb.Review
+import com.ashish.movieguide.data.remote.entities.tmdb.Review
 import com.ashish.movieguide.ui.animation.SlideInUpAnimator
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView

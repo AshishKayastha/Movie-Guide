@@ -1,7 +1,7 @@
 package com.ashish.movieguide.ui.discover.tvshow
 
 import android.support.v4.app.Fragment
-import com.ashish.movieguide.data.network.entities.tmdb.TVShow
+import com.ashish.movieguide.data.remote.entities.tmdb.TVShow
 import com.ashish.movieguide.ui.discover.base.BaseDiscoverFragment
 import dagger.android.DispatchingAndroidInjector
 import javax.inject.Inject

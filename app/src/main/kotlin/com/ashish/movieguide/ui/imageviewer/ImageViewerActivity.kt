@@ -6,11 +6,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v4.view.animation.FastOutSlowInInterpolator
+import android.transition.TransitionInflater
 import android.view.View
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.common.BaseActivity
 import com.ashish.movieguide.ui.widget.DepthPageTransformer
 import com.ashish.movieguide.utils.SystemUiHelper
+import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.transition.LeakFreeSupportSharedElementCallback
 import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.activity_image_viewer.*
@@ -24,59 +26,27 @@ class ImageViewerActivity : BaseActivity() {
     companion object {
         const val SHOW_UI_MILLIS = 4000L
         const val EXTRA_CURRENT_POSITION = "current_position"
-        const val EXTRA_STARTING_POSITION = "starting_position"
         private const val EXTRA_IMAGE_URL_LIST = "image_url_list"
 
         fun createIntent(
                 context: Context,
-                startingPosition: Int,
+                currentPosition: Int,
                 imageUrlList: ArrayList<String>
         ): Intent = Intent(context, ImageViewerActivity::class.java)
                 .putExtra(EXTRA_IMAGE_URL_LIST, imageUrlList)
-                .putExtra(EXTRA_STARTING_POSITION, startingPosition)
+                .putExtra(EXTRA_CURRENT_POSITION, currentPosition)
     }
 
     @State var currentPosition: Int = 0
-    @State var startingPosition: Int = 0
     @State var imageUrlList: ArrayList<String>? = null
 
     var systemUiHelper: SystemUiHelper? = null
-
-    private var isReturning: Boolean = false
     private lateinit var imageViewerAdapter: ImageViewerAdapter
 
     private val callback = object : LeakFreeSupportSharedElementCallback() {
-        override fun onSharedElementStart(sharedElementNames: MutableList<String>?, sharedElements: MutableList<View>?,
-                                          sharedElementSnapshots: MutableList<View>?) {
-            super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)
-            if (isReturning) {
-                imageViewerAdapter.getRegisteredFragment(currentPosition)?.loadThumbnail()
-            }
-        }
-
         override fun onMapSharedElements(names: MutableList<String>, sharedElements: MutableMap<String, View>) {
-            if (isReturning) {
-                val sharedElement = imageViewerAdapter.getRegisteredFragment(currentPosition)?.getImageView()
-                if (sharedElement == null) {
-
-                    /*
-                      If shared element is null, then it has been scrolled off screen and
-                      no longer visible. In this case we cancel the shared element transition by
-                      removing the shared element from the shared elements map.
-                     */
-                    names.clear()
-                    sharedElements.clear()
-                } else if (startingPosition != currentPosition) {
-                    /*
-                      If the user has swiped to a different ViewPager page, then we need to
-                      remove the old shared element and replace it with the new shared element
-                      that should be transitioned instead.
-                     */
-                    names.clear()
-                    sharedElements.clear()
-                    names.add(sharedElement.transitionName)
-                    sharedElements[sharedElement.transitionName] = sharedElement
-                }
+            imageViewerAdapter.getRegisteredFragment(currentPosition)?.view?.let {
+                sharedElements[names[0]] = it.find(R.id.imageView)
             }
         }
     }
@@ -95,8 +65,11 @@ class ImageViewerActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        postponeEnterTransition()
+
+        window.sharedElementEnterTransition = TransitionInflater.from(this)
+                .inflateTransition(R.transition.image_shared_element_transition)
         setEnterSharedElementCallback(callback)
+        if (savedInstanceState == null) postponeEnterTransition()
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -126,8 +99,7 @@ class ImageViewerActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_image_viewer
 
     override fun getIntentExtras(extras: Bundle?) {
-        startingPosition = extras?.getInt(EXTRA_STARTING_POSITION) ?: 0
-        currentPosition = startingPosition
+        currentPosition = extras?.getInt(EXTRA_CURRENT_POSITION) ?: 0
         imageUrlList = extras?.getStringArrayList(EXTRA_IMAGE_URL_LIST)
     }
 
@@ -142,10 +114,8 @@ class ImageViewerActivity : BaseActivity() {
     }
 
     override fun finishAfterTransition() {
-        isReturning = true
         val data = Intent()
         data.putExtra(EXTRA_CURRENT_POSITION, currentPosition)
-        data.putExtra(EXTRA_STARTING_POSITION, startingPosition)
         setResult(Activity.RESULT_OK, data)
         super.finishAfterTransition()
     }

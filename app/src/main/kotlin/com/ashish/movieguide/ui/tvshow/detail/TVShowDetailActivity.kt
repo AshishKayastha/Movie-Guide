@@ -8,11 +8,11 @@ import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.entities.tmdb.Season
-import com.ashish.movieguide.data.network.entities.tmdb.TVShow
-import com.ashish.movieguide.data.network.entities.tmdb.TVShowDetail
-import com.ashish.movieguide.data.network.entities.trakt.TraktShow
-import com.ashish.movieguide.data.preferences.PreferenceHelper
+import com.ashish.movieguide.data.local.preferences.PreferenceHelper
+import com.ashish.movieguide.data.remote.entities.tmdb.Season
+import com.ashish.movieguide.data.remote.entities.tmdb.TVShow
+import com.ashish.movieguide.data.remote.entities.tmdb.TVShowDetail
+import com.ashish.movieguide.data.remote.entities.trakt.TraktShow
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter

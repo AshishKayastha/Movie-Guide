@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.entities.tmdb.FilterQuery
+import com.ashish.movieguide.data.remote.entities.tmdb.FilterQuery
 import com.ashish.movieguide.ui.widget.ItemOffsetDecoration
 import com.ashish.movieguide.utils.Constants.DATE_PICKER_FORMAT
 import com.ashish.movieguide.utils.TMDbConstants.SORT_BY_MOVIE

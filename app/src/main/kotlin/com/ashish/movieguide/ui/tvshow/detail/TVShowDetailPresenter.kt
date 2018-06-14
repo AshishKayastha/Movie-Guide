@@ -1,15 +1,15 @@
 package com.ashish.movieguide.ui.tvshow.detail
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.interactors.TVShowInteractor
-import com.ashish.movieguide.data.network.entities.common.FullDetailContent
-import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
-import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
-import com.ashish.movieguide.data.network.entities.tmdb.TVShowDetail
-import com.ashish.movieguide.data.network.entities.tmdb.Videos
-import com.ashish.movieguide.data.network.entities.trakt.SyncItems
-import com.ashish.movieguide.data.network.entities.trakt.SyncShow
-import com.ashish.movieguide.data.network.entities.trakt.TraktShow
+import com.ashish.movieguide.data.remote.entities.common.FullDetailContent
+import com.ashish.movieguide.data.remote.entities.tmdb.CreditResults
+import com.ashish.movieguide.data.remote.entities.tmdb.ImageItem
+import com.ashish.movieguide.data.remote.entities.tmdb.TVShowDetail
+import com.ashish.movieguide.data.remote.entities.tmdb.Videos
+import com.ashish.movieguide.data.remote.entities.trakt.SyncItems
+import com.ashish.movieguide.data.remote.entities.trakt.SyncShow
+import com.ashish.movieguide.data.remote.entities.trakt.TraktShow
+import com.ashish.movieguide.data.remote.interactors.TVShowInteractor
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
 import com.ashish.movieguide.ui.common.rating.RatingManager

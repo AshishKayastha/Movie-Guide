@@ -3,7 +3,7 @@ package com.ashish.movieguide.ui.episode
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.entities.tmdb.Episode
+import com.ashish.movieguide.data.remote.entities.tmdb.Episode
 import com.ashish.movieguide.ui.base.adapter.BaseContentHolder
 import com.ashish.movieguide.ui.base.adapter.ContentDelegateAdapter
 import com.ashish.movieguide.ui.base.adapter.RecyclerViewItem

@@ -1,15 +1,15 @@
 package com.ashish.movieguide.ui.movie.detail
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.interactors.MovieInteractor
-import com.ashish.movieguide.data.network.entities.common.FullDetailContent
-import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
-import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
-import com.ashish.movieguide.data.network.entities.tmdb.MovieDetail
-import com.ashish.movieguide.data.network.entities.tmdb.Videos
-import com.ashish.movieguide.data.network.entities.trakt.SyncItems
-import com.ashish.movieguide.data.network.entities.trakt.SyncMovie
-import com.ashish.movieguide.data.network.entities.trakt.TraktMovie
+import com.ashish.movieguide.data.remote.entities.common.FullDetailContent
+import com.ashish.movieguide.data.remote.entities.tmdb.CreditResults
+import com.ashish.movieguide.data.remote.entities.tmdb.ImageItem
+import com.ashish.movieguide.data.remote.entities.tmdb.MovieDetail
+import com.ashish.movieguide.data.remote.entities.tmdb.Videos
+import com.ashish.movieguide.data.remote.entities.trakt.SyncItems
+import com.ashish.movieguide.data.remote.entities.trakt.SyncMovie
+import com.ashish.movieguide.data.remote.entities.trakt.TraktMovie
+import com.ashish.movieguide.data.remote.interactors.MovieInteractor
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.personalcontent.PersonalContentManager
 import com.ashish.movieguide.ui.common.rating.RatingManager
@@ -55,8 +55,8 @@ class MovieDetailPresenter @Inject constructor(
 
     override fun getContentList(fullDetailContent: FullDetailContent<MovieDetail, TraktMovie>): List<String> {
         val contentList = ArrayList<String>()
+        val omdbDetail = fullDetailContent.omdbDetail
         fullDetailContent.detailContent?.apply {
-            val omdbDetail = fullDetailContent.omdbDetail
             contentList.apply {
                 add(overview ?: "")
                 add(tagline ?: "")
@@ -116,7 +116,7 @@ class MovieDetailPresenter @Inject constructor(
         }
     }
 
-    private fun getMovieId() = fullDetailContent?.detailContent?.id!!
+    private fun getMovieId(): Long = fullDetailContent?.detailContent?.id!!
 
     override fun onDetachView() {
         super.onDetachView()

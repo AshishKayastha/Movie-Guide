@@ -220,6 +220,7 @@
     </style>
 
     <style name="ListItemCard" parent="Match.Width">
+        <item name="android:clipChildren">false</item>
         <item name="android:foreground">?selectableItemBackground</item>
         <item name="android:stateListAnimator">@animator/elevation_animator</item>
         <item name="cardCornerRadius">@dimen/corner_radius</item>

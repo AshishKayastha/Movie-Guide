@@ -12,8 +12,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.entities.common.OMDbDetail
-import com.ashish.movieguide.data.network.entities.tmdb.Credit
+import com.ashish.movieguide.data.remote.entities.common.OMDbDetail
+import com.ashish.movieguide.data.remote.entities.tmdb.Credit
 import com.ashish.movieguide.ui.base.mvp.MvpActivity
 import com.ashish.movieguide.ui.common.adapter.DetailContentAdapter
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener

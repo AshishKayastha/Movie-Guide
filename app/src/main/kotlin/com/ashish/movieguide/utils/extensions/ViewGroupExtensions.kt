@@ -55,7 +55,8 @@ fun RecyclerView.ViewHolder.convertToFullSpan() {
 fun ViewStub.inflateToRecyclerView(
         context: Context,
         @IdRes viewId: Int,
-        recyclerAdapter: RecyclerView.Adapter<*>
+        recyclerAdapter: RecyclerView.Adapter<*>,
+        attachSnapHelper: Boolean = true
 ): RecyclerView {
     val inflatedView = this.inflate()
     val recyclerView = inflatedView.find<RecyclerView>(viewId)
@@ -66,8 +67,10 @@ fun ViewStub.inflateToRecyclerView(
         layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.HORIZONTAL, false)
         adapter = recyclerAdapter
-        val snapHelper = StartSnapHelper()
-        snapHelper.attachToRecyclerView(this)
+        if (attachSnapHelper) {
+            val snapHelper = StartSnapHelper()
+            snapHelper.attachToRecyclerView(this)
+        }
     }
 
     return recyclerView

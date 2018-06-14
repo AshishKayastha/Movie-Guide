@@ -12,7 +12,7 @@ Movie Guide is an open source Android application for [TMDb](https://www.themovi
 * Minimal and simple user interface, which user can get easily acquainted with.
 * View movies, tv shows and actors information from TMDb.
 * Search and filter your favorite movies, tv shows and people.
-* View movie and tv show ratings from OMDb.
+* View show and tv show ratings from OMDb.
 
 ## Movie Guide Implementations
 * Min SDK 21 with material design and animations

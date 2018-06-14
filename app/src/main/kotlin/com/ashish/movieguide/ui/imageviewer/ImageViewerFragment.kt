@@ -2,22 +2,19 @@ package com.ashish.movieguide.ui.imageviewer
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.ui.base.common.BaseFragment
-import com.ashish.movieguide.utils.Constants.DETAIL_IMAGE_THUMBNAIL_SIZE
+import com.ashish.movieguide.utils.Constants.DETAIL_IMAGE_OPTIONS
 import com.ashish.movieguide.utils.StartTransitionListener
 import com.ashish.movieguide.utils.SystemUiHelper
 import com.ashish.movieguide.utils.extensions.convertToOriginalImageUrl
 import com.ashish.movieguide.utils.glide.GlideApp
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_image_viewer.*
 
@@ -65,7 +62,7 @@ class ImageViewerFragment : BaseFragment() {
                 .asBitmap()
                 .load(imageUrl)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .apply(RequestOptions().override(DETAIL_IMAGE_THUMBNAIL_SIZE, DETAIL_IMAGE_THUMBNAIL_SIZE))
+                .apply(DETAIL_IMAGE_OPTIONS)
 
         fullBitmapRequest = GlideApp.with(this)
                 .asBitmap()
@@ -81,35 +78,16 @@ class ImageViewerFragment : BaseFragment() {
     }
 
     @SuppressLint("CheckResult")
-    fun loadThumbnail() {
-        thumbBitmapRequest?.listener(StartTransitionListener<Bitmap>(activity!!))
-        thumbBitmapRequest?.into(imageView)
+    private fun loadThumbnail() {
+        thumbBitmapRequest
+                ?.listener(StartTransitionListener<Bitmap>(activity!!))
+                ?.into(imageView)
     }
 
     private fun loadFullImage() {
         fullBitmapRequest
                 ?.thumbnail(thumbBitmapRequest)
                 ?.into(imageView)
-    }
-
-    /**
-     * Returns the shared element that should be transitioned back to the
-     * previous Activity, or null if the view is not visible on the screen.
-     */
-    fun getImageView(): ImageView? {
-        return if (isViewInBounds(activity?.window?.decorView, imageView)) imageView else null
-    }
-
-    /**
-     * Returns true if {@param view} is contained within {@param container}'s bounds.
-     */
-    private fun isViewInBounds(container: View?, view: View): Boolean {
-        val containerBounds = Rect()
-        if (container != null) {
-            container.getHitRect(containerBounds)
-            return view.getLocalVisibleRect(containerBounds)
-        }
-        return false
     }
 
     private fun handleTouchEvent() {

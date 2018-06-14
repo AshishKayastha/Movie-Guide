@@ -1,9 +1,9 @@
 package com.ashish.movieguide.ui.common.personalcontent
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.interactors.AuthInteractor
-import com.ashish.movieguide.data.network.entities.tmdb.Favorite
-import com.ashish.movieguide.data.network.entities.tmdb.Watchlist
+import com.ashish.movieguide.data.remote.entities.tmdb.Favorite
+import com.ashish.movieguide.data.remote.entities.tmdb.Watchlist
+import com.ashish.movieguide.data.remote.interactors.AuthInteractor
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.Utils

@@ -1,12 +1,12 @@
 package com.ashish.movieguide.ui.tvshow.list
 
-import com.ashish.movieguide.data.interactors.TVShowInteractor
-import com.ashish.movieguide.data.network.api.tmdb.TVShowApi.Companion.AIRING_TODAY
-import com.ashish.movieguide.data.network.api.tmdb.TVShowApi.Companion.ON_THE_AIR
-import com.ashish.movieguide.data.network.api.tmdb.TVShowApi.Companion.POPULAR
-import com.ashish.movieguide.data.network.api.tmdb.TVShowApi.Companion.TOP_RATED
-import com.ashish.movieguide.data.network.entities.tmdb.Results
-import com.ashish.movieguide.data.network.entities.tmdb.TVShow
+import com.ashish.movieguide.data.remote.api.tmdb.TVShowApi.Companion.AIRING_TODAY
+import com.ashish.movieguide.data.remote.api.tmdb.TVShowApi.Companion.ON_THE_AIR
+import com.ashish.movieguide.data.remote.api.tmdb.TVShowApi.Companion.POPULAR
+import com.ashish.movieguide.data.remote.api.tmdb.TVShowApi.Companion.TOP_RATED
+import com.ashish.movieguide.data.remote.entities.tmdb.Results
+import com.ashish.movieguide.data.remote.entities.tmdb.TVShow
+import com.ashish.movieguide.data.remote.interactors.TVShowInteractor
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider

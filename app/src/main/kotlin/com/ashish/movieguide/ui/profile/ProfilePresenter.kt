@@ -1,9 +1,9 @@
 package com.ashish.movieguide.ui.profile
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.api.trakt.UserApi
-import com.ashish.movieguide.data.network.entities.trakt.Stats
-import com.ashish.movieguide.data.preferences.PreferenceHelper
+import com.ashish.movieguide.data.local.preferences.PreferenceHelper
+import com.ashish.movieguide.data.remote.api.trakt.UserApi
+import com.ashish.movieguide.data.remote.entities.trakt.Stats
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider

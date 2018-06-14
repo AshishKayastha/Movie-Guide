@@ -1,8 +1,8 @@
 package com.ashish.movieguide.ui.common.rating
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.api.trakt.SyncApi
-import com.ashish.movieguide.data.network.entities.trakt.SyncItems
+import com.ashish.movieguide.data.remote.api.trakt.SyncApi
+import com.ashish.movieguide.data.remote.entities.trakt.SyncItems
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.widget.CustomToast
 import com.ashish.movieguide.utils.Utils

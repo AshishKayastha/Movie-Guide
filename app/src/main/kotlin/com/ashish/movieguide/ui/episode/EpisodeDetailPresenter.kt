@@ -1,15 +1,15 @@
 package com.ashish.movieguide.ui.episode
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.interactors.TVShowInteractor
-import com.ashish.movieguide.data.network.entities.common.FullDetailContent
-import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
-import com.ashish.movieguide.data.network.entities.tmdb.EpisodeDetail
-import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
-import com.ashish.movieguide.data.network.entities.tmdb.Videos
-import com.ashish.movieguide.data.network.entities.trakt.SyncEpisode
-import com.ashish.movieguide.data.network.entities.trakt.SyncItems
-import com.ashish.movieguide.data.network.entities.trakt.TraktEpisode
+import com.ashish.movieguide.data.remote.entities.common.FullDetailContent
+import com.ashish.movieguide.data.remote.entities.tmdb.CreditResults
+import com.ashish.movieguide.data.remote.entities.tmdb.EpisodeDetail
+import com.ashish.movieguide.data.remote.entities.tmdb.ImageItem
+import com.ashish.movieguide.data.remote.entities.tmdb.Videos
+import com.ashish.movieguide.data.remote.entities.trakt.SyncEpisode
+import com.ashish.movieguide.data.remote.entities.trakt.SyncItems
+import com.ashish.movieguide.data.remote.entities.trakt.TraktEpisode
+import com.ashish.movieguide.data.remote.interactors.TVShowInteractor
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentPresenter
 import com.ashish.movieguide.ui.common.rating.RatingManager
 import com.ashish.movieguide.utils.extensions.getFormattedMediumDate

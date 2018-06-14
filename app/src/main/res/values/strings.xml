@@ -59,7 +59,7 @@
     <string name="release_date_title">Release Date:</string>
 
     <string name="similar_movies_title">Similar Movies</string>
-    <string name="error_load_movie_detail">An error occurred while trying to load movie detail</string>
+    <string name="error_load_movie_detail">An error occurred while trying to load show detail</string>
 
     <!-- TV Show Detail -->
     <string name="seasons_title">Seasons</string>
@@ -193,7 +193,7 @@
 
     <string name="title_rated">Rated</string>
     <string name="title_episodes">Episodes</string>
-    <string name="title_rate_movie">Rate this movie</string>
+    <string name="title_rate_movie">Rate this show</string>
     <string name="title_rate_tv_show">Rate this TV show</string>
     <string name="title_rate_episode">Rate this episode</string>
 

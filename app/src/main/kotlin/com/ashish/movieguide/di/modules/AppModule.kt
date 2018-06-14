@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.ashish.movieguide.data.database.entities.Models
+import com.ashish.movieguide.data.local.entities.Models
 import com.ashish.movieguide.di.qualifiers.ApplicationContext
 import dagger.Binds
 import dagger.Module

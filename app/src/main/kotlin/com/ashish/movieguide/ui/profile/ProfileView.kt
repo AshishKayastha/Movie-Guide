@@ -1,10 +1,10 @@
 package com.ashish.movieguide.ui.profile
 
-import com.ashish.movieguide.data.network.entities.trakt.EpisodeStats
-import com.ashish.movieguide.data.network.entities.trakt.MovieStats
-import com.ashish.movieguide.data.network.entities.trakt.NetworkStats
-import com.ashish.movieguide.data.network.entities.trakt.RatingDistribution
-import com.ashish.movieguide.data.network.entities.trakt.UserProfile
+import com.ashish.movieguide.data.remote.entities.trakt.EpisodeStats
+import com.ashish.movieguide.data.remote.entities.trakt.MovieStats
+import com.ashish.movieguide.data.remote.entities.trakt.NetworkStats
+import com.ashish.movieguide.data.remote.entities.trakt.RatingDistribution
+import com.ashish.movieguide.data.remote.entities.trakt.UserProfile
 import com.ashish.movieguide.ui.base.mvp.ProgressMvpView
 
 interface ProfileView : ProgressMvpView {

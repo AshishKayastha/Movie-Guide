@@ -14,7 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.preferences.PreferenceHelper
+import com.ashish.movieguide.data.local.preferences.PreferenceHelper
 import com.ashish.movieguide.ui.base.common.BaseActivity
 import com.ashish.movieguide.ui.login.LoginActivity
 import com.ashish.movieguide.ui.main.TabFragmentFactory.CONTENT_TYPE_DISCOVER

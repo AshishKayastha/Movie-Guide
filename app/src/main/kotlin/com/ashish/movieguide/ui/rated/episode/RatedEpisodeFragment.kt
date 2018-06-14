@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.entities.tmdb.Episode
+import com.ashish.movieguide.data.remote.entities.tmdb.Episode
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewFragment
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.common.rating.RatingChangeObserver

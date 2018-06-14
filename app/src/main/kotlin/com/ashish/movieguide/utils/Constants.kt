@@ -2,6 +2,7 @@ package com.ashish.movieguide.utils
 
 import com.ashish.movieguide.BuildConfig
 import com.ashish.movieguide.utils.extensions.dpToPx
+import com.bumptech.glide.request.RequestOptions
 
 /**
  * Created by Ashish on Dec 27.
@@ -27,7 +28,10 @@ object Constants {
 
     val LIST_THUMBNAIL_WIDTH = 200f.dpToPx().toInt()
     val LIST_THUMBNAIL_HEIGHT = 260f.dpToPx().toInt()
-    val DETAIL_IMAGE_THUMBNAIL_SIZE = 180f.dpToPx().toInt()
+    private val DETAIL_IMAGE_THUMBNAIL_SIZE = 180f.dpToPx().toInt()
+
+    val DETAIL_IMAGE_OPTIONS = RequestOptions()
+            .override(DETAIL_IMAGE_THUMBNAIL_SIZE, DETAIL_IMAGE_THUMBNAIL_SIZE)
 
     const val OMDB_API_KEY = BuildConfig.OMDB_API_KEY
 }

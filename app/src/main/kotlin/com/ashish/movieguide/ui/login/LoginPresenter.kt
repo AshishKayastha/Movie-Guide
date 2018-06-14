@@ -1,12 +1,12 @@
 package com.ashish.movieguide.ui.login
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.api.trakt.TraktAuthApi
-import com.ashish.movieguide.data.network.api.trakt.UserApi
-import com.ashish.movieguide.data.network.entities.trakt.Settings
-import com.ashish.movieguide.data.network.entities.trakt.TokenRequest
-import com.ashish.movieguide.data.network.entities.trakt.TraktToken
-import com.ashish.movieguide.data.preferences.PreferenceHelper
+import com.ashish.movieguide.data.local.preferences.PreferenceHelper
+import com.ashish.movieguide.data.remote.api.trakt.TraktAuthApi
+import com.ashish.movieguide.data.remote.api.trakt.UserApi
+import com.ashish.movieguide.data.remote.entities.trakt.Settings
+import com.ashish.movieguide.data.remote.entities.trakt.TokenRequest
+import com.ashish.movieguide.data.remote.entities.trakt.TraktToken
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.TraktConstants.GRANT_TYPE_AUTHORIZATION_CODE
 import com.ashish.movieguide.utils.TraktConstants.REDIRECT_URI

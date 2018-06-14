@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.entities.tmdb.Episode
-import com.ashish.movieguide.data.network.entities.tmdb.Season
-import com.ashish.movieguide.data.network.entities.tmdb.SeasonDetail
-import com.ashish.movieguide.data.network.entities.trakt.TraktSeason
+import com.ashish.movieguide.data.remote.entities.tmdb.Episode
+import com.ashish.movieguide.data.remote.entities.tmdb.Season
+import com.ashish.movieguide.data.remote.entities.tmdb.SeasonDetail
+import com.ashish.movieguide.data.remote.entities.trakt.TraktSeason
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.common.adapter.RecyclerViewAdapter

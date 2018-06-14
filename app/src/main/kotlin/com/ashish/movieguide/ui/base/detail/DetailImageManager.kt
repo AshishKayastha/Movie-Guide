@@ -6,15 +6,17 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.util.Pair
 import android.support.v7.widget.RecyclerView
+import android.transition.TransitionInflater
+import android.transition.TransitionSet
 import android.view.View
 import android.view.ViewStub
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import com.ashish.movieguide.R
 import com.ashish.movieguide.di.scopes.ActivityScope
 import com.ashish.movieguide.ui.common.adapter.ImageAdapter
 import com.ashish.movieguide.ui.common.adapter.OnItemClickListener
 import com.ashish.movieguide.ui.imageviewer.ImageViewerActivity
+import com.ashish.movieguide.utils.extensions.find
 import com.ashish.movieguide.utils.extensions.inflateToRecyclerView
 import com.ashish.movieguide.utils.extensions.isNotNullOrEmpty
 import com.ashish.movieguide.utils.extensions.startActivityWithTransition
@@ -30,27 +32,16 @@ class DetailImageManager @Inject constructor(private val activity: Activity) {
     private var imagesRecyclerView: RecyclerView? = null
 
     private val callback = object : LeakFreeSupportSharedElementCallback() {
-        override fun onMapSharedElements(names: MutableList<String>?, sharedElements: MutableMap<String, View>?) {
+        override fun onMapSharedElements(names: MutableList<String>, sharedElements: MutableMap<String, View>) {
             super.onMapSharedElements(names, sharedElements)
-
             if (reenterState != null) {
                 val currentPosition = reenterState!!.getInt(ImageViewerActivity.EXTRA_CURRENT_POSITION)
-                val startingPosition = reenterState!!.getInt(ImageViewerActivity.EXTRA_STARTING_POSITION)
 
-                /*
-                  If startingPosition != currentPosition the user must have swiped to a
-                  different page in the ImageViewerActivity. We must update the shared element
-                  so that the correct one falls into place.
-                 */
-                if (startingPosition != currentPosition) {
-                    val newSharedElement = imagesRecyclerView?.layoutManager?.findViewByPosition(currentPosition)
-                    if (newSharedElement != null) {
-                        val newTransitionName = "image_$currentPosition"
-                        names?.clear()
-                        sharedElements?.clear()
-                        names?.add(newTransitionName)
-                        sharedElements?.put(newTransitionName, newSharedElement)
-                    }
+                // Locate the ViewHolder for the clicked position.
+                val holder = imagesRecyclerView?.findViewHolderForAdapterPosition(currentPosition)
+                holder?.itemView?.let {
+                    // Map the first shared element name to the child ImageView.
+                    sharedElements[names[0]] = it.find(R.id.detail_content_image)
                 }
 
                 reenterState = null
@@ -60,6 +51,13 @@ class DetailImageManager @Inject constructor(private val activity: Activity) {
 
     private val onImageItemClickListener = object : OnItemClickListener {
         override fun onItemClick(position: Int, view: View) {
+            // Exclude the clicked view from the exit transition (e.g. the clicked view will disappear immediately
+            // instead of fading out with the rest to prevent an overlapping animation of fade and move).
+            val exitTransition = activity.window.exitTransition
+            if (exitTransition is TransitionSet) {
+                exitTransition.excludeTarget(view, true)
+            }
+
             val imageUrlList = imageAdapter?.imageUrlList
             if (imageUrlList.isNotNullOrEmpty()) {
                 val imageView = view.findViewById(R.id.detail_content_image) as ImageView
@@ -75,6 +73,9 @@ class DetailImageManager @Inject constructor(private val activity: Activity) {
     }
 
     fun initImageTransition() {
+        activity.window.exitTransition = TransitionInflater.from(activity)
+                .inflateTransition(R.transition.grid_exit_transition)
+
         ActivityCompat.setExitSharedElementCallback(activity, callback)
     }
 
@@ -83,45 +84,33 @@ class DetailImageManager @Inject constructor(private val activity: Activity) {
         imagesRecyclerView = imagesViewStub.inflateToRecyclerView(
                 activity,
                 R.id.detailImagesRecyclerView,
-                imageAdapter!!
+                imageAdapter!!,
+                false
         )
     }
 
     fun fixImagePositionOnActivityReenter(data: Intent) {
-        // Get extras passed to this activity from ImageViewerActivity
+        /// Get extras passed to this activity from ImageViewerActivity
         reenterState = data.extras
         val currentPosition = reenterState?.getInt(ImageViewerActivity.EXTRA_CURRENT_POSITION)
-        val startingPosition = reenterState?.getInt(ImageViewerActivity.EXTRA_STARTING_POSITION)
 
-        /*
-          If startingPosition and currentPosition are not same
-          then scroll images recyclerview to currentPosition
-         */
-        if (startingPosition != currentPosition) {
-            imagesRecyclerView?.smoothScrollToPosition(currentPosition!!)
+        if (currentPosition != null) {
+            imagesRecyclerView?.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+                override fun onLayoutChange(view: View, left: Int, top: Int, right: Int, bottom: Int,
+                                            oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+                    imagesRecyclerView?.removeOnLayoutChangeListener(this)
+                    imagesRecyclerView?.layoutManager?.let { lm ->
+                        val viewAtPosition = lm.findViewByPosition(currentPosition)
+                        // Scroll to position if the view for the current position is null (not currently part of
+                        // layout manager children), or it's not completely visible.
+                        if (viewAtPosition == null
+                                || lm.isViewPartiallyVisible(viewAtPosition, false, true)) {
+                            imagesRecyclerView?.smoothScrollToPosition(currentPosition)
+                        }
+                    }
+                }
+            })
         }
-
-        /*
-          Postpone reenter transition as the image recyclerview
-          may not have been drawn by this time so we want to delay the
-          transition until view is drawn.
-         */
-        activity.postponeEnterTransition()
-        imagesRecyclerView?.viewTreeObserver?.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-            override fun onPreDraw(): Boolean {
-                imagesRecyclerView?.viewTreeObserver?.removeOnPreDrawListener(this)
-
-                // Fix required for smooth transition
-                imagesRecyclerView?.requestLayout()
-
-                /*
-                  Start postponed shared element transiton when we know
-                  that recyclerview is now drawn.
-                 */
-                activity.startPostponedEnterTransition()
-                return true
-            }
-        })
     }
 
     fun performCleanup() {

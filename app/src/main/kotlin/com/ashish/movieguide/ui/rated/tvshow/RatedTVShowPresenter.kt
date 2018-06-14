@@ -1,8 +1,8 @@
 package com.ashish.movieguide.ui.rated.tvshow
 
-import com.ashish.movieguide.data.interactors.AuthInteractor
-import com.ashish.movieguide.data.network.entities.tmdb.Results
-import com.ashish.movieguide.data.network.entities.tmdb.TVShow
+import com.ashish.movieguide.data.remote.entities.tmdb.Results
+import com.ashish.movieguide.data.remote.entities.tmdb.TVShow
+import com.ashish.movieguide.data.remote.interactors.AuthInteractor
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider

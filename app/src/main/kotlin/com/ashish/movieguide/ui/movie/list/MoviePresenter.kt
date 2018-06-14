@@ -1,12 +1,12 @@
 package com.ashish.movieguide.ui.movie.list
 
-import com.ashish.movieguide.data.interactors.MovieInteractor
-import com.ashish.movieguide.data.network.api.tmdb.MovieApi.Companion.NOW_PLAYING
-import com.ashish.movieguide.data.network.api.tmdb.MovieApi.Companion.POPULAR
-import com.ashish.movieguide.data.network.api.tmdb.MovieApi.Companion.TOP_RATED
-import com.ashish.movieguide.data.network.api.tmdb.MovieApi.Companion.UPCOMING
-import com.ashish.movieguide.data.network.entities.tmdb.Movie
-import com.ashish.movieguide.data.network.entities.tmdb.Results
+import com.ashish.movieguide.data.remote.api.tmdb.MovieApi.Companion.NOW_PLAYING
+import com.ashish.movieguide.data.remote.api.tmdb.MovieApi.Companion.POPULAR
+import com.ashish.movieguide.data.remote.api.tmdb.MovieApi.Companion.TOP_RATED
+import com.ashish.movieguide.data.remote.api.tmdb.MovieApi.Companion.UPCOMING
+import com.ashish.movieguide.data.remote.entities.tmdb.Movie
+import com.ashish.movieguide.data.remote.entities.tmdb.Results
+import com.ashish.movieguide.data.remote.interactors.MovieInteractor
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewMvpView
 import com.ashish.movieguide.ui.base.recyclerview.RecyclerViewPresenter
 import com.ashish.movieguide.utils.schedulers.BaseSchedulerProvider

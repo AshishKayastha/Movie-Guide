@@ -1,12 +1,12 @@
 package com.ashish.movieguide.ui.people.detail
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.interactors.PeopleInteractor
-import com.ashish.movieguide.data.network.entities.common.FullDetailContent
-import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
-import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
-import com.ashish.movieguide.data.network.entities.tmdb.PersonDetail
-import com.ashish.movieguide.data.network.entities.trakt.TraktPerson
+import com.ashish.movieguide.data.remote.entities.common.FullDetailContent
+import com.ashish.movieguide.data.remote.entities.tmdb.CreditResults
+import com.ashish.movieguide.data.remote.entities.tmdb.ImageItem
+import com.ashish.movieguide.data.remote.entities.tmdb.PersonDetail
+import com.ashish.movieguide.data.remote.entities.trakt.TraktPerson
+import com.ashish.movieguide.data.remote.interactors.PeopleInteractor
 import com.ashish.movieguide.ui.base.detail.BaseDetailPresenter
 import com.ashish.movieguide.ui.base.detail.BaseDetailView
 import com.ashish.movieguide.utils.extensions.convertListToCommaSeparatedText

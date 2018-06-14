@@ -1,7 +1,7 @@
 package com.ashish.movieguide.utils
 
 import com.ashish.movieguide.BuildConfig.TRAKT_CLIENT_ID
-import com.ashish.movieguide.data.preferences.PreferenceHelper
+import com.ashish.movieguide.data.local.preferences.PreferenceHelper
 import com.ashish.movieguide.utils.TraktConstants.API_VERSION
 import com.ashish.movieguide.utils.TraktConstants.CONTENT_TYPE_JSON
 import com.ashish.movieguide.utils.TraktConstants.HEADER_AUTHORIZATION

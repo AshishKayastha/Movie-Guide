@@ -172,7 +172,7 @@ dependencies {
     kapt "com.evernote:android-state-processor:$versions.androidStateVersion"
 
     // Leak Canary
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanaryVersion"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanaryVersion"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanaryVersion"
 }
 

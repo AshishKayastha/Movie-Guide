@@ -25,7 +25,6 @@ fun Activity?.hideKeyboard() {
 
 fun Activity.startActivityWithTransition(viewPair: Pair<View, String>?, intent: Intent) {
     val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, viewPair)
-    window.exitTransition = null
     ActivityCompat.startActivity(this, intent, options.toBundle())
 }
 
@@ -47,7 +46,7 @@ fun Activity.setTopBarColorAndAnimate(
             val backButton = toolbar[0] as ImageButton?
             backButton?.setColorFilter(primaryBlack)
             menu?.tint(primaryBlack)
-            setOverflowMenuColor(primaryBlack)
+            toolbar?.overflowIcon?.tint(primaryBlack)
             collapsingToolbar.setCollapsedTitleTextColor(primaryBlack)
         }
 

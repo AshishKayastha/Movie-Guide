@@ -6,10 +6,10 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.entities.tmdb.Episode
-import com.ashish.movieguide.data.network.entities.tmdb.EpisodeDetail
-import com.ashish.movieguide.data.network.entities.trakt.TraktEpisode
-import com.ashish.movieguide.data.preferences.PreferenceHelper
+import com.ashish.movieguide.data.local.preferences.PreferenceHelper
+import com.ashish.movieguide.data.remote.entities.tmdb.Episode
+import com.ashish.movieguide.data.remote.entities.tmdb.EpisodeDetail
+import com.ashish.movieguide.data.remote.entities.trakt.TraktEpisode
 import com.ashish.movieguide.ui.base.detail.fulldetail.FullDetailContentActivity
 import com.ashish.movieguide.ui.common.rating.RatingDialog
 import com.ashish.movieguide.utils.Constants.ADAPTER_TYPE_EPISODE

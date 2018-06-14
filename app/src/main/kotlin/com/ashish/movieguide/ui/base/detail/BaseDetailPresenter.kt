@@ -1,9 +1,9 @@
 package com.ashish.movieguide.ui.base.detail
 
 import com.ashish.movieguide.R
-import com.ashish.movieguide.data.network.entities.common.FullDetailContent
-import com.ashish.movieguide.data.network.entities.tmdb.CreditResults
-import com.ashish.movieguide.data.network.entities.tmdb.ImageItem
+import com.ashish.movieguide.data.remote.entities.common.FullDetailContent
+import com.ashish.movieguide.data.remote.entities.tmdb.CreditResults
+import com.ashish.movieguide.data.remote.entities.tmdb.ImageItem
 import com.ashish.movieguide.ui.base.mvp.RxPresenter
 import com.ashish.movieguide.utils.AuthException
 import com.ashish.movieguide.utils.extensions.addAllIfNotNull
